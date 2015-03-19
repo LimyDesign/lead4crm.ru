@@ -3,12 +3,25 @@ var app = express();
 var cool = require('cool-ascii-faces');
 var pg = require('pg');
 
+var host = 'ec2-54-247-125-202.eu-west-1.compute.amazonaws.com';
+var database = 'dcuaceirnqfh7a';
+var user = 'fukhhuzwpyiphq';
+var port = '5432';
+
+var config = {
+	host: host,
+	port: port,
+	database: database,
+	user: user,
+	password: 'SYSw21dqJoIy6c8uVoKMzQvTu1',
+	ssl: true
+};
+
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
 app.get('/db', function (request, response) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-  	response.send(process.env.DATABASE_URL);
+  pg.connect(config, function(err, client, done) {
   	if (err) {
   		return console.error('Error fetching client from pool', err);
   	}
