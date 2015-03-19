@@ -1,35 +1,136 @@
 doctype html
-html(lang="ru").no-js
+html
 	head
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
-		link(type='text/css', rel='stylesheet', href='css/normalize.css')
-		link(type='text/css', rel='stylesheet', href='css/demo.css')
-		link(type='text/css', rel='stylesheet', href='css/component.css')
+		link(type='text/css', rel='stylesheet', href='css/bootstrap.css')
+		link(type='text/css', rel='stylesheet', href='fonts/font-awesome-4.3.0/css/font-awesome.min.css')
+		link(type='text/css', rel='stylesheet', href='css/all.css')
 		link(type='text/css', rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,100,100italic,300,300italic&subset=latin,cyrillic,latin-ext,cyrillic-ext')
 		title=title
 		<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 	body
-		.container.bg-1
-			.content
-				#large-header.large-header
-					canvas#demo-canvas
-					h1.main-title Нас 
-						span.thin миллионы
-				.codrops-top.clearfix
-				.codrops-header
-					h1 Простая генерация базы лидов для Битрикс24
-						span Нет ничего проще чем создание базы потенциальных клиентов &mdash; быстро и по нужным критериям в течении мгновения.
-					nav.codrops-demos
-						a.current-demo(href='#.') Главная
-						a(href='#.') Подключиться
-						a(href='#.') Цены
-						a(href='#.') Поддержка
+		#wrapper
+			header#header
+				.container
+					.logo
+						a(href="#")
+							img(src="images/logo.svg")
+					nav#nav
+						.opener-holder
+							a(href="#").nav-opener
+								span
+						a(href="#").btn.btn-primary.rounded Подключиться
+						.nav-drop
+							ul
+								li.active.visible-sm.visible-xs
+									a(href="#") Главная
+								li
+									a(href="#") О проекте
+								li
+									a(href="#") О нас
+								li
+									a(href="#") Цены
+								li
+									a(href="#") Поддержка
+							.drop-holder.visible-sm.visible-xs
+								span Следите
+								ul.social-networks
+									li
+										a(href="#").fa.fa-github
+									li
+										a(href="#").fa.fa-twitter
+									li
+										a(href="#").fa.fa-facebook
+			section.visual
+				.container
+					.text-block
+						.heading-holder
+							h1 Генератор лидов
+						p.tagline Нет ничего проще чем создание базы потенциальных клиентов
+						span.info Версия 0.0.1 для Битрикс24
+				img(src="images/img-decor-01.jpg").bg-stretch
+			section.main
+				.container
+					#cta
+						a(href="#").btn.btn-primary.rounded Установить в Битрикс24
+						p Работает на базе API 
+							img(src="images/2gis-logo-1.svg")
+					.row
+						.text-box.col-md-offset-1.col-md-10
+							h2 Эволия в CRM системах
+							p Наше решение не является революционным, но как оказывается подобных решений на российском рынке еще не предствалено. Поэтому мы взяли и сделали. Отныне все просто &mdash; пара кликов и база ваша!
+							.social-placeholder
+			section.area
+				.container
+					.row
+						.col-md-5
+							h2.visible-xs.visible-sm.text-primary &lt; наша рекомендация &gt;
+							ul.visual-list
+								li
+									.img-holder
+										img(src="images/graph-04.svg", width="110")
+									.text-holder
+										h3 Подробная карточка клиента / лида
+										p При импорте данных по вашим критериям, импортируются не только назнвания компании, но и все возможные данные, которые компания сама предоставила о себе. В результате вы получаете наиболее полные данные по каждой компании, при этом вам ничего не надо делать, кроме нажатия кнопки «Импорт».
+								li
+									.img-holder
+										img(src="images/graph-03.svg", width="90")
+									.text-holder
+										h3 Тонкая выборка
+										p Настраивайте выборку данных как вам угодно &mdash; мы постарались реализовать фильтры так, чтобы они смогли упростить процесс получения максимально подходящих для вас потенциальных клиентов. Заказывая базу у кого-нибудь вам отправляют файл в формате Excel, мы делаем так, чтобы вам не нужно было бы в дальнейшем выбирать нужные и не нужные компании. 
+								li
+									.img-holder
+										img(src="images/graph-01.svg", width="71")
+									.text-holder
+										h3 Экономия времени
+										p С нами вы экономите не только на оплате друда менеджеров или системного администратора, с нами вы экономите на множестве потенциальных расходов, которые компании несут не пользуясь нашим замечательным модулем. Кроме этого вы увеличиваете прибыль компании ровно на столько, сколько времени тратится на сбор данных по вашим потенциальным клиентам.
+						.col-md-7
+							.slide-holder
+								h2.hidden-xs.hidden-sm.text-primary &lt; наша рекомендация &gt;
+								.img-slide.scroll-trigger
+									img(src="images/img-01.png", height="624", width="1184")
+			footer#footer
+				.container
+					.footer-holder
+						.row
+							.col-md-4
+								.logo
+									a(href="#.")
+										img(src="images/logo.svg", alt="LEAD4CRM")
+								p Смарт генератор лидов для CRM Битрикс24. Работает на базе справочника 2GIS.
+							.col-md-2
+								h4 Навигация
+								ul
+									li
+										a(href="#.") Главная
+									li
+										a(href="#.") О проекте
+									li
+										a(href="#.") О нас
+									li
+										a(href="#.") Цены
+									li
+										a(href="#.") Поддержка
+							.col-md-3
+								.text-holder
+									strong.phone
+										a(href="tel:+79041326000") +7 904 132-60-00
+									span.available Работаем с 9:00 до 18:00
+									h4 Россия, Иркутск
+									address 664002, Иркутск, ул. Жукова, 2 - 4
+							.col-md-3
+								.text-frame
+									h4 С сведению
+									p Наши данные актуальны на столько на сколько актуальны данные в справочнике 2GIS потому, что мы не кэшируем и не сохраняем.
 
-		script(src='/js/TweenLite.min.js')
-		script(src='/js/EasePack.min.js')
-		script(src='/js/rAF.min.js')
-		script(src='/js/demo-1.js')
+		script(src="js/jquery-1.11.2.min.js")
+		script(src="js/bootstrap.js")
+		script(src="js/jquery.main.js")
+		//- script(src='/js/TweenLite.min.js')
+		//- script(src='/js/EasePack.min.js')
+		//- script(src='/js/rAF.min.js')
+		//- script(src='/js/demo-1.js')
