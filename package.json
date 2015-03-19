@@ -19,9 +19,7 @@
     "type": "git",
     "url": "https://github.com/LimyDesign/lead4crm.ru.git"
   },
-  "scripts": {
-    "postinstall": "brunch build --optimize"
-  },
+
   "keywords": [
     "генератор",
     "лиды",
