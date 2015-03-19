@@ -19,11 +19,11 @@ var config = {
 
 app.set('port', (process.env.PORT || 5000));
 app.set('/views', __dirname + '/views');
-app.use('/public', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(request, response) {
 	response.render('index.jade', {
-		title: 'Hello, Jade!'
+		title: 'Генератор лидов для Битрикс24'
 	});
 });
 
