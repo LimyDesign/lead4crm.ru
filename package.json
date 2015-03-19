@@ -9,7 +9,8 @@
   "dependencies": {
     "pg": "4.x",
     "express": "~4.9.x",
-    "cool-ascii-faces": "~1.3.x"
+    "statik": ">= 1.1.0",
+    "brush": "1.x"
   },
   "engines": {
     "node": "0.10.x"
@@ -17,6 +18,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/LimyDesign/lead4crm.ru.git"
+  },
+  "scripts": {
+    "postinstall": "brunch build --optimize"
   },
   "keywords": [
     "генератор",

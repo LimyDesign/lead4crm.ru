@@ -1,7 +1,7 @@
 var express = require('express');
-var app = express();
-var cool = require('cool-ascii-faces');
+var h5bp = require('h5bp');
 var pg = require('pg');
+var app = express();
 
 var host = 'ec2-54-247-125-202.eu-west-1.compute.amazonaws.com';
 var database = 'dcuaceirnqfh7a';
@@ -18,34 +18,25 @@ var config = {
 };
 
 app.set('port', (process.env.PORT || 5000));
+app.use(h5bp({ root: __dirname + '/public' }));
+app.use(express.compress());
 app.use(express.static(__dirname + '/public'));
+
 
 app.get('/db', function (request, response) {
   pg.connect(config, function(err, client, done) {
-  	if (err) {
-  		return console.error('Error fetching client from pool', err);
-  	}
+    if (err) {
+      return console.error('Error fetching client from pool', err);
+    }
     client.query('SELECT * FROM test_table', function(err, result) {
       done();
       if (err)
        { console.error(err); response.send("Error running query " + err); }
       else
        { response.send(result.rows); }
-   	  client.end();
+      client.end();
     });
   });
-});
-
-app.get('/cool', function(request, response) {
-	response.send(cool());
-});
-
-app.get('/', function(request, response) {
-	var result = '';
-	var times = process.env.TIMES || 5;
-	for (i=0; i < times; i++)
-		result += cool() + "<br>";
-	response.send(result);
 });
 
 app.listen(app.get('port'), function() {
