@@ -1,5 +1,5 @@
 var express = require('express');
-var h5bp = require('h5bp');
+var jade = require('jade');
 var pg = require('pg');
 var app = express();
 
@@ -18,10 +18,14 @@ var config = {
 };
 
 app.set('port', (process.env.PORT || 5000));
-app.use(h5bp({ root: __dirname + '/public' }));
-app.use(express.compress());
-app.use(express.static(__dirname + '/public'));
+app.set('/views', __dirname + '/views');
+app.use('/public', express.static(__dirname + '/public'));
 
+app.get('/', function(request, response) {
+	response.render('index.jade', {
+		title: 'Hello, Jade!'
+	});
+});
 
 app.get('/db', function (request, response) {
   pg.connect(config, function(err, client, done) {
