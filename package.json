@@ -9,7 +9,10 @@
   "dependencies": {
     "pg": "4.x",
     "express": "~4.9.x",
-    "jade": "*"
+    "connect": "^2.25.7",
+    "express-session": "*",
+    "jade": "*",
+    "colors": "*"
   },
   "engines": {
     "node": "0.10.x"

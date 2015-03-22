@@ -45,12 +45,47 @@ p {
   display: table-footer-group;
   height: 1%; }
 
-.btn-blue {
+.btn-fb-color {
   background: #3b5998;
   color: #fff; }
-  .btn-blue:hover {
+  .btn-fb-color:hover {
     color: #fff;
     background: #21396b; }
+
+.btn-vk-color {
+  background: #597da3;
+  color: #fff; }
+  .btn-vk-color:hover {
+    color: #fff;
+    background: #476482; }
+
+.btn-ok-color {
+  background: #eb722e;
+  color: #fff; }
+  .btn-ok-color:hover {
+    color: #fff;
+    background: #b84819; }
+
+.btn-google-plus-color {
+  background: #cc3732;
+  color: #fff; }
+  .btn-google-plus-color:hover {
+    color: #fff;
+    background: #a32c28; }
+
+.btn-mailru-color {
+  background: #168de2;
+  color: #fff; }
+  .btn-mailru-color:hover {
+    color: #fff;
+    background: #1170b4; }
+
+.btn-ya-color {
+  background: #fdcc01;
+  color: #000; }
+  .btn-ya-color:hover {
+    color: #000;
+    background: #caa301; }
 
 .logo {
   float: left;
