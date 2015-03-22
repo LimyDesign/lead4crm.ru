@@ -37,13 +37,13 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.get('/', function(request, response) {
-	response.render('index.jade', {
+app.get('/', function(req, res) {
+	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24'
 	});
 });
 
-app.get('/vklogin', function(request, response) {
+app.get('/vklogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Вконтакте"'.green);
 
 	var url_parts = url.parse(request.url, true);
@@ -52,7 +52,7 @@ app.get('/vklogin', function(request, response) {
 		client_id: '4836170',
 		client_secret: 'cPkR53zhon0lU7TAiz9f',
 		code: query.code,
-		redirect_uri: 'http://' + request.headers.host + '/vklogin'
+		redirect_uri: 'http://' + req.headers.host + '/vklogin'
 	});
 	var options = {
 		host: 'oauth.vk.com',
@@ -60,9 +60,9 @@ app.get('/vklogin', function(request, response) {
 		path: '/access_token?' + data,
 		method: 'GET'
 	};
-	var httpsreq = https.request(options, function(response) {
-		response.setEncoding('utf8');
-		response.on('data', function(chunk) {
+	var httpsreq = https.request(options, function(res2) {
+		res2.setEncoding('utf8');
+		res2.on('data', function(chunk) {
 			var chunk = JSON.parse(chunk);
 			pg.connect(dbconfig, function(err, client, done) {
 				if (err) {
@@ -72,33 +72,21 @@ app.get('/vklogin', function(request, response) {
 					done();
 					if (err) {
 						console.error('Ошибка получения данных',err);
-						response.writeHead(301, {
-							Location: 'http://' + request.headers.host
-						});
 					} else {
 						if (result.rows[0]) {
 							console.log(result.rows[0]);
-							request.session.authorized = true;
-							request.session.userid = result.rows[0].id;
-							response.writeHead(301, {
-								Location: 'http://' + request.headers.host + '/cabinet'
-							});
+							req.session.authorized = true;
+							req.session.userid = result.rows[0].id;
 						} else {
 							console.log('Попытка создания нового пользователя. ');
 							client.query("insert into users (email, vk) values ('" + chunk.email + "', " + chunk.user_id + ") returning id", function(err, result) {
 								done();
 								if (err) {
 									console.error('Ошибка записи данных в БД', err);
-									response.writeHead(301, {
-										Location: 'http://' + request.headers.host
-									});
 								} else {
-									request.session.authorized = true;
-									request.session.userid = result.rows[0].id;
+									req.session.authorized = true;
+									req.session.userid = result.rows[0].id;
 									console.log('Добавлен новый пользователь # ' + result.rows[0].id);
-									response.writeHead(301, {
-										Location: 'http://' + request.headers.host + '/cabinet'
-									});
 								}
 							});
 						}
@@ -109,23 +97,26 @@ app.get('/vklogin', function(request, response) {
 			});
 		});
 	});
-	response.end();
+	res.writeHead(301, {
+		Location: 'http://' + req.headers.host
+	});
+	res.end();
 });
 
-app.get('/oklogin', function(request, response) {
-	response.send(request.headers);
+app.get('/oklogin', function(req, res) {
+	res.send(req.headers);
 });
 
-app.get('/cabinet', function(request, response) {
+app.get('/cabinet', function(req, res) {
 	console.log('Вход в личный кабинет'.green);
-	if (request.session.authorized) {
-		response.send('Ваш ID: ' + request.session.userid);
+	if (req.session.authorized) {
+		res.send('Ваш ID: ' + req.session.userid);
 	} else {
-		response.send('Вы не авторизованны!');
+		res.send('Вы не авторизованны!');
 	}
 });
 
-app.get('/db', function (request, response) {
+app.get('/db', function (req, res) {
   pg.connect(dbconfig, function(err, client, done) {
     if (err) {
       return console.error('Error fetching client from pool', err);
@@ -133,9 +124,9 @@ app.get('/db', function (request, response) {
     client.query('SELECT * FROM users', function(err, result) {
       done();
       if (err)
-       { console.error(err); response.send("Error running query " + err); }
+       { console.error(err); res.send("Error running query " + err); }
       else
-       { response.send(result.rows); }
+       { res.send(result.rows); }
       client.end();
     });
   });
