@@ -72,21 +72,33 @@ app.get('/vklogin', function(request, response) {
 					done();
 					if (err) {
 						console.error('Ошибка получения данных',err);
+						response.writeHead(301, {
+							Location: 'http://' + request.headers.host
+						});
 					} else {
 						if (result.rows[0]) {
 							console.log(result.rows[0]);
 							request.session.authorized = true;
 							request.session.userid = result.rows[0].id;
+							response.writeHead(301, {
+								Location: 'http://' + request.headers.host + '/cabinet'
+							});
 						} else {
 							console.log('Попытка создания нового пользователя. ');
 							client.query("insert into users (email, vk) values ('" + chunk.email + "', " + chunk.user_id + ") returning id", function(err, result) {
 								done();
 								if (err) {
 									console.error('Ошибка записи данных в БД', err);
+									response.writeHead(301, {
+										Location: 'http://' + request.headers.host
+									});
 								} else {
 									request.session.authorized = true;
 									request.session.userid = result.rows[0].id;
 									console.log('Добавлен новый пользователь # ' + result.rows[0].id);
+									response.writeHead(301, {
+										Location: 'http://' + request.headers.host + '/cabinet'
+									});
 								}
 							});
 						}
@@ -97,20 +109,6 @@ app.get('/vklogin', function(request, response) {
 			});
 		});
 	});
-	if (httpsreq.end()) {
-		console.log('Yap!');
-	} else {
-		console.log('Fuuu!');
-	}
-	if (request.session.authorized) {
-		response.writeHead(301, {
-			Location: 'http://' + request.headers.host + '/cabinet'
-		});
-	} else {
-		response.writeHead(301, {
-			Location: 'http://' + request.headers.host
-		});
-	}
 	response.end();
 });
 
