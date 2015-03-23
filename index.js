@@ -7,6 +7,7 @@ var http = require('http');
 var https = require('https');
 var jade = require('jade');
 var colors = require('colors');
+var crypto = require('crypto');
 var pg = require('pg');
 var app = express();
 
@@ -38,15 +39,25 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
+	var vklogin_query = querystring.stringify({
+		client_id: '4836170',
+		scope: 'notify,email',
+		redirect_uri: 'http://' + req.headers.host + '/vklogin',
+		response_type: 'code',
+		v: '5.29',
+		state: crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'),
+		display: 'page'
+	});
 	res.render('index.jade', {
-		title: 'Генератор лидов для Битрикс24'
+		title: 'Генератор лидов для Битрикс24',
+		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query
 	});
 });
 
 app.get('/vklogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Вконтакте"'.green);
 
-	var url_parts = url.parse(request.url, true);
+	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 	var data = querystring.stringify({
 		client_id: '4836170',
@@ -60,9 +71,9 @@ app.get('/vklogin', function(req, res) {
 		path: '/access_token?' + data,
 		method: 'GET'
 	};
-	var httpsreq = https.request(options, function(res2) {
-		res2.setEncoding('utf8');
-		res2.on('data', function(chunk) {
+	var httpsreq = https.request(options, function(res) {
+		res.setEncoding('utf8');
+		res.on('data', function(chunk) {
 			var chunk = JSON.parse(chunk);
 			pg.connect(dbconfig, function(err, client, done) {
 				if (err) {
@@ -97,14 +108,32 @@ app.get('/vklogin', function(req, res) {
 			});
 		});
 	});
-	res.writeHead(301, {
-		Location: 'http://' + req.headers.host
+	// setTimeout(function() {
+	// 	res.writeHead(301, {
+	// 		Location: 'http://' + req.headers.host
+	// 	});
+	// 	res.end();
+	// }, 10);
+	var vklogin_query = querystring.stringify({
+		client_id: '4836170',
+		scope: 'notify,email',
+		redirect_uri: 'http://' + req.headers.host + '/vklogin',
+		response_type: 'code',
+		v: '5.29',
+		state: crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'),
+		display: 'page'
 	});
-	res.end();
+	res.render('index.jade', {
+		title: 'Генератор лидов для Битрикс24',
+		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query
+	});
 });
 
 app.get('/oklogin', function(req, res) {
-	res.send(req.headers);
+	// res.send(req.headers);
+	var shasum = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime());
+	var d = shasum.digest('hex');
+	res.send(crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'));
 });
 
 app.get('/cabinet', function(req, res) {

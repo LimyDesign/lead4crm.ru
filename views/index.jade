@@ -114,8 +114,28 @@ html
 								a(href="#.").btn-next: i.glyphicon.glyphicon-menu-right
 						.block-frame
 							ul.cta-list
-								li
-									a(href="#.").btn.btn-fb-color : #[i.fa.fa-facebook] Facebook
+								li: a(href="#.").btn.btn-fb-color #[i.fa.fa-facebook] Facebook
+								li: a(href="#.").btn.btn-vk-color #[i.fa.fa-vk] Вконтакте
+								li: a(href="#.").btn.btn-google-plus-color #[i.fa.fa-google-plus] Google+
+			section.visual-container
+				.visual-area
+					.container
+						h2 Мнения некоторых компаний о нас
+						ul.testimonials
+							li
+								.img-holder
+									a(href="#."): img(src="images/logo-smashing.png", height="43", width="165" alt="smashing magazine")
+								p: em Программа просто необходимость в любом виде бизнес, мы уже даже не знаем как раньше без этого обходились. Короче спасибо ребятам за этот продукт.
+					img(src="images/img-decor-02.jpg", height="764", width="1380").bg-stretch
+				.visual-area
+					.container
+						h2 Цены
+						.pricing-tables
+							.plan
+								.head
+									h3 Малый бизнес
+								.price
+									span.price-main #[span.symbol: i.fa.fa-rub] 1000
 			footer#footer
 				.container
 					.footer-holder
@@ -134,10 +154,10 @@ html
 									li: a(href="#.") Поддержка
 							.col-md-3
 								.text-holder
-									strong.phone: a(href="tel:+79041326000") +7 904 132 6000
-									span.available Работаем с 9:00 до 18:00
+									strong.phone: a(href="tel:+79041326000") +7 (499) 704-69-17
+									span.available Работаем всегда &mdash; 24/7
 									h4 Сделано в России
-									address Поддержи отечественного производителя!
+									address Произведено в #[a(href="http://limydesign.ru", target="_blank") LimyDesign]
 							.col-md-3
 								.text-frame
 									h4 С сведению
@@ -149,26 +169,14 @@ html
 				div
 					p.text-center: strong Войдите или зарегистрируйтесь через:
 					ul.cta-list
-						li
-							a(href="").btn.btn-fb-color.
-								Facebook
-						li
-							a(href="https://oauth.vk.com/authorize?client_id=4836170&display=page&scope=notify,email&redirect_uri=http://localhost:5000/vklogin&response_type=code", title="Зайти через Вконтакте").btn.btn-vk-color.
-								Вконтакте
+						li: a(href="").btn.btn-fb-color Facebook
+						li: a(href=vklogin, title="Зайти через Вконтакте").btn.btn-vk-color Вконтакте
 					ul.cta-list
-						li
-							a(href="").btn.btn-google-plus-color.
-								Google+
-						li
-							a(href="").btn.btn-ok-color.
-								Одноклассники
+						li: a(href="").btn.btn-google-plus-color Google+
+						li: a(href="").btn.btn-ok-color Одноклассники
 					ul.cta-list
-						li
-							a(href="").btn.btn-mailru-color.
-								Mail.Ru
-						li
-							a(href="").btn.btn-ya-color.
-								Яндекс
+						li: a(href="").btn.btn-mailru-color Mail.Ru
+						li: a(href="").btn.btn-ya-color Яндекс
 
 		.md-overlay
 
