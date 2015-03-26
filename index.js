@@ -40,6 +40,14 @@ app.use(session({
 	saveUninitialized: true
 }));
 
+app.get('/*', function(req, res, next) {
+	if (req.headers.host.match(/^www/) !== null) {
+		res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+	} else {
+		next();
+	}
+});
+
 app.get('/', function(req, res) {
 	if (req.session.authorized)
 		cabinet = true;
@@ -143,15 +151,10 @@ app.get('/vklogin', function(req, res) {
 	function final() {
 		console.log('Готовчик!'.yellow, results);
 		if (req.session.authorized && results.indexOf('error') < 0) {
-			res.writeHead(301, {
-				Location: 'http://' + req.headers.host + '/cabinet'
-			});
+			res.redirect('http://' + req.headers.host + '/cabinet');
 		} else {
-			res.writeHead(301, {
-				Location: 'http://' + req.headers.host
-			});
+			res.redirect('http://' + req.headers.host);
 		}
-		res.end();
 	}
 
 	var vk_res;
@@ -188,10 +191,7 @@ app.get('/logout', function(req, res) {
 		if (err) {
 			console.log('Ошибка удаления сессии', err);
 		} else {
-			res.writeHead(301, {
-				Location: 'http://' + req.headers.host
-			});
-			res.end();
+			res.redirect('http://' + req.headers.host);
 		}
 	});
 });
@@ -234,10 +234,7 @@ app.get('/cabinet', function(req, res) {
 	if (req.session.authorized) {
 		show_cabinet();
 	} else {
-		res.writeHead(301, {
-			Location: 'http://' + req.headers.host
-		});
-		res.end();
+		res.redirect('http://' + req.headers.host);
 	}
 });
 
