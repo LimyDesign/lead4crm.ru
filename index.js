@@ -71,69 +71,99 @@ app.get('/vklogin', function(req, res) {
 		path: '/access_token?' + data,
 		method: 'GET'
 	};
-	var httpsreq = https.request(options, function(res) {
-		res.setEncoding('utf8');
-		res.on('data', function(chunk) {
-			var chunk = JSON.parse(chunk);
-			pg.connect(dbconfig, function(err, client, done) {
-				if (err) {
-					return console.error('Ошибка подключения к БД',err);
-				}
-				client.query('select * from users where vk = $1', [chunk.user_id], function(err, result) {
-					done();
-					if (err) {
-						console.error('Ошибка получения данных',err);
-					} else {
-						if (result.rows[0]) {
-							console.log(result.rows[0]);
-							req.session.authorized = true;
-							req.session.userid = result.rows[0].id;
-						} else {
-							console.log('Попытка создания нового пользователя. ');
-							client.query("insert into users (email, vk) values ('" + chunk.email + "', " + chunk.user_id + ") returning id", function(err, result) {
-								done();
-								if (err) {
-									console.error('Ошибка записи данных в БД', err);
-								} else {
-									req.session.authorized = true;
-									req.session.userid = result.rows[0].id;
-									console.log('Добавлен новый пользователь # ' + result.rows[0].id);
-								}
-							});
-						}
 
-					}
-					client.end();
+	function async(arg, callback) {
+		setTimeout(function() {
+			console.log('Выполенение комманды ' + arg + '...');
+			if (arg == 'httpsreq') {
+				var httpsreq = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					res.on('data', function(chunk) {
+						console.log('BODY: ' + chunk);
+						vk_res = JSON.parse(chunk);
+					});
+					if (res.statusCode != 200)
+						callback('error');
+					else
+						callback(arg);
 				});
+				httpsreq.end();
+			} else if (arg == 'pgconnect') {
+				pg.connect(dbconfig, function(err, client, done) {
+					if (err) {
+						return console.error('Ошибка подключения к БД',err);
+					}
+					client.query('select * from users where vk = $1', [vk_res.user_id], function(err, result) {
+						done();
+						if (err) {
+							console.error('Ошибка получения данных',err);
+						} else {
+							if (result.rows[0]) {
+								console.log(result.rows[0]);
+								req.session.authorized = true;
+								req.session.userid = result.rows[0].id;
+							} else {
+								console.log('Попытка создания нового пользователя. ');
+								client.query("insert into users (email, vk) values ('" + vk_res.email + "', " + vk_res.user_id + ") returning id", function(err, result) {
+									done();
+									if (err) {
+										console.error('Ошибка записи данных в БД', err);
+									} else {
+										req.session.authorized = true;
+										req.session.userid = result.rows[0].id;
+										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
+									}
+								});
+							}
+							client.end();
+						}
+						callback(arg);
+					});
+				});
+			}
+		}, 4);
+	}
+
+	function final() {
+		console.log('Готовчик!'.yellow, results);
+		if (req.session.authorized && results.indexOf('error') < 0) {
+			res.writeHead(301, {
+				Location: 'http://' + req.headers.host + '/cabinet'
 			});
-		});
-	});
-	// setTimeout(function() {
-	// 	res.writeHead(301, {
-	// 		Location: 'http://' + req.headers.host
-	// 	});
-	// 	res.end();
-	// }, 10);
-	var vklogin_query = querystring.stringify({
-		client_id: '4836170',
-		scope: 'notify,email',
-		redirect_uri: 'http://' + req.headers.host + '/vklogin',
-		response_type: 'code',
-		v: '5.29',
-		state: crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'),
-		display: 'page'
-	});
-	res.render('index.jade', {
-		title: 'Генератор лидов для Битрикс24',
-		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query
-	});
+		} else {
+			res.writeHead(301, {
+				Location: 'http://' + req.headers.host
+			});
+		}
+		res.end();
+	}
+
+	var vk_res;
+	var items = ["httpsreq","pgconnect"];
+	var results = [];
+
+	function series(item) {
+		if (item) {
+			async(item, function(result) {
+				results.push(result);
+				if (result == 'error')
+					return final();
+				else 
+					return series(items.shift());
+			});
+		} else {
+			return final();
+		}
+	}
+
+	series(items.shift());
 });
 
 app.get('/oklogin', function(req, res) {
 	// res.send(req.headers);
-	var shasum = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime());
-	var d = shasum.digest('hex');
-	res.send(crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'));
+	// var shasum = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime());
+	// var d = shasum.digest('hex');
+	// res.send(crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'));
 });
 
 app.get('/cabinet', function(req, res) {
