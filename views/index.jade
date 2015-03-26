@@ -4,10 +4,10 @@ html
 		meta(charset='utf-8')
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
-		link(type='text/css', rel='stylesheet', href='css/bootstrap.css')
-		link(type='text/css', rel='stylesheet', href='css/modal.css')
-		link(type='text/css', rel='stylesheet', href='fonts/font-awesome-4.3.0/css/font-awesome.min.css')
-		link(type='text/css', rel='stylesheet', href='css/all.css')
+		link(type='text/css', rel='stylesheet', href='/css/bootstrap.css')
+		link(type='text/css', rel='stylesheet', href='/css/modal.css')
+		link(type='text/css', rel='stylesheet', href='/fonts/font-awesome-4.3.0/css/font-awesome.min.css')
+		link(type='text/css', rel='stylesheet', href='/css/all.css')
 		link(type='text/css', rel='stylesheet', href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,100,100italic,300,300italic&subset=latin,cyrillic,latin-ext,cyrillic-ext')
 		title=title
 		<!--[if IE]>
@@ -18,14 +18,17 @@ html
 		#wrapper
 			header#header
 				.container
-					.logo: a(href="#"): img(src="images/logo.svg")
+					.logo: a(href=mainpage_url): img(src="images/logo.svg")
 					nav#nav
 						.opener-holder
 							a(href="#").nav-opener: span
-						a(data-modal="modal-8").btn.btn-primary.md-trigger.rounded Войти
+						if cabinet
+							a(href=cabinet_url).btn.btn-primary.rounded Кабинет
+						else
+							a(data-modal="modal-8").btn.btn-primary.md-trigger.rounded Войти
 						.nav-drop
 							ul
-								li.active.visible-sm.visible-xs: a(href="#") Главная
+								li.active.visible-sm.visible-xs: a(href=mainpage_url) Главная
 								li: a(href="#") О проекте
 								li: a(href="#") О нас
 								li: a(href="#") Цены
@@ -38,7 +41,7 @@ html
 									li: a(href="#").fa.fa-facebook
 			section.visual
 				.container
-					.text-block
+					.text-block.hidden-xs.hidden-sm
 						.heading-holder: h1 Генератор лидов
 						p.tagline Нет ничего проще чем создание базы потенциальных клиентов
 						span.info Версия 0.0.1
@@ -48,7 +51,7 @@ html
 					#cta
 						a(href="#").btn.btn-primary.rounded Установить в Битрикс24
 						p Работает на базе API 
-							img(src="images/2gis-logo-1.svg")
+							img(src="/images/2gis-logo-1.svg")
 					.row
 						.text-box.col-md-offset-1.col-md-10
 							h2 Эволюция в CRM системах
@@ -61,24 +64,24 @@ html
 							h2.visible-xs.visible-sm.text-primary= '<рекомендуем>'
 							ul.visual-list
 								li
-									.img-holder: img(src="images/graph-04.svg", width="110")
+									.img-holder: img(src="/images/graph-04.svg", width="110")
 									.text-holder
 										h3 Подробная карточка компании
 										p При импорте данных по вашим критериям, импортируются не только назнвания компании, но и все возможные данные, которые компания сама предоставила о себе. В результате вы получаете наиболее полные данные по каждой компании, при этом вам ничего не надо делать, кроме нажатия кнопки «Импорт».
 								li
-									.img-holder: img(src="images/graph-03.svg", width="90")
+									.img-holder: img(src="/images/graph-03.svg", width="90")
 									.text-holder
 										h3 Тонкая настройка
 										p Настраивайте выборку данных как вам угодно &mdash; мы постарались реализовать фильтры так, чтобы они смогли упростить процесс получения максимально подходящих для вас потенциальных клиентов. Заказывая базу у кого-нибудь вам отправляют файл в формате Excel, мы делаем так, чтобы вам не нужно было бы в дальнейшем выбирать нужные и не нужные компании. 
 								li
-									.img-holder: img(src="images/graph-01.svg", width="71")
+									.img-holder: img(src="/images/graph-01.svg", width="71")
 									.text-holder
 										h3 Экономия времени
 										p С нами вы экономите не только на оплате друда менеджеров или системного администратора, с нами вы экономите на множестве потенциальных расходов, которые компании несут не пользуясь нашим замечательным модулем. Кроме этого вы увеличиваете прибыль компании ровно на столько, сколько времени тратится на сбор данных по вашим потенциальным клиентам.
 						.col-md-7
 							.slide-holder
 								h2.hidden-xs.hidden-sm.text-primary= '<наша рекомендация>'
-								.img-slide.scroll-trigger: img(src="images/img-01.png", height="839", width="1352")
+								.img-slide.scroll-trigger: img(src="/images/img-01.png", height="839", width="1352")
 			section.main
 				.container
 					.block-holder
@@ -88,7 +91,7 @@ html
 									.slideset
 										.slide
 											.img-box
-												.img-holder: img(src="images/user-01.jpg", height="85", width="85")
+												.img-holder: img(src="/images/user-01.jpg", height="85", width="85")
 												.text-holder
 													h3 Арсен Беспалов
 													p PHP / JavaScript / Node.js / AngularJS
@@ -96,7 +99,7 @@ html
 											em.date 22 марта 2014 г.
 										.slide
 											.img-box
-												.img-holder: img(src="images/user-02.jpg", height="85", width="85")
+												.img-holder: img(src="/images/user-02.jpg", height="85", width="85")
 												.text-holder
 													h3 Александр Семенов
 													p PHP / 1C / Delphi / Java
@@ -104,7 +107,7 @@ html
 											em.date 22 марта 2014 г.
 										.slide
 											.img-box
-												.img-holder: img(src="images/user-03.jpg", height="85", width="85")
+												.img-holder: img(src="/images/user-03.jpg", height="85", width="85")
 												.text-holder
 													h3 Александр Краско
 													p C / C++
@@ -124,7 +127,7 @@ html
 						ul.testimonials
 							li
 								.img-holder
-									a(href="http://bitrix24.ru", target="_blank"): img(src="images/bx24-logo.png", height="36", width="195" alt="Битрикс24")
+									a(href="http://bitrix24.ru", target="_blank"): img(src="/images/bx24-logo.png", height="36", width="195" alt="Битрикс24")
 								p: em Лучшее решение корпоративного портала, включающий множество инструментов управления котрудниками, проектами и взаимоотношениями с клиентами.
 					img(src="images/img-decor-02.jpg", height="764", width="1380").bg-stretch
 				.visual-area
@@ -168,7 +171,7 @@ html
 									li Стоимость пакета — 120&nbsp;000 #[i.fa.fa-rub]
 								button.btn.btn-default.rounded подключить
 						p.silent Данные цены указаны для добавления каждой компании в справочник CRM Битрикс24. Срок действия тарифных планов не ограничен по времени использования. Стомость пакета услуг может ровно не делиться на стомость импорта за компанию, в связи с чем импортируемое кол-во компаний округляется в меньшую сторону. При исчерпывании всех средств доступ блокируется до момента приобретения нового пакета. Средства перечисленные на лицевой счет возврату или обмену на другие услуги не подлежат. Фактом оплаты считается момент зачисления денежных средств на лицевой счет нашей компании, в связи с чем оплата по счету для юридических лиц может затянуться до 3 банковских дней.
-					img(src="images/img-decor-03.jpg", height="1175", width="1380").bg-stretch
+					img(src="/images/img-decor-03.jpg", height="1175", width="1380").bg-stretch
 			section.area
 				.container
 					.subscribe
@@ -183,12 +186,12 @@ html
 						.row
 							.col-md-4
 								.logo
-									a(href="#."): img(src="images/logo.svg", alt="LEAD4CRM")
+									a(href=mainpage_url): img(src="images/logo.svg", alt="LEAD4CRM")
 								p Смарт генератор лидов для CRM Битрикс24. Работает на базе справочника 2GIS.
 							.col-md-2
 								h4 Навигация
 								ul
-									li: a(href="#.") Главная
+									li: a(href=mainpage_url) Главная
 									li: a(href="#.") О проекте
 									li: a(href="#.") О нас
 									li: a(href="#.") Цены
@@ -221,13 +224,13 @@ html
 
 		.md-overlay
 
-		script(src="js/jquery-1.11.2.min.js")
-		script(src="js/bootstrap.js")
-		script(src="js/jquery.main.js")
+		script(src="/js/jquery-1.11.2.min.js")
+		script(src="/js/bootstrap.js")
+		script(src="/js/jquery.main.js")
 
-		script(src="js/classie.js")
-		script(src="js/modalEffects.js")
+		script(src="/js/classie.js")
+		script(src="/js/modalEffects.js")
 		script.
 			var polyfilter_scriptpath = '/js/';
-		script(src="js/cssParser.js")
-		script(src="js/css-filters-polyfill.js")
+		script(src="/js/cssParser.js")
+		script(src="/js/css-filters-polyfill.js")

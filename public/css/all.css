@@ -8,10 +8,10 @@ html {
 body {
   margin: 0;
   height: 100%;
-  font: 1.3rem/1.61538 "Montserrat", sans-serif; }
+  font: 1.3rem/1.61538 "Roboto", sans-serif; }
 
-p {
-  font-family: "Source Sans Pro", sans-serif; }
+/*p {
+  font-family: "Roboto", sans-serif; }*/
 
 .btn, a {
   -webkit-transition: color linear .4s, background-color linear .4s, border-color linear .4s;
@@ -149,6 +149,10 @@ p {
       #nav li a:hover {
         text-decoration: none;
         color: #8d81ac; }
+  #nav li.active {
+    border-bottom: 2px solid #635C73; }
+    #nav li.active:hover {
+      border-bottom-color: #8d81ac; }
 
 .nav-opener {
   display: none;

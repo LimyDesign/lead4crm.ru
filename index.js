@@ -26,6 +26,8 @@ var dbconfig = {
 	ssl: true
 };
 
+var cabinet = false;
+
 app.set('port', (process.env.PORT || 5000));
 app.set('/views', __dirname + '/views');
 app.use(express.static(__dirname + '/public'));
@@ -39,6 +41,11 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
+	if (req.session.authorized)
+		cabinet = true;
+	else
+		cabinet = false;
+
 	var vklogin_query = querystring.stringify({
 		client_id: process.env.VK_CLIENT_ID,
 		scope: 'notify,email,offline',
@@ -50,7 +57,10 @@ app.get('/', function(req, res) {
 	});
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
-		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query
+		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query,
+		mainpage_url: 'http://' + req.headers.host,
+		cabinet: cabinet,
+		cabinet_url: 'http://' + req.headers.host + '/cabinet'
 	});
 });
 
@@ -168,12 +178,34 @@ app.get('/oklogin', function(req, res) {
 
 app.get('/cabinet', function(req, res) {
 	console.log('Вход в личный кабинет'.green);
+
+	function show_cabinet() {
+		res.render('cabinet.jade', {
+			title: 'Личный кабинет',
+			mainpage_url: 'http://' + req.headers.host,
+			cabinet_url: 'http://' + req.headers.host + '/cabinet'
+		});
+	}
+
 	if (req.session.authorized) {
-		res.send('Ваш ID: ' + req.session.userid);
+		show_cabinet();
 	} else {
-		res.send('Вы не авторизованны!');
+		res.writeHead(301, {
+			Location: 'http://' + req.headers.host
+		});
+		res.end();
 	}
 });
+
+app.get('/logout', function(req, res) {
+	console.log('Выход из личного кабинета'.green);
+
+	req.session = null;
+	res.writeHead(301, {
+		Location: 'http://' + req.headers.host
+	});
+	res.end();
+})
 
 app.get('/db', function (req, res) {
   pg.connect(dbconfig, function(err, client, done) {
