@@ -40,8 +40,8 @@ app.use(session({
 
 app.get('/', function(req, res) {
 	var vklogin_query = querystring.stringify({
-		client_id: '4836170',
-		scope: 'notify,email',
+		client_id: process.env.VK_CLIENT_ID,
+		scope: 'notify,email,offline',
 		redirect_uri: 'http://' + req.headers.host + '/vklogin',
 		response_type: 'code',
 		v: '5.29',
@@ -60,8 +60,8 @@ app.get('/vklogin', function(req, res) {
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 	var data = querystring.stringify({
-		client_id: '4836170',
-		client_secret: 'cPkR53zhon0lU7TAiz9f',
+		client_id: process.env.VK_CLIENT_ID,
+		client_secret: process.env.VK_CLIENT_SECRET,
 		code: query.code,
 		redirect_uri: 'http://' + req.headers.host + '/vklogin'
 	});
