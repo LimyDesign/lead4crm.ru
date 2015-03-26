@@ -149,9 +149,9 @@ body {
       #nav li a:hover {
         text-decoration: none;
         color: #8d81ac; }
-  #nav li.active {
+  #nav li.active a {
     border-bottom: 2px solid #635C73; }
-    #nav li.active:hover {
+    #nav li.active a:hover {
       border-bottom-color: #8d81ac; }
 
 .nav-opener {
@@ -249,6 +249,51 @@ body {
     color: #494654;
     text-transform: uppercase; }
   .visual .text-block {
+    padding: 90px 0; }
+
+.visual-other {
+  min-height: 94px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #000;
+  font-size: 0;
+  letter-spacing: -4px;
+  padding: 104px 0 0;
+  background: #8d81ac; }
+  .visual-other .bg-stretch {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%); }
+  .visual-other > .container {
+    display: inline-block;
+    vertical-align: center;
+    position: relative;
+    z-index: 1;
+    font-size: 2.4rem;
+    line-height: 1.5;
+    letter-spacing: 0; }
+  .visual-other h1 {
+    margin: 0 0 10px;
+    font-size: 8.2rem;
+    line-height: 1.12;
+    font-weight: bold;
+    color: #e3dfed; }
+  .visual-other p {
+    margin: 0 0 8px; }
+    .visual-other p.tagline {
+      line-height: 1.1;
+      font-size: 2.6rem; }
+  .visual-other .info {
+    display: block;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #494654;
+    text-transform: uppercase; }
+  .visual-other .text-block {
     padding: 90px 0; }
 
 #cta {

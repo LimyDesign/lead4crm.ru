@@ -112,15 +112,21 @@ app.get('/vklogin', function(req, res) {
 								console.log(result.rows[0]);
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
+								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
+								req.session.vk_token = result.rows[0].vk_token;
 							} else {
 								console.log('Попытка создания нового пользователя. ');
-								client.query("insert into users (email, vk) values ('" + vk_res.email + "', " + vk_res.user_id + ") returning id", function(err, result) {
+								client.query("insert into users (email, vk, vk_token) values ('" + vk_res.email + "', " + vk_res.user_id + ", '" + vk_res.access_token + "') returning id", function(err, result) {
 									done();
 									if (err) {
 										console.error('Ошибка записи данных в БД', err);
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
+										req.session.user_email = result.rows[0].email;
+										req.session.vk = result.rows[0].vk;
+										req.session.vk_token = result.rows[0].vk_token;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 								});
@@ -176,14 +182,52 @@ app.get('/oklogin', function(req, res) {
 	// res.send(crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex'));
 });
 
+app.get('/logout', function(req, res) {
+	console.log('Выход из личного кабинета'.red);
+	req.session.destroy(function(err) {
+		if (err) {
+			console.log('Ошибка удаления сессии', err);
+		} else {
+			res.writeHead(301, {
+				Location: 'http://' + req.headers.host
+			});
+			res.end();
+		}
+	});
+});
+
 app.get('/cabinet', function(req, res) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
+		if (req.session.user_email)
+		var user_email = get_user_email(req.session.userid);
+
 		res.render('cabinet.jade', {
 			title: 'Личный кабинет',
 			mainpage_url: 'http://' + req.headers.host,
-			cabinet_url: 'http://' + req.headers.host + '/cabinet'
+			cabinet_url: 'http://' + req.headers.host + '/cabinet',
+			user_email: user_email
+		});
+	}
+
+	function get_user_email(userid) {
+		pg.connect(dbconfig, function(err, client, done) {
+			if (err) {
+				return console.error('Ошибка подключения к БД',err);
+			}
+			client.query('select * from users where vk = $1', [userid], function(err, result) {
+				done();
+				if (err) {
+					console.error('Ошибка получения данных',err);
+				} else {
+					if (result.rows[0]) {
+						console.log('Email пользователя: ' + result.rows[0].email);
+						req.session.user_email = result.rows[0].email;
+					}
+					client.end();
+				}
+			});
 		});
 	}
 
@@ -196,16 +240,6 @@ app.get('/cabinet', function(req, res) {
 		res.end();
 	}
 });
-
-app.get('/logout', function(req, res) {
-	console.log('Выход из личного кабинета'.green);
-
-	req.session = null;
-	res.writeHead(301, {
-		Location: 'http://' + req.headers.host
-	});
-	res.end();
-})
 
 app.get('/db', function (req, res) {
   pg.connect(dbconfig, function(err, client, done) {

@@ -26,19 +26,73 @@ html
 						.nav-drop
 							ul
 								li.visible-sm.visible-xs: a(href=mainpage_url) Главная
-								li: a(href="#") О проекте
-								li: a(href="#") О нас
-								li: a(href="#") Цены
-								li: a(href="#") Поддержка
-								li.active: a(href=cabinet_url) Личный кабинет
+								li Баланс: #[span 0] #[i.fa.fa-rub]
+								li Тарифный план: #[span Демо]
 							.drop-holder.visible-sm.visible-xs
 								span Следите
 								ul.social-networks
 									li: a(href="#").fa.fa-github
 									li: a(href="#").fa.fa-twitter
 									li: a(href="#").fa.fa-facebook
+			section.visual-other
+				.container
+					.text-block
+						.heading-holder: h1 Личный кабинет
 			section.area
 				.container
 					.row
 						.col-md-12
-							h2 Добрый день.
+							h2 Добрый день!
+							p. 
+								Здесь храняться данные о вашей учетной записи, привязанных социальных профилях, 
+								текущем остатке на лицевом счету и текущий тарифный план. Остальное вы найдете 
+								непосредственной в самой CRM. Мы постарались сделать все очень очень простым, но
+								тем не менее, если вдруг у Вас возникнут вопросы, позвоните нам и мы проконсультируем
+								вас.
+			section.area
+				.container
+					.subscribe
+						h3 Ваш адрес электронной почты
+						form.form-inline
+							button(type="button").btn.btn-primary.rounded Изменить
+							.form-group
+								input(type="email", placeholder="Электропочта", value=user_email).form-control.rounded
+			footer#footer
+				.container
+					.footer-holder
+						.row
+							.col-md-4
+								.logo
+									a(href=mainpage_url): img(src="images/logo.svg", alt="LEAD4CRM")
+								p Смарт генератор лидов для CRM Битрикс24. Работает на базе справочника 2GIS.
+							.col-md-2
+								h4 Навигация
+								ul
+									li: a(href=mainpage_url) Главная
+									li: a(href="#.") О проекте
+									li: a(href="#.") О нас
+									li: a(href="#.") Цены
+									li: a(href="#.") Поддержка
+							.col-md-3
+								.text-holder
+									strong.phone: a(href="tel:+79041326000") +7 (499) 704-69-17
+									span.available Работаем всегда &mdash; 24/7
+									h4 Сделано в России
+									address Произведено в #[a(href="http://limydesign.ru", target="_blank") LimyDesign]
+							.col-md-3
+								.text-frame
+									h4 С сведению
+									p.
+										Наши данные актуальны на столько на сколько актуальны данные в справочнике 2GIS 
+										потому, что мы не кэшируем и не сохраняем.
+
+		script(src="/js/jquery-1.11.2.min.js")
+		script(src="/js/bootstrap.js")
+		script(src="/js/jquery.main.js")
+
+		script(src="/js/classie.js")
+		script(src="/js/modalEffects.js")
+		script.
+			var polyfilter_scriptpath = '/js/';
+		script(src="/js/cssParser.js")
+		script(src="/js/css-filters-polyfill.js")
