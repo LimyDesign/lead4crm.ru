@@ -40,14 +40,6 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.get('/*', function(req, res, next) {
-	if (req.headers.host.match(/^www/) !== null) {
-		res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
-	} else {
-		next();
-	}
-});
-
 app.get('/', function(req, res) {
 	if (req.session.authorized)
 		cabinet = true;
@@ -56,7 +48,7 @@ app.get('/', function(req, res) {
 
 	var vklogin_query = querystring.stringify({
 		client_id: process.env.VK_CLIENT_ID,
-		scope: 'notify,email,offline',
+		scope: 'notify,email',
 		redirect_uri: 'http://' + req.headers.host + '/vklogin',
 		response_type: 'code',
 		v: '5.29',
@@ -125,7 +117,7 @@ app.get('/vklogin', function(req, res) {
 								req.session.vk_token = result.rows[0].vk_token;
 							} else {
 								console.log('Попытка создания нового пользователя. ');
-								client.query("insert into users (email, vk, vk_token) values ('" + vk_res.email + "', " + vk_res.user_id + ", '" + vk_res.access_token + "') returning id", function(err, result) {
+								client.query("insert into users (email, vk) values ('" + vk_res.email + "', " + vk_res.user_id + ") returning id", function(err, result) {
 									done();
 									if (err) {
 										console.error('Ошибка записи данных в БД', err);
@@ -200,14 +192,12 @@ app.get('/cabinet', function(req, res) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
-		if (req.session.user_email)
-		var user_email = get_user_email(req.session.userid);
-
 		res.render('cabinet.jade', {
 			title: 'Личный кабинет',
 			mainpage_url: 'http://' + req.headers.host,
 			cabinet_url: 'http://' + req.headers.host + '/cabinet',
-			user_email: user_email
+			user_email: req.session.user_email,
+			vk_id: req.session.vk
 		});
 	}
 

@@ -1,3 +1,10 @@
+mixin unlink_button(href, name, soc_id, color)
+	a(href=href, class!='btn btn-block active ' + color) #{name} &nbsp;
+		span.label.label-success #{soc_id}
+
+mixin link_button(href, name, color)
+	a(href=href, class!='btn btn-block ' + color)= name
+
 doctype html
 html
 	head
@@ -51,14 +58,63 @@ html
 								непосредственной в самой CRM. Мы постарались сделать все очень очень простым, но
 								тем не менее, если вдруг у Вас возникнут вопросы, позвоните нам и мы проконсультируем
 								вас.
+					.row
+						.col-md-6
+							h3 Ваши социальные аккаунты
+							p.
+								Через эти социальные аккаунты вы сможете входить в свой личный кабинет. Если вы впервые
+								авторизовались и у вас несколько аккаунтов, мы рекомендуем подключить все, для
+								занчительного упрощения при следующих авторизациях, в том числе чтобы в следующий раз
+								заходя на наш сайт вы смогли попасть в свой старый аккаунт, а не создать новый, где
+								снова придется вносить деньги на баланс и снова придется менять параметры в вашей CRM.
+						.col-md-6
+							h4 Не привязанные аккаунты
+							if !fb_id
+								+link_button('/fblink', 'Привязать аккаунт Facebook', 'btn-fb-color')
+							
+							if !vk_id
+								+link_button('/vklink', 'Привязать аккаунт Вконтакте', 'btn-vk-color')
+
+							if !gp_id
+								+link_button('/gplink', 'Привязать аккаунт Google+', 'btn-google-plus-color')
+
+							if !mr_id
+								+link_button('/mrlink', 'Привязать аккаунт Mail.Ru', 'btn-mailru-color')
+							
+							if !ya_id
+								+link_button('/yalink', 'Привязать аккаунт Яндекс', 'btn-ya-color')
+							h4 Привязанные аккаунты
+							if fb_id
+								+unlink_button('/fbunlink', 'Отвязать аккаунт Facebook', fb_id, 'btn-fb-color')
+							
+							if vk_id
+								+unlink_button('/vkunlink', 'Отвязать аккаунт Вконтакте', vk_id, 'btn-vk-color')
+
+							if gp_id
+								+unlink_button('/gpunlink', 'Отвязать аккаунт Google+', gp_id, 'btn-google-plus-color')
+
+							if mr_id
+								+unlink_button('/mrunlink', 'Отвязать аккаунт Mail.Ru', mr_id, 'btn-mailru-color')
+							
+							if ya_id
+								+unlink_button('/yaunlink', 'Отвязать аккаунт Яндекс', ya_id, 'btn-ya-color')
+					.row
+						.col-md-6
+							h3 Ключ доступа
+							p.
+								Это ваш ключ доступа к нашей системе, для того, чтобы модуль начал работать необходимо
+								ввести этот ключ в настройках нашего модуля. Во время установки вы явно видели форму,
+								где необходимо было это сделать.
+
 			section.area
 				.container
 					.subscribe
-						h3 Ваш адрес электронной почты
+						h3 Ваш адрес электропочты
 						form.form-inline
 							button(type="button").btn.btn-primary.rounded Изменить
 							.form-group
 								input(type="email", placeholder="Электропочта", value=user_email).form-control.rounded
+							
 			footer#footer
 				.container
 					.footer-holder
