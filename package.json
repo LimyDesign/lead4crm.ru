@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "pg": "4.x",
+    "compression": "^1.4.3",
     "express": "~4.9.x",
     "connect": "^2.25.7",
     "express-session": "*",
