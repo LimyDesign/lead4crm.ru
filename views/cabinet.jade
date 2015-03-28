@@ -78,6 +78,9 @@ html
 							if !gp_id
 								+link_button('/gplink', 'Привязать аккаунт Google+', 'btn-google-plus-color')
 
+							if !ok_id
+								+link_button('/oklink', 'Привязать аккаунт Одноклассники', 'btn-ok-color')
+
 							if !mr_id
 								+link_button('/mrlink', 'Привязать аккаунт Mail.Ru', 'btn-mailru-color')
 							
@@ -92,6 +95,9 @@ html
 
 							if gp_id
 								+unlink_button('/gpunlink', 'Отвязать аккаунт Google+', gp_id, 'btn-google-plus-color')
+
+							if ok_id
+								+unlink_button('/okunlink', 'Отвязать аккаунт Одноклассники', ok_id, 'btn-ok-color')
 
 							if mr_id
 								+unlink_button('/mrunlink', 'Отвязать аккаунт Mail.Ru', mr_id, 'btn-mailru-color')
