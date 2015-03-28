@@ -85,6 +85,132 @@ app.get('/', function(req, res) {
 	});
 });
 
+app.get('/fblogin', function(req, res) {
+	console.log('Авторизация через соц.сеть "Facebook"'.green);
+
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+	var data = querystring.stringify({
+		client_id: process.env.FB_CLIENT_ID,
+		client_secret: process.env.FB_CLIENT_SECRET,
+		code: query.code,
+		redirect_uri: 'http://' + req.headers.host + '/fblogin'
+	});
+	var options = {
+		host: 'graph.facebook.com',
+		port: 443,
+		path: '/oauth/access_token?' + data,
+		method: 'GET'
+	};
+
+	function async(arg, callback) {
+		setTimeout(function() {
+			console.log('Выполенение комманды ' + arg + '...');
+			if (arg == 'httpsreq') {
+				var httpsreq = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					if (res.statusCode != 200) {
+						callback('error');
+					} else {
+						res.on('data', function(chunk) {
+							fb_res = querystring.parse(chunk);
+						});
+						callback(arg);
+					}
+				});
+				httpsreq.end();
+			} else if (arg == 'get_user_data') {
+				options = {
+					host: 'graph.facebook.com',
+					port: 443,
+					path: '/me?access_token=' + fb_res.access_token,
+					method: 'GET'
+				};
+				var httpsreq2 = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					if (res.statusCode != 200) {
+						callback('error');
+					} else {
+						res.on('data', function(chunk) {
+							console.log('FB 2th Response: ', chunk);
+							fb_res2 = JSON.parse(chunk);
+						});
+						callback(arg);
+					}
+				});
+				httpsreq2.end();
+			} else if (arg == 'pgconnect') {
+				var client = new pg.Client(dbconfig);
+				client.connect(function(err) {
+					if (err) {
+						return console.error('Ошибка подключения к БД',err);
+					}
+					client.query('select * from users where fb = $1', [fb_res2.id], function(err, result) {
+						if (err) {
+							return console.error('Ошибка получения данных',err);
+						} else {
+							if (result.rows[0]) {
+								console.log(result.rows[0]);
+								req.session.authorized = true;
+								req.session.userid = result.rows[0].id;
+								req.session.user_email = result.rows[0].email;
+								req.session.fb = result.rows[0].fb;
+								client.end();
+								callback(arg);
+							} else {
+								console.log('Попытка создания нового пользователя.');
+								client.query("insert into users (email, fb) values ('" + fb_res2.email + "', " + fb_res2.id + ") returning id", function(err, result) {
+									if (err) {
+										return console.error('Ошибка записи данных в БД', err);
+									} else {
+										req.session.authorized = true;
+										req.session.userid = result.rows[0].id;
+										req.session.user_email = result.rows[0].email;
+										req.session.fb = result.rows[0].fb;
+										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
+									}
+									client.end();
+									callback(arg);
+								});
+							}
+						}
+					});
+				});
+			}
+		}, 4);
+	}
+
+	function final() {
+		console.log('Готовчик!'.yellow, results);
+		if (req.session.authorized && results.indexOf('error') < 0) {
+			res.redirect('http://' + req.headers.host + '/cabinet');
+		} else {
+			res.redirect('http://' + req.headers.host);
+		}
+	}
+
+	var fb_res;
+	var fb_res2;
+	var items = ["httpsreq", "get_user_data", "pgconnect"];
+	var results = [];
+
+	function series(item) {
+		if (item) {
+			async(item, function(result) {
+				results.push(result);
+				if (result == 'error')
+					return final();
+				else 
+					return series(items.shift());
+			});
+		} else {
+			return final();
+		}
+	}
+
+	series(items.shift());
+});
+
 app.get('/vklogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Вконтакте"'.green);
 
@@ -354,6 +480,7 @@ app.get('/cabinet', function(req, res) {
 			mainpage_url: 'http://' + req.headers.host,
 			cabinet_url: 'http://' + req.headers.host + '/cabinet',
 			user_email: req.session.user_email,
+			fb_id: req.session.fb,
 			vk_id: req.session.vk,
 			ok_id: req.session.ok
 		});
