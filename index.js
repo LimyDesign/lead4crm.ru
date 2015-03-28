@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('express-session');
 var connect = require('connect');
+var compress = require('compression');
 var url = require('url');
 var querystring = require('querystring');
 var http = require('http');
@@ -30,6 +31,7 @@ var cabinet = false;
 
 app.set('port', (process.env.PORT || 5000));
 app.set('/views', __dirname + '/views');
+app.use(compress());
 app.use(express.static(__dirname + '/public'));
 app.use(connect.cookieParser());
 
@@ -60,16 +62,23 @@ app.get('/', function(req, res) {
 	});
 	var oklogin_query = querystring.stringify({
 		client_id: process.env.OK_CLIENT_ID,
-		scope: 'GET_EMAIL',
+		// scope: 'GET_EMAIL',
 		response_type: 'code',
 		redirect_uri: 'http://' + req.headers.host + '/oklogin',
-		layout: 'w',
+		// layout: 'w',
 		state: oauth_state
+	});
+	var fblogin_quey = querystring.stringify({
+		client_id: process.env.FB_CLIENT_ID,
+		scope: 'email',
+		redirect_uri: 'http://' + req.headers.host + '/fblogin',
+		response_type: 'code'
 	})
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
 		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query,
 		oklogin: 'http://www.odnoklassniki.ru/oauth/authorize?' + oklogin_query,
+		fblogin: 'https://www.facebook.com/dialog/oauth?' + fblogin_quey,
 		mainpage_url: 'http://' + req.headers.host,
 		cabinet: cabinet,
 		cabinet_url: 'http://' + req.headers.host + '/cabinet'
