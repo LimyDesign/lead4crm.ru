@@ -88,7 +88,7 @@ app.get('/', function(req, res) {
 	var mrlogin_query = querystring.stringify({
 		client_id: process.env.MR_CLIENT_ID,
 		response_type: 'code',
-		redirect_uri: 'http://' + req.headers.host + '/mrlogin',
+		redirect_uri: 'http://' + req.headers.host + '/mrlogin'
 	});
 	var yalogin_query = querystring.stringify({
 		response_type: 'code',
@@ -96,7 +96,9 @@ app.get('/', function(req, res) {
 		state: oauth_state
 	});
 	var bxlogin_query = querystring.stringify({
-		client_id: process.env.BX_CLIENT_ID
+		client_id: process.env.BX_CLIENT_ID,
+		response_type: 'code',
+		redirect_uri: 'http://' + req.headers.host + '/bxlogin'
 	});
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
@@ -106,7 +108,7 @@ app.get('/', function(req, res) {
 		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + gplogin_query,
 		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + mrlogin_query,
 		yalogin: 'https://oauth.yandex.ru/authorize?' + yalogin_query,
-		bxlogin: 'https://my.bitrix24.ru/?' + bxlogin_query,
+		bxlogin: 'https://lsd.bitrix24.ru/oauth/authorize/?' + bxlogin_query,
 		mainpage_url: 'http://' + req.headers.host,
 		cabinet: cabinet,
 		cabinet_url: 'http://' + req.headers.host + '/cabinet'
@@ -941,20 +943,18 @@ app.get('/bxlogin', function(req, res) {
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;
 	var data = querystring.stringify({
+		client_id: process.env.BX_CLIENT_ID,
 		grant_type: 'authorization_code',
+		client_secret: process.env.BX_CLIENT_SECRET,
+		redirect_uri: 'http://' + req.headers.host + '/bxlogin',
 		code: query.code,
-		client_id: process.env.YA_CLIENT_ID,
-		client_secret: process.env.YA_CLIENT_SECRET
+		scope: 'user'
 	});
 	var options = {
-		host: 'oauth.yandex.ru',
+		host: 'lds.bitrix24.ru',
 		port: 443,
-		path: '/token',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Content-Length': data.length
-		}
+		path: '/oauth/token/?' + data,
+		method: 'GET'
 	};
 
 	function async(arg, callback) {
@@ -965,7 +965,7 @@ app.get('/bxlogin', function(req, res) {
 					res.setEncoding('utf8');
 					if (res.statusCode != 200) {
 						res.on('data', function(chunk) {
-							console.log('Yandex Error Response:', chunk);
+							console.log('Bitrix24 Error Response:', chunk);
 						});
 						callback('error');
 					} else {
@@ -974,7 +974,8 @@ app.get('/bxlogin', function(req, res) {
 							_json += chunk.toString();
 						});
 						res.on('end', function() {
-							ya_res = JSON.parse(_json);
+							console.log(bx_res);
+							bx_res = JSON.parse(_json);
 							callback(arg);
 						});
 					}
@@ -985,7 +986,7 @@ app.get('/bxlogin', function(req, res) {
 				options = {
 					host: 'login.yandex.ru',
 					port: 443,
-					path: '/info?' + querystring.stringify({ oauth_token: ya_res.access_token }),
+					path: '/info?' + querystring.stringify({ oauth_token: bx_res.access_token }),
 					method: 'GET'
 				};
 				var httpsreq2 = https.request(options, function(res) {
@@ -1001,7 +1002,7 @@ app.get('/bxlogin', function(req, res) {
 							_json += chunk.toString();
 						});
 						res.on('end', function() {
-							ya_res2 = JSON.parse(_json);
+							bx_res2 = JSON.parse(_json);
 						});
 						callback(arg);
 					}
@@ -1013,7 +1014,7 @@ app.get('/bxlogin', function(req, res) {
 					if (err) {
 						return console.error('Ошибка подключения к БД',err);
 					}
-					client.query("select * from users where ya = $1", [ya_res2.id], function(err, result) {
+					client.query("select * from users where bx = $1", [bx_res2.id], function(err, result) {
 						if (err) {
 							return console.error('Ошибка получения данных',err);
 						} else {
@@ -1022,21 +1023,21 @@ app.get('/bxlogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
-								req.session.ya = result.rows[0].ya;
+								req.session.bx = result.rows[0].bx;
 								client.end();
 								callback(arg);
 							} else {
 								console.log('Попытка создания нового пользователя. ');
-								ya_res2.default_email = ya_res2.default_email || 'vasia@ya.com';
-								client.query("insert into users (email, ya) values ('" + ya_res2.default_email + "', " + ya_res2.id + ") returning id", function(err, result) {
+								bx_res2.default_email = bx_res2.default_email || 'vasia@ya.com';
+								client.query("insert into users (email, ya) values ('" + bx_res2.default_email + "', " + bx_res2.id + ") returning id", function(err, result) {
 									if (err) {
 										return console.error('Ошибка записи данных в БД', err);
 									} else {
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = ya_res2.default_email;
-										req.session.ya = ya_res2.id;
+										req.session.user_email = bx_res2.default_email;
+										req.session.ya = bx_res2.id;
 										client.end();
 										callback(arg);
 									}
@@ -1058,9 +1059,10 @@ app.get('/bxlogin', function(req, res) {
 		}
 	}
 
-	var ya_res;
-	var ya_res2;
-	var items = ["httpsreq","get_user_data","pgconnect"];
+	var bx_res;
+	var bx_res2;
+	// var items = ["httpsreq","get_user_data","pgconnect"];
+	var items = ["httpsreq"];
 	var results = [];
 
 	function series(item) {
