@@ -85,12 +85,18 @@ app.get('/', function(req, res) {
 		login_hint: 'email',
 		include_granted_scopes: 'true'
 	});
+	var mrlogin_query = querystring.stringify({
+		client_id: process.env.MR_CLIENT_ID,
+		response_type: 'code',
+		redirect_uri: 'http://' + req.headers.host + '/mrlogin',
+	});
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
 		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query,
 		oklogin: 'http://www.odnoklassniki.ru/oauth/authorize?' + oklogin_query,
 		fblogin: 'https://www.facebook.com/dialog/oauth?' + fblogin_quey,
 		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + gplogin_query,
+		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + mrlogin_query,
 		mainpage_url: 'http://' + req.headers.host,
 		cabinet: cabinet,
 		cabinet_url: 'http://' + req.headers.host + '/cabinet'
@@ -610,6 +616,170 @@ app.get('/gplogin', function(req, res) {
 	series(items.shift());
 });
 
+app.get('/mrlogin', function(req, res) {
+	console.log('Авторизация через сервис Mail.Ru'.green);
+
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+	var data = querystring.stringify({
+		client_id: process.env.MR_CLIENT_ID,
+		client_secret: process.env.MR_SECRET_KEY,
+		code: query.code,
+		redirect_uri: 'http://' + req.headers.host + '/mrlogin',
+		grant_type: 'authorization_code'
+	});
+	var options = {
+		host: 'connect.mail.ru',
+		port: 443,
+		path: '/oauth/token',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': data.length
+		}
+	};
+
+	function async(arg, callback) {
+		setTimeout(function() {
+			console.log('Выполенение комманды ' + arg + '...');
+			if (arg == 'httpsreq') {
+				var httpsreq = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					if (res.statusCode != 200) {
+						callback('error');
+					} else {
+						var _json = '';
+						res.on('data', function(chunk) {
+							_json += chunk;
+						});
+						res.on('end', function() {
+							mr_res = JSON.parse(_json);
+						})
+						callback(arg);
+					}
+				});
+				httpsreq.write(data);
+				httpsreq.end();
+			} else if (arg == 'get_user_data') {
+				console.log('Access Token:', mr_res.access_token);
+				var sig = 'app_id=' + process.env.MR_CLIENT_ID + 'method=users.getInfo' + 
+					'secure=1' + 'session_key=' + mr_res.access_token + process.env.MR_SECRET_KEY;
+				console.log('Sig:', sig);
+				var md5_sig = crypto.createHash('md5').update(sig).digest('hex');
+				console.log('MD5 Sig:', md5_sig);
+				data = querystring.stringify({
+					app_id: process.env.MR_CLIENT_ID,
+					method: 'users.getInfo',
+					sig: md5_sig,
+					session_key: mr_res.access_token,
+					secure: '1'
+				});
+				options = {
+					host: 'www.appsmail.ru',
+					port: 80,
+					path: '/platform/api?' + data,
+					method: 'GET'
+				};
+				var httpreq = http.request(options, function(res) {
+					if (res.statusCode != 200){
+						res.on('data', function(chunk) {
+							process.stdout.write(chunk);
+						});
+						callback('error');
+					} else {
+						var _json = '';
+						res.setEncoding('utf8');
+						res.on('data', function(chunk) {
+							_json += chunk;
+						});
+						res.on('end', function() {
+							console.log(_json);
+							mr_res2 = JSON.parse(_json);
+							console.log(mr_res2[0].email);
+							callback(arg);
+						});
+					}
+				});
+				httpreq.end();
+			} else if (arg == 'pgconnect') {
+				var client = new pg.Client(dbconfig);
+				client.connect(function(err) {
+					if (err) {
+						return console.error('Ошибка подключения к БД',err);
+						callback('error');
+					}
+					client.query('select * from users where mr = $1', [mr_res2[0].uid], function(err, result) {
+						if (err) {
+							return console.error('Ошибка получения данных',err);
+							callback('error');
+						} else {
+							if (result.rows[0]) {
+								console.log(result.rows[0]);
+								req.session.authorized = true;
+								req.session.userid = result.rows[0].id;
+								req.session.user_email = result.rows[0].email;
+								req.session.mr = result.rows[0].mr;
+								client.end();
+								callback(arg);
+							} else {
+								console.log('Попытка создания нового пользователя. ');
+								mr_res2.email = mr_res2.email || 'you@email.com';
+								client.query("insert into users (email, mr) values ('" + mr_res2[0].email + "', " + mr_res2[0].uid + ") returning id", function(err, result) {
+									if (err) {
+										return console.error('Ошибка записи данных в БД', err);
+										callback('error');
+									} else {
+										req.session.authorized = true;
+										req.session.userid = result.rows[0].id;
+										req.session.user_email = result.rows[0].email;
+										req.session.mr = result.rows[0].mr;
+										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
+									}
+									client.end();
+									callback(arg);
+								});
+							}
+						}
+					});
+				});
+			} else {
+				callback('error');
+			}
+		}, 4);
+	}
+
+	function final() {
+		console.log('Готовчик!'.yellow, results);
+		if (req.session.authorized && results.indexOf('error') < 0) {
+			res.redirect('http://' + req.headers.host + '/cabinet');
+		} else {
+			res.redirect('http://' + req.headers.host);
+		}
+	}
+
+	var mr_res;
+	var mr_res2;
+	var items = ["httpsreq","get_user_data","pgconnect"];
+	// var items = ["httpsreq","get_user_data","error"];
+	var results = [];
+
+	function series(item) {
+		if (item) {
+			async(item, function(result) {
+				results.push(result);
+				if (result == 'error')
+					return final();
+				else 
+					return series(items.shift());
+			});
+		} else {
+			return final();
+		}
+	}
+
+	series(items.shift());
+});
+
 app.get('/logout', function(req, res, next) {
 	console.log('Выход из личного кабинета'.red);
 	req.session.destroy(function(err) {
@@ -634,7 +804,8 @@ app.get('/cabinet', function(req, res) {
 			fb_id: req.session.fb,
 			vk_id: req.session.vk,
 			ok_id: req.session.ok,
-			gp_id: req.session.gp
+			gp_id: req.session.gp,
+			mr_id: req.session.mr
 		});
 	}
 
