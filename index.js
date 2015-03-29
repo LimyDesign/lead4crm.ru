@@ -62,7 +62,7 @@ app.get('/', function(req, res) {
 	});
 	var oklogin_query = querystring.stringify({
 		client_id: process.env.OK_CLIENT_ID,
-		// scope: 'GET_EMAIL',
+		scope: 'GET_EMAIL',
 		response_type: 'code',
 		redirect_uri: 'http://' + req.headers.host + '/oklogin',
 		// layout: 'w',
@@ -95,6 +95,9 @@ app.get('/', function(req, res) {
 		client_id: process.env.YA_CLIENT_ID,
 		state: oauth_state
 	});
+	var bxlogin_query = querystring.stringify({
+		client_id: process.env.BX_CLIENT_ID
+	});
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
 		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query,
@@ -103,6 +106,7 @@ app.get('/', function(req, res) {
 		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + gplogin_query,
 		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + mrlogin_query,
 		yalogin: 'https://oauth.yandex.ru/authorize?' + yalogin_query,
+		bxlogin: 'https://my.bitrix24.ru/?' + bxlogin_query,
 		mainpage_url: 'http://' + req.headers.host,
 		cabinet: cabinet,
 		cabinet_url: 'http://' + req.headers.host + '/cabinet'
@@ -437,8 +441,8 @@ app.get('/oklogin', function(req, res) {
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = result.rows[0].email;
-										req.session.ok = result.rows[0].ok;
+										req.session.user_email = ok_res2.email;
+										req.session.ok = ok_res2.uid;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 									client.end();
@@ -788,6 +792,151 @@ app.get('/mrlogin', function(req, res) {
 
 app.get('/yalogin', function(req, res) {
 	console.log('Авторизация через сервис Яндекс'.green);
+
+	var url_parts = url.parse(req.url, true);
+	var query = url_parts.query;
+	var data = querystring.stringify({
+		grant_type: 'authorization_code',
+		code: query.code,
+		client_id: process.env.YA_CLIENT_ID,
+		client_secret: process.env.YA_CLIENT_SECRET
+	});
+	var options = {
+		host: 'oauth.yandex.ru',
+		port: 443,
+		path: '/token',
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'Content-Length': data.length
+		}
+	};
+
+	function async(arg, callback) {
+		setTimeout(function() {
+			console.log('Выполенение комманды ' + arg + '...');
+			if (arg == 'httpsreq') {
+				var httpsreq = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					if (res.statusCode != 200) {
+						res.on('data', function(chunk) {
+							console.log('Yandex Error Response:', chunk);
+						});
+						callback('error');
+					} else {
+						var _json = '';
+						res.on('data', function(chunk) {
+							_json += chunk.toString();
+						});
+						res.on('end', function() {
+							ya_res = JSON.parse(_json);
+							callback(arg);
+						});
+					}
+				});
+				httpsreq.write(data);
+				httpsreq.end();
+			} else if (arg == 'get_user_data') {
+				options = {
+					host: 'login.yandex.ru',
+					port: 443,
+					path: '/info?' + querystring.stringify({ oauth_token: ya_res.access_token }),
+					method: 'GET'
+				};
+				var httpsreq2 = https.request(options, function(res) {
+					res.setEncoding('utf8');
+					if (res.statusCode != 200) {
+						res.on('data', function(chunk) {
+							console.log(chunk);
+						});
+						callback('error');
+					} else {
+						var _json = '';
+						res.on('data', function(chunk) {
+							_json += chunk.toString();
+						});
+						res.on('end', function() {
+							ya_res2 = JSON.parse(_json);
+						});
+						callback(arg);
+					}
+				});
+				httpsreq2.end();
+			} else if (arg == 'pgconnect') {
+				var client = new pg.Client(dbconfig);
+				client.connect(function(err) {
+					if (err) {
+						return console.error('Ошибка подключения к БД',err);
+					}
+					client.query("select * from users where ya = $1", [ya_res2.id], function(err, result) {
+						if (err) {
+							return console.error('Ошибка получения данных',err);
+						} else {
+							if (result.rows[0]) {
+								console.log(result.rows[0]);
+								req.session.authorized = true;
+								req.session.userid = result.rows[0].id;
+								req.session.user_email = result.rows[0].email;
+								req.session.ya = result.rows[0].ya;
+								client.end();
+								callback(arg);
+							} else {
+								console.log('Попытка создания нового пользователя. ');
+								ya_res2.default_email = ya_res2.default_email || 'vasia@ya.com';
+								client.query("insert into users (email, ya) values ('" + ya_res2.default_email + "', " + ya_res2.id + ") returning id", function(err, result) {
+									if (err) {
+										return console.error('Ошибка записи данных в БД', err);
+									} else {
+										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
+										req.session.authorized = true;
+										req.session.userid = result.rows[0].id;
+										req.session.user_email = ya_res2.default_email;
+										req.session.ya = ya_res2.id;
+										client.end();
+										callback(arg);
+									}
+								});
+							}
+						}
+					});
+				});
+			}
+		}, 4);
+	}
+
+	function final() {
+		console.log('Готовчик!'.yellow, results);
+		if (req.session.authorized && results.indexOf('error') < 0) {
+			res.redirect('http://' + req.headers.host + '/cabinet');
+		} else {
+			res.redirect('http://' + req.headers.host);
+		}
+	}
+
+	var ya_res;
+	var ya_res2;
+	var items = ["httpsreq","get_user_data","pgconnect"];
+	var results = [];
+
+	function series(item) {
+		if (item) {
+			async(item, function(result) {
+				results.push(result);
+				if (result == 'error')
+					return final();
+				else 
+					return series(items.shift());
+			});
+		} else {
+			return final();
+		}
+	}
+
+	series(items.shift());
+});
+
+app.get('/bxlogin', function(req, res) {
+	console.log('Авторизация через сервис Битрикс24'.green);
 
 	var url_parts = url.parse(req.url, true);
 	var query = url_parts.query;

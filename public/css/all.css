@@ -87,6 +87,14 @@ body {
     color: #000;
     background: #caa301; }
 
+.btn-bx-color {
+  background: #2fc7f7;
+  font-weight: bold;
+  color: #fff; }
+  .btn-bx-color:hover {
+    color: #fff;
+    background: #09b4ea; }
+
 .logo {
   float: left;
   margin: 0 0 0 15px;
