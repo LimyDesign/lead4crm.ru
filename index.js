@@ -193,8 +193,8 @@ app.get('/fblogin', function(req, res) {
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = result.rows[0].email;
-										req.session.fb = result.rows[0].fb;
+										req.session.user_email = fb_res2.email;
+										req.session.fb = fb_res2.id;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 									client.end();
@@ -299,8 +299,8 @@ app.get('/vklogin', function(req, res) {
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = result.rows[0].email;
-										req.session.vk = result.rows[0].vk;
+										req.session.user_email = vk_res.email;
+										req.session.vk = vk_res.user_id;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 									client.end();
@@ -580,8 +580,8 @@ app.get('/gplogin', function(req, res) {
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = result.rows[0].email;
-										req.session.gp = result.rows[0].gp;
+										req.session.user_email = gp_res2.email;
+										req.session.gp = gp_res2.id;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 									client.end();
@@ -741,8 +741,8 @@ app.get('/mrlogin', function(req, res) {
 									} else {
 										req.session.authorized = true;
 										req.session.userid = result.rows[0].id;
-										req.session.user_email = result.rows[0].email;
-										req.session.mr = result.rows[0].mr;
+										req.session.user_email = mr_res2[0].email;
+										req.session.mr = mr_res2[0].uid;
 										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
 									}
 									client.end();
