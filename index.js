@@ -1099,7 +1099,7 @@ app.get('/logout', function(req, res, next) {
 	});
 });
 
-app.get('/cabinet', function(req, res) {
+app.get('/cabinet/:plan', function(req, res) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
@@ -1142,6 +1142,84 @@ app.get('/cabinet', function(req, res) {
 	} else {
 		res.redirect('http://' + req.headers.host);
 	}
+});
+
+app.get('/support', function(req, res) {
+	if (req.session.authorized)
+		cabinet = true;
+	else
+		cabinet = false;
+
+	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
+	req.session.oauth_state = req.session.oauth_state || oauth_state;
+
+	var vklogin_query = querystring.stringify({
+		client_id: process.env.VK_CLIENT_ID,
+		scope: 'email',
+		redirect_uri: 'http://' + req.headers.host + '/vklogin',
+		response_type: 'code',
+		v: '5.29',
+		state: oauth_state,
+		display: 'page'
+	});
+	var oklogin_query = querystring.stringify({
+		client_id: process.env.OK_CLIENT_ID,
+		scope: 'GET_EMAIL',
+		response_type: 'code',
+		redirect_uri: 'http://' + req.headers.host + '/oklogin',
+		// layout: 'w',
+		state: oauth_state
+	});
+	var fblogin_quey = querystring.stringify({
+		client_id: process.env.FB_CLIENT_ID,
+		scope: 'email',
+		redirect_uri: 'http://' + req.headers.host + '/fblogin',
+		response_type: 'code'
+	});
+	var gplogin_query = querystring.stringify({
+		client_id: process.env.GP_CLIENT_ID,
+		scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+		redirect_uri: 'http://' + req.headers.host + '/gplogin',
+		response_type: 'code',
+		state: oauth_state,
+		access_type: 'online',
+		approval_prompt: 'auto',
+		login_hint: 'email',
+		include_granted_scopes: 'true'
+	});
+	var mrlogin_query = querystring.stringify({
+		client_id: process.env.MR_CLIENT_ID,
+		response_type: 'code',
+		redirect_uri: 'http://' + req.headers.host + '/mrlogin'
+	});
+	var yalogin_query = querystring.stringify({
+		response_type: 'code',
+		client_id: process.env.YA_CLIENT_ID,
+		state: oauth_state
+	});
+	var bxlogin_query = querystring.stringify({
+		client_id: process.env.BX_CLIENT_ID,
+		response_type: 'code',
+		redirect_uri: 'http://' + req.headers.host + '/bxlogin'
+	});
+	res.render('support.jade', {
+		title: 'Поддержка',
+		vklogin: 'https://oauth.vk.com/authorize?' + vklogin_query,
+		oklogin: 'http://www.odnoklassniki.ru/oauth/authorize?' + oklogin_query,
+		fblogin: 'https://www.facebook.com/dialog/oauth?' + fblogin_quey,
+		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + gplogin_query,
+		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + mrlogin_query,
+		yalogin: 'https://oauth.yandex.ru/authorize?' + yalogin_query,
+		// bxlogin: 'https://lsd.bitrix24.ru/oauth/authorize/?' + bxlogin_query,
+		mainpage_url: 'http://' + req.headers.host,
+		aboutproject_url: 'http://' + req.headers.host + '/about-project',
+		aboutours_url: 'http://' + req.headers.host + '/about-ours',
+		prices_url: 'http://' + req.headers.host + '/price',
+		support_url: 'http://' + req.headers.host + '/support',
+		cabinet_url: 'http://' + req.headers.host + '/cabinet',
+		cabinet: cabinet,
+		supportactive: true
+	});
 });
 
 app.get('/db', function (req, res) {
