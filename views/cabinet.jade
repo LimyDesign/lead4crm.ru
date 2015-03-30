@@ -8,21 +8,7 @@ mixin link_button(href, name, color)
 doctype html
 html
 	head
-		meta(charset='utf-8')
-		meta(http-equiv='X-UA-Compatible', content='IE=edge')
-		meta(name='viewport', content='width=device-width, initial-scale=1')
-		link(type='text/css', rel='stylesheet', href='/css/bootstrap.css')
-		link(type='text/css', rel='stylesheet', href='/css/modal.css')
-		link(type='text/css', rel='stylesheet', href='/fonts/font-awesome-4.3.0/css/font-awesome.min.css')
-		link(type='text/css', rel='stylesheet', href='/css/all.css')
-		link(href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,300,500&subset=latin,cyrillic', 
-			rel='stylesheet',
-			type='text/css')
-		title=title
-		<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		script(src="js/modernizr.custom.js")
+		include header.jade
 	body
 		#wrapper
 			header#header
@@ -121,42 +107,6 @@ html
 							.form-group
 								input(type="email", placeholder="Электропочта", value=user_email).form-control.rounded
 							
-			footer#footer
-				.container
-					.footer-holder
-						.row
-							.col-md-4
-								.logo
-									a(href=mainpage_url): img(src="images/logo.svg", alt="LEAD4CRM")
-								p Смарт генератор лидов для CRM Битрикс24. Работает на базе справочника 2GIS.
-							.col-md-2
-								h4 Навигация
-								ul
-									li: a(href=mainpage_url) Главная
-									li: a(href="#.") О проекте
-									li: a(href="#.") О нас
-									li: a(href="#.") Цены
-									li: a(href="#.") Поддержка
-							.col-md-3
-								.text-holder
-									strong.phone: a(href="tel:+79041326000") +7 (499) 704-69-17
-									span.available Работаем всегда &mdash; 24/7
-									h4 Сделано в России
-									address Произведено в #[a(href="http://limydesign.ru", target="_blank") LimyDesign]
-							.col-md-3
-								.text-frame
-									h4 С сведению
-									p.
-										Наши данные актуальны на столько на сколько актуальны данные в справочнике 2GIS 
-										потому, что мы не кэшируем и не сохраняем.
+			include footer.jade
 
-		script(src="/js/jquery-1.11.2.min.js")
-		script(src="/js/bootstrap.js")
-		script(src="/js/jquery.main.js")
-
-		script(src="/js/classie.js")
-		script(src="/js/modalEffects.js")
-		script.
-			var polyfilter_scriptpath = '/js/';
-		script(src="/js/cssParser.js")
-		script(src="/js/css-filters-polyfill.js")
+		include scripts.jade

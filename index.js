@@ -108,10 +108,15 @@ app.get('/', function(req, res) {
 		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + gplogin_query,
 		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + mrlogin_query,
 		yalogin: 'https://oauth.yandex.ru/authorize?' + yalogin_query,
-		bxlogin: 'https://lsd.bitrix24.ru/oauth/authorize/?' + bxlogin_query,
+		// bxlogin: 'https://lsd.bitrix24.ru/oauth/authorize/?' + bxlogin_query,
 		mainpage_url: 'http://' + req.headers.host,
+		aboutproject_url: 'http://' + req.headers.host + '/about-project',
+		aboutours_url: 'http://' + req.headers.host + '/about-ours',
+		prices_url: 'http://' + req.headers.host + '/price',
+		support_url: 'http://' + req.headers.host + '/support',
+		cabinet_url: 'http://' + req.headers.host + '/cabinet',
 		cabinet: cabinet,
-		cabinet_url: 'http://' + req.headers.host + '/cabinet'
+		mainactive: true
 	});
 });
 
