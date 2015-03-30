@@ -61,7 +61,9 @@ html
 								российском рынке еще не представлено. Поэтому мы взяли и сделали. Отныне все просто 
 								&mdash; пара кликов и база ваша!
 							.social-placeholder
-								<script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script><div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="small" data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-yashareTheme="counter"></div>
+								div(class="yashare-auto-init", data-yashareL10n="ru",
+									data-yashareQuickServices="vkontakte,facebook,twitter,gplus",
+									data-yashareTheme="counter")
 			section.area
 				.container
 					.row
@@ -277,6 +279,7 @@ html
 
 		.md-overlay
 
+		script(src="//yastatic.net/share/share.js")
 		script(src="js/modernizr.custom.js")
 		script(src="/js/jquery-1.11.2.min.js")
 		script(src="/js/bootstrap.js")
