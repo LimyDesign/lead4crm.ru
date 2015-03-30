@@ -1,0 +1,126 @@
+doctype html
+html
+	head
+		include header.jade
+	body
+		#wraper
+			include menu.jade
+			section.visual-other
+				.container
+					.text-block
+						.heading-holder: h1 Цены
+			section.visual-container
+				.visual-area
+					.container
+						h2 Стоимость услуг доступа
+						.pricing-tables
+							.plan
+								.head
+									h3 Старт
+								.price
+									span.price-main 0,98 #[span.month: i.fa.fa-rub]
+									span.price-additional за каждую компанию
+								ul.item-list
+									li Стоимость пакета — 2000 #[i.fa.fa-rub]
+								a(href="/cabinet/start").btn.btn-default.rounded подключить
+							.plan.recommended
+								.head
+									h3 Компания
+								.price
+									span.price-main 0,65 #[span.month: i.fa.fa-rub]
+									span.price-additional за каждую компанию
+								ul.item-list
+									li Стоимость пакета — 10&nbsp;000 #[i.fa.fa-rub]
+								a(href="/cabinet/company").btn.btn-default.rounded подключить
+							.plan
+								.head
+									h3 Корпорация
+								.price
+									span.price-main 0,43 #[span.month: i.fa.fa-rub]
+									span.price-additional за каждую компанию
+								ul.item-list
+									li Стоимость пакета — 50&nbsp;000 #[i.fa.fa-rub]
+								a(href="/cabinet/corporation").btn.btn-default.rounded подключить
+							.plan
+								.head
+									h3 Ултра
+								.price
+									span.price-main 0,10 #[span.month: i.fa.fa-rub]
+									span.price-additional за каждую компанию
+								ul.item-list
+									li Стоимость пакета — 120&nbsp;000 #[i.fa.fa-rub]
+								a(href="/cabinet/ultra").btn.btn-default.rounded подключить
+						p.silent.
+							Данные цены указаны для добавления каждой компании в справочник CRM Битрикс24. Срок действия
+							тарифных планов не ограничен по времени использования. Стомость пакета услуг может ровно не 
+							делиться на стомость импорта за компанию, в связи с чем импортируемое кол-во компаний 
+							округляется в меньшую сторону. При исчерпывании всех средств доступ блокируется до момента 
+							приобретения нового пакета. Средства перечисленные на лицевой счет возврату или обмену на 
+							другие услуги не подлежат. Фактом оплаты считается момент зачисления денежных средств на 
+							лицевой счет нашей компании, в связи с чем оплата по счету для юридических лиц может 
+							затянуться до 3 банковских дней.
+					img(src="/images/img-decor-03.jpg", height="1175", width="1380").bg-stretch
+			section.main
+				.container
+					.row
+						.text-box.col-md-offset-1.col-md-10
+							h2 Как пользоваться?
+							p.
+								Все очень просто — вы вибираете подходящий вам пакет услуг, ориентируясь на стоимость 
+								пакета и стоимость добавления каждой компании в ваш справочник контрагентов CRM. Далее
+								зайдя на ваш корпоративный порта и установив наш модуль нужно будет ввести сформированный
+								для вас ключ доступа.
+							p.
+								Активировав ключ доступа вы получаете возможность импорта данных из справочника 2GIS по
+								указанным параметрам поиска, например по рубриками или по названиям компаний, а также по
+								определенным городам.
+			section.area
+				.container
+					.row
+						.text-box.col-md-offset-1.col-md-10
+							h2 Как оплачивать?
+							p.
+								Пакеты услуг доступа имеют определенные цены и подключаются только в том случае, если у
+								вас на балансе будет сумма не меньше стоимости пакета. При этом баланс будет расходоваться
+								по мере пользования сервиса импорта. То есть если вы подключите пакет «Компания» 
+								стомостью 10&nbsp;000 рублей и испортируете из справочника 50 компаний, то согласно
+								тарифу, израсходованно будет 35 рубля 50 копеек, соответственно на вашем балансе 
+								останется 9&nbsp;964,50 рублей.
+							p.
+								Что касается пополнению баланса, то здесь предлагается несколько способов:
+					.row
+						table.table.table-responsive
+							tr
+								td
+									img(src="/images/price/icon_1.png").center-block
+									h4.text-center Банковские карты
+									ul
+										li Visa, Visa Electron
+										li MasterCard
+										li Maestro
+								td
+									img(src="/images/price/icon_2.png").center-block
+									h4.text-center Электронные деньги
+									ul
+										li Яндекс.Деньги
+										li WebMoney
+								td
+									img(src="/images/price/icon_3.png").center-block
+									h4.text-center Наличные
+									ul
+										li Более 170 тысяч пунктов <br> оплаты по России
+								td
+									img(src="/images/price/icon_4.png").center-block
+									h4.text-center Баланс телефона
+									ul
+										li Билайн
+										li МегаФон
+										li МТС
+								td
+									img(src="/images/price/icon_5.png").center-block
+									h4.text-center Безналичный расчет
+									ul
+										li С любого расчетного счета <br> юридического лица
+			include footer.jade
+		include login-modal.jade
+		include scripts.jade
