@@ -1174,6 +1174,7 @@ body {
     padding: 30px 0; }
 
   .visual-other {
+    padding: 0;
     min-height: 34px; }
     .visual-other > .container {
       font-size: 1.6rem;
