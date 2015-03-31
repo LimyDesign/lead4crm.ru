@@ -1173,6 +1173,25 @@ body {
   .visual .text-block {
     padding: 30px 0; }
 
+  .visual-other {
+    min-height: 94px; }
+    .visual-other > .container {
+      font-size: 1.6rem;
+      line-height: 1.5; }
+    .visual-other .bg-stretch {
+      max-width: 100%;
+      bottom: 20px; }
+    .visual-other .info {
+      background: rgba(255, 255, 255, 0.3);
+      color: #BEBCC3; }
+
+  .visual-other h1 {
+    font-size: 5.4rem;
+    line-height: 1.148; }
+  
+  .visual-other .text-block {
+    padding: 30px 0; }
+    
   #nav .nav-drop > ul li.active:before {
     top: 15px;
     bottom: 15px; }
