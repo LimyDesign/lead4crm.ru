@@ -52,7 +52,7 @@ app.use(session({
 }));
 
 // Конструктор запросов для oAuth провайдеров
-function login_query(provider, req, state) {
+function login_query(provider, req) {
 	if (provider == 'vkontakte') {
 		return querystring.stringify({
 			client_id: process.env.VK_CLIENT_ID,
@@ -60,7 +60,7 @@ function login_query(provider, req, state) {
 			redirect_uri: 'http://' + req.headers.host + '/vklogin',
 			response_type: 'code',
 			v: '5.29',
-			state: state,
+			state: req.session.oauth_state,
 			display: 'page'
 		});
 	} else if (provider == 'odnoklassniki') {
@@ -70,7 +70,7 @@ function login_query(provider, req, state) {
 			response_type: 'code',
 			redirect_uri: 'http://' + req.headers.host + '/oklogin',
 			// layout: 'w',
-			state: state
+			state: req.session.oauth_state
 		});
 	} else if (provider == 'facebook') {
 		return querystring.stringify({
@@ -85,7 +85,7 @@ function login_query(provider, req, state) {
 			scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
 			redirect_uri: 'http://' + req.headers.host + '/gplogin',
 			response_type: 'code',
-			state: state,
+			state: req.session.oauth_state,
 			access_type: 'online',
 			approval_prompt: 'auto',
 			login_hint: 'email',
@@ -101,13 +101,7 @@ function login_query(provider, req, state) {
 		return querystring.stringify({
 			response_type: 'code',
 			client_id: process.env.YA_CLIENT_ID,
-			state: state
-		});
-	} else if (provider == 'bitrix24') {
-		return querystring.stringify({
-			client_id: process.env.BX_CLIENT_ID,
-			response_type: 'code',
-			redirect_uri: 'http://' + req.headers.host + '/bxlogin'
+			state: req.session.oauth_state
 		});
 	}
 }
@@ -120,6 +114,84 @@ function is_auth(req) {
 		return false;
 }
 
+// 2-й конструктор запросов к oAuth провайдерам
+function oAuthData(client_data, req, prov) {
+	var query = url.parse(req.url, true).query;
+	if (client_data.grant_type) {
+		return querystring.stringify({
+			client_id: client_data.client_id,
+			client_secret: client_data.client_secret,
+			code: query.code,
+			redirect_uri: 'http://' + req.headers.host + '/login/' + prov,
+			grant_type: client_data.grant_type
+		});
+	} else {
+		return querystring.stringify({
+			client_id: client_data.client_id,
+			client_secret: client_data.client_secret,
+			code: query.code,
+			redirect_uri: 'http://' + req.headers.host + '/login/' + prov
+		});
+	}
+}
+
+function oAuthOptions(opt) {
+	if (opt.method == 'GET') {
+		return {
+			host: opt.host,
+			port: opt.port,
+			path: opt.path + '?' + opt.data,
+			method: opt.method
+		};
+	} else {
+		return {
+			host: opt.host,
+			port: opt.port,
+			path: opt.path,
+			method: opt.method,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Length': opt.data.length
+			}
+		};
+	}
+}
+
+function oAuthAsync(cmd, callback) {
+	setTimeout(function() {
+		console.log('Выполенение комманды ' + cmd + '...');
+		switch(cmd) {
+			case 'getToken':
+			case 'getUserData':
+			case 'rwDB':
+			default:
+		}
+	}, 4);
+}
+
+function oAuthFinal(req, results) {
+	console.log('Готовчик!'.yellow, res);
+	if (req.session.authorized && results.indexOf('error') < 0) {
+		res.redirect('http://' + req.headers.host + '/cabinet');
+	} else {
+		res.redirect('http://' + req.headers.host);
+	}
+}
+
+function oAuthSerial(cmd, req) {
+	if (cmd) {
+		oAuthAsync(cmd, function(results) {
+			results.push(results);
+			if (results == 'error')
+				return oAuthFinal(req, results);
+			else 
+				return oAuthSeries(cmd.shift(), req);
+		});
+	} else {
+		return oAuthFinal(req, results);
+	}
+}
+
 // Главная страница
 app.get('/', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
@@ -127,12 +199,12 @@ app.get('/', function(req, res) {
 	
 	res.render('index.jade', {
 		title: 'Генератор лидов для Битрикс24',
-		vklogin: 'https://oauth.vk.com/authorize?' + login_query('vkontakte', req, req.session.oauth_state),
-		oklogin: 'http://www.odnoklassniki.ru/oauth/authorize?' + login_query('odnoklassniki', req, req.session.oauth_state),
-		fblogin: 'https://www.facebook.com/dialog/oauth?' + login_query('facebook', req, req.session.oauth_state),
-		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + login_query('google-plus', req, req.session.oauth_state),
-		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + login_query('mailru', req, req.session.oauth_state),
-		yalogin: 'https://oauth.yandex.ru/authorize?' + login_query('yandex', req, req.session.oauth_state),
+		vklogin: 'https://oauth.vk.com/authorize?' + login_query('vkontakte', req),
+		oklogin: 'http://www.odnoklassniki.ru/oauth/authorize?' + login_query('odnoklassniki', req),
+		fblogin: 'https://www.facebook.com/dialog/oauth?' + login_query('facebook', req),
+		gplogin: 'https://accounts.google.com/o/oauth2/auth?' + login_query('google-plus', req),
+		mrlogin: 'https://connect.mail.ru/oauth/authorize?' + login_query('mailru', req),
+		yalogin: 'https://oauth.yandex.ru/authorize?' + login_query('yandex', req),
 		mainpage_url: 'http://' + req.headers.host,
 		aboutproject_url: 'http://' + req.headers.host + about_project_uri,
 		aboutours_url: 'http://' + req.headers.host + about_us_uri,
@@ -144,14 +216,35 @@ app.get('/', function(req, res) {
 	});
 });
 
-app.get('/cabinet/:plan', function(req, res) {
+// Операции с личным кабинетом
+app.get('/cabinet/:command/:plan', function(req, res, next) {
+	var plan = req.params.plan;
+	var command = req.params.command;
+	if (command) {
+		if (plan) {
+			console.log(plan);
+			res.redirect('http://' + req.headers.host + cabinet_uri);
+		} else {
+			next();
+		}
+	} else {
+		next();
+	}
+});
+
+app.get('/cabinet/:command', function(req, res, next) {
+	next();
+});
+
+// Персональный кабинет
+app.get('/cabinet', function(req, res, next) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
 		res.render('cabinet.jade', {
 			title: 'Личный кабинет',
 			mainpage_url: 'http://' + req.headers.host,
-			cabinet_url: 'http://' + req.headers.host + '/cabinet',
+			cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 			user_email: req.session.user_email,
 			fb_id: req.session.fb,
 			vk_id: req.session.vk,
@@ -189,6 +282,7 @@ app.get('/cabinet/:plan', function(req, res) {
 	}
 });
 
+// Страница про проект
 app.get('/about-project', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
 	req.session.oauth_state = req.session.oauth_state || oauth_state;
@@ -212,6 +306,7 @@ app.get('/about-project', function(req, res) {
 	});
 });
 
+// Страница про нас
 app.get('/about-us', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
 	req.session.oauth_state = req.session.oauth_state || oauth_state;
@@ -235,6 +330,7 @@ app.get('/about-us', function(req, res) {
 	});
 });
 
+// Страница с ценами
 app.get('/price', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
 	req.session.oauth_state = req.session.oauth_state || oauth_state;
@@ -258,6 +354,7 @@ app.get('/price', function(req, res) {
 	});
 });
 
+// Страница поддержки
 app.get('/support', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
 	req.session.oauth_state = req.session.oauth_state || oauth_state;
@@ -281,6 +378,128 @@ app.get('/support', function(req, res) {
 	});
 });
 
+// Авторизация пользователей
+app.get('/login/:provider', function(req, res, next) {
+	var provider = req.params.provider;
+	if (provider) {
+		var prov_res = [];
+		var command = [];
+		var results = [];
+
+		switch(provider) {
+			case 'facebook':
+				console.log('Авторизация через соц.сеть «Facebook»...'.green);
+				var data = oAuthData({
+					client_id: process.env.FB_CLIENT_ID,
+					client_secret: process.env.FB_CLIENT_SECRET
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'graph.facebook.com',
+					port: 443,
+					path: '/oauth/access_token',
+					data: data,
+					method: 'GET'
+				});
+				command = ['getToken','getUserData','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			case 'vkontakte':
+				console.log('Авторизация через соц.сеть «Вконтакте»...'.green);
+				var data = oAuthData({
+					client_id: process.env.VK_CLIENT_ID,
+					client_secret: process.env.VK_CLIENT_SECRET
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'oauth.vk.com',
+					port: 443,
+					path: '/access_token',
+					data: data,
+					method: 'GET'
+				});
+				command = ['getToken','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			case 'odnoklassniki':
+				console.log('Авторизация через соц.сеть «Одноклассники»'.green);
+				var data = oAuthData({
+					client_id: process.env.OK_CLIENT_ID,
+					client_secret: process.env.OK_SECRET_KEY,
+					grant_type: 'authorization_code'
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'api.odnoklassniki.ru',
+					port: 443,
+					path: '/oauth/token.do',
+					data: data,
+					method: 'POST'
+				});
+				command = ['getToken','getUserData','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			case 'google-plus':
+				console.log('Авторизация через сервис Google'.green);
+				var data = oAuthData({
+					client_id: process.env.GP_CLIENT_ID,
+					client_secret: process.env.GP_CLIENT_SECRET,
+					grant_type: 'authorization_code'
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'accounts.google.com',
+					port: 443,
+					path: '/o/oauth2/token',
+					data: data,
+					method: 'POST'
+				});
+				command = ['getToken','getUserData','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			case 'mailru':
+				console.log('Авторизация через сервис Mail.Ru'.green);
+				var data = oAuthData({
+					client_id: process.env.MR_CLIENT_ID,
+					client_secret: process.env.MR_SECRET_KEY,
+					grant_type: 'authorization_code'
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'connect.mail.ru',
+					port: 443,
+					path: '/oauth/token',
+					data: data,
+					method: 'POST'
+				});
+				command = ['getToken','getUserData','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			case 'yandex':
+				console.log('Авторизация через сервис Яндекс'.green);
+				var data = oAuthData({
+					client_id: process.env.YA_CLIENT_ID,
+					client_secret: process.env.YA_CLIENT_SECRET,
+					grant_type: 'authorization_code'
+				}, req, provider);
+				var options = oAuthOptions({
+					host: 'oauth.yandex.ru',
+					port: 443,
+					path: '/token',
+					data: data,
+					method: 'POST'
+				});
+				command = ['getToken','getUserData','rwDB'];
+				oAuthSeries(command.shift(), results);
+				break;
+			default:
+				res.send('Данный вид авторизации не поддерживается нашим сайтом.');
+		}
+	} else {
+		res.redirect('http://' + req.headers.host);
+	}
+});
+
+app.get('/login', function(req, res) {
+	res.send('Необходимо указать тип авторизации');
+});
+
+// Авторизация пользователей через сервис Facebook
 app.get('/fblogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Facebook"'.green);
 
@@ -407,6 +626,7 @@ app.get('/fblogin', function(req, res) {
 	series(items.shift());
 });
 
+// Авторизация пользователей через сервис Вконтакте
 app.get('/vklogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Вконтакте"'.green);
 
@@ -512,6 +732,7 @@ app.get('/vklogin', function(req, res) {
 	series(items.shift());
 });
 
+// Авторизация пользователей через сервис Одноклассники
 app.get('/oklogin', function(req, res) {
 	console.log('Авторизация через соц.сеть "Одноклассники"'.green);
 
@@ -655,6 +876,7 @@ app.get('/oklogin', function(req, res) {
 	series(items.shift());
 });
 
+// Авторизация пользователей через сервис Google
 app.get('/gplogin', function(req, res) {
 	console.log('Авторизация через сервис Google'.green);
 
@@ -794,6 +1016,7 @@ app.get('/gplogin', function(req, res) {
 	series(items.shift());
 });
 
+// Авторизация пользователей через сервис Mail.Ru
 app.get('/mrlogin', function(req, res) {
 	console.log('Авторизация через сервис Mail.Ru'.green);
 
@@ -958,6 +1181,7 @@ app.get('/mrlogin', function(req, res) {
 	series(items.shift());
 });
 
+// Авторизация пользователей через сервис Яндекс
 app.get('/yalogin', function(req, res) {
 	console.log('Авторизация через сервис Яндекс'.green);
 
@@ -1103,151 +1327,7 @@ app.get('/yalogin', function(req, res) {
 	series(items.shift());
 });
 
-app.get('/bxlogin', function(req, res) {
-	console.log('Авторизация через сервис Битрикс24'.green);
-
-	var url_parts = url.parse(req.url, true);
-	var query = url_parts.query;
-	var data = querystring.stringify({
-		client_id: process.env.BX_CLIENT_ID,
-		grant_type: 'authorization_code',
-		client_secret: process.env.BX_CLIENT_SECRET,
-		redirect_uri: 'http://' + req.headers.host + '/bxlogin',
-		code: query.code,
-		scope: 'user'
-	});
-	var options = {
-		host: 'lds.bitrix24.ru',
-		port: 443,
-		path: '/oauth/token/?' + data,
-		method: 'GET'
-	};
-
-	function async(arg, callback) {
-		setTimeout(function() {
-			console.log('Выполенение комманды ' + arg + '...');
-			if (arg == 'httpsreq') {
-				var httpsreq = https.request(options, function(res) {
-					res.setEncoding('utf8');
-					if (res.statusCode != 200) {
-						res.on('data', function(chunk) {
-							console.log('Bitrix24 Error Response:', chunk);
-						});
-						callback('error');
-					} else {
-						var _json = '';
-						res.on('data', function(chunk) {
-							_json += chunk.toString();
-						});
-						res.on('end', function() {
-							console.log(bx_res);
-							bx_res = JSON.parse(_json);
-							callback(arg);
-						});
-					}
-				});
-				httpsreq.write(data);
-				httpsreq.end();
-			} else if (arg == 'get_user_data') {
-				options = {
-					host: 'login.yandex.ru',
-					port: 443,
-					path: '/info?' + querystring.stringify({ oauth_token: bx_res.access_token }),
-					method: 'GET'
-				};
-				var httpsreq2 = https.request(options, function(res) {
-					res.setEncoding('utf8');
-					if (res.statusCode != 200) {
-						res.on('data', function(chunk) {
-							console.log(chunk);
-						});
-						callback('error');
-					} else {
-						var _json = '';
-						res.on('data', function(chunk) {
-							_json += chunk.toString();
-						});
-						res.on('end', function() {
-							bx_res2 = JSON.parse(_json);
-						});
-						callback(arg);
-					}
-				});
-				httpsreq2.end();
-			} else if (arg == 'pgconnect') {
-				var client = new pg.Client(dbconfig);
-				client.connect(function(err) {
-					if (err) {
-						return console.error('Ошибка подключения к БД',err);
-					}
-					client.query("select * from users where bx = $1", [bx_res2.id], function(err, result) {
-						if (err) {
-							return console.error('Ошибка получения данных',err);
-						} else {
-							if (result.rows[0]) {
-								console.log(result.rows[0]);
-								req.session.authorized = true;
-								req.session.userid = result.rows[0].id;
-								req.session.user_email = result.rows[0].email;
-								req.session.bx = result.rows[0].bx;
-								client.end();
-								callback(arg);
-							} else {
-								console.log('Попытка создания нового пользователя. ');
-								bx_res2.default_email = bx_res2.default_email || 'vasia@ya.com';
-								client.query("insert into users (email, ya) values ('" + bx_res2.default_email + "', " + bx_res2.id + ") returning id", function(err, result) {
-									if (err) {
-										return console.error('Ошибка записи данных в БД', err);
-									} else {
-										console.log('Добавлен новый пользователь # ' + result.rows[0].id);
-										req.session.authorized = true;
-										req.session.userid = result.rows[0].id;
-										req.session.user_email = bx_res2.default_email;
-										req.session.ya = bx_res2.id;
-										client.end();
-										callback(arg);
-									}
-								});
-							}
-						}
-					});
-				});
-			}
-		}, 4);
-	}
-
-	function final() {
-		console.log('Готовчик!'.yellow, results);
-		if (req.session.authorized && results.indexOf('error') < 0) {
-			res.redirect('http://' + req.headers.host + '/cabinet');
-		} else {
-			res.redirect('http://' + req.headers.host);
-		}
-	}
-
-	var bx_res;
-	var bx_res2;
-	// var items = ["httpsreq","get_user_data","pgconnect"];
-	var items = ["httpsreq"];
-	var results = [];
-
-	function series(item) {
-		if (item) {
-			async(item, function(result) {
-				results.push(result);
-				if (result == 'error')
-					return final();
-				else 
-					return series(items.shift());
-			});
-		} else {
-			return final();
-		}
-	}
-
-	series(items.shift());
-});
-
+// Выход
 app.get('/logout', function(req, res, next) {
 	console.log('Выход из личного кабинета'.red);
 	req.session.destroy(function(err) {
@@ -1260,6 +1340,7 @@ app.get('/logout', function(req, res, next) {
 	});
 });
 
+// Запуск HTTP сервера
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
 });

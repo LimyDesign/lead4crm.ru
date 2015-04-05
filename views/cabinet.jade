@@ -13,7 +13,7 @@ html
 		#wrapper
 			header#header
 				.container
-					.logo: a(href=mainpage_url): img(src="images/logo.svg")
+					.logo: a(href=mainpage_url): img(src="/images/logo.svg")
 					nav#nav
 						.opener-holder
 							a(href="#").nav-opener: span
@@ -56,40 +56,40 @@ html
 						.col-md-6
 							h4 Не привязанные аккаунты
 							if !fb_id
-								+link_button('/fblink', 'Привязать аккаунт Facebook', 'btn-fb-color')
+								+link_button('/cabinet/link/fb', 'Привязать аккаунт Facebook', 'btn-fb-color')
 							
 							if !vk_id
-								+link_button('/vklink', 'Привязать аккаунт Вконтакте', 'btn-vk-color')
+								+link_button('/cabinet/link/vk', 'Привязать аккаунт Вконтакте', 'btn-vk-color')
 
 							if !gp_id
-								+link_button('/gplink', 'Привязать аккаунт Google+', 'btn-google-plus-color')
+								+link_button('/cabinet/link/gp', 'Привязать аккаунт Google+', 'btn-google-plus-color')
 
 							if !ok_id
-								+link_button('/oklink', 'Привязать аккаунт Одноклассники', 'btn-ok-color')
+								+link_button('/cabinet/link/ok', 'Привязать аккаунт Одноклассники', 'btn-ok-color')
 
 							if !mr_id
-								+link_button('/mrlink', 'Привязать аккаунт Mail.Ru', 'btn-mailru-color')
+								+link_button('/cabinet/link/mr', 'Привязать аккаунт Mail.Ru', 'btn-mailru-color')
 							
 							if !ya_id
-								+link_button('/yalink', 'Привязать аккаунт Яндекс', 'btn-ya-color')
+								+link_button('/cabinet/link/ya', 'Привязать аккаунт Яндекс', 'btn-ya-color')
 							h4 Привязанные аккаунты
 							if fb_id
-								+unlink_button('/fbunlink', 'Отвязать аккаунт Facebook', fb_id, 'btn-fb-color')
+								+unlink_button('/cabinet/unlink/fb', 'Отвязать аккаунт Facebook', fb_id, 'btn-fb-color')
 							
 							if vk_id
-								+unlink_button('/vkunlink', 'Отвязать аккаунт Вконтакте', vk_id, 'btn-vk-color')
+								+unlink_button('/cabinet/unlink/vk', 'Отвязать аккаунт Вконтакте', vk_id, 'btn-vk-color')
 
 							if gp_id
-								+unlink_button('/gpunlink', 'Отвязать аккаунт Google+', gp_id, 'btn-google-plus-color')
+								+unlink_button('/cabinet/unlink/gp', 'Отвязать аккаунт Google+', gp_id, 'btn-google-plus-color')
 
 							if ok_id
-								+unlink_button('/okunlink', 'Отвязать аккаунт Одноклассники', ok_id, 'btn-ok-color')
+								+unlink_button('/cabinet/unlink/ok', 'Отвязать аккаунт Одноклассники', ok_id, 'btn-ok-color')
 
 							if mr_id
-								+unlink_button('/mrunlink', 'Отвязать аккаунт Mail.Ru', mr_id, 'btn-mailru-color')
+								+unlink_button('/cabinet/unlink/mr', 'Отвязать аккаунт Mail.Ru', mr_id, 'btn-mailru-color')
 							
 							if ya_id
-								+unlink_button('/yaunlink', 'Отвязать аккаунт Яндекс', ya_id, 'btn-ya-color')
+								+unlink_button('/cabinet/unlink/ya', 'Отвязать аккаунт Яндекс', ya_id, 'btn-ya-color')
 					.row
 						.col-md-6
 							h3 Ключ доступа
