@@ -18,12 +18,17 @@ var host = db.hostname;
 var database = db.path.substring(1);
 var port = db.port;
 var db_userpass = db.auth.split(':');
+// var dbconfig = {
+// 	host: host,
+// 	port: port,
+// 	database: database,
+// 	user: db_userpass[0],
+// 	password: db_userpass[1],
+// 	ssl: true
+// };
 var dbconfig = {
 	host: host,
-	port: port,
 	database: database,
-	user: db_userpass[0],
-	password: db_userpass[1],
 	ssl: true
 };
 
