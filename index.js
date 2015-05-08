@@ -26,10 +26,6 @@ var dbconfig = {
 	password: db_userpass[1],
 	ssl: true
 };
-// var dbconfig = {
-// 	database: database,
-// 	ssl: true
-// };
 
 // Общие параметры: по-умолчанию кабинет закрыт,
 // указываются URI для ссылок в меню
@@ -218,6 +214,11 @@ app.get('/', function(req, res) {
 		cabinet: is_auth(req),
 		mainactive: true
 	});
+});
+
+// Тест
+app.get('/test', function(req, res) {
+	res.send('ХУЙ!');
 });
 
 // Операции с личным кабинетом
