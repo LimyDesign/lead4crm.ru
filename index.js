@@ -27,7 +27,6 @@ var db_userpass = db.auth.split(':');
 // 	ssl: true
 // };
 var dbconfig = {
-	host: host,
 	database: database,
 	ssl: true
 };
