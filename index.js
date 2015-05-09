@@ -304,8 +304,10 @@ app.get('/cabinet', function(req, res, next) {
 						tariffs[row.id] = row.name;
 					}
 					client.end();
+					return tariffs;
 				}
 			});
+			return tariffs;
 		});
 		return tariffs;
 	}
