@@ -265,6 +265,7 @@ app.get('/cabinet', function(req, res, next) {
 			apikey: req.session.apikey,
 			tariff_select: getTariffList()
 		});
+		console.log(getTariffList());
 	}
 
 	function get_user_email(userid) {
