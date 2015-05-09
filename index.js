@@ -261,7 +261,8 @@ app.get('/cabinet', function(req, res, next) {
 			ok_id: req.session.ok,
 			gp_id: req.session.gp,
 			mr_id: req.session.mr,
-			ya_id: req.session.ya
+			ya_id: req.session.ya,
+			apikey: req.session.apikey
 		});
 	}
 
