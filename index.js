@@ -212,21 +212,8 @@ app.get('/', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		mainactive: true
+		currentUrl: mainpage_url
 	});
-});
-
-// Тест
-app.get('/test', function(req, res) {
-	res.send('ХУЙ!');
-});
-
-app.get('/fuck', function(req, res) {
-	res.send('FUCK!');
-});
-
-app.get('/fuck00', function(req, res) {
-	res.send('F\/C|<!');
 });
 
 // Операции с личным кабинетом
@@ -315,7 +302,7 @@ app.get('/about-project', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		projectactive: true
+		currentUrl: aboutproject_url
 	});
 });
 
@@ -339,7 +326,7 @@ app.get('/about-us', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		oursactive: true
+		currentUrl: aboutours_url
 	});
 });
 
@@ -363,7 +350,7 @@ app.get('/price', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		priceactive: true
+		currentUrl: prices_url
 	});
 });
 
@@ -387,7 +374,7 @@ app.get('/support', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		supportactive: true
+		currentUrl: support_url
 	});
 });
 

@@ -10,11 +10,11 @@ header#header
 				a(data-modal="modal-8").btn.btn-primary.md-trigger.rounded Войти
 			.nav-drop
 				ul
-					li(class=mainactive ? 'active' : ''): a(href=mainpage_url) Главная
-					li(class=projectactive ? 'active': ''): a(href=aboutproject_url) О проекте
-					li(class=oursactive ? 'active' : ''): a(href=aboutours_url) О нас
-					li(class=priceactive ? 'active' : ''): a(href=prices_url) Цены
-					li(class=supportactive ? 'active' : ''): a(href=support_url) Поддержка
+					li(class={active: currentUrl === mainpage_url}): a(href=mainpage_url) Главная
+					li(class={active: currentUrl === aboutproject_url}): a(href=aboutproject_url) О проекте
+					li(class={active: currentUrl === aboutours_url}) О нас
+					li(class={active: currentUrl === prices_url}) Цены
+					li(class={active: currentUrl === support_url}) Поддержка
 				.drop-holder.visible-sm.visible-xs
 					span Следите
 					ul.social-networks
