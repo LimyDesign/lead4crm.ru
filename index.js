@@ -221,6 +221,10 @@ app.get('/test', function(req, res) {
 	res.send('ХУЙ!');
 });
 
+app.get('/fuck', function(req, res) {
+	res.send('FUCK!');
+});
+
 // Операции с личным кабинетом
 app.get('/cabinet/:command/:plan', function(req, res, next) {
 	var plan = req.params.plan;
