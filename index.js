@@ -307,7 +307,9 @@ app.get('/cabinet', function(req, res, next) {
 					var tariffs = {};
 					for (var i = 0; i < result.rows.length; i++) {
 						var row = result.rows[i];
-						tariffs.push({row.code: row.name});
+						var tCode = row.code;
+						var tName = row.name;
+						tariffs.push({tCode: tName});
 					}
 					return tariffs;
 				}
