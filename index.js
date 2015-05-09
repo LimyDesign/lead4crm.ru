@@ -212,7 +212,7 @@ app.get('/', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		currentUrl: mainpage_url
+		currentUrl: 'http://' + req.headers.host
 	});
 });
 
@@ -302,7 +302,7 @@ app.get('/about-project', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		currentUrl: aboutproject_url
+		currentUrl: 'http://' + req.headers.host + about_project_uri
 	});
 });
 
@@ -326,7 +326,7 @@ app.get('/about-us', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		currentUrl: aboutours_url
+		currentUrl: 'http://' + req.headers.host + about_us_uri
 	});
 });
 
@@ -350,7 +350,7 @@ app.get('/price', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		currentUrl: prices_url
+		currentUrl: 'http://' + req.headers.host + price_uri
 	});
 });
 
@@ -374,7 +374,7 @@ app.get('/support', function(req, res) {
 		support_url: 'http://' + req.headers.host + support_uri,
 		cabinet_url: 'http://' + req.headers.host + cabinet_uri,
 		cabinet: is_auth(req),
-		currentUrl: support_url
+		currentUrl: 'http://' + req.headers.host + support_uri
 	});
 });
 
