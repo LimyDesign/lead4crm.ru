@@ -225,6 +225,10 @@ app.get('/fuck', function(req, res) {
 	res.send('FUCK!');
 });
 
+app.get('/fuck00', function(req, res) {
+	res.send('F\/C|<!');
+});
+
 // Операции с личным кабинетом
 app.get('/cabinet/:command/:plan', function(req, res, next) {
 	var plan = req.params.plan;
