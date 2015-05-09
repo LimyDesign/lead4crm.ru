@@ -75,13 +75,12 @@ perspective effects (not including the modals and the overlay).
 	margin: 0 auto;
 }
 
-.md-content a {
+.md-content a.md-link {
 	color: #000;
 	text-decoration: underline;
-	font-weight: bold;
 }
 
-.md-content a:hover {
+.md-content a.md-link:hover {
 	text-decoration: none;
 }
 
