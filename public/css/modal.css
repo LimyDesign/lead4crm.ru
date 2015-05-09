@@ -69,7 +69,7 @@ perspective effects (not including the modals and the overlay).
 /* Content styles */
 .md-content {
 	color: #635c73;
-	background: #e3dfed;
+	background: #fff;
 	position: relative;
 	border-radius: 3px;
 	margin: 0 auto;
