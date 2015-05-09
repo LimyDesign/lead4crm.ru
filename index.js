@@ -289,6 +289,7 @@ app.get('/cabinet', function(req, res, next) {
 	}
 
 	function getTariffList() {
+		var tariffs = {};
 		pg.connect(dbconfig, function(err, client, done) {
 			if (err) {
 				return console.error('Ошибка подключения к БД',err);
@@ -298,16 +299,15 @@ app.get('/cabinet', function(req, res, next) {
 				if (err) {
 					console.error('Ошибка получения данных',err);
 				} else {
-					var tariffs = {};
 					for (var i = 0; i < result.rows.length; i++) {
 						var row = result.rows[i];
 						tariffs[row.id] = row.name;
 					}
-					console.log(tariffs);
-					return tariffs;
+					client.end();
 				}
 			});
 		});
+		return tariffs;
 	}
 
 	if (req.session.authorized) {
