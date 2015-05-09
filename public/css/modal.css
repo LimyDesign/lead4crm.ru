@@ -75,6 +75,16 @@ perspective effects (not including the modals and the overlay).
 	margin: 0 auto;
 }
 
+.md-content a {
+	color: #000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.md-content a:hover {
+	text-decoration: none;
+}
+
 .md-content h3 {
 	margin: 0;
 	padding: 0.4em;
