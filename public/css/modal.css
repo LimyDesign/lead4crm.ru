@@ -76,9 +76,12 @@ perspective effects (not including the modals and the overlay).
 }
 
 .md-content a.md-link {
-	color: #000;
-	padding-bottom: 5px;
+	color: #3b5998;
 	text-decoration: underline;
+}
+
+.md-content a.md-link:visited {
+	color: #cc3732;
 }
 
 .md-content a.md-link:hover {
