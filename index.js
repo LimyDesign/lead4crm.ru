@@ -291,7 +291,7 @@ app.get('/cabinet', function(req, res, next) {
 	function getTariffList() {
 		var tariffs = {};
 		function async(callback) {
-			setTimeout(function() {
+			// setTimeout(function() {
 				pg.connect(dbconfig, function(err, client, done) {
 					if (err) {
 						return console.error('Ошибка подключения к БД',err);
@@ -310,7 +310,8 @@ app.get('/cabinet', function(req, res, next) {
 						}
 					});
 				});
-			}, 4);
+			// }, 4);
+			console.log(tariffs);
 		}
 		return async(function(result) { return result; });
 	}
