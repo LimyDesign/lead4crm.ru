@@ -202,6 +202,13 @@ function oAuthSerial(cmd, req) {
 	}
 }
 
+// функция получиения списка тарифов 
+// для конкретного пользователя 
+// в зависимости от текущего баланса
+function getTariffList(req) {
+
+}
+
 // Главная страница
 app.get('/', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
@@ -262,7 +269,8 @@ app.get('/cabinet', function(req, res, next) {
 			gp_id: req.session.gp,
 			mr_id: req.session.mr,
 			ya_id: req.session.ya,
-			apikey: req.session.apikey
+			apikey: req.session.apikey,
+			tariff_select: getTariffList()
 		});
 	}
 
@@ -284,6 +292,27 @@ app.get('/cabinet', function(req, res, next) {
 				}
 			});
 		});
+	}
+
+	function getTariffList() {
+		pg.connect(dbconfig, function(err, client, done) {
+			if (err) {
+				return console.error('Ошибка подключения к БД',err);
+			}
+			client.query('select * from tariff where domain = $1', ['lead4crm.ru'], function(err, result) {
+				done();
+				if (err) {
+					console.error('Ошибка получения данных',err);
+				} else {
+					var tariffs = {};
+					for (var i = 0; i < result.rows.length; i++) {
+						var row = result.rows[i];
+						tariffs.push({row.code: row.name});
+					}
+					return tariffs;
+				}
+			})
+		})
 	}
 
 	if (req.session.authorized) {
