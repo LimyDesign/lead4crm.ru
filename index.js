@@ -304,12 +304,12 @@ app.get('/cabinet', function(req, res, next) {
 				if (err) {
 					console.error('Ошибка получения данных',err);
 				} else {
-					var tariffs = {};
+					var tariffs = [];
 					for (var i = 0; i < result.rows.length; i++) {
 						var row = result.rows[i];
 						var tCode = row.code;
 						var tName = row.name;
-						tariffs.push({i: 'fff'});
+						tariffs.push({tCode: tName});
 					}
 					console.log(tariffs);
 					return tariffs;
