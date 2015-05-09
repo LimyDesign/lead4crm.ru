@@ -202,13 +202,6 @@ function oAuthSerial(cmd, req) {
 	}
 }
 
-// функция получиения списка тарифов 
-// для конкретного пользователя 
-// в зависимости от текущего баланса
-function getTariffList(req) {
-
-}
-
 // Главная страница
 app.get('/', function(req, res) {
 	var oauth_state = crypto.createHmac('sha1', req.headers['user-agent'] + new Date().getTime()).digest('hex');
@@ -311,8 +304,8 @@ app.get('/cabinet', function(req, res, next) {
 					}
 					return tariffs;
 				}
-			})
-		})
+			});
+		});
 	}
 
 	if (req.session.authorized) {
