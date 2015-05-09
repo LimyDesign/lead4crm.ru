@@ -97,11 +97,15 @@ html
 			section.area
 				.container
 					.subscribe
-						h3 Ваш адрес электропочты
+						h3 Выберите тарифный план
 						form.form-inline
 							button(type="button").btn.btn-primary.rounded Изменить
 							.form-group
-								input(type="email", placeholder="Электропочта", value=user_email).form-control.rounded
+								select#tariff.form-control.rounded
+									option(name=0) [ Выберите подходящий тариф ]
+									each val, index in tariff_select
+										option(name=index)=val
+								//- input(type="email", placeholder="Электропочта", value=user_email).form-control.rounded
 							
 			include footer.jade
 
