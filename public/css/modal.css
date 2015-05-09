@@ -71,13 +71,13 @@ perspective effects (not including the modals and the overlay).
 	color: #000;
 	background: #fff;
 	position: relative;
-	border-radius: 13px;
+	border-radius: 3px;
 	margin: 0 auto;
 }
 
 .md-content a.md-link {
 	color: #000;
-	margin-bottom: 5px;
+	padding-bottom: 5px;
 	text-decoration: underline;
 }
 
