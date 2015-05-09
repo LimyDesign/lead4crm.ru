@@ -135,6 +135,7 @@ function oAuthData(client_data, req, prov) {
 	}
 }
 
+// конструктор опций запроса
 function oAuthOptions(opt) {
 	if (opt.method == 'GET') {
 		return {
@@ -157,6 +158,10 @@ function oAuthOptions(opt) {
 	}
 }
 
+// функция пошаговой авторизации:
+// 1. Получение токена
+// 2. Получение данных пользователя
+// 3. Запись данных в базу данных
 function oAuthAsync(cmd, callback) {
 	setTimeout(function() {
 		console.log('Выполенение комманды ' + cmd + '...');
@@ -169,6 +174,9 @@ function oAuthAsync(cmd, callback) {
 	}, 4);
 }
 
+// Функция перенаправления после авторизации:
+// в случае удачи переадресует в кабинет,
+// в случае провала кидает на главную страницу
 function oAuthFinal(req, results) {
 	console.log('Готовчик!'.yellow, res);
 	if (req.session.authorized && results.indexOf('error') < 0) {
@@ -178,6 +186,8 @@ function oAuthFinal(req, results) {
 	}
 }
 
+// функция хуй знает чего, позже разберусь
+// хуёво когда нет комментариев
 function oAuthSerial(cmd, req) {
 	if (cmd) {
 		oAuthAsync(cmd, function(results) {
@@ -569,7 +579,13 @@ app.get('/fblogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
+								req.session.ok = result.rows[0].ok;
 								req.session.fb = result.rows[0].fb;
+								req.session.gp = result.rows[0].gp;
+								req.session.mr = result.rows[0].mr;
+								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
@@ -677,6 +693,12 @@ app.get('/vklogin', function(req, res) {
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
 								req.session.vk = result.rows[0].vk;
+								req.session.ok = result.rows[0].ok;
+								req.session.fb = result.rows[0].fb;
+								req.session.gp = result.rows[0].gp;
+								req.session.mr = result.rows[0].mr;
+								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
@@ -818,7 +840,13 @@ app.get('/oklogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
 								req.session.ok = result.rows[0].ok;
+								req.session.fb = result.rows[0].fb;
+								req.session.gp = result.rows[0].gp;
+								req.session.mr = result.rows[0].mr;
+								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
@@ -958,7 +986,13 @@ app.get('/gplogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
+								req.session.ok = result.rows[0].ok;
+								req.session.fb = result.rows[0].fb;
 								req.session.gp = result.rows[0].gp;
+								req.session.mr = result.rows[0].mr;
+								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
@@ -1119,7 +1153,13 @@ app.get('/mrlogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
+								req.session.ok = result.rows[0].ok;
+								req.session.fb = result.rows[0].fb;
+								req.session.gp = result.rows[0].gp;
 								req.session.mr = result.rows[0].mr;
+								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
@@ -1269,7 +1309,13 @@ app.get('/yalogin', function(req, res) {
 								req.session.authorized = true;
 								req.session.userid = result.rows[0].id;
 								req.session.user_email = result.rows[0].email;
+								req.session.vk = result.rows[0].vk;
+								req.session.ok = result.rows[0].ok;
+								req.session.fb = result.rows[0].fb;
+								req.session.gp = result.rows[0].gp;
+								req.session.mr = result.rows[0].mr;
 								req.session.ya = result.rows[0].ya;
+								req.session.apikey = result.rows[0].apikey;
 								client.end();
 								callback(arg);
 							} else {
