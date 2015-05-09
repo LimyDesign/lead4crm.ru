@@ -311,6 +311,7 @@ app.get('/cabinet', function(req, res, next) {
 						var tName = row.name;
 						tariffs.push({tCode: tName});
 					}
+					console.log(tariffs);
 					return tariffs;
 				}
 			})
