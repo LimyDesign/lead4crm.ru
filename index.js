@@ -303,6 +303,7 @@ app.get('/cabinet', function(req, res, next) {
 						var row = result.rows[i];
 						tariffs[row.id] = row.name;
 					}
+					console.log(tariffs);
 					return tariffs;
 				}
 			});
