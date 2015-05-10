@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-{% spaceless %}
 <html>
 <head>
 	{% include 'layout/header.twig' %}
 </head>
 <body>
+{% spaceless %}
 	<div id="wrapper">
 		{% include 'layout/menu.twig' %}
 		<section class="visual">
@@ -265,7 +265,7 @@
 		{% include 'layout/footer.twig' %}
 	</div>
 	{% include 'layout/login.twig' %}
+{% endspaceless %}
 	{% include 'layout/scripts.twig' %}
 </body>
 </html>
-{% endspaceless %}
