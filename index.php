@@ -84,11 +84,11 @@ function arrayOAuthLoginURL() {
 function arrayMenuUrl() {
 	return array(
 		'mainpage_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-		'aboutproject_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-		'aboutours_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-		'prices_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-		'support_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
-		'cabinet_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/'
+		'aboutproject_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-project/',
+		'aboutours_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-us/',
+		'prices_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/price/',
+		'support_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/support/',
+		'cabinet_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/cabinet/'
 		);
 }
 ?>
