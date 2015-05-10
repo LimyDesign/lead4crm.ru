@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Everzet\\Jade' => array($vendorDir . '/pagon/jade/src'),
+    'Twig_' => array($vendorDir . '/twig/twig/lib'),
 );
