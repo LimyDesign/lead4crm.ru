@@ -21,7 +21,7 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 $cmd = array_values($requestURI);
 
 $indexOptions = array('title' => 'Генератор лидов для Битрикс 24');
-$indexOptions = array_merge($indexOptions, arrayOAuthLoginURL());
+$indexOptions = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
 
 echo $twig->render('index.twig', $indexOptions);
 
@@ -82,6 +82,13 @@ function arrayOAuthLoginURL() {
 }
 
 function arrayMenuUrl() {
-	global $conf;
+	return array(
+		'mainpage_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'aboutproject_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'aboutours_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'prices_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'support_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'cabinet_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/'
+		);
 }
 ?>
