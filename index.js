@@ -269,8 +269,8 @@ app.get('/cabinet', function(req, res, next) {
 			mr_id: req.session.mr,
 			ya_id: req.session.ya,
 			apikey: req.session.apikey,
-			tariff_select: {'start': 'fack', 'xm': 'asdasd'}
-			// tariff_select: getTariffList(function(result) { return result; })
+			// tariff_select: {'start': 'fack', 'xm': 'asdasd'}
+			tariff_select: getTariffList(function(result) { return result; })
 		});
 	}
 	
