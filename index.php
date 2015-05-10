@@ -22,11 +22,16 @@ $cmd = array_values($requestURI);
 
 switch ($cmd[0]) {
 	case 'about-project':
+		$title = 'О проекте';
 	case 'about-us':
+		$title = 'О нас';
 	case 'price':
+		$title = 'Цены';
 	case 'support':
+		$title = 'Поддержка';
+	case 'generate-page':
 		$options = array(
-			'title' => 'Поддержка',
+			'title' => $title,
 			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		echo $twig->render($cmd[0].'.twig', $options);
