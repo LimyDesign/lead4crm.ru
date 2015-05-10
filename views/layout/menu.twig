@@ -12,20 +12,20 @@
 			</div>
 			<div class="nav-drop">
 				<ul>
-					<li>
-						<a href="{{mainpage_url}}" title="Главная" class="{% if currentUrl in mainpage_url %}active{% endif %}">Главная</a>
+					<li class="{% if currentUrl in mainpage_url %}active{% endif %}">
+						<a href="{{mainpage_url}}" title="Главная">Главная</a>
 					</li>
-					<li>
-						<a href="{{aboutproject_url}}" title="О проекте" class="{% if currentUrl in aboutproject_url %}active{% endif %}">О проекте</a>
+					<li class="{% if currentUrl in aboutproject_url %}active{% endif %}">
+						<a href="{{aboutproject_url}}" title="О проекте">О проекте</a>
 					</li>
-					<li>
-						<a href="{{aboutours_url}}" title="О нас" class="{% if currentUrl in aboutours_url %}active{% endif %}">О нас</a>
+					<li class="{% if currentUrl in aboutours_url %}active{% endif %}">
+						<a href="{{aboutours_url}}" title="О нас">О нас</a>
 					</li>
-					<li>
-						<a href="{{prices_url}}" title="Цены" class="{% if currentUrl in prices_url %}active{% endif %}">Цены</a>
+					<li class="{% if currentUrl in prices_url %}active{% endif %}">
+						<a href="{{prices_url}}" title="Цены">Цены</a>
 					</li>
-					<li>
-						<a href="{{support_url}}" title="Поддержка" class="{% if currentUrl in support_url %}active{% endif %}">Поддержка</a>
+					<li class="{% if currentUrl in support_url %}active{% endif %}">
+						<a href="{{support_url}}" title="Поддержка">Поддержка</a>
 					</li>
 				</ul>
 				<div class="drop-holder visible-sm visible-xs">
