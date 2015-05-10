@@ -20,5 +20,6 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 }
 $cmd = array_values($requestURI);
 
-echo $twig->render('index.twig');
+echo $twig->render('index.twig', array(
+	'title' => 'Генератор лидов для CRM Битрикс 24'));
 ?>
