@@ -1,10 +1,10 @@
 doctype html
 html
 	head
-		include header.jade
+		- include header.jade
 	body
 		#wrapper
-			include menu.jade
+			- include menu.jade
 			section.visual
 				.container
 					.text-block
@@ -165,8 +165,8 @@ html
 							button.btn.btn-primary.rounded Подписаться
 							.form-group
 								input(type="email", placeholder="Электропочта").form-control.rounded#exampleInputEmail2
-			include footer.jade
+			- include footer.jade
 
-		include login-modal.jade
+		- include login-modal.jade
 
-		include scripts.jade
+		- include scripts.jade
