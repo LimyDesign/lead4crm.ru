@@ -251,11 +251,11 @@ app.get('/cabinet', function(req, res, next) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
-		var tariff_select = {};
-		getTariffList(function(result) {
-			tariff_select = result;
-		});
-		console.log(tariff_select);
+		// var tariff_select = {};
+		// getTariffList(function(result) {
+		// 	tariff_select = result;
+		// });
+		// console.log(tariff_select);
 
 		res.render('cabinet.jade', {
 			title: 'Личный кабинет',
@@ -269,7 +269,7 @@ app.get('/cabinet', function(req, res, next) {
 			mr_id: req.session.mr,
 			ya_id: req.session.ya,
 			apikey: req.session.apikey,
-			tariff_select: tariff_select
+			tariff_select: getTariffList(function(result) { return result; });
 		});
 	}
 	
