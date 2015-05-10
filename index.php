@@ -73,7 +73,7 @@ function arrayOAuthLoginURL() {
 	$yalogin = http_build_query(array(
 		'client_id' => $conf->provider->yandex->CLIENT_ID,
 		'response_type' => 'code',
-		'state' => $state))
+		'state' => $state));
 	return array(
 		'vklogin' => 'https://oauth.vk.com/authorize?' . $vklogin,
 		'oklogin' => 'http://www.odnoklassniki.ru/oauth/authorize?' . $oklogin,
