@@ -20,10 +20,19 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 }
 $cmd = array_values($requestURI);
 
-$indexOptions = array('title' => 'Генератор лидов для Битрикс 24');
-$indexOptions = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
-
-echo $twig->render('index.twig', $indexOptions);
+switch ($cmd[0]) {
+	case 'about-project':
+		$options = array('title' => 'О проекте');
+		$options = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
+		echo $twig->render($cmd[0].'.twig', $options);
+		break;
+	
+	default:
+		$options = array('title' => 'Генератор лидов для Битрикс 24');
+		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+		echo $twig->render('index.twig', $options);
+		break;
+}
 
 function arrayOAuthLoginURL() {
 	global $conf;
