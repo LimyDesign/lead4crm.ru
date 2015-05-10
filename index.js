@@ -251,6 +251,12 @@ app.get('/cabinet', function(req, res, next) {
 	console.log('Вход в личный кабинет'.green);
 
 	function show_cabinet() {
+		var tariff_select = {};
+		getTariffList(function(result) {
+			tariff_select = result;
+		});
+		console.log(tariff_select);
+
 		res.render('cabinet.jade', {
 			title: 'Личный кабинет',
 			mainpage_url: 'http://' + req.headers.host,
@@ -263,57 +269,30 @@ app.get('/cabinet', function(req, res, next) {
 			mr_id: req.session.mr,
 			ya_id: req.session.ya,
 			apikey: req.session.apikey,
-			tariff_select: getTariffList()
+			tariff_select: tariff_select
 		});
-		console.log(getTariffList());
 	}
-
-	function get_user_email(userid) {
+	
+	function getTariffList(callback) {
 		pg.connect(dbconfig, function(err, client, done) {
 			if (err) {
 				return console.error('Ошибка подключения к БД',err);
 			}
-			client.query('select * from users where vk = $1', [userid], function(err, result) {
+			client.query('select * from tariff where domain = $1', ['lead4crm.ru'], function(err, result) {
 				done();
 				if (err) {
 					console.error('Ошибка получения данных',err);
 				} else {
-					if (result.rows[0]) {
-						console.log('Email пользователя: ' + result.rows[0].email);
-						req.session.user_email = result.rows[0].email;
+					var tariffs = {};
+					for (var i = 0; i < result.rows.length; i++) {
+						var row = result.rows[i];
+						tariffs[row.id] = row.name;
 					}
 					client.end();
+					callback(tariffs);
 				}
 			});
 		});
-	}
-
-	function getTariffList() {
-		var tariffs = {};
-		function async(callback) {
-			// setTimeout(function() {
-				pg.connect(dbconfig, function(err, client, done) {
-					if (err) {
-						return console.error('Ошибка подключения к БД',err);
-					}
-					client.query('select * from tariff where domain = $1', ['lead4crm.ru'], function(err, result) {
-						done();
-						if (err) {
-							console.error('Ошибка получения данных',err);
-						} else {
-							for (var i = 0; i < result.rows.length; i++) {
-								var row = result.rows[i];
-								tariffs[row.id] = row.name;
-							}
-							client.end();
-							callback(tariffs);
-						}
-					});
-				});
-			// }, 4);
-			console.log(tariffs);
-		}
-		return async(function(result) { return result; });
 	}
 
 	if (req.session.authorized) {
