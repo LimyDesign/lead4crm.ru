@@ -22,8 +22,8 @@ $cmd = array_values($requestURI);
 
 $indexOptions = array('title' => 'Генератор лидов для Битрикс 24');
 $indexOptions = array_merge($indexOptions, arrayOAuthLoginURL());
-print_r($indexOptions);
-die();
+// print_r($indexOptions);
+// die();
 
 echo $twig->render('index.twig', $indexOptions);
 
