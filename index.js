@@ -275,25 +275,27 @@ app.get('/cabinet', function(req, res, next) {
 	}
 	
 	function getTariffList(callback) {
-		pg.connect(dbconfig, function(err, client, done) {
-			if (err) {
-				return console.error('Ошибка подключения к БД',err);
-			}
-			client.query('select * from tariff where domain = $1', ['lead4crm.ru'], function(err, result) {
-				done();
+		setTimeout(function() {
+			pg.connect(dbconfig, function(err, client, done) {
 				if (err) {
-					console.error('Ошибка получения данных',err);
-				} else {
-					var tariffs = {};
-					for (var i = 0; i < result.rows.length; i++) {
-						var row = result.rows[i];
-						tariffs[row.id] = row.name;
-					}
-					client.end();
-					callback(tariffs);
+					return console.error('Ошибка подключения к БД',err);
 				}
+				client.query('select * from tariff where domain = $1', ['lead4crm.ru'], function(err, result) {
+					done();
+					if (err) {
+						console.error('Ошибка получения данных',err);
+					} else {
+						var tariffs = {};
+						for (var i = 0; i < result.rows.length; i++) {
+							var row = result.rows[i];
+							tariffs[row.code] = row.name;
+						}
+						client.end();
+						callback(tariffs);
+					}
+				});
 			});
-		});
+		}, 4);
 	}
 
 	if (req.session.authorized) {
