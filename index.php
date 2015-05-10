@@ -29,6 +29,8 @@ switch ($cmd[0]) {
 			'title' => 'Поддержка',
 			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 		$options = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
+		print_r($options);
+		die();
 		echo $twig->render($cmd[0].'.twig', $options);
 		break;
 
