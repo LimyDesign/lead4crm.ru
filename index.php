@@ -22,14 +22,15 @@ $cmd = array_values($requestURI);
 
 switch ($cmd[0]) {
 	case 'about-project':
-		$title = 'О проекте';
 	case 'about-us':
-		$title = 'О нас';
 	case 'price':
-		$title = 'Цены';
 	case 'support':
-		$title = 'Поддержка';
-	case 'generate-page':
+		switch ($cmd[0]) {
+			case 'about-project': $title = 'О проекте'; break;
+			case 'about-us': $title = 'О нас'; break;
+			case 'price': $title = 'Цены'; break;
+			case 'support': $title = 'Поддержка'; break;
+		}
 		$options = array(
 			'title' => $title,
 			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
