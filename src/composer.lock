@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "89c8bb0647c6ea5a646f4fecb0c2dc98",
+    "packages": [
+        {
+            "name": "pagon/jade",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hfcorriez/jade.php.git",
+                "reference": "c606c0f2cdcf8e2b93ad03b5c1e16e0d37d86a25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hfcorriez/jade.php/zipball/c606c0f2cdcf8e2b93ad03b5c1e16e0d37d86a25",
+                "reference": "c606c0f2cdcf8e2b93ad03b5c1e16e0d37d86a25",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Everzet\\Jade": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com",
+                    "homepage": "http://everzet.com"
+                },
+                {
+                    "name": "Corrie Zhao",
+                    "email": "hfcorriez@gmail.com",
+                    "homepage": "http://feiyang.me"
+                }
+            ],
+            "description": "Jade of Pagon",
+            "keywords": [
+                "jade",
+                "jade.php",
+                "template"
+            ],
+            "time": "2013-03-06 12:48:19"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

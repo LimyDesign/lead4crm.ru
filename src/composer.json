@@ -1,0 +1,5 @@
+{
+    "require": {
+        "pagon/jade": "^1.0"
+    }
+}
