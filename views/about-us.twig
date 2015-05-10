@@ -1,0 +1,42 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'layout/header.twig' %}
+</head>
+<body>
+	<div id="wraper">
+		{% include 'layout/menu.twig' %}
+		<section class="visual-other">
+			<div class="container">
+				<div class="text-block">
+					<div class="heading-holder">
+						<h1>О нас</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="text-box col-md-offset-1 col-md-10">
+						<h2>Кто мы?</h2>
+						<p>Мы небольшая группа единомышлинников, занимающаяся разработкой программного обеспечения, как в виде web-приложений, так и нативного для рабочих станций, планшетов и мобильных устройств. Также не в меньшем приоритете для нас является разработка серверного ПО для различных телекоммуникационных систем.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="text-box col-md-offset-1 col-md-10">
+						<h2>Работа у нас</h2>
+						<p>Имеете знания в области разработки приложений на языках PHP, JavaScript, Node.js, C, C++, C#, отлично понимаете структуру и синтаксис SQL: MySQL, PostgreSQL, MS SQL. Мы согласны и с вами разделить кусок пирога на равных условиях при вашем вложении сил, знаний и умений. Мы уверены, что многие из вас действительно достойные кандидаты, чтобы получить часть общей прибыли нашей компании.</p>
+						<p>Считаете себя именно таким? Пишите: <a href="mailto:bespalov@arsen.pw"> bespalov@arsen.pw</a> или звоните по телефону указанному ниже.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% include 'layout/footer.twig' %}
+	</div>
+	{% include 'layout/login.twig' %}
+	{% include 'layout/scripts.twig' %}
+</body>
+</html>
+{% endspaceless %}
