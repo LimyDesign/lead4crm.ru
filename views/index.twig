@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	{% extends 'layout/header.twig' %}
+	{% include 'layout/header.twig' %}
 </head>
 <body>
 	<div id="wrapper">
-		{# {% extends 'layout/menu.twig' %} #}
+		{# {% include 'layout/menu.twig' %} #}
 		<section class="visual">
 			<div class="container">
 				<div class="text-block">
@@ -261,9 +261,9 @@
 				</div>
 			</div>
 		</section>
-		{% extends 'layout/footer.twig' %}
+		{% include 'layout/footer.twig' %}
 	</div>
-	{% extends 'layout/login.twig' %}
-	{% extends 'layout/scripts.twig' %}
+	{% include 'layout/login.twig' %}
+	{% include 'layout/scripts.twig' %}
 </body>
 </html>
