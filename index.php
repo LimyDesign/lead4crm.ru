@@ -21,7 +21,7 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 $cmd = array_values($requestURI);
 
 $indexOptions = array('title' => 'Генератор лидов для Битрикс 24');
-$indexOptions = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
+$indexOptions = array_merge($indexOptions, arrayOAuthLoginURL());
 print_r($indexOptions);
 die();
 
