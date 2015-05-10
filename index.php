@@ -22,13 +22,27 @@ $cmd = array_values($requestURI);
 
 switch ($cmd[0]) {
 	case 'about-project':
-		$options = array('title' => 'О проекте');
+		$title = 'О проекте';
+	case 'about-us':
+		$title = 'О нас';
+	case 'price':
+		$title = 'Цены';
+	case 'support':
+		$title = 'Поддержка';
+		$options = array(
+			'title' => $title,
+			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 		$options = array_merge($indexOptions, arrayOAuthLoginURL(), arrayMenuUrl());
 		echo $twig->render($cmd[0].'.twig', $options);
 		break;
+
+	case 'cabinet':
+		break;
 	
 	default:
-		$options = array('title' => 'Генератор лидов для Битрикс 24');
+		$options = array(
+			'title' => 'Генератор лидов для Битрикс 24', 
+			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST']);
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		echo $twig->render('index.twig', $options);
 		break;
@@ -92,7 +106,7 @@ function arrayOAuthLoginURL() {
 
 function arrayMenuUrl() {
 	return array(
-		'mainpage_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/',
+		'mainpage_url' => 'http://' . $_SERVER['HTTP_HOST'],
 		'aboutproject_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-project/',
 		'aboutours_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-us/',
 		'prices_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/price/',
