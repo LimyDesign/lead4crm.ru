@@ -82,4 +82,8 @@ function arrayOAuthLoginURL() {
 		'mrlogin' => 'https://connect.mail.ru/oauth/authorize?' . $mrlogin,
 		'yalogin' => 'https://oauth.yandex.ru/authorize?' . $yandex);
 }
+
+function arrayMenuUrl() {
+	global $conf;
+}
 ?>
