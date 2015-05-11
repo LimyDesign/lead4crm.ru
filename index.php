@@ -26,13 +26,18 @@ if ($cmd[0]) {
 			logout();
 			break;
 
+		case 'getUserData':
+			isAuth();
+			getUserData();
+			break;
+
 		case 'cabinet':
+			isAuth();
 			$cOptions = array(
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
 				'links' => arrayOAuthLoginURL());
-			isAuth();
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -355,6 +360,20 @@ function dbLogin($userId, $userEmail, $provider) {
 			header("Location: /cabinet/");
 		}
 	}
+}
+
+function getUserData() {
+	header("Content-Type: text/json");
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select (sum(debet) - sum(credit)) as balans from log where uid = {$_SESSION['userid']}";
+		$result = pg_query($query);
+		$balans = pg_fetch_result($result, 0, 'balans');
+		$balans = $balans ? $balans : '0';
+	}
+	echo json_encode(array('balans' => @$balans, 'tariff' => @$tariff));
+	exit();
 }
 
 function isAuth() {
