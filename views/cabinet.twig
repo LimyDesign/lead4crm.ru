@@ -76,8 +76,28 @@
 					</div>
 					<div class="col-md-6">
 						<h3>&nbsp;</h3>
-						<h4>Не привязанные аккаунты</h4>
+						{% if not provider.fb or not provider.vk or not provider.gp or not provider.ok or not provider.mr or not provider.ya %}
+							<h4>Не привязанные аккаунты</h4>
+						{% endif %}
 						<h4>Привязанные аккаунты</h4>
+						{% if provider.fb %}
+							<a href="/unlink/fb/" class="btn btn-block btn-fb-color">Facebook</a>
+						{% endif %}
+						{% if provider.vk %}
+							<a href="/unlink/vk/" class="btn btn-block btn-vk-color">Вконтакте</a>
+						{% endif %}
+						{% if provider.gp %}
+							<a href="/unlink/gp/" class="btn btn-block btn-google-plus-color">Google+</a>
+						{% endif %}
+						{% if provider.ok %}
+							<a href="/unlink/ok/" class="btn btn-block btn-ok-color">Одноклассники</a>
+						{% endif %}
+						{% if provider.mr %}
+							<a href="/unlink/mr/" class="btn btn-block btn-mailru-color">Mail.Ru</a>
+						{% endif %}
+						{% if provider.ya %}
+							<a href="/unlink/ya/" class="btn btn-block btn-ya-color">Яндекс</a>
+						{% endif %}
 					</div>
 				</div>
 				<div class="row">
