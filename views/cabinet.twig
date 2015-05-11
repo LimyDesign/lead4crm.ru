@@ -100,7 +100,9 @@
 						<form action="/getInvoice/" method="post">
 							<div class="form-group">
 								<label for="inputCompany">Наименование юридического лица</label>
-								<input type="text" name="company" value='{{company|e(html_attr)}}' placeholder='ООО "Царь-Компания"' class="form-control" id="inputCompany">
+								<input type="text" name="companyname" value='{{company|e(html_attr)}}' placeholder='ООО "Царь-Компания"' class="form-control" id="inputCompany">
+								<label for="inputInvoiceSum">Сумма счета</label>
+								<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum">
 							</div>
 						</form>
 					</div>
