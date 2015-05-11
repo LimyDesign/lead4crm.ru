@@ -35,11 +35,12 @@ if ($cmd[0]) {
 				'title' => $title,
 				'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig'))
+			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig')) {
 				echo $twig->render($cmd[0].'.twig', $options);
-			else
+			} else {
 				header("HTTP/1.0 404 Not Found");
 				echo $twig->render('404.twig', $options);
+			}
 			break;
 
 		case 'cabinet':
