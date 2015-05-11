@@ -48,7 +48,8 @@ if ($cmd[0]) {
 	}
 } else {
 	$options = array(
-		'title' => 'Генератор лидов для Битрикс 24', 
+		'title' => 'Генератор лидов для Битрикс 24',
+		'userid' => $_SESSION['userid'],
 		'currentUrl' => 'http://' . $_SERVER['HTTP_HOST']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
