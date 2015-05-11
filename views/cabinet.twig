@@ -102,6 +102,8 @@
 								<label for="inputCompany">Наименование юридического лица</label>
 								<input type="text" name="companyname" value='{{company|e(html_attr)}}' placeholder='ООО "Царь-Компания"' class="form-control input-lg" id="inputCompany" aria-describedby="helpBlock">
 								<span id="helpBlock" class="help-block">Введите полное или сокращенное наименование компании, обязательно с указанием правовой формы, например: ООО "Царь-Компания".</span>
+							</div>
+							<div class="form-group">
 								<label for="inputInvoiceSum">Сумма счета</label>
 								<div class="input-group input-group-lg">
 									<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum" aria-describedby="helpBlock2">
@@ -109,6 +111,7 @@
 								</div>
 								<span id="helpBlock2" class="help-block">Введите сумму счета, которую планируете оплатить, при этом сумма не должна быть меньше 100 рублей.</span>
 							</div>
+							<button type="submit" class="btn btn-lg btn-primary">Выписать счет</button>
 						</form>
 					</div>
 				</div>
