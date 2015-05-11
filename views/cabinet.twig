@@ -243,7 +243,7 @@
 			var v = $(this).children().html();
 			var o = $(this).attr('id');
 			$('#'+i+' .selected').attr('id',o);
-			$('input[name="paymentType"]').val(i);
+			$('input[name="paymentType"]').val(o);
 			$('#'+i+' .selected').html(v);
 		});
 
