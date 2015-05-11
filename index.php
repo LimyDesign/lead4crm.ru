@@ -27,6 +27,8 @@ if ($cmd[0]) {
 			break;
 
 		case 'cabinet':
+			$cOptions = array(
+				'apikey' => $_SESSION['apikey']);
 			isAuth();
 
 		case $cmd[0]:
@@ -44,6 +46,10 @@ if ($cmd[0]) {
 				'userid' => $_SESSION['userid'],
 				'currentUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/');
 			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+			
+			if (count($cOptions) > 0)
+				$options = array_merge($options, $cOptions);
+
 			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig')) {
 				echo $twig->render($cmd[0].'.twig', $options);
 			} else {
@@ -314,16 +320,19 @@ function dbLogin($userId, $userEmail, $provider) {
 				$result = pg_query($query);
 				$userid = pg_fetch_result($result, 0, 'id');
 				$contract = pg_fetch_result($result, 0, 'contract');
+				$apikey = $state;
 			} else {
 				$userid = pg_fetch_result($result, 0, 'id');
 				$contract = pg_fetch_result($result, 0, 'contract');
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
+				$apikey = pg_fetch_result($result, 0, 'apikey');
 			}
 			$_SESSION['userid'] = $userid;
 			$_SESSION['contract'] = $contract;
 			$_SESSION['company'] = $company;
 			$_SESSION['is_admin'] = $is_admin;
+			$_SESSION['apikey'] = $apikey;
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
 			pg_close($db);
