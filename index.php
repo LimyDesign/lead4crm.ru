@@ -37,7 +37,9 @@ if ($cmd[0]) {
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
-				'links' => arrayOAuthLoginURL());
+				'links' => arrayOAuthLoginURL(),
+				'yaShopId' => $conf->payments->ShopID,
+				'yaSCId' => $conf->payments->SCID);
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
