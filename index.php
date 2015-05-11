@@ -374,7 +374,7 @@ function getUserData() {
 		$query = "select name from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
-		$tariff = $tariff ? $tariff : 'Демо';
+		$tariff = $tariff ? $tariff : 'Демо654';
 	}
 	echo json_encode(array('balans' => $balans, 'tariff' => $tariff));
 	exit();
