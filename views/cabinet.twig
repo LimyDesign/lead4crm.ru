@@ -133,6 +133,12 @@
 	</div>
 	{% include 'layout/login.twig' %}
 	{% include 'layout/scripts.twig' %}
+	<script src="/public/js/jquery.number.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#inputInvoiceSum').number(true, 2, '.', ' ');
+	});
+	</script>
 </body>
 </html>
 {% endspaceless %}
