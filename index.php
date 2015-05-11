@@ -30,7 +30,8 @@ if ($cmd[0]) {
 			$cOptions = array(
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
-				'provider' => getUserProvider());
+				'provider' => getUserProvider(),
+				'links' => arrayOAuthLoginURL());
 			isAuth();
 
 		case $cmd[0]:
