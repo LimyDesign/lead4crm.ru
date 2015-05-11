@@ -8,7 +8,11 @@
 		<nav id="nav">
 			<div class="opener-holder">
 				<a href="#" class="nav-opener"><span></span></a>
-				<a data-modal="modal-8" class="btn btn-primary md-trigger rounded">Войти</a>
+				{% if userid %}
+					<a href="/cabinet/" class="btn btn-primary md-trigger rounded">Кабинет</a>
+				{% else %}
+					<a data-modal="modal-8" class="btn btn-primary md-trigger rounded">Войти</a>
+				{% endif %}
 			</div>
 			<div class="nav-drop">
 				<ul>
