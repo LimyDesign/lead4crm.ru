@@ -239,6 +239,10 @@
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
 		selectText('apikey');
 
+		$('body').on('click', '#apikey', function(){
+			selectText('apikey');
+		});
+
 		$('body').on('click','.option li',function(){
 			var i = $(this).parents('.select').attr('id');
 			var v = $(this).children().html();
