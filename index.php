@@ -30,7 +30,7 @@ if ($cmd[0]) {
 			$cOptions = array(
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
-				'provider' => getUserProvider(),
+				'provider' => $_SESSION['provider'],
 				'links' => arrayOAuthLoginURL());
 			isAuth();
 
@@ -330,12 +330,19 @@ function dbLogin($userId, $userEmail, $provider) {
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
 				$apikey = pg_fetch_result($result, 0, 'apikey');
+				$vk = pg_fetch_result($result, 0, 'vk');
+				$ok = pg_fetch_result($result, 0, 'ok');
+				$fb = pg_fetch_result($result, 0, 'fb');
+				$gp = pg_fetch_result($result, 0, 'gp');
+				$mr = pg_fetch_result($result, 0, 'mr');
+				$ya = pg_fetch_result($result, 0, 'ya');
 			}
 			$_SESSION['userid'] = $userid;
 			$_SESSION['contract'] = $contract;
 			$_SESSION['company'] = $company;
 			$_SESSION['is_admin'] = $is_admin;
 			$_SESSION['apikey'] = $apikey;
+			$_SESSION['provider'] = array('vk' => $vk, 'ok' => $ok, 'fb' => $fb, 'gp' => $gp, 'mr' => $mr, 'ya' => $ya);
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
 			pg_close($db);
