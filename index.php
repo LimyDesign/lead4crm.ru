@@ -28,6 +28,7 @@ if ($cmd[0]) {
 				case 'about-us': $title = 'О нас'; break;
 				case 'price': $title = 'Цены'; break;
 				case 'support': $title = 'Поддержка'; break;
+				case 'login': getDataLogin($cmd[1]); exit(2);
 				default: $title = '404 - Страница не найдена'; break;
 			}
 			$options = array(
@@ -116,5 +117,24 @@ function arrayMenuUrl() {
 		'support_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/support/',
 		'cabinet_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/cabinet/'
 		);
+}
+
+functio getDataLogin($provider) {
+	switch ($provider) {
+		case 'facebook':
+		case 'vkontakte':
+		case 'odnoklassniki':
+		case 'google-plus':
+		case 'google-plus':
+		case 'mailru':
+			# code...
+			break;
+		
+		default:
+			header("HTTP/1.1 412 Precondition Failed");
+			header("Content-Type: text/plain");
+			echo "Необходимо указать тип авторизации";
+			break;
+	}
 }
 ?>
