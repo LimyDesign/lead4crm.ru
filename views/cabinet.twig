@@ -233,6 +233,7 @@
 	<script src="/public/js/jquery.number.min.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
+		$('#inputSum').number(true, 2, '.', ' ');
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
 
 		$('body').on('click','.option li',function(){
