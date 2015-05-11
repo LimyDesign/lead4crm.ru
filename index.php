@@ -181,7 +181,7 @@ function vklogin() {
 		'client_id' => $conf->provider->vkontakte->CLIENT_ID,
 		'client_secret' => $conf->provider->vkontakte->CLIENT_SECRET,
 		'code' => $_GET['code'],
-		'redirect_uri' => $redirect_uri
+		'redirect_uri' => $redirect_uri));
 	curl_setopt($curl, CURLOPT_URL, 'https://oauth.vk.com/access_token?'.$data);
 	$res = json_decode(curl_exec($curl));
 	dbLogin($res->user_id, $res->email, 'vk');
