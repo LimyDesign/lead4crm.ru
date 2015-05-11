@@ -38,6 +38,7 @@ if ($cmd[0]) {
 			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig'))
 				echo $twig->render($cmd[0].'.twig', $options);
 			else
+				header("HTTP/1.0 404 Not Found");
 				echo $twig->render('404.twig', $options);
 			break;
 
@@ -133,7 +134,7 @@ function getDataLogin($provider) {
 		default:
 			header("HTTP/1.1 412 Precondition Failed");
 			header("Content-Type: text/plain");
-			echo "Необходимо указать тип авторизации";
+			echo "Необходимо указать корректный тип авторизации.";
 			break;
 	}
 }
