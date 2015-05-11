@@ -327,7 +327,7 @@ function dbLogin($userId, $userEmail, $provider) {
 }
 
 function isAuth() {
-	if ($_SESSION['userid'] !== true) {
+	if (!$_SESSION['userid']) {
 		if ($_SERVER['HTTP_REFERER'])
 			$referer = $_SERVER['HTTP_REFERER'];
 		else
