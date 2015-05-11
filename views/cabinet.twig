@@ -104,9 +104,10 @@
 								<span id="helpBlock" class="help-block">Введите полное или сокращенное наименование компании, обязательно с указанием правовой формы, например: ООО "Царь-Компания".</span>
 								<label for="inputInvoiceSum">Сумма счета</label>
 								<div class="input-group">
-									<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum">
+									<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum" aria-describedby="helpBlock2">
 									<span class="input-group-addon" id="inputInvoiceSum"><i class="fa fa-rub"></i></span>
 								</div>
+								<span id="helpBlock2" class="help-block">Введите сумму счета, которую планируете оплатить, при этом сумма не должна быть меньше 100 рублей.</span>
 							</div>
 						</form>
 					</div>
