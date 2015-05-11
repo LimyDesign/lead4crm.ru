@@ -248,7 +248,13 @@
 		});
 
 		$('#yaform').submit(function(event) {
-			// if 
+			$('#sum').number(true, 2, '.', '');
+			if ($('#sum').val() >= 100) {
+				return true;
+			} else {
+				$('#sum').number(true, 2, '.', ' ');
+				return false;
+			}
 		});
 	});
 	</script>
