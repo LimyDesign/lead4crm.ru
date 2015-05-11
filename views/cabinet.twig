@@ -3,6 +3,13 @@
 <html>
 <head>
 	{% include 'layout/header.twig' %}
+	<style type="text/css" media="screen">
+		.select button {width:100%; text-align:left;}
+		.select .caret {position:absolute; right:10px; margin-top:10px;}
+		.select:last-child>.btn {border-top-left-radius:5px; border-bottom-left-radius:5px;}
+		.selected {padding-right:10px;}
+		.option {width:100%;}	
+	</style>
 </head>
 <body>
 	<div id="wraper">
@@ -95,7 +102,84 @@
 					<div class="col-md-6">
 						<h3>&nbsp;</h3>
 						<h4>Физическим лицам</h4>
-
+						<form action="https://money.yandex.ru/eshop.xml" method="post">
+							<input type="hidden" name="shopId" value="{{ yaShopId }}">
+							<input type="hidden" name="scid" value="{{ yaSCId }}">
+							<input type="hidden" name="customerNumber" value="{{ userid }}">
+							<div class="form-group">
+								<label>Выберите форму оплаты:</label>
+								<div class="input-group-btn select" id="select2">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="selected">
+											<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+											<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+											<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+											Оплата с произвольной банковской картой.
+										</span>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu option" role="menu">
+										<li id="1">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги">
+												Оплата из кошелька в Яндекс.Деньгах.
+											</a>
+										</li>
+										<li id="2">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+												<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+												<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+												Оплата с произвольной банковской карты.
+											</a>
+										</li>
+										<li id="3">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/beeline.png" alt="Билайн" data-toggle="tooltip" title="Билайн">
+												<img src="https://kassa.yandex.ru/style/gfx/megafon.png" alt="Мегафон" data-toggle="tooltip" title="Мегафон">
+												<img src="https://kassa.yandex.ru/style/gfx/mts.png" alt="МТС" data-toggle="tooltip" title="МТС">
+												Платеж со счета мобильного телефона.
+											</a>
+										</li>
+										<li id="4">
+											<a href="#">
+												Оплата наличными через кассы и терминалы.
+											</a>
+										</li>
+										<li id="5">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney">
+												Оплата из кошелька в системе WebMoney.
+											</a>
+										</li>
+										<li id="6">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/sberbank.png" alt="Сбербанк" data-toggle="tooltip" title="Сбербанк">
+												Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн.
+											</a>
+										</li>
+										<li id="6">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик">
+												Оплата через Альфа-Клик.
+											</a>
+										</li>
+										<li id="7">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/masterpass.png" alt="MasterPass" data-toggle="tooltip" title="MasterPass">
+												Оплата через MasterPass.
+											</a>
+										</li>
+										<li id="8">
+											<a href="#">
+												<img src="https://kassa.yandex.ru/style/gfx/psb.png" alt="Промсвязьбанк" data-toggle="tooltip" title="Промсвязьбанк">
+												Оплата через Промсвязьбанк.
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</form>
 						<h4>Юридическим лицам</h4>
 						<form action="/getInvoice/" method="post">
 							<div class="form-group">
@@ -140,6 +224,14 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
+
+		$('body').on('click','.option li',function(){
+			var i = $(this).parents('.select').attr('id');
+			var v = $(this).children().text();
+			var o = $(this).attr('id');
+			$('#'+i+' .selected').attr('id',o);
+			$('#'+i+' .selected').text(v);
+		});
 	});
 	</script>
 </body>
