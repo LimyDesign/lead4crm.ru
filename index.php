@@ -21,21 +21,26 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 $cmd = array_values($requestURI);
 
 switch ($cmd[0]) {
-	case 'about-project':
-	case 'about-us':
-	case 'price':
-	case 'support':
+	case $cmd[0]:
+	// case 'about-project':
+	// case 'about-us':
+	// case 'price':
+	// case 'support':
 		switch ($cmd[0]) {
 			case 'about-project': $title = 'О проекте'; break;
 			case 'about-us': $title = 'О нас'; break;
 			case 'price': $title = 'Цены'; break;
 			case 'support': $title = 'Поддержка'; break;
+			default: $title = '404 - Страница не найдена'; break;
 		}
 		$options = array(
 			'title' => $title,
 			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-		echo $twig->render($cmd[0].'.twig', $options);
+		if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig'))
+			echo $twig->render($cmd[0].'.twig', $options);
+		else
+			echo $twig->render('404.twig', $options);
 		break;
 
 	case 'cabinet':
