@@ -290,8 +290,8 @@ function yalogin() {
 
 function dbLogin($userId, $userEmail, $provider) {
 	global $conf;
-	if ($conf['db']['type'] == 'postgres') {
-		$db = pg_connect('dbname='.$conf['db']['database']) or die('Невозможно подключиться к БД: '.pg_last_error());
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 		if ($_SESSION['userid']) {
 			$query = "UPDATE users SET {$provider} = {$userId} WHERE id = {$_SESSION['userid']}";
 			$result = pg_query($query);
