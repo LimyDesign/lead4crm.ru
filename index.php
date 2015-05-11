@@ -334,7 +334,8 @@ function dbLogin($userId, $userEmail, $provider) {
 
 function isAuth() {
 	if (!$_SESSION['userid'])
-		header("Location: {$_SERVER['HTTP_REFERER']}/");
+		header("location:javascript://history.go(-1)");
+		// header("Location: {$_SERVER['HTTP_REFERER']}/");
 }
 
 function logout() {
