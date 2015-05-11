@@ -20,39 +20,35 @@ for ($i=0;$i<sizeof($scriptName);$i++)
 }
 $cmd = array_values($requestURI);
 
-switch ($cmd[0]) {
-	case $cmd[0]:
-	// case 'about-project':
-	// case 'about-us':
-	// case 'price':
-	// case 'support':
-		switch ($cmd[0]) {
-			case 'about-project': $title = 'О проекте'; break;
-			case 'about-us': $title = 'О нас'; break;
-			case 'price': $title = 'Цены'; break;
-			case 'support': $title = 'Поддержка'; break;
-			default: $title = '404 - Страница не найдена'; break;
-		}
-		$options = array(
-			'title' => $title,
-			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
-		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-		if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig'))
-			echo $twig->render($cmd[0].'.twig', $options);
-		else
-			echo $twig->render('404.twig', $options);
-		break;
+if ($cmd[0]) {
+	switch ($cmd[0]) {
+		case $cmd[0]:
+			switch ($cmd[0]) {
+				case 'about-project': $title = 'О проекте'; break;
+				case 'about-us': $title = 'О нас'; break;
+				case 'price': $title = 'Цены'; break;
+				case 'support': $title = 'Поддержка'; break;
+				default: $title = '404 - Страница не найдена'; break;
+			}
+			$options = array(
+				'title' => $title,
+				'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
+			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig'))
+				echo $twig->render($cmd[0].'.twig', $options);
+			else
+				echo $twig->render('404.twig', $options);
+			break;
 
-	case 'cabinet':
-		break;
-	
-	default:
-		$options = array(
-			'title' => 'Генератор лидов для Битрикс 24', 
-			'currentUrl' => 'http://' . $_SERVER['HTTP_HOST']);
-		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-		echo $twig->render('index.twig', $options);
-		break;
+		case 'cabinet':
+			break;
+	}
+} else {
+	$options = array(
+		'title' => 'Генератор лидов для Битрикс 24', 
+		'currentUrl' => 'http://' . $_SERVER['HTTP_HOST']);
+	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+	echo $twig->render('index.twig', $options);
 }
 
 function arrayOAuthLoginURL() {
