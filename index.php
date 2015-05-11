@@ -36,6 +36,7 @@ if ($cmd[0]) {
 			}
 			$options = array(
 				'title' => $title,
+				'userid' => $_SESSION['userid'],
 				'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
 			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig')) {
