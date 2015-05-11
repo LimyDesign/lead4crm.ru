@@ -28,7 +28,8 @@ if ($cmd[0]) {
 
 		case 'cabinet':
 			$cOptions = array(
-				'apikey' => $_SESSION['apikey']);
+				'apikey' => $_SESSION['apikey'],
+				'company' => $_SESSION['company']);
 			isAuth();
 
 		case $cmd[0]:

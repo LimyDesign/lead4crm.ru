@@ -28,10 +28,10 @@
 					<div class="nav-drop">
 						<ul>
 							<li>
-								Баланс: <span>0</span>&nbsp;<i class="fa fa-rub"></i>
+								Баланс: <span id="balans">0</span>&nbsp;<i class="fa fa-rub"></i>
 							</li>
 							<li>
-								Тарифный план: <span>Демо</span>
+								Тарифный план: <span id="tariff">Демо</span>
 							</li>
 						</ul>
 						<div class="drop-holder visible-sm visible-xs">
@@ -260,6 +260,11 @@
 				$('#sum').number(true, 2, '.', ' ');
 				return false;
 			}
+		});
+
+		$.post('/getUserData/', function(data) {
+			$('#balans').number(data.balans, 2, '.', ' ');
+			$('#tariff').text(data.tariff);
 		});
 	});
 
