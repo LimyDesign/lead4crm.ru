@@ -28,7 +28,7 @@ if ($cmd[0]) {
 
 		case 'cabinet':
 			isAuth();
-			
+
 		case $cmd[0]:
 			switch ($cmd[0]) {
 				case 'about-project': $title = 'О проекте'; break;
@@ -42,7 +42,7 @@ if ($cmd[0]) {
 			$options = array(
 				'title' => $title,
 				'userid' => $_SESSION['userid'],
-				'currentUrl' => 'http://' . $_SERVER['HTTP_HOST'] . '/' . $cmd[0] . '/');
+				'currentUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/');
 			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig')) {
 				echo $twig->render($cmd[0].'.twig', $options);
@@ -56,7 +56,7 @@ if ($cmd[0]) {
 	$options = array(
 		'title' => 'Генератор лидов для Битрикс 24',
 		'userid' => $_SESSION['userid'],
-		'currentUrl' => 'http://' . $_SERVER['HTTP_HOST']);
+		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
 }
@@ -74,7 +74,7 @@ function arrayOAuthLoginURL() {
 	$vklogin = http_build_query(array(
 		'client_id' => $conf->provider->vkontakte->CLIENT_ID,
 		'scope' => 'email',
-		'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login/vkontakte/',
+		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/vkontakte/',
 		'response_type' => 'code',
 		'v' => '5.29',
 		'state' => $state,
@@ -83,17 +83,17 @@ function arrayOAuthLoginURL() {
 		'client_id' => $conf->provider->odnoklassniki->CLIENT_ID,
 		'scope' => 'GET_EMAIL',
 		'response_type' => 'code',
-		'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login/odnoklassniki/',
+		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/odnoklassniki/',
 		'state' => $state));
 	$fblogin = http_build_query(array(
 		'client_id' => $conf->provider->facebook->CLIENT_ID,
 		'scope' => 'email',
-		'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login/facebook/',
+		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/facebook/',
 		'response_type' => 'code'));
 	$gplogin = http_build_query(array(
 		'client_id' => $conf->provider->{google-plus}->CLIENT_ID,
 		'scope' => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-		'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login/google-plus/',
+		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/google-plus/',
 		'response_type' => 'code',
 		'state' => $state,
 		'access_type' => 'online',
@@ -103,7 +103,7 @@ function arrayOAuthLoginURL() {
 	$mrlogin = http_build_query(array(
 		'client_id' => $conf->provider->mailru->CLIENT_ID,
 		'response_type' => 'code',
-		'redirect_uri' => 'http://' . $_SERVER['HTTP_HOST'] . '/login/mailru/'));
+		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/mailru/'));
 	$yalogin = http_build_query(array(
 		'client_id' => $conf->provider->yandex->CLIENT_ID,
 		'response_type' => 'code',
@@ -119,12 +119,12 @@ function arrayOAuthLoginURL() {
 
 function arrayMenuUrl() {
 	return array(
-		'mainpage_url' => 'http://' . $_SERVER['HTTP_HOST'],
-		'aboutproject_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-project/',
-		'aboutours_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/about-us/',
-		'prices_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/price/',
-		'support_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/support/',
-		'cabinet_url' => 'http://' . $_SERVER['HTTP_HOST'] . '/cabinet/'
+		'mainpage_url' => 'http://' . $_SERVER['SERVER_NAME'],
+		'aboutproject_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/about-project/',
+		'aboutours_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/about-us/',
+		'prices_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/price/',
+		'support_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/support/',
+		'cabinet_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
 		);
 }
 
@@ -164,7 +164,7 @@ function getDataLogin($provider) {
 
 function fblogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/login/facebook/';
+	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/facebook/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -181,7 +181,7 @@ function fblogin() {
 
 function vklogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/login/vkontakte/';
+	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/vkontakte/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -196,7 +196,7 @@ function vklogin() {
 
 function gplogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/login/google-plus/';
+	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/google-plus/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data =  http_build_query(array(
@@ -217,7 +217,7 @@ function gplogin() {
 
 function oklogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/login/odnoklassniki/';
+	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/odnoklassniki/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -249,7 +249,7 @@ function oklogin() {
 
 function mrlogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['HTTP_HOST'].'/login/mailru/';
+	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/mailru/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -333,13 +333,8 @@ function dbLogin($userId, $userEmail, $provider) {
 }
 
 function isAuth() {
-	if (!$_SESSION['userid']) {
-		if ($_SERVER['HTTP_REFERER'])
-			$referer = $_SERVER['HTTP_REFERER'];
-		else
-			$referer = '';
-		header("Location: {$referer}/");
-	}
+	if (!$_SESSION['userid'])
+		header("Location: {$_SERVER['HTTP_REFERER']}/");
 }
 
 function logout() {
