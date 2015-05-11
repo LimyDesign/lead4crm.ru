@@ -22,8 +22,13 @@ $cmd = array_values($requestURI);
 
 if ($cmd[0]) {
 	switch ($cmd[0]) {
+		case 'logout':
+			logout();
+			break;
+
 		case 'cabinet':
 			isAuth();
+			
 		case $cmd[0]:
 			switch ($cmd[0]) {
 				case 'about-project': $title = 'О проекте'; break;
