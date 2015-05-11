@@ -371,8 +371,12 @@ function getUserData() {
 		$result = pg_query($query);
 		$balans = pg_fetch_result($result, 0, 'balans');
 		$balans = $balans ? $balans : '0';
+		$query = "select name from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
+		$result = pg_query($query);
+		$tariff = pg_fetch_result($result, 0, 'name');
+		$tariff = $tariff ? $tariff : 'Демо';
 	}
-	echo json_encode(array('balans' => @$balans, 'tariff' => @$tariff));
+	echo json_encode(array('balans' => $balans, 'tariff' => $tariff));
 	exit();
 }
 
