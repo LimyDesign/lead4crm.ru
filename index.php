@@ -319,7 +319,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$result = pg_query($query);
 			if (pg_num_rows($result) != 1) {
 				$state = sha1($_SERVER['HTTP_USER_AGENT'].time());
-				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '$state') RETURNING id, contract";
+				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '{$state}') RETURNING id, contract";
 				$result = pg_query($query);
 				$userid = pg_fetch_result($result, 0, 'id');
 				$contract = pg_fetch_result($result, 0, 'contract');
