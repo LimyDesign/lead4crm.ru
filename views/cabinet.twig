@@ -1,0 +1,110 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'layout/header.twig' %}
+</head>
+<body>
+	<div id="wraper">
+		<header id="header">
+			<div class="container">
+				<div class="logo">
+					<a href="{{mainpage_url}}">
+						<img src="/public/images/logo.svg">
+					</a>
+				</div>
+				<nav id="nav">
+					<div class="opener-holder">
+						<a href="#" class="nav-opener"><span></span></a>
+						<a href="/logout/" class="btn btn-primary md-trigger rounded">Выход</a>
+					</div>
+					<div class="nav-drop">
+						<ul>
+							<li>
+								Баланс: <span>0</span> <i class="fa fa-rub"></i>
+							</li>
+							<li>
+								Тарифный план: <span>Демо</span>
+							</li>
+						</ul>
+						<div class="drop-holder visible-sm visible-xs">
+							<span>Следите</span>
+							<ul class="social-networks">
+								<li>
+									<a href="https://www.facebook.com/lead4crm" class="fa fa-facebook"></a>
+								</li>
+								<li>
+									<a href="http://vk.com/lead4crm" class="fa fa-vk"></a>
+								</li>
+								<li>
+									<a href="https://plus.google.com/114159806572244188963" class="fa fa-google-plus"></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</header>
+		<section class="visual-other">
+			<div class="container">
+				<div class="text-block">
+					<div class="heading-holder">
+						<h1>Личный кабинет</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2>Добрый день!</h2>
+						<p>Здесь храняться данные о вашей учетной записи, привязанных социальных профилях, текущем остатке на лицевом счету и текущий тарифный план. Остальное вы найдете непосредственной в самой CRM. Мы постарались сделать все очень очень простым, но тем не менее, если вдруг у Вас возникнут вопросы, позвоните нам и мы проконсультируем вас.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Ваши социальные аккаунты</h3>
+						<p>Через эти социальные аккаунты вы сможете входить в свой личный кабинет. Если вы впервые авторизовались и у вас несколько аккаунтов, мы рекомендуем подключить все, для занчительного упрощения при следующих авторизациях, в том числе чтобы в следующий раз заходя на наш сайт вы смогли попасть в свой старый аккаунт, а не создать новый, где снова придется вносить деньги на баланс и снова придется менять параметры в вашей CRM.</p>
+					</div>
+					<div class="col-md-6">
+						<h4>Не привязанные аккаунты</h4>
+						<h4>Привязанные аккаунты</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Ключ доступа</h3>
+						<p>Это ваш ключ доступа к нашей системе, для того, чтобы модуль начал работать необходимо ввести этот ключ в настройках нашего модуля. Во время установки вы явно видели форму, где необходимо было это сделать. Скопируйте и вставьте этот ключ в поле "Ключ доступа" в настройках модуля "Генератор лидов".</p>
+					</div>
+					<div class="col-md-6">
+						<h3>&nbsp;</h3>
+						<div class="well">
+							<h4 class="text-center">{{apikey}}</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="area">
+			<div class="container">
+				<div class="subscribe">
+					<h3>Выберите тарифный план</h3>
+					<form class="form-inline">
+						<button type="submit" class="btn btn-primary rounded">Изменить</button>
+						<div class="form-group">
+							<select name="tariff" class="form-control">
+								<option>[ Выберите подходящий тариф ]</option>
+							</select>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+		{% include 'layout/footer.twig' %}
+	</div>
+	{% include 'layout/login.twig' %}
+	{% include 'layout/scripts.twig' %}
+</body>
+</html>
+{% endspaceless %}
