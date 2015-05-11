@@ -291,11 +291,11 @@
 		});
 
 		$('#yaform').submit(function(event) {
-			$('#sum').number(true, 2, '.', '');
-			if ($('#sum').val() >= 100) {
+			$('#inputSum').number(true, 2, '.', '');
+			if ($('#inputSum').val() >= 100) {
 				return true;
 			} else {
-				$('#sum').number(true, 2, '.', ' ');
+				$('#inputSum').number(true, 2, '.', ' ');
 				return false;
 			}
 		});
