@@ -22,12 +22,15 @@ $cmd = array_values($requestURI);
 
 if ($cmd[0]) {
 	switch ($cmd[0]) {
+		case 'cabinet':
+			isAuth();
 		case $cmd[0]:
 			switch ($cmd[0]) {
 				case 'about-project': $title = 'О проекте'; break;
 				case 'about-us': $title = 'О нас'; break;
 				case 'price': $title = 'Цены'; break;
 				case 'support': $title = 'Поддержка'; break;
+				case 'cabinet': $title = 'Личный кабинет'; break;
 				case 'login': getDataLogin($cmd[1]); exit(2);
 				default: $title = '404 - Страница не найдена'; break;
 			}
@@ -41,9 +44,6 @@ if ($cmd[0]) {
 				header("HTTP/1.0 404 Not Found");
 				echo $twig->render('404.twig', $options);
 			}
-			break;
-
-		case 'cabinet':
 			break;
 	}
 } else {
@@ -322,6 +322,16 @@ function dbLogin($userId, $userEmail, $provider) {
 			pg_close($db);
 			header("Location: /cabinet/");
 		}
+	}
+}
+
+function isAuth() {
+	if ($_SESSION['userid'] !== true) {
+		if ($_SERVER['HTTP_REFERER'])
+			$referer = $_SERVER['HTTP_REFERER'];
+		else
+			$referer = '';
+		header("Location: {$referer}/");
 	}
 }
 ?>
