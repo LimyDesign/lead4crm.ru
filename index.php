@@ -119,7 +119,7 @@ function arrayMenuUrl() {
 		);
 }
 
-functio getDataLogin($provider) {
+function getDataLogin($provider) {
 	switch ($provider) {
 		case 'facebook':
 		case 'vkontakte':
