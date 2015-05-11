@@ -336,4 +336,9 @@ function isAuth() {
 		header("Location: {$referer}/");
 	}
 }
+
+function logout() {
+	session_destroy();
+	header("Location: /");
+}
 ?>
