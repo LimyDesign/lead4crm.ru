@@ -103,7 +103,10 @@
 								<input type="text" name="companyname" value='{{company|e(html_attr)}}' placeholder='ООО "Царь-Компания"' class="form-control" id="inputCompany" aria-describedby="helpBlock">
 								<span id="helpBlock" class="help-block">Введите полное или сокращенное наименование компании, обязательно с указанием правовой формы, например: ООО "Царь-Компания".</span>
 								<label for="inputInvoiceSum">Сумма счета</label>
-								<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum">
+								<div class="input-group">
+									<input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum">
+									<span class="input-group-addon" id="inputInvoiceSum"><i class="fa fa-rub"></i></span>
+								</div>
 							</div>
 						</form>
 					</div>
