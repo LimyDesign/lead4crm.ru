@@ -1,0 +1,80 @@
+<p><b><u>ИП Беспалов Арсен Георгиевич</u></b></p>
+<p><b>Адрес: 664048, Иркутская обл, Иркутск г, Севастопольская ул, д. 253, кв. 57, тел.: (499) 704-69-17</b></p>
+<div align="center"><b>Образец заполнения платежного поручения</b></div>
+<table border="1" cellpadding="1" cellspacing="0">
+	<tr>
+		<td width="50mm">ИНН 381004151548</td>
+		<td width="43mm">КПП</td>
+		<td width="13mm" align="center" rowspan="2"><br/><br/><br/>Сч. №</td>
+		<td width="55mm" rowspan="2"><br/><br/><br/>40802810618350007723</td>
+	</tr>
+	<tr>
+		<td width="93mm" colspan="2">Получатель<br/>ИП Беспалов Арсен Георгиевич</td>
+	</tr>
+	<tr>
+		<td width="93mm" colspan="2" rowspan="2">Банк получателя<br/>БАЙКАЛЬСКИЙ БАНК СБЕРБАНКА РОССИИ г. ИРКУТСК</td>
+		<td width="13mm" align="center">БИК</td>
+		<td width="55mm" rowspan="2">042520607<br>30101810900000000607</td>
+	</tr>
+	<tr>
+		<td width="13mm" align="center">Сч. №</td>
+	</tr>
+</table>
+
+<h1 align="center">СЧЕТ № {{ invoice_number }} от {{ invoice_date }}</h1>
+<p>&nbsp;</p>
+<table border="0" cellpadding="1" cellspacing="0">
+	<tr>
+		<td width="30mm">&nbsp;Плательщик:</td>
+		<td>{{ client_company }}</td>
+	</tr>
+	<tr>
+		<td width="30mm">&nbsp;Грузополучатель:</td>
+		<td>{{ client_company }}</td>
+	</tr>
+</table>
+&nbsp;<br/>
+<table border="1" cellpadding="1" cellspacing="0">
+	<tr>
+		<td width="7mm" align="center" style="line-height:12mm;">№</td>
+		<td width="71mm" align="center" style="line-height:8mm;"><span style="line-height:4mm">Наименование<br/>товара</span></td>
+		<td width="15mm" align="center">Еденица изме-рения</td>
+		<td width="13mm" align="center" style="line-height:8mm;"><span style="line-height:4mm">Коли-чество</span></td>
+		<td width="27mm" align="center" style="line-height:12mm;">Цена</td>
+		<td width="28mm" align="center" style="line-height:12mm;">Сумма</td>
+	</tr>
+	<tr>
+		<td align="right">1</td>
+		<td>Авансовый платеж за оказание информационных услуг речез Интернет-ресурс www.cnamrf.ru на лицевой счет № {{ userid }}</td>
+		<td align="center"></td>
+		<td align="right">1</td>
+		<td align="right">{{ price }}</td>
+		<td align="right">{{ summ }}</td>
+	</tr>
+</table>
+<table border="0" cellpadding="1" cellspacing="0">
+	<tr>
+		<td width="133mm" align="right"><b>Итого:</b></td>
+		<td width="28mm" align="right" border="1"><b>{{ total }}</b></td>
+	</tr>
+	<tr>
+		<td width="133mm" align="right"><b>Без налога (НДС):</b></td>
+		<td width="28mm" align="center" border="1"><b>-</b></td>
+	</tr>
+	<tr>
+		<td width="133mm" align="right"><b>Всего к оплате:</b></td>
+		<td width="28mm" align="right" border="1"><b>{{ total }}</b></td>
+	</tr>
+</table>
+<p>
+	Всего наименований 1, на сумму {{ summ_alt }}<br/>
+	<b>{{ summ_text }}</b>
+</p>
+<p>
+	&nbsp;<br/>
+	Руководитель предприятия _______________________ (Беспалов А.Г.)
+</p>
+<p>
+	&nbsp;<br/>
+	Главный бухгалтер ______________________________ ( )
+</p>
