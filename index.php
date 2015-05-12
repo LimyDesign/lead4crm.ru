@@ -426,6 +426,12 @@ function generateInvoice($userSumm, $userCompany) {
 	$pdf->writeHTML($html, true, 0, true, 0);
 	$pdf->Image(K_PATH_IMAGES . 'print_trans.png', 21, 140, 40, '', '', '', '', false);
 	$pdf->Image(K_PATH_IMAGES . 'sign_trans.png', 50, 124, 60, '', '', '', '', false);
+	$pdf->SetLineStyle(array('width' => 0.5, 'cap' => 'butt', 'join' => 'miter', 'dash' => 4, 'color' => array(255,0,0)));
+	$pdf->SetFillColor(255,255,128);
+	$pdf->SetTextColor(0,0,128);
+	$text = 'ВНИМАНИЕ! После оплаты отправьте платежное поручение по адресу: support@lead4crm.ru';
+	$pdf->Cell(0, 0, $text, 1, 1, 'L', 1, 0);
+
 	$pdf->lastPage();
 	$pdf->Output("Счет L4CRM-{$invoice_num}.pdf", 'D');
 }
