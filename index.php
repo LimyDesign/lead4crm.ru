@@ -390,11 +390,11 @@ function getUserData() {
 function generateInvoice($userSumm, $userCompany) {
 	global $pdf, $twig;
 
-	$pdf->SetCreator('CNAM RF');
+	$pdf->SetCreator('Lead4CRM');
 	$pdf->SetAuthor('Arsen Bespalov');
-	$pdf->SetTitle('CNAM RF Invoice');
+	$pdf->SetTitle('Lead4CRM Invoice');
 	$pdf->SetSubject('Invoice');
-	$pdf->SetKeywords('CNAM, invoice');
+	$pdf->SetKeywords('lead4crm, invoice');
 
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);

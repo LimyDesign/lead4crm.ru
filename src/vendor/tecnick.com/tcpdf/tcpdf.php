@@ -7700,17 +7700,19 @@ class TCPDF {
 					header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 					header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 					// force download dialog
-					if (strpos(php_sapi_name(), 'cgi') === false) {
-						header('Content-Type: application/force-download');
-						header('Content-Type: application/octet-stream', false);
-						header('Content-Type: application/download', false);
-						header('Content-Type: application/pdf', false);
-					} else {
-						header('Content-Type: application/pdf');
-					}
+					header('X-Accel-Redirect: ' . $name);
+					header('Content-Type: application/pdf');
+					// if (strpos(php_sapi_name(), 'cgi') === false) {
+					// 	header('Content-Type: application/force-download');
+					// 	header('Content-Type: application/octet-stream', false);
+					// 	header('Content-Type: application/download', false);
+					// 	header('Content-Type: application/pdf', false);
+					// } else {
+					// 	header('Content-Type: application/pdf');
+					// }
 					// use the Content-Disposition header to supply a recommended filename
 					header('Content-Disposition: attachment; filename="'.basename($name).'"');
-					header('Content-Transfer-Encoding: binary');
+					// header('Content-Transfer-Encoding: binary');
 					TCPDF_STATIC::sendOutputData(file_get_contents($name), filesize($name));
 				}
 				break;
