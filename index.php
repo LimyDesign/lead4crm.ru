@@ -431,7 +431,7 @@ function generateInvoice($userSumm, $userCompany) {
 	$pdf->SetFillColor(255,255,128);
 	$pdf->SetTextColor(0,0,128);
 	$text = 'ВНИМАНИЕ! После оплаты отправьте платежное поручение по адресу: support@lead4crm.ru';
-	$pdf->Ln(20);
+	$pdf->Ln(30);
 	$pdf->Cell(0, 10, $text, 1, 1, 'L', 1, 0);
 
 	$pdf->lastPage();
