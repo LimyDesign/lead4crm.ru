@@ -388,7 +388,7 @@ function getUserData() {
 }
 
 function generateInvoice($userSumm, $userCompany) {
-	global $pdf, $twig, $conf;
+	global $pdf, $twig;
 
 	$pdf->SetCreator('CNAM RF');
 	$pdf->SetAuthor('Arsen Bespalov');
@@ -432,8 +432,8 @@ function generateInvoice($userSumm, $userCompany) {
 
 function writeInvoice($num, $sum, $system = 'bank') {
 	global $conf;
-	if ($conf['db']['type'] == 'postgres') {
-		$db = pg_connect('dbname='.$conf['db']['database']) or die('Невозможно подключиться к БД: '.pg_last_error());
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "insert into invoices (invoice, uid, sum, system) values ({$num}, {$_SESSION['userid']}, '{$sum}', '{$system}')";
 		pg_query($query);
 		pg_close($db);
@@ -444,8 +444,8 @@ function writeInvoice($num, $sum, $system = 'bank') {
 function setUserCompany($company) {
 	global $conf;
 	if ($company != $_SESSION['company']) {
-		if ($conf['db']['type'] == 'postgres') {
-			$db = pg_connect('dbname='.$conf['db']['database']) or die('Невозможно подключиться к БД: '.pg_last_error());
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 			$company = pg_escape_string($company);
 			$query = "update users set company = '{$company}' where id = {$_SESSION['userid']}";
 			pg_query($query);
