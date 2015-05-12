@@ -7691,14 +7691,14 @@ class TCPDF {
 					if (ob_get_contents()) {
 						$this->Error('Some data has already been output, can\'t send PDF file');
 					}
-					header('Content-Description: File Transfer');
+					// header('Content-Description: File Transfer');
 					if (headers_sent()) {
 						$this->Error('Some data has already been output to browser, can\'t send PDF file');
 					}
-					header('Cache-Control: private, must-revalidate, post-check=0, pre-check=0, max-age=1');
-					header('Pragma: public');
-					header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-					header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+					// header('Cache-Control: private, must-revalidate, post-check=0, pre-check=0, max-age=1');
+					// header('Pragma: public');
+					// header('Expires: Sat, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+					// header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 					// force download dialog
 					header('X-Accel-Redirect: ' . $name);
 					header('Content-Type: application/pdf');
