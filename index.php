@@ -435,7 +435,7 @@ function generateInvoice($userSumm, $userCompany) {
 	$pdf->Cell(0, 10, $text, 1, 1, 'L', 1, 0);
 
 	$pdf->lastPage();
-	$pdf->Output("Invoice_L4CRM-{$invoice_num}.pdf", 'D');
+	$pdf->Output("Invoice_L4CRM-{$invoice_num}.pdf", 'FD');
 }
 
 function writeInvoice($num, $sum, $system = 'bank') {
