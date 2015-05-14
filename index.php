@@ -53,7 +53,8 @@ if ($cmd[0]) {
 				'provider' => $_SESSION['provider'],
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
-				'yaSCId' => $conf->payments->SCID);
+				'yaSCId' => $conf->payments->SCID,
+				'tariffs' => getUserTariff());
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -584,7 +585,6 @@ function yandexPayments($cmd) {
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 			$query = "select id, uid, invoice, sum from invoices where uid = {$yaCustomerNumber} and invoice = {$yaInvoiceId} and sum = {$yaOrderSumAmount}";
-			// file_put_contents('query.log', $query);
 			$result = pg_query($query);
 			$iid = pg_fetch_result($result, 0, 'id');
 			$uid = pg_fetch_result($result, 0, 'uid');
@@ -618,6 +618,22 @@ function yandexPayments($cmd) {
 	}
 	echo $response;
 	exit();
+}
+
+function getUserTariff() {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select * from tariff where domain = 'lead4crm.ru' and sum <= (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']})";
+		$result = pg_query($query);
+		while ($row = pg_fetch_assoc($result)) {
+			$tariffs[$row['id']] = $row['name'];
+			$tariffs[$row['id']] = $row['code'];
+		}
+		pg_free_result($result);
+		pg_close($db);
+	}
+	return $tariffs;
 }
 
 function russian_date() {
