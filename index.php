@@ -630,7 +630,7 @@ function getUserTariff() {
 			$tariffs[$row['id']]['name'] = $row['name'];
 			$tariffs[$row['id']]['code'] = $row['code'];
 			$tariffs[$row['id']]['price'] = $row['price'];
-			$tariffs[$row['id']]['sum'] = $row['sum'];
+			$tariffs[$row['id']]['sum'] = number_format($row['sum'], 2, '.', ' ');
 		}
 		pg_free_result($result);
 		pg_close($db);

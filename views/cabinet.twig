@@ -268,7 +268,7 @@
 							<select name="tariff" class="form-control">
 								<option value="demo">[ Выберите подходящий тариф ]</option>
 								{% for tariff in tariffs %}
-									<option value="{{tariff.code}}">{{tariff.name}} ({{tariff.sum}})</option>
+									<option value="{{tariff.code}}">{{tariff.name}} ({{tariff.sum}} <i class="fa fa-rub"></i>)</option>
 								{% endfor %}
 							</select>
 						</div>
