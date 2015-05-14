@@ -327,8 +327,12 @@
 
 		$('#tariffForm').submit(function(event) {
 			event.preventDefault();
-			if ($('select[name="tariff"]').val() != 'demo')
+			if ($('select[name="tariff"]').val() != 'demo') {
 				$('#tariffModal').modal('show');
+				$('#tariffModal').find('#ok').on('click', function() {
+					alert('fuck');
+				});
+			}
 		});
 
 		$.post('/getUserData/', function(data) {
