@@ -584,7 +584,7 @@ function yandexPayments($cmd) {
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 			$query = "select id, uid, invoice, sum from invoices where uid = {$yaCustomerNumber} and invoice = {$yaInvoiceId} and sum = {$yaOrderSumAmount}";
-			// file_put_contents('query.log', $query);
+			file_put_contents('query.log', $query);
 			$result = pg_query($query);
 			$iid = pg_fetch_result($result, 0, 'id');
 			$uid = pg_fetch_result($result, 0, 'uid');
