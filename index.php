@@ -36,6 +36,10 @@ if ($cmd[0]) {
 			generateInvoice($_POST['invoicesum'], $_POST['companyname']);
 			break;
 
+		case 'payment':
+			yandexPayments($cmd[1]);
+			break;
+
 		case 'cabinet':
 			isAuth();
 			$cOptions = array(
@@ -463,6 +467,137 @@ function setUserCompany($company) {
 		}
 	}
 	return $company;
+}
+
+function yandexPayments($cmd) {
+	global $conf;
+	
+	$performedDatetime = date(DATE_W3C);
+
+	$message = 'Что-то пошло не так!';
+	$techMessage = 'Вернитесь назад и попробуйте снова. Возможно на этапе проведения платежа потерялось часть данных.';
+	
+	$shopId = $conf->payments->ShopID;
+	$shopPassword = $conf->payments->ShopPassword;
+
+	$yaAction = $_POST['action'];
+	$yaOrderSumAmount = $_POST['orderSumAmount'];
+	$yaOrderSumCurrencyPaycash = $_POST['orderSumCurrencyPaycash'];
+	$yaOrderSumBankPaycash = $_POST['orderSumBankPaycash'];
+	$yaShopId = $_POST['shopId'];
+	$yaInvoiceId = $_POST['invoiceId'];
+	$yaCustomerNumber = $_POST['customerNumber'];
+	$yaMD5 = $_POST['md5'];
+	$yaPaymentType = $_POST['paymentType'];
+
+	switch ($yaPaymentType) {
+		case 'PC':
+			$client = 'Яндекс.Деньги: Счет № ';
+			break;
+		case 'AC':
+			$client = 'Банковская карта: Счет № ';
+			break;
+		case 'MC':
+			$client = 'Мобильный телефон: Счет № ';
+			break;
+		case 'GP':
+			$client = 'Наличные: Счет № ';
+			break;
+		case 'WM':
+			$client = 'WebMoney: Счет № ';
+			break;
+		case 'SB':
+			$client = 'Сбербанк: Счет № ';
+			break;
+		case 'AB':
+			$client = 'Альфа-Клик: Счет № ';
+			break;
+		case 'МА':
+			$client = 'MasterPass: Счет № ';
+			break;
+		case 'PB':
+			$client = 'Промсвязьбанк: Счет № ';
+			break;
+	}
+
+	header('Content-Type: application/xml');
+	$response = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+
+	if ($cmd == 'check')
+	{
+		$checkOrderStr = array(
+			$yaAction,
+			$yaOrderSumAmount,
+			$yaOrderSumCurrencyPaycash,
+			$yaOrderSumBankPaycash,
+			$shopId,
+			$yaInvoiceId,
+			$yaCustomerNumber,
+			$shopPassword);
+		$md5 = strtoupper(md5(implode(';', $checkOrderStr)));
+
+		if ($md5 != $yaMD5) {
+			$code = '100';
+		} else {
+			$code = '0';
+			if ($conf->db->type == 'postgres') {
+				$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+				$system = 'yamoney:'.$_POST['paymentType'];
+				$query = "insert into invoices (invoice, uid, sum, system) values ({$yaInvoiceId}, {$yaCustomerNumber}, {$yaOrderSumAmount}, '{$system}')";
+				$result = pg_query($query);
+				$iid = pg_fetch_result($result, 0, 'id');
+				pg_free_result($result);
+				$query = "insert into log (uid, debet, client, invoice) values ({$yaInvoiceId}, {$yaOrderSumAmount}, '{$client}', {$iid})";
+				pg_query($query);
+				pg_close($db);
+			}
+		}
+
+		if ($code) {
+			$error_msg = "message=\"{$message}\" techMessage=\"{$techMessage}\"";
+		}
+
+		$response .= "<checkOrderResponse performedDatetime=\"{$performedDatetime}\" code=\"{$code}\" invoiceId=\"{$yaInvoiceId}\" shopId=\"{$yaShopId}\" {$error_msg} />";
+	} 
+	elseif ($cmd == 'aviso') 
+	{
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+			$query = "select id, uid, invoice, sum from invoices where uid = {$yaCustomerNumber} and invoice = {$yaInvoiceId} and sum = {$yaOrderSumAmount}";
+			// file_put_contents('query.log', $query);
+			$result = pg_query($query);
+			$iid = pg_fetch_result($result, 0, 'id');
+			$uid = pg_fetch_result($result, 0, 'uid');
+			$invoice = pg_fetch_result($result, 0, 'invoice');
+			$sum = pg_fetch_result($result, 0, 'sum');
+			pg_free_result($result);
+			if ($iid) {
+				$checkOrderStr = array(
+					$yaAction,
+					number_format($sum, 2, '.', ''),
+					$yaOrderSumCurrencyPaycash,
+					$yaOrderSumBankPaycash,
+					$shopId,
+					$invoice,
+					$uid,
+					$shopPassword);
+				$md5 = strtoupper(md5(implode(';', $checkOrderStr)));
+				if ($md5 != $yaMD5) {
+					$code = '1';
+				} else {
+					$code = '0';
+					$query = "insert into log (uid, debet, client, invoice) values ({$uid}, {$sum}, '{$client}', {$iid})";
+					pg_query($query);
+				}
+			} else {
+				$code = '200';
+			}
+			pg_close($db);
+		}
+		$response .= "<paymentAvisoResponse performedDatetime=\"{$performedDatetime}\" code=\"{$code}\" invoiceId=\"{$yaInvoiceId}\" shopId=\"{$yaShopId}\"/>";
+	}
+	echo $response;
+	exit();
 }
 
 function russian_date() {
