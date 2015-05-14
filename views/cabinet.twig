@@ -298,9 +298,17 @@
 		});
 
 		$('body').on('click', '#newapikey', function() {
-			$(this).addClass('disabled');
-			$(this).find('i.fa').removeClass('fa-key');
-			$(this).find('i.fa').addClass('fa-spinner fa-pulse');
+			var b = $(this);
+			b.addClass('disabled');
+			b.find('i.fa').removeClass('fa-key');
+			b.find('i.fa').addClass('fa-spinner fa-pulse');
+			$.get('/newAPIKey/', function(data) {
+				$('#apikey').text(data);
+			}).done(function() {
+				b.removeClass('disabled');
+				b.find('i.fa').removeClass('fa-spinner fa-pulse');
+				b.find('i.fa').addClass('fa-key');
+			});
 		});
 
 		$('#yaform').submit(function(event) {

@@ -31,6 +31,11 @@ if ($cmd[0]) {
 			getUserData();
 			break;
 
+		case 'newAPIKey':
+			isAuth();
+			newAPIKey();
+			break;
+
 		case 'getInvoice':
 			isAuth();
 			generateInvoice($_POST['invoicesum'], $_POST['companyname']);
@@ -389,6 +394,21 @@ function getUserData() {
 	}
 	echo json_encode(array('balans' => $balans, 'tariff' => $tariff));
 	exit();
+}
+
+function newAPIKey() {
+	global $conf;
+	if ($conf->db->type == 'postgres')
+	{
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$userid = $_SESSION['userid'];
+		$apikey = sha1($_SERVER['HTTP_USER_AGENT'].time());
+		$query = "update users set apikey = '{$apikey}' where id = {$userid}";
+		pg_query($query);
+		pg_close($db);
+		$_SESSION['apikey'] = $apikey;
+	}
+	die($apikey);
 }
 
 function generateInvoice($userSumm, $userCompany) {
