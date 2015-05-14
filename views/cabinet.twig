@@ -262,7 +262,7 @@
 			<div class="container">
 				<div class="subscribe">
 					<h3>Выберите тарифный план</h3>
-					<form class="form-inline" action="/changeTariff/" method="post">
+					<form class="form-inline" action="/changeTariff/" method="post" id="tariff">
 						<button type="submit" class="btn btn-primary rounded">Изменить</button>
 						<div class="form-group">
 							<select name="tariff" class="form-control">
@@ -323,6 +323,11 @@
 				$('#inputSum').number(true, 2, '.', ' ');
 				return false;
 			}
+		});
+
+		$('#tariff').submit(function(event) {
+			event.defaultPrevent();
+			$('#tariffModal').modal('show');
 		});
 
 		$.post('/getUserData/', function(data) {
