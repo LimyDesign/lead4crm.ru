@@ -327,7 +327,8 @@
 
 		$('#tariffForm').submit(function(event) {
 			event.preventDefault();
-			$('#tariffModal').modal('show');
+			if ($('select[name="tariff"]').val() != 'demo')
+				$('#tariffModal').modal('show');
 		});
 
 		$.post('/getUserData/', function(data) {
