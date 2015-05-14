@@ -129,10 +129,10 @@
 							<strong id="apikey">{{apikey}}</strong>
 						</div>
 						<div class="text-center">
-							<a href="#." class="btn btn-primary" id="newapikey">
+							<button class="btn btn-primary" id="newapikey">
 								<i class="fa fa-key"></i> &nbsp;
 								Сделать новый ключ
-							</a>
+							</button>
 						</div>
 						<h3>&nbsp;</h3>
 					</div>
@@ -284,17 +284,23 @@
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
 		selectText('apikey');
 
-		$('body').on('mouseup', '.well', function(){
+		$('body').on('mouseup', '.well', function() {
 			selectText('apikey');
 		});
 
-		$('body').on('click','.option li',function(){
+		$('body').on('click','.option li',function() {
 			var i = $(this).parents('.select').attr('id');
 			var v = $(this).children().html();
 			var o = $(this).attr('id');
 			$('#'+i+' .selected').attr('id',o);
 			$('input[name="paymentType"]').val(o);
 			$('#'+i+' .selected').html(v);
+		});
+
+		$('body').on('click', '#newapikey', function() {
+			$(this).addClass('disabled');
+			$(this).find('i.fa').removeClass('fa-key');
+			$(this).find('i.fa').addClass('fa-spinner fa-pulse');
 		});
 
 		$('#yaform').submit(function(event) {
@@ -311,6 +317,7 @@
 			$('#balans').number(data.balans, 2, '.', ' ');
 			$('#tariff').text(data.tariff);
 		});
+
 	});
 
 	function selectText(element) {
