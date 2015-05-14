@@ -262,31 +262,15 @@
 			<div class="container">
 				<div class="subscribe">
 					<h3>Выберите тарифный план</h3>
-					<form class="form-inline" action="/changeTariff/" method="post" id="tariff">
+					<form class="form-inline" action="/changeTariff/" method="post">
 						<button type="submit" class="btn btn-primary rounded">Изменить</button>
 						<div class="form-group">
-							<div class="input-group-btn select" id="select1">
-								<button type="button" class="btn btn-default dropup dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-									<span class="selected">
-										[ Выберите подходящий тариф ]
-									</span>
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu option" role="menu">
-									<li id="demo">
-										<a href="#.">
-											[ Выберите подходящий тариф ]
-										</a>
-									</li>
-									{% for tariff in tariffs %}
-										<li id="{{tariff.code}}">
-											<a href="#.">
-												{{tariff.name}}
-											</a>
-										</li>
-									{% endfor %}
-								</ul>
-							</div>
+							<select name="tariff" class="form-control">
+								<option value="demo">[ Выберите подходящий тариф ]</option>
+								{% for tariff in tariffs %}
+									<option value="{{tariff.code}}">{{tariff.name}}</option>
+								{% endfor %}
+							</select>
 						</div>
 					</form>
 				</div>
