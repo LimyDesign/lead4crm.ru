@@ -629,6 +629,8 @@ function getUserTariff() {
 		while ($row = pg_fetch_assoc($result)) {
 			$tariffs[$row['id']]['name'] = $row['name'];
 			$tariffs[$row['id']]['code'] = $row['code'];
+			$tariffs[$row['id']]['price'] = $row['price'];
+			$tariffs[$row['id']]['sum'] = $row['sum'];
 		}
 		pg_free_result($result);
 		pg_close($db);
