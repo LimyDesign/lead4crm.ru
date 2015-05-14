@@ -627,8 +627,8 @@ function getUserTariff() {
 		$query = "select * from tariff where domain = 'lead4crm.ru' and sum <= (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']})";
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
-			$tariffs[$row['id']] = $row['name'];
-			$tariffs[$row['id']] = $row['code'];
+			$tariffs[$row['id']]['name'] = $row['name'];
+			$tariffs[$row['id']]['code'] = $row['code'];
 		}
 		pg_free_result($result);
 		pg_close($db);
