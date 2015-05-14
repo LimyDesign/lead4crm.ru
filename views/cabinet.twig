@@ -330,7 +330,7 @@
 			if ($('select[name="tariff"]').val() != 'demo') {
 				$('#tariffModal').modal('show');
 				$('#tariffModal').find('#ok').on('click', function() {
-					alert('fuck');
+					$(this).modal('hide');
 				});
 			}
 		});
