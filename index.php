@@ -650,13 +650,13 @@ function setTariff() {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$tariff = $_POST['tariff'];
 		if ($tariff != 'demo') {
-			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}'), qty = qty + (select queries from tariff where code = '{$tariff}') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}') returning id";
-			die($query);
+			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), qty = qty + (select queries from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') returning id";
+			// die($query);
 			$result = pg_query($query);
 			$uid = pg_fetch_result($result, 0, 'id');
 			pg_free_result($result);
 			if ($uid == $_SESSION['userid']) {
-				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}'), 'Активания тарифа ' || (select name from tariff where code = '{$tariff}'))";
+				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), 'Активания тарифа ' || (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'))";
 				pg_query($query);
 			}
 			pg_close($db);
