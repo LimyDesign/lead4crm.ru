@@ -197,12 +197,23 @@
 							</div>
 							<div class="price">
 								<span class="price-main">0,98 <span class="month"><i class="fa fa-rub"></i></span></span>
-								<span class="price-additional">за каждую компанию</span>
+								<span class="price-additional">за 1 запрос</span>
 							</div>
 							<ul class="item-list">
-								<li>Стоимость пакета — 2000 <i class="fa fa-rub"></i></li>
+								<li class="fa fa-plus">&nbsp;Автоматическое продление</li>
+								<li class="fa fa-plus">&nbsp;Выборка по городам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по рубрикам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по названиям</li>
 							</ul>
-							<a href="/setTariff/start/" class="btn btn-default rounded">подключить</a>
+							<ul class="item-list">
+								<li>Стоимость тарифа — 2000 <i class="fa fa-rub"></i></li>
+								<li>Автопродление — 1500 <i class="fa fa-rub"></i></li>
+							</ul>
+							{% if userid %}
+								<a href="/setTariff/start/" class="btn btn-default rounded">подключить</a>
+							{% else %}
+								<a class="btn btn-default rounded disabled">подключить</a>
+							{% endif %}
 						</div>
 						<div class="plan recommended">
 							<div class="head">
@@ -210,12 +221,23 @@
 							</div>
 							<div class="price">
 								<span class="price-main">0,65 <span class="month"><i class="fa fa-rub"></i></span></span>
-								<span class="price-additional">за каждую компанию</span>
+								<span class="price-additional">за 1 запрос</span>
 							</div>
 							<ul class="item-list">
-								<li>Стоимость пакета — 10&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li class="fa fa-plus">&nbsp;Автоматическое продление</li>
+								<li class="fa fa-plus">&nbsp;Выборка по городам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по рубрикам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по названиям</li>
 							</ul>
-							<a href="/setTariff/company/" class="btn btn-default rounded">подключить</a>
+							<ul class="item-list">
+								<li>Стоимость пакета — 10&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li>Автопродление — 9&nbsp;000 <i class="fa fa-rub"></i></li>
+							</ul>
+							{% if userid %}
+								<a href="/setTariff/company/" class="btn btn-default rounded">подключить</a>
+							{% else %}
+								<a class="btn btn-default rounded disabled">подключить</a>
+							{% endif %}
 						</div>
 						<div class="plan">
 							<div class="head">
@@ -223,12 +245,23 @@
 							</div>
 							<div class="price">
 								<span class="price-main">0,43 <span class="month"><i class="fa fa-rub"></i></span></span>
-								<span class="price-additional">за каждую компанию</span>
+								<span class="price-additional">за 1 запрос</span>
 							</div>
 							<ul class="item-list">
-								<li>Стоимость пакета — 50&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li class="fa fa-plus">&nbsp;Автоматическое продление</li>
+								<li class="fa fa-plus">&nbsp;Выборка по городам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по рубрикам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по названиям</li>
 							</ul>
-							<a href="/setTariff/corporation/" class="btn btn-default rounded">подключить</a>
+							<ul class="item-list">
+								<li>Стоимость пакета — 50&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li>Автопродление — 45&nbsp;000 <i class="fa fa-rub"></i></li>
+							</ul>
+							{% if userid %}
+								<a href="/setTariff/corporation/" class="btn btn-default rounded">подключить</a>
+							{% else %}
+								<a class="btn btn-default rounded disabled">подключить</a>
+							{% endif %}
 						</div>
 						<div class="plan">
 							<div class="head">
@@ -236,12 +269,23 @@
 							</div>
 							<div class="price">
 								<span class="price-main">0,10 <span class="month"><i class="fa fa-rub"></i></span></span>
-								<span class="price-additional">за каждую компанию</span>
+								<span class="price-additional">за 1 запрос</span>
 							</div>
 							<ul class="item-list">
-								<li>Стоимость пакета — 120&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li class="fa fa-plus">&nbsp;Автоматическое продление</li>
+								<li class="fa fa-plus">&nbsp;Выборка по городам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по рубрикам</li>
+								<li class="fa fa-plus">&nbsp;Выборка по названиям</li>
 							</ul>
-							<a href="/setTariff/ultra/" class="btn btn-default rounded">подключить</a>
+							<ul class="item-list">
+								<li>Стоимость пакета — 120&nbsp;000 <i class="fa fa-rub"></i></li>
+								<li>Автопродление — 100&nbsp;000 <i class="fa fa-rub"></i></li>
+							</ul>
+							{% if userid %}
+								<a href="/setTariff/ultra/" class="btn btn-default rounded">подключить</a>
+							{% else %}
+								<a class="btn btn-default rounded disabled">подключить</a>
+							{% endif %}
 						</div>
 					</div>
 					<p class="silent">Данные цены указаны для добавления каждой компании в справочник CRM Битрикс24. Срок действия тарифных планов не ограничен по времени использования. Стомость пакета услуг может ровно не делиться на стомость импорта за компанию, в связи с чем импортируемое кол-во компаний округляется в меньшую сторону. При исчерпывании всех средств доступ блокируется до момента приобретения нового пакета. Средства перечисленные на лицевой счет возврату или обмену на другие услуги не подлежат. Фактом оплаты считается момент зачисления денежных средств на лицевой счет нашей компании, в связи с чем оплата по счету для юридических лиц может затянуться до 3 банковских дней.</p>
