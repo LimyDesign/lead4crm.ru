@@ -334,7 +334,7 @@
 				$('#tariffModal').find('#ok').on('click', function() {
 					var b = $(this)
 					var t = b.text();
-					console.log(a,s);
+					alert(a);
 					b.addClass('disabled');
 					b.html('<i class="fa fa-spinner fa-pulse"></i> &nbsp; ' + t);
 					$.post(a,s).done(function(data) {
