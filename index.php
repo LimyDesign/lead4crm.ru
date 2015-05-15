@@ -651,6 +651,7 @@ function setTariff() {
 		$tariff = $_POST['tariff'];
 		if ($tariff != 'demo') {
 			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}'), qty = qty + (select queries from tariff where code = '{$tariff}') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}') returning id";
+			die($query);
 			$result = pg_query($query);
 			$uid = pg_fetch_result($result, 0, 'id');
 			pg_free_result($result);
