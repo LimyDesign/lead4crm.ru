@@ -326,14 +326,13 @@
 		});
 
 		$('#tariffForm').submit(function(event) {
+			event.preventDefault();
 			if ($('select[name="tariff"]').val() != 'demo') {
 				$('#tariffModal').modal('show');
 				$('#tariffModal').find('#ok').on('click', function() {
 					$('#tariffModal').modal('hide');
-					return true;
+					$(this).unbind('submit').submit();
 				});
-			} else {
-				return false;
 			}
 		});
 
