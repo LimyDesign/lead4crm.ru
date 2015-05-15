@@ -645,11 +645,12 @@ function getUserTariff() {
 
 function setTariff() {
 	global $conf;
-	if ($conf['db']['type'] == 'postgres')
+	if ($conf->db->type == 'postgres')
 	{
-		$db = pg_connect('dbname='.$conf['db']['database']) or die('Невозможно подключиться к БД: '.pg_last_error());
-		if (is_numeric($tariff)) {
-			$query = "update users set tariffid = {$tariff}, qty = qty + (select queries from tariff where id = {$tariff}) where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where id = {$tariff}) returning id";
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$tariff = $_POST['tariff'];
+		if ($tariff != 'demo') {
+			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}'), qty = qty + (select queries from tariff where code = '{$tariff}') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}') returning id";
 			$result = pg_query($query);
 			$uid = pg_fetch_result($result, 0, 'id');
 			pg_free_result($result);
@@ -660,7 +661,7 @@ function setTariff() {
 			pg_close($db);
 		}
 	}
-	header("Location: /cabinet/");
+	getUserData();
 }
 
 function russian_date() {
