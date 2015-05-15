@@ -67,6 +67,7 @@ if ($cmd[0]) {
 				case 'about-us': $title = 'О нас'; break;
 				case 'price': $title = 'Цены'; break;
 				case 'support': $title = 'Поддержка'; break;
+				case 'subscribe': $title = 'Подписка на новости'; break;
 				case 'cabinet': $title = 'Личный кабинет'; break;
 				case 'login': getDataLogin($cmd[1]); exit(2);
 				default: $title = '404 - Страница не найдена'; break;
@@ -661,7 +662,7 @@ function setTariff($getTariff) {
 			pg_close($db);
 		}
 	}
-	
+
 	if ($getTariff)
 		header("location: /cabinet/");
 	else
