@@ -430,7 +430,7 @@ perspective effects (not including the modals and the overlay).
 }
 
 .md-show.md-effect-12 ~ .md-overlay {
-	background: #e74c3c;
+	background: #fff;
 } 
 
 .md-effect-12 .md-content h3,
