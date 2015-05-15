@@ -262,7 +262,7 @@
 			<div class="container">
 				<div class="subscribe">
 					<h3>Выберите тарифный план</h3>
-					<form class="form-inline" action="/changeTariff/" method="post" id="tariffForm">
+					<form class="form-inline" action="/setTariff/" method="post" id="tariffForm">
 						<button type="submit" class="btn btn-primary rounded">Изменить</button>
 						<div class="form-group">
 							<select name="tariff" class="form-control">
@@ -325,13 +325,24 @@
 			}
 		});
 
-		$('#tariffForm').submit(function(event) {
-			event.preventDefault();
+		$('#tariffForm').submit(function(e) {
+			e.preventDefault();
 			if ($('select[name="tariff"]').val() != 'demo') {
+				var a = $(this).attr('action');
+				var s = $(this).serialize();
 				$('#tariffModal').modal('show');
 				$('#tariffModal').find('#ok').on('click', function() {
-					$('#tariffModal').modal('hide');
-					$('#tariffForm').unbind('submit').submit();
+					var b = $(this)
+					var t = b.text();
+					b.addClass('disabled');
+					b.html('<i class="fa fa-spinner fa-pulse"></i> &nbsp; ' + t);
+					$.post(a,s).done(function(data) {
+						$('#balans').number(data.balans, 2, '.', ' ');
+						$('#tariff').text(data.tariff);
+						$('#tariffModal').modal('hide');
+						b.removeClass('disabled');
+						b.text(t);
+					}, 'json');
 				});
 			}
 		});
@@ -339,7 +350,7 @@
 		$.post('/getUserData/', function(data) {
 			$('#balans').number(data.balans, 2, '.', ' ');
 			$('#tariff').text(data.tariff);
-		});
+		}, 'json');
 
 	});
 
