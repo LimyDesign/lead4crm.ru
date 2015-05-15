@@ -37,7 +37,9 @@
 								<li>Автоматическое продление</li>
 								<li>Стоимость пакета — 2000 <i class="fa fa-rub"></i></li>
 							</ul>
-							<a href="/setTariff/start/" class="btn btn-default rounded">подключить</a>
+							{% if userid %}
+								<a href="/setTariff/start/" class="btn btn-default rounded">подключить</a>
+							{% endif %}
 						</div>
 						<div class="plan recommended">
 							<div class="head">
@@ -51,8 +53,9 @@
 								<li>Автоматическое продление</li>
 								<li>Стоимость пакета — 10&nbsp;000 <i class="fa fa-rub"></i></li>
 							</ul>
-							<a href="/setTariff/company/" class="btn btn-default rounded">подключить</a>
-							<a data-modal="login" class="btn btn-default md-trigger rounded">авторизоваться</a>
+							{% if userid %}
+								<a href="/setTariff/company/" class="btn btn-default rounded">подключить</a>
+							{% endif %}
 						</div>
 						<div class="plan">
 							<div class="head">
@@ -68,7 +71,7 @@
 							</ul>
 							{% if userid %}
 								<a href="/setTariff/corporation/" class="btn btn-default rounded">подключить</a>
-							{% else %}{{auth_link}}{% endif %}
+							{% endif %}
 						</div>
 						<div class="plan">
 							<div class="head">
@@ -84,7 +87,7 @@
 							</ul>
 							{% if userid %}
 								<a href="/setTariff/ultra/" class="btn btn-default rounded">подключить</a>
-							{% else %}{{auth_link}}{% endif %}
+							{% endif %}
 						</div>
 					</div>
 					<p class="silent">Данные цены указаны для добавления каждой компании в справочник CRM Битрикс24. Срок действия тарифных планов не ограничен по времени использования. Стомость пакета услуг может ровно не делиться на стомость импорта за компанию, в связи с чем импортируемое кол-во компаний округляется в меньшую сторону. При исчерпывании всех средств доступ блокируется до момента приобретения нового пакета. Средства перечисленные на лицевой счет возврату или обмену на другие услуги не подлежат. Фактом оплаты считается момент зачисления денежных средств на лицевой счет нашей компании, в связи с чем оплата по счету для юридических лиц может затянуться до 3 банковских дней.</p>
