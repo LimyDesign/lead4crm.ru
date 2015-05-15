@@ -331,7 +331,7 @@
 				$('#tariffModal').modal('show');
 				$('#tariffModal').find('#ok').on('click', function() {
 					$('#tariffModal').modal('hide');
-					$(this).unbind('submit').submit();
+					$('#tariffForm').unbind('submit').submit();
 				});
 			}
 		});
