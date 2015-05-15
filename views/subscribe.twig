@@ -1,0 +1,38 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'layout/header.twig' %}
+</head>
+<body>
+	<div id="wraper">
+		{% include 'layout/menu.twig' %}
+		<section class="visual-other">
+			<div class="container">
+				<div class="text-block">
+					<div class="heading-holder">
+						<h1>Новостная рассылка</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="text-box col-md-offset-1 col-md-10">
+						<h2>Подписка подтверждена</h2>
+						<p>Ваша подписка на нашу рассылку подтверждена.</p>
+						<p>Спасибо вам за подписку на нашу рассылку!</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% include 'layout/footer.twig' %}
+	</div>
+	{% include 'layout/login.twig' %}
+	{% include 'layout/scripts.twig' %}
+	<script src="/public/js/classie.min.js"></script>
+	<script src="/public/js/modalEffects.min.js"></script>
+</body>
+</html>
+{% endspaceless %}
