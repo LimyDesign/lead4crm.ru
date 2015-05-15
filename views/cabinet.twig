@@ -334,16 +334,16 @@
 				$('#tariffModal').find('#ok').on('click', function() {
 					var b = $(this)
 					var t = b.text();
-					alert(s);
 					b.addClass('disabled');
 					b.html('<i class="fa fa-spinner fa-pulse"></i> &nbsp; ' + t);
-					$.post(a,s).done(function(data) {
+					$.post(a,s,function(data) {
 						$('#balans').number(data.balans, 2, '.', ' ');
 						$('#tariff').text(data.tariff);
+					}, 'json').done(function() {
 						$('#tariffModal').modal('hide');
 						b.removeClass('disabled');
 						b.text(t);
-					}, 'json');
+					});
 				});
 			}
 		});
