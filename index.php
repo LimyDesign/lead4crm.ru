@@ -69,7 +69,6 @@ if ($cmd[0]) {
 				case 'support': $title = 'Поддержка'; break;
 				case 'subscribe-confirm': $title = 'Подтверждение подписки'; break;
 				case 'subscribe': $title = 'Спасибо!'; break;
-				case 'subscribe-': $title = 'Подписка на новости'; break;
 				case 'cabinet': $title = 'Личный кабинет'; break;
 				case 'login': getDataLogin($cmd[1]); exit(2);
 				default: $title = '404 - Страница не найдена'; break;
