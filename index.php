@@ -65,7 +65,7 @@ if ($cmd[0]) {
 			$auth = $_REQUEST['AUTH_ID'];
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
-			// var_dump($isAdmin); die();
+			var_dump($isAdmin->result); die();
 			$cOptions = array(
 				'isAdmin' => $isAdmin->result);
 		case 'b24-index':
