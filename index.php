@@ -67,7 +67,9 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_encode($res, true);
-			$cOptions = array('res' => $arRes);
+			$cOptions = array(
+				'res' => $arRes,
+				'cities' => getCities());
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -105,6 +107,21 @@ if ($cmd[0]) {
 		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
+}
+
+function getCities() {
+	global $conf;
+	$cities = array();
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = 'select * from cities';
+		$result = pg_query($query);
+		while ($row = pg_fetch_assoc($result)) {
+			$cities[$row['id']]['code'] = $row['id'];
+			$cities[$row['id']]['name'] = $row['name'];
+		}
+	}
+	return $cities;
 }
 
 function arrayOAuthLoginURL() {

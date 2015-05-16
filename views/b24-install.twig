@@ -28,6 +28,9 @@
 					<span class="destination-input-box" id="destination-input-box">
 						<select name="CITY" class="destination-inp">
 							<option value="">[ выберите ваш город ]</option>
+							{% for city in cities %}
+								<option value="city.code">city.name</option>
+							{% endif %}
 						</select>
 					</span>
 				</div>
