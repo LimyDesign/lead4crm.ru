@@ -121,9 +121,9 @@ function getCities($userCity) {
 			$cities[$row['id']]['code'] = $row['id'];
 			$cities[$row['id']]['name'] = $row['name'];
 			if ($userCity == $row['id']['name'])
-				$cities[$row['id']]['selected'] = true;
+				$cities[$row['id']]['selected'] = 1;
 			else
-				$cities[$row['id']]['selected'] = false;
+				$cities[$row['id']]['selected'] = 0;
 		}
 	}
 	return $cities;
