@@ -48,6 +48,7 @@
 </html>
 {% endspaceless %}
 <script>
+// Меняем приветствие в зависимости от времени суток
 BX24.callMethod('user.current', {}, function(res) {
 	d = new Date();
 	h = d.getHours();
@@ -67,12 +68,21 @@ BX24.callMethod('user.current', {}, function(res) {
 			}
 		}
 	}
+	// Получаем все данные о данном пользователе
+	// (нужно для отладки, топом надо убрать)
 	console.log(res);
 });
+
+// Меняем заголов в Битрикс24
 BX24.setTitle('Настройка приложения «Генератор лидов»');
+
+// Сохраняем данные формы в Битрикс24
+// и переходим после в само приложение
 $('#bxAppOptionsForm').submit(function(e) {
 	e.preventDefault();
 	BX24.callMethod('')
 });
+
+// Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
 </script>
