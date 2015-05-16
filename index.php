@@ -61,6 +61,14 @@ if ($cmd[0]) {
 				'yaSCId' => $conf->payments->SCID,
 				'tariffs' => getUserTariff());
 
+		case 'b24-install':
+		case 'b24-index':
+			$auth = $_REQUEST['AUTH_ID'];
+			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
+			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
+			$arRes = json_encode($res, true);
+			$cOptions = array('res' => $arRes);
+
 		case $cmd[0]:
 			switch ($cmd[0]) {
 				case 'about-project': $title = 'О проекте'; break;
