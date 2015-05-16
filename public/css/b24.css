@@ -8,3 +8,29 @@ body {
 	margin: 0;
 	padding: 0;
 }
+
+.block {
+	background: #fff;
+	margin-bottom: 17px;
+}
+
+.block .block-top {
+	background: #f8a70b;
+	margin-bottom: 13px;
+}
+
+.block-top {
+	height: 52px;
+	position: relative;
+}
+
+.block-top-title {
+	color: #fff;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 12px;
+	height: 52px;
+	line-height: 52px;
+	padding-left: 20px;
+	text-transform: uppercase;
+}
