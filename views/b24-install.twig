@@ -10,7 +10,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h2>Добрый день!</h2>
+						<h2 id="greeting">Добрый день!</h2>
 						<p class="lead">Спасибо что выбрали наше приложение. Мы старались его сделать максимально удобным и функциональным. Для правильной работы приложения требуется указать всего пару параметров.</p>
 						<form>
 							<div class="form-group">
@@ -48,6 +48,25 @@
 </html>
 {% endspaceless %}
 <script>
+d = new Date();
+h = d.getHours();
+g = $('#greeting');
+if (h >= 5 && h < 12) {
+	g.text('Доброе утро!');
+} else {
+	if (h >= 12 && h < 18) {
+		g.text('Добрый день!');
+	} else {
+		if (h >= 18 && h < 24) {
+			g.text('Добрый вечер!');
+		} else {
+			if (h >= 0 && h < 5) {
+				g.text('Доброй ночи!');
+			}
+		}
+	}
+}
+
 BX24.callMethod('user.current', {}, function(res) {
 	console.log(res)
 })
