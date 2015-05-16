@@ -16,12 +16,12 @@
 						<form id="bxAppOptionsForm">
 							<div class="form-group">
 								<label for="inputAPIKey">Ключ доступа</label>
-								<input name="apikey" type="text" class="form-control input-lg" placeholder="Введите персональный ключ доступа" value="{{apikey}}" aria-describedby="helpAPIKey">
+								<input name="apikey" type="text" class="form-control input-lg" id="inputAPIKey" placeholder="Введите персональный ключ доступа" value="{{apikey}}" aria-describedby="helpAPIKey">
 								<span id="helpAPIKey" class="help-block">Ключ доступа можно найти в личном кабинете на сайте модуля <a href="http://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>. Если вы уже авторизованы на сайте <a href="http://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>, то скорее всего данное поле заполнено автоматически и вам не нужно никуда более переходить, достаточно просто выбрать правильный город и сохранить настройки.</span>
 							</div>
 							<div class="form-group">
 								<label for="selectCityName">Выберите ваш город</label>
-								<select name="city" class="form-control input-lg" aria-describedby="helpCityName">
+								<select name="city" class="form-control input-lg" id="selectCityName" aria-describedby="helpCityName">
 									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										{% if city.selected %}
