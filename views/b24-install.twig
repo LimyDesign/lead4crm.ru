@@ -40,3 +40,8 @@
 	</div>
 </body>
 </html>
+<script>
+BX24.callMethod('user.current', {}, function(res) {
+	alert('Привет, ' + res.data().NAME + '!');
+});
+</script>
