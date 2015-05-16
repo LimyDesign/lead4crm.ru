@@ -56,7 +56,7 @@
 	{% if isAdmin %}
 		<form action="{{installURL}}" method="post">
 			<input type="hidden" name="AUTH_ID" value="{{auth}}">
-			<button class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></button>
+			<button type="submit" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></button>
 		</form>
 	{% endif %}
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
