@@ -99,15 +99,22 @@ BX24.init(function() {
 		// Получаем данные из формы
 		var k = $(this).find('input[name="apikey"]').val();
 		var c = $(this).find('select[name="city"]').val();
+
+		// BX24.appOption.set('LEAD4CRM_APIKEY', k);
+		// BX24.appOption.set('LEAD4CRM_CITYID', c);
+		// BX24.installFinish();
 		
 		// Не смотря на то, что проверка уже проводилась на стороне сервера
 		// проверяем еще раз, может быть где-то произошла подмена
 		// пользователя и каким-то хитрым образом пользователь
 		// попытался получить возможность редактировать настроки приложения
 		if (BX24.isAdmin()) {
+			console.log('Пробуем сохранить данные.');
 			// Сохраняем параметры приложения в Битрикс24
 			if (BX24.appOption.set('LEAD4CRM_APIKEY', k)) {
+				console.log('Сохранили ключ.');
 				if (BX24.appOption.set('LEAD4CRM_CITYID', c)) {
+					console.log('Сохранили город.');
 					// Сообщаем Битрикс24 о том, что настройка 
 					// приложения успешно завершена
 					BX24.installFinish();
