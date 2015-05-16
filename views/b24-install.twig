@@ -106,8 +106,9 @@ BX24.init(function() {
 						// Сообщаем Битрикс24 о том, что все готово
 						// и можно переключаться на приложение.
 						var status = BX24.installFinish();
-						console.log('Status:',status);
-						// window.history.go(-1);
+						if (typeof(status) == 'undefined') {
+							window.history.go(-1);
+						}
 					}
 				})
 			}
