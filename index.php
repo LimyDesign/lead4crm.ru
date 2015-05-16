@@ -67,6 +67,7 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_decode($res, true);
+			echo $arRes['result']['PERSONAL_CITY']; die();
 			$cOptions = array(
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
