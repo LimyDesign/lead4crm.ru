@@ -67,7 +67,6 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_decode($res, true);
-			echo $arRes['result']['PERSONAL_CITY']; die();
 			$cOptions = array(
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
@@ -121,7 +120,7 @@ function getCities($userCity) {
 		while ($row = pg_fetch_assoc($result)) {
 			$cities[$row['id']]['code'] = $row['id'];
 			$cities[$row['id']]['name'] = $row['name'];
-			if ($userCity == $row['id']['name'])
+			if ($userCity == $row['name'])
 				$cities[$row['id']]['selected'] = 1;
 			else
 				$cities[$row['id']]['selected'] = 0;
