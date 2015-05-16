@@ -112,8 +112,15 @@ BX24.init(function() {
 			console.log('Пробуем сохранить данные.');
 			// Сохраняем параметры приложения в Битрикс24
 			BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
-
 				console.log('Возврат:',callback.LEAD4CRM_APIKEY);
+				if (callback.LEAD4CRM_APIKEY) {
+					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
+						console.log('Возврат:',callback.LEAD4CRM_CITYID);
+						if (callback.LEAD4CRM_CITYID) {
+							alert('Хуй!');
+						}
+					})
+				}
 			});
 			// if (BX24.appOption.set('LEAD4CRM_APIKEY', k)) {
 			// 	console.log('Сохранили ключ.');
