@@ -114,7 +114,7 @@ function getCities() {
 	$cities = array();
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = 'select * from cities';
+		$query = 'select * from cities order by name asc';
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
 			$cities[$row['id']]['code'] = $row['id'];
