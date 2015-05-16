@@ -1,3 +1,4 @@
+{% if isAdmin %}
 {% spaceless %}
 <!DOCTYPE html>
 <html>
@@ -86,3 +87,4 @@ $('#bxAppOptionsForm').submit(function(e) {
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
 </script>
+{% endif %}
