@@ -70,7 +70,7 @@ if ($cmd[0]) {
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_decode($res, true);
 			$cOptions = array(
-				'auth' => $auth,
+				'request' => $_REQUEST,
 				'isAdmin' => $isAdmin->result,
 				'installURL' => '/b24-install/' . $_SERVER['QUERY_STRING'],
 				'res' => $arRes,

@@ -54,8 +54,10 @@
 		</section>
 	</div>
 	{% if isAdmin %}
-		<form action="{{installURL}}" method="post">
-			<input type="hidden" name="AUTH_ID" value="{{auth}}">
+		<form action="/b24-install/" method="post">
+			{% for name, value in request %}
+				<input type="hidden" name="{{name}}" value="{{value}}">
+			{% endfor %}
 			<button type="submit" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></button>
 		</form>
 	{% endif %}
