@@ -66,8 +66,8 @@ if ($cmd[0]) {
 			$auth = $_REQUEST['AUTH_ID'];
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
-			$arRes = json_encode($res, true);
-			header("Content-Type: text/plain"); echo($res); die();
+			$arRes = json_decode($res, true);
+			// header("Content-Type: text/plain"); echo($res); die();
 			$cOptions = array(
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
