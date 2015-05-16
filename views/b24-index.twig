@@ -1,18 +1,126 @@
+{% if isAdmin %}
+{% spaceless %}
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
+	{% include 'layout/header.twig' %}
 </head>
 <body>
-	Битрикс24 сказал серверу, что вас зовут {{res.result.NAME}}.
-	<a href="#." onclick="clientCheck();">Проверим?</a>
+	<div id="wraper">
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2 id="greeting">Добрый день!</h2>
+						<p class="lead">Начните с ввода вида деятельности. И если есть необходимость поменять город, также укажите город в котором будете производить поиск.</p>
+						<form id="bxAppOptionsForm" class="form-horizontal">
+							<div class="form-group">
+								<label for="inputSearchText" class="control-label col-sm-2">Поиск:</label>
+								<div class="col-sm-10">
+									<input name="searchText" type="text" class="form-control input-lg" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText">
+									<span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, каждый поисковый запрос тарифицируется.</mark></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="selectSearchCity" class="control-label col-sm-2">Город:</label>
+								<div class="col-sm-10">
+									<select name="searchCity" class="form-control input-lg" id="selectSearchCity" aria-describedby="helpSearchCity">
+										{% for city in cities %}
+											<option value="{{city.code}}">{{city.name}}</option>
+										{% endfor %}
+									</select>
+									<span id="helpSearchCity" class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</span>
+								</div>
+							</div>
+							<button class="btn btn-primary btn-lg rounded" type="submit">
+								<i class="fa fa-search"></i> &nbsp; 
+								Поиск
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
+	{% include 'layout/scripts.twig' %}
 </body>
 </html>
+{% endspaceless %}
 <script>
-function clientCheck() {
-	BX24.callMethod('user.current', {}, function(r) {
-		alert('Клиенту он сказал, что вас зовут ' + r.data().NAME + ' :-)');
+// Инициализируем Битрикс24
+BX24.init(function() {
+	// Меняем приветствие в зависимости от времени суток
+	BX24.callMethod('user.current', {}, function(res) {
+		d = new Date();
+		h = d.getHours();
+		g = $('#greeting');
+		if (h >= 5 && h < 12) {
+			g.text('Доброе утро, ' + res.data().NAME + '!');
+		} else {
+			if (h >= 12 && h < 18) {
+				g.text('Добрый день, ' + res.data().NAME + '!');
+			} else {
+				if (h >= 18 && h < 24) {
+					g.text('Добрый вечер, ' + res.data().NAME + '!');
+				} else {
+					if (h >= 0 && h < 5) {
+						g.text('Доброй ночи, ' + res.data().NAME + '!');
+					}
+				}
+			}
+		}
 	});
-}
+
+	// Меняем заголов в Битрикс24
+	BX24.setTitle('Настройка приложения «Генератор лидов»');
+
+	if (BX24.isAdmin()) {
+		var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
+		var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+		if (b24APIKey && b24CityID) {
+			$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
+			$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
+		}
+	}
+
+	// Сохраняем данные формы в Битрикс24
+	// и переходим после в само приложение
+	$('#bxAppOptionsForm').submit(function(e) {
+		// Перехватываем событие по-умолчанию
+		e.preventDefault();
+
+		$(this).find('button').attr('disabled', 'disabled');
+		$(this).find('input[name="apikey"]').attr('disabled', 'disabled');
+		$(this).find('select[name="city"]').attr('disabled', 'disabled');
+		$(this).find('button i').removeClass('fa-floppy-o').addClass('fa-spinner fa-pulse');
+		
+		// Получаем данные из формы
+		var k = $(this).find('input[name="apikey"]').val();
+		var c = $(this).find('select[name="city"]').val();
+		
+		// Не смотря на то, что проверка уже проводилась на стороне сервера
+		// проверяем еще раз, может быть где-то произошла подмена
+		// пользователя и каким-то хитрым образом пользователь
+		// попытался получить возможность редактировать настроки приложения
+		if (BX24.isAdmin()) {
+			// Сохраняем параметры приложения в Битрикс24
+			BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
+				if (callback.LEAD4CRM_APIKEY) {
+					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
+						if (callback.LEAD4CRM_CITYID) {
+							// Сообщаем Битрикс24 о том, что все готово
+							// и можно переключаться на приложение.
+							BX24.installFinish();
+						}
+					})
+				}
+			});
+		}
+	});
+});
+
+// Изменяем размер фрейма под текущие контент
+BX24.fitWindow();
 </script>
+{% endif %}
