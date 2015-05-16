@@ -105,7 +105,9 @@ BX24.init(function() {
 					if (callback.LEAD4CRM_CITYID) {
 						// Сообщаем Битрикс24 о том, что все готово
 						// и можно переключаться на приложение.
-						BX24.installFinish();
+						var status = BX24.installFinish();
+						console.log('Status:',status);
+						// window.history.go(-1);
 					}
 				})
 			}
