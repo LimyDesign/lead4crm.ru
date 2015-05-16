@@ -54,7 +54,7 @@
 		</section>
 	</div>
 	{% if isAdmin %}
-		<form action="/b24-install/" method="post">
+		<form action="/b24-install/" method="post" id="configForm">
 			{% for name, value in request %}
 				<input type="hidden" name="{{name}}" value="{{value}}">
 			{% endfor %}
@@ -98,6 +98,11 @@ BX24.init(function() {
 	if (b24CityID) {
 		$('#selectSearchCity').val(b24CityID);
 	}
+
+	$('#configForm').submit(function(e) {
+		$(this).find('button').attr('disabled', 'disabled');
+		$(this).find('i.fa').addClass('fa-spin');
+	});
 
 	// Сохраняем данные формы в Битрикс24
 	// и переходим после в само приложение
