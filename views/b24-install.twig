@@ -12,7 +12,7 @@
 					<div class="col-md-12">
 						<h2 id="greeting">Добрый день!</h2>
 						<p class="lead">Спасибо что выбрали наше приложение. Мы старались его сделать максимально удобным и функциональным. Для правильной работы приложения требуется указать всего пару параметров.</p>
-						<form>
+						<form id="bxAppOptionsForm">
 							<div class="form-group">
 								<label for="inputAPIKey">Ключ доступа</label>
 								<input name="apikey" type="text" class="form-control input-lg" placeholder="Введите персональный ключ доступа" value="{{apikey}}" aria-describedby="helpAPIKey">
@@ -68,6 +68,11 @@ BX24.callMethod('user.current', {}, function(res) {
 		}
 	}
 	console.log(res);
+});
+BX24.setTitle('Настройка приложения «Генератор лидов»');
+$('#bxAppOptionsForm').submit(function(e) {
+	e.preventDefault();
+	BX24.callMethod('')
 });
 BX24.fitWindow();
 </script>
