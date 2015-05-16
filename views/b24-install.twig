@@ -117,7 +117,9 @@ BX24.init(function() {
 					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
 						console.log('Возврат:',callback.LEAD4CRM_CITYID);
 						if (callback.LEAD4CRM_CITYID) {
-							alert('Хуй!');
+							if (BX24.installFinish()) {
+								console.log('Yo!');
+							}
 						}
 					})
 				}
