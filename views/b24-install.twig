@@ -36,13 +36,12 @@
 				</div>
 			</li>
 		</ol>
+		<div class="bx-btn-panel">
+			<p id="bx-save-options" class="webform-small-button webform-small-button-accept bx-save-options" title="Сохранить" onclick="javascript:SaveOptions();">Сохранить</p>
+		</div>
 		<!-- <p class="block-item">Здесь будет настройка приложения!</p> -->
 	</div>
 </body>
 </html>
 <script>
-BX24.callMethod('user.current', {}, function(res) {
-	// console.log('RES:',res);
-	alert('Привет, ' + res.data().NAME + '!');
-});
 </script>
