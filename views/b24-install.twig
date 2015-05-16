@@ -42,6 +42,7 @@
 </html>
 <script>
 BX24.callMethod('user.current', {}, function(res) {
-	alert('Привет, ' + res.data().NAME + '!');
+	console.log(res);
+	// alert('Привет, ' + res.data().NAME + '!');
 });
 </script>
