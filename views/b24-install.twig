@@ -76,13 +76,11 @@ BX24.init(function() {
 	// Меняем заголов в Битрикс24
 	BX24.setTitle('Настройка приложения «Генератор лидов»');
 
-	if (BX24.isAdmin()) {
-		var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
-		var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
-		if (b24APIKey && b24CityID) {
-			$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
-			$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
-		}
+	var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
+	var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+	if (b24APIKey && b24CityID) {
+		$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
+		$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
 	}
 
 	// Сохраняем данные формы в Битрикс24
@@ -100,24 +98,18 @@ BX24.init(function() {
 		var k = $(this).find('input[name="apikey"]').val();
 		var c = $(this).find('select[name="city"]').val();
 		
-		// Не смотря на то, что проверка уже проводилась на стороне сервера
-		// проверяем еще раз, может быть где-то произошла подмена
-		// пользователя и каким-то хитрым образом пользователь
-		// попытался получить возможность редактировать настроки приложения
-		if (BX24.isAdmin()) {
-			// Сохраняем параметры приложения в Битрикс24
-			BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
-				if (callback.LEAD4CRM_APIKEY) {
-					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
-						if (callback.LEAD4CRM_CITYID) {
-							// Сообщаем Битрикс24 о том, что все готово
-							// и можно переключаться на приложение.
-							BX24.installFinish();
-						}
-					})
-				}
-			});
-		}
+		// Сохраняем параметры приложения в Битрикс24
+		BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
+			if (callback.LEAD4CRM_APIKEY) {
+				BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
+					if (callback.LEAD4CRM_CITYID) {
+						// Сообщаем Битрикс24 о том, что все готово
+						// и можно переключаться на приложение.
+						BX24.installFinish();
+					}
+				})
+			}
+		});
 	});
 });
 
