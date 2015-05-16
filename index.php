@@ -69,6 +69,7 @@ if ($cmd[0]) {
 			$arRes = json_encode($res, true);
 			$cOptions = array(
 				'res' => $arRes,
+				'apikey' => $_SESSION['apikey'],
 				'cities' => getCities());
 
 		case $cmd[0]:
