@@ -71,13 +71,19 @@ BX24.init(function() {
 				}
 			}
 		}
-		// Получаем все данные о данном пользователе
-		// (нужно для отладки, топом надо убрать)
-		console.log(res);
 	});
 
 	// Меняем заголов в Битрикс24
 	BX24.setTitle('Настройка приложения «Генератор лидов»');
+
+	if (BX24.isAdmin()) {
+		var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
+		var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+		if (b24APIKey && b24CityID) {
+			$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
+			$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
+		}
+	}
 
 	// Сохраняем данные формы в Битрикс24
 	// и переходим после в само приложение
