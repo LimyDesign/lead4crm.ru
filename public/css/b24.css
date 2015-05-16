@@ -112,7 +112,7 @@ span#destination-input-box.destination-input-box {
 	vertical-align: middle;
 }
 
-.webform-small-button-blue::before,
+.webform-small-button-blue::before, 
 .webform-small-button-accept::before {
 	width: 4px;
 	background: url(/public/images/controls-sprite.png) no-repeat 0 -328px;
@@ -125,20 +125,20 @@ span#destination-input-box.destination-input-box {
 	margin-right: 6px;
 }
 
-.webform-button-left,
-.webform-button-right,
-.webform-button::before,
-.webform-button::after,
-.webform-small-button-left,
-.webform-button-upload .webform-button-left,
-.webform-small-button-right,
-.webform-button-upload .webform-button-right,
-.webform-small-button::before,
+.webform-button-left, 
+.webform-button-right, 
+.webform-button::before, 
+.webform-button::after, 
+.webform-small-button-left, 
+.webform-button-upload .webform-button-left, 
+.webform-small-button-right, 
+.webform-button-upload .webform-button-right, 
+.webform-small-button::before, 
 .webform-small-button::after {
 	display: none;
 }
 
-.webform-small-button-blue::after,
+.webform-small-button-blue::after, 
 .webform-small-button-accept::after {
 	background: url(/public/images/controls-sprite.png) no-repeat -6px -328px;
 }
@@ -149,7 +149,7 @@ span#destination-input-box.destination-input-box {
 	margin-left: 8px;
 }
 
-.webform-small-button::before,
+.webform-small-button::before, 
 .webform-small-button::after {
 	content: '';
 }
@@ -160,7 +160,7 @@ span#destination-input-box.destination-input-box {
 	text-align: center;
 }
 
-.webform-small-button-accept,
+.webform-small-button-accept, 
 .webform-small-button-accept .webform-small-button-text {
 	font-size: 12px;
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
@@ -168,19 +168,19 @@ span#destination-input-box.destination-input-box {
 	line-height: 39px;
 }
 
-.webform-small-button,
-.webform-button.webform-button-upload,
+.webform-small-button, 
+.webform-button.webform-button-upload, 
 .webform-field-upload {
 	height: 39px;
 	line-height: 39px !important;
 	margin: 0 12px 0 0;
 }
 
-.webform-button-accept,
-.webform-button-create,
-.webform-button-accept .webform-button-text,
-.webform-button-create .webform-button-text,
-.webform-small-button-accept,
+.webform-button-accept, 
+.webform-button-create, 
+.webform-button-accept .webform-button-text, 
+.webform-button-create .webform-button-text, 
+.webform-small-button-accept, 
 .webform-small-button-accept .webform-small-button-text {
 	background: #bbed21;
 	-webkit-box-shadow: none;
@@ -188,8 +188,8 @@ span#destination-input-box.destination-input-box {
 	color: #535c69;
 }
 
-.webform-button,
-.webform-small-button,
+.webform-button, 
+.webform-small-button, 
 .webform-button-upload {
 	background: #ecedef;
 	-webkit-box-shadow: 0 0 0 1px #c6cdd3 inset;
@@ -216,17 +216,23 @@ span#destination-input-box.destination-input-box {
 	transition: background-color .25s linear;
 }
 
-.webform-small-button-accept,
-.webform-small-button-blue:hover,
-.webform-small-button-accept:hover,
+.webform-small-button-accept, 
+.webform-small-button-blue:hover, 
+.webform-small-button-accept:hover, 
 .webform-small-button-accept .webform-small-button-text {
 	color: #fff;
 	font: normal normal normal 13px/24px Arial, Helvetica, sans-serif;
 	text-shadow: #75ab6f -1px -1px 0;
 }
 
-.webform-small-button,
-.webform-small-button:hover,
+.webform-small-button-accept, 
+.webform-small-button-blue {
+	margin: 0 12px 0 0;
+	background: url(/public/images/controls-sprite.png) repeat-x 0 -356;
+}
+
+.webform-small-button, 
+.webform-small-button:hover, 
 .webform-small-button-text {
 	color: #4f4f4f;
 	font: normal normal normal 13px/24px Arial, Helvetica, sans-serif;
@@ -241,10 +247,10 @@ span#destination-input-box.destination-input-box {
 	vertical-align: middle;
 }
 
-.webform-small-button,
-.webform-small-button:before,
-.webform-small-button:after,
-.webform-small-button-icon,
+.webform-small-button, 
+.webform-small-button:before, 
+.webform-small-button:after, 
+.webform-small-button-icon, 
 .webform-small-button-text {
 	cursor: pointer;
 	display: inline-block;
