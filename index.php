@@ -67,7 +67,6 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_decode($res, true);
-			// header("Content-Type: text/plain"); echo($res); die();
 			$cOptions = array(
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
@@ -122,9 +121,9 @@ function getCities($userCity) {
 			$cities[$row['id']]['code'] = $row['id'];
 			$cities[$row['id']]['name'] = $row['name'];
 			if ($userCity == $row['id']['name'])
-				$cities[$row['id']['selected']] = true;
+				$cities[$row['id']]['selected'] = true;
 			else
-				$cities[$row['id']['selected']] = false;
+				$cities[$row['id']]['selected'] = false;
 		}
 	}
 	return $cities;
