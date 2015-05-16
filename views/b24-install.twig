@@ -15,11 +15,11 @@
 						<form>
 							<h3>Ключ доступа</h3>
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Введите персональный ключ доступа">
+								<input type="text" class="form-control input-lg" placeholder="Введите персональный ключ доступа">
 							</div>
 							<h3>Ваш город</h3>
 							<div class="form-group">
-								<select name="CITY" class="form-control">
+								<select name="CITY" class="form-control input-lg">
 									<option value="">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										<option value="{{city.code}}">{{city.name}}</option>
