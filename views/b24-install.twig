@@ -109,30 +109,18 @@ BX24.init(function() {
 		// пользователя и каким-то хитрым образом пользователь
 		// попытался получить возможность редактировать настроки приложения
 		if (BX24.isAdmin()) {
-			console.log('Пробуем сохранить данные.');
 			// Сохраняем параметры приложения в Битрикс24
 			BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
-				console.log('Возврат:',callback.LEAD4CRM_APIKEY);
 				if (callback.LEAD4CRM_APIKEY) {
 					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
-						console.log('Возврат:',callback.LEAD4CRM_CITYID);
 						if (callback.LEAD4CRM_CITYID) {
-							if (BX24.installFinish()) {
-								console.log('Yo!');
-							}
+							// Сообщаем Битрикс24 о том, что все готово
+							// и можно переключаться на приложение.
+							BX24.installFinish();
 						}
 					})
 				}
 			});
-			// if (BX24.appOption.set('LEAD4CRM_APIKEY', k)) {
-			// 	console.log('Сохранили ключ.');
-			// 	if (BX24.appOption.set('LEAD4CRM_CITYID', c)) {
-			// 		console.log('Сохранили город.');
-			// 		// Сообщаем Битрикс24 о том, что настройка 
-			// 		// приложения успешно завершена
-			// 		BX24.installFinish();
-			// 	}
-			// }
 		}
 	});
 });
