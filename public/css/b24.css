@@ -106,7 +106,8 @@ span#destination-input-box.destination-input-box {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 	margin: 0 7px 7px 0;
 	height: 30px;
-	min-width: 108px;
+	width: 100%;
+	/*min-width: 108px;*/
 	outline: 0;
 	padding: 0;
 	vertical-align: middle;
