@@ -90,6 +90,9 @@ BX24.init(function() {
 	$('#bxAppOptionsForm').submit(function(e) {
 		// Перехватываем событие по-умолчанию
 		e.preventDefault();
+
+		$(this).find('button').attr('disabled', 'disabled');
+		$(this).find('button i').removeClass('fa-floppy-o').addClass('fa-spinner fa-pulse');
 		
 		// Получаем данные из формы
 		var k = $(this).find('input[name="apikey"]').val();
