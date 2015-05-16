@@ -62,8 +62,8 @@ if ($cmd[0]) {
 				'tariffs' => getUserTariff());
 
 		case 'b24-install':
-			header("Content-Type: text/plain"); print_r($_REQUEST); die();
 		case 'b24-index':
+			header("Content-Type: text/plain"); print_r($_REQUEST); die();
 			$auth = $_REQUEST['AUTH_ID'];
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
