@@ -54,7 +54,7 @@
 		</section>
 	</div>
 	{% if isAdmin %}
-		<a href="{{install_url}}" onclick="openSettings" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></a>
+		<a href="javascript:void()" onclick="openSettings" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></a>
 	{% endif %}
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
@@ -62,6 +62,10 @@
 </html>
 {% endspaceless %}
 <script>
+function openSettings() {
+	window.location = {{installURL}};
+}
+
 // Инициализируем Битрикс24
 BX24.init(function() {
 	// Подключаем подсказки
