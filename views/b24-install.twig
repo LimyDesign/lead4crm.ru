@@ -105,10 +105,11 @@ BX24.init(function() {
 					if (callback.LEAD4CRM_CITYID) {
 						// Сообщаем Битрикс24 о том, что все готово
 						// и можно переключаться на приложение.
-						var status = BX24.installFinish();
-						if (typeof(status) == 'undefined') {
-							window.history.go(-1);
-						}
+						BX24.installFinish();
+						console.log('Prev:', document.referrer);
+						// if (typeof(status) == 'undefined') {
+						// 	window.history.go(-1);
+						// }
 					}
 				})
 			}
