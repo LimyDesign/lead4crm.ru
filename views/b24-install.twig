@@ -20,7 +20,7 @@
 							</div>
 							<div class="form-group">
 								<label for="selectCityName">Выберите ваш город</label>
-								<select name="city" class="form-control input-lg">
+								<select name="city" class="form-control input-lg" aria-describedby="helpCityName">
 									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										{% if city.selected %}
@@ -30,6 +30,7 @@
 										{% endif %}
 									{% endfor %}
 								</select>
+								<span id="helpCityname" class="help-block">Выберите город в котором работает ваша компания. По-умолчанию выбирается тот город, который указан в вашей карточке, если конечно данное поле заполнено правильно и ваш город есть в списке поддерживаемых городов.</span>
 							</div>
 							<button class="btn btn-primary btn-lg rounded" type="submit">
 								<i class="fa fa-floppy-o"></i> &nbsp; 
