@@ -48,26 +48,25 @@
 </html>
 {% endspaceless %}
 <script>
-d = new Date();
-h = d.getHours();
-g = $('#greeting');
-if (h >= 5 && h < 12) {
-	g.text('Доброе утро!');
-} else {
-	if (h >= 12 && h < 18) {
-		g.text('Добрый день!');
+BX24.callMethod('user.current', {}, function(res) {
+	d = new Date();
+	h = d.getHours();
+	g = $('#greeting');
+	if (h >= 5 && h < 12) {
+		g.text('Доброе утро, ' + res.data().NAME + '!');
 	} else {
-		if (h >= 18 && h < 24) {
-			g.text('Добрый вечер!');
+		if (h >= 12 && h < 18) {
+			g.text('Добрый день, ' + res.data().NAME + '!');
 		} else {
-			if (h >= 0 && h < 5) {
-				g.text('Доброй ночи!');
+			if (h >= 18 && h < 24) {
+				g.text('Добрый вечер, ' + res.data().NAME + '!');
+			} else {
+				if (h >= 0 && h < 5) {
+					g.text('Доброй ночи, ' + res.data().NAME + '!');
+				}
 			}
 		}
 	}
-}
-
-BX24.callMethod('user.current', {}, function(res) {
 	console.log(res)
 })
 </script>
