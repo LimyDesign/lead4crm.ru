@@ -67,7 +67,6 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_encode($res, true);
-			var_dump($arRes); die();
 			$cOptions = array(
 				'res' => $arRes,
 				'cities' => getCities());
