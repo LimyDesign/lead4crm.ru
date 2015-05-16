@@ -67,11 +67,11 @@ if ($cmd[0]) {
 			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
 			$arRes = json_encode($res, true);
-			header("Content-Type: text/plain"); print_r($arRes); die();
+			// header("Content-Type: text/plain"); print_r($arRes); die();
 			$cOptions = array(
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
-				'cities' => getCities());
+				'cities' => getCities($arRes['result']['PERSONAL_CITY']));
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -111,7 +111,7 @@ if ($cmd[0]) {
 	echo $twig->render('index.twig', $options);
 }
 
-function getCities() {
+function getCities($userCity) {
 	global $conf;
 	$cities = array();
 	if ($conf->db->type == 'postgres') {
@@ -121,6 +121,10 @@ function getCities() {
 		while ($row = pg_fetch_assoc($result)) {
 			$cities[$row['id']]['code'] = $row['id'];
 			$cities[$row['id']]['name'] = $row['name'];
+			if ($userCity == $row['id']['name'])
+				$cities[$row['id']['selected']] = true;
+			else
+				$cities[$row['id']['selected']] = false;
 		}
 	}
 	return $cities;

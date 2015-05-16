@@ -23,7 +23,11 @@
 								<select name="city" class="form-control input-lg">
 									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
-										<option value="{{city.code}}">{{city.name}}</option>
+										{% if city.selected %}
+											<option value="{{city.code}}" selected>{{city.name}}</option>
+										{% else %}
+											<option value="{{city.code}}">{{city.name}}</option>
+										{% endif %}
 									{% endfor %}
 								</select>
 							</div>
