@@ -62,6 +62,9 @@
 <script>
 // Инициализируем Битрикс24
 BX24.init(function() {
+	// Подключаем подсказки
+	$('[data-toggle="tooltip"]').tooltip();
+
 	// Меняем приветствие в зависимости от времени суток
 	BX24.callMethod('user.current', {}, function(res) {
 		d = new Date();
