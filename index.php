@@ -70,6 +70,7 @@ if ($cmd[0]) {
 			$arRes = json_decode($res, true);
 			$cOptions = array(
 				'isAdmin' => $isAdmin->result,
+				'installURL' => 'https://www.lead4crm.ru/b24-install/' . $_SERVER['QUERY_STRING'],
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
 				'cities' => getCities($arRes['result']['PERSONAL_CITY']));

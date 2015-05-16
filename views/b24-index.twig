@@ -54,7 +54,7 @@
 		</section>
 	</div>
 	{% if isAdmin %}
-		<a href="javascript:void(0)" onclick="openSettings" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></a>
+		<a href="{{install_url}}" onclick="openSettings" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></a>
 	{% endif %}
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
