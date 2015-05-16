@@ -1,51 +1,63 @@
+{% spaceless %}
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="/public/css/b24.css">
-	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
+	{% include 'layout/header.twig' %}
 </head>
 <body>
-	<div class="block">
-		<div class="block-top">
-			<div class="block-top-title">
-				Общие данные
+	<div id="wraper">
+		<section class="visual-other">
+			<div class="container">
+				<div class="text-block">
+					<div class="heading-holder">
+						<h1>Настройка приложения</h1>
+					</div>
+				</div>
 			</div>
-		</div>
-		<ol class="string-block">
-			<li class="destination-block">
-				<div class="destination-title">Ключ доступа:</div>
-				<div class="destination-wrap" id="destination-container">
-					<span class="destination-input-box" id="destination-input-box">
-						<input type="text" class="destination-inp" id="destination-input">
-					</span>
+		</section>
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h2>Добрый день!</h2>
+						<p>Для правильной работы приложения требуется указать всего пару параметров. Один из которых вы можете найти в личном кабинете на сайте <a href="http://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>.</p>
+					</div>
 				</div>
-			</li>
-			<li class="destination-block">
-				<div class="destination-title">Ваш город:</div>
-				<div class="destination-wrap" id="destination-container">
-					<span class="destination-input-box" id="destination-input-box">
-						<select name="CITY" class="destination-inp">
-							<option value="">[ выберите ваш город ]</option>
-							{% for city in cities %}
-								<option value="{{city.code}}">{{city.name}}</option>
-							{% endfor %}
-						</select>
-					</span>
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Ключ доступа</h3>
+					</div>
+					<div class="col-md-6">
+						<form>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Введите персональный ключ доступа">
+							</div>
+						</form>
+					</div>
 				</div>
-			</li>
-		</ol>
-		<!-- <p class="block-item">Здесь будет настройка приложения!</p> -->
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Ваш город</h3>
+					</div>
+					<div class="col-md-6">
+						<form>
+							<div class="form-group">
+								<select name="CITY" class="form-control">
+									<option value="">[ выберите ваш город ]</option>
+									{% for city in cities %}
+										<option value="{{city.code}}">{{city.name}}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% include 'layout/footer.twig' %}
 	</div>
-	<div class="webform-buttons">
-		<span class="webform-button webform-button-create">
-			<span class="webform-button-left"></span>
-			<input type="submit" class="webform-button-text" id="bx-save-options" value="Сохранить" title="Сохранить и перейти к приложению">
-			<span class="webform-button-right"></span>
-		</span>
-	</div>
+	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
+	{% include 'layout/scripts.twig' %}
 </body>
 </html>
-<script>
-</script>
+{% endspaceless %}
