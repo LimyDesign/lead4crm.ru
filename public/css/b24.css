@@ -111,6 +111,11 @@ span#destination-input-box.destination-input-box {
 	vertical-align: middle;
 }
 
+.webform-buttons {
+	margin: 15px 0 0 0;
+	text-align: center;
+}
+
 .webform-small-button-blue::before, 
 .webform-small-button-accept::before {
 	width: 4px;
@@ -151,12 +156,6 @@ span#destination-input-box.destination-input-box {
 .webform-small-button::before, 
 .webform-small-button::after {
 	content: '';
-}
-
-.bx-btn-panel .bx-save-options {
-	min-width: 100px;
-	margin: 3px 2px !important;
-	text-align: center;
 }
 
 .webform-small-button-accept, 
