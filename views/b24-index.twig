@@ -4,6 +4,13 @@
 <html>
 <head>
 	{% include 'layout/header.twig' %}
+	<style>
+	.btn-config {
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+	</style>
 </head>
 <body>
 	<div id="wraper">
@@ -46,6 +53,7 @@
 			</div>
 		</section>
 	</div>
+	<a href="#." onclick="openSettings" class="btn btn-lg btn-warning rounded btn-config"><i class="fa fa-cog"></i></a>
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
 </body>
