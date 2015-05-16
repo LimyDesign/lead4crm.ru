@@ -92,6 +92,8 @@ BX24.init(function() {
 		e.preventDefault();
 
 		$(this).find('button').attr('disabled', 'disabled');
+		$(this).find('input[name="apikey"]').attr('disabled', 'disabled');
+		$(this).find('select[name="city"]').attr('disabled', 'disabled');
 		$(this).find('button i').removeClass('fa-floppy-o').addClass('fa-spinner fa-pulse');
 		
 		// Получаем данные из формы
