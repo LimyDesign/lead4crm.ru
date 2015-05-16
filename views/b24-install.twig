@@ -13,14 +13,14 @@
 						<h2>Добрый день!</h2>
 						<p class="lead">Спасибо что выбрали наше приложение. Мы старались его сделать максимально удобным и функциональным. Для правильной работы приложения требуется указать всего пару параметров.</p>
 						<form>
-							<h3>Ключ доступа</h3>
 							<div class="form-group">
-								<input type="text" class="form-control input-lg" placeholder="Введите персональный ключ доступа" value="{{apikey}}">
+								<label for="inputAPIKey">Ключ доступа</label>
+								<input name="apikey" type="text" class="form-control input-lg" placeholder="Введите персональный ключ доступа" value="{{apikey}}">
 							</div>
-							<h3>Ваш город</h3>
 							<div class="form-group">
-								<select name="CITY" class="form-control input-lg">
-									<option value="">[ выберите ваш город ]</option>
+								<label for="selectCityName">Выберите ваш город</label>
+								<select name="city" class="form-control input-lg">
+									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										<option value="{{city.code}}">{{city.name}}</option>
 									{% endfor %}
