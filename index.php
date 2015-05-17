@@ -35,6 +35,10 @@ if ($cmd[0]) {
 			getB24UserData($_POST['apikey']);
 			break;
 
+		case 'getDataSearch':
+			getDataSearch($_POST['searchAPI'], $_POST['searchText'], $_POST['searchCity']);
+			break;
+
 		case 'newAPIKey':
 			isAuth();
 			newAPIKey();
@@ -445,6 +449,16 @@ function getB24UserData($apikey) {
 	header("Content-Type: text/json");
 	echo json_encode($fullData);
 	exit();
+}
+
+function getDataSearch($apikey, $text, $city, $domain) {
+	$url = 'http://api.cnamrf.ru/getCompanyList/?';
+	$uri = http_build_query(array(
+		'apikey' => $apikey,
+		'text' => $text,
+		'city' => $city,
+		'domain' => $domain));
+	return file_get_contents($url.$uri);
 }
 
 function getUserData($return = 'json') {

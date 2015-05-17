@@ -23,6 +23,8 @@
 								<small>Тариф компании: <span id="tariff">Демо</span></small></h2>
 							<p class="lead">Начните с ввода вида деятельности. И если есть необходимость поменять город, также укажите город в котором будете производить поиск.</p>
 							<form id="searchForm" class="form-horizontal">
+								<input type="hidden" name="searchAPI" id="inputAPIKey">
+								<input type="hidden" name="searchDomain" value="{{request.DOMAIN}}">
 								<div class="form-group form-group-lg">
 									<label for="inputSearchText" class="control-label col-sm-2">Поиск:</label>
 									<div class="col-sm-10">
@@ -59,13 +61,15 @@
 								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска"><i class="fa fa-search"></i></button>
 							</h2>
 							<div class="table-responsive">
-								<table class="table table-bordered">
+								<table class="table table-bordered" id="tableResult">
 									<thead>
 										<tr>
 											<th><input type="checkbox" name="selectAll"></th>
 											<th>Название компании</th>
 										</tr>
 									</thead>
+									<tbody>
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -110,6 +114,7 @@ BX24.init(function() {
 			$('#qty').number(qty, 0, '.', ' ');
 		}
 	}
+	$('#inputAPIKey').val(b24APIKey);
 
 	// Меняем приветствие в зависимости от времени суток
 	BX24.callMethod('user.current', {}, function(res) {
@@ -147,6 +152,7 @@ BX24.init(function() {
 		$(this).find('i.fa').addClass('fa-spin');
 	});
 
+	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
 		if ($('#inputSearchText').val() != '') {
@@ -156,41 +162,12 @@ BX24.init(function() {
 			$('#searchButton').attr('disabled', 'disabled');
 			$('#searchButton').find('i').removeClass('fa-search')
 				.addClass('fa-circle-o-notch fa-spin');
-		}
-	});
-
-	// Сохраняем данные формы в Битрикс24
-	// и переходим после в само приложение
-	$('#bxAppOptionsForm').submit(function(e) {
-		// Перехватываем событие по-умолчанию
-		e.preventDefault();
-
-		$(this).find('button').attr('disabled', 'disabled');
-		$(this).find('input[name="apikey"]').attr('disabled', 'disabled');
-		$(this).find('select[name="city"]').attr('disabled', 'disabled');
-		$(this).find('button i').removeClass('fa-floppy-o').addClass('fa-spinner fa-pulse');
-		
-		// Получаем данные из формы
-		var k = $(this).find('input[name="apikey"]').val();
-		var c = $(this).find('select[name="city"]').val();
-		
-		// Не смотря на то, что проверка уже проводилась на стороне сервера
-		// проверяем еще раз, может быть где-то произошла подмена
-		// пользователя и каким-то хитрым образом пользователь
-		// попытался получить возможность редактировать настроки приложения
-		if (BX24.isAdmin()) {
-			// Сохраняем параметры приложения в Битрикс24
-			BX24.appOption.set('LEAD4CRM_APIKEY', k, function(callback) {
-				if (callback.LEAD4CRM_APIKEY) {
-					BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
-						if (callback.LEAD4CRM_CITYID) {
-							// Сообщаем Битрикс24 о том, что все готово
-							// и можно переключаться на приложение.
-							BX24.installFinish();
-						}
-					})
-				}
-			});
+			$.post('/getDataSearch/', $(this).serialize(), function(data) {
+				$('#qty').number(data.qty, 0, '.', ' ');
+				data.result.forEach(function(entry) {
+					console.log(entry);
+				});
+			}, 'json');
 		}
 	});
 });
