@@ -85,6 +85,7 @@
 	{% endif %}
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
+	<script type="text/javascript" src="/public/js/jquery.number.min.js"></script>
 </body>
 </html>
 {% endspaceless %}
@@ -102,11 +103,11 @@ BX24.init(function() {
 	if (!tariff || !qty) {
 		$.post('/getB24UserTariff/', {apikey: b24APIKey}, function(data) {
 			$('#tariff').text(data.tariff);
-			$('#qty').text(data.qty);
+			$('#qty').number(data.qty, 0, '.', ' ');
 		});
 	} else {
 		$('#tariff').text(tariff);
-		$('#qty').text(qty);
+		$('#qty').number(qty, 0, '.', ' ');
 	}
 
 	// Меняем приветствие в зависимости от времени суток
