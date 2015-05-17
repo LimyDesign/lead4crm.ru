@@ -56,6 +56,10 @@
 						<div id="search-results" style="display:none;">
 							<h2>
 								Результаты поиска
+								<p class="lead">
+									По запросу «<strong id="searching"></strong>» найдено
+									<span class="badge" id="resultTotal"></span>
+								</p>
 								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска"><i class="fa fa-search"></i></button>
 							</h2>
 							<div class="table-responsive">
@@ -178,6 +182,8 @@ BX24.init(function() {
 				searchCity: $('#selectSearchCity').val()}
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
+				$('#searching').text(($('#inputSearchText').val());
+				$('#resultTotal').text(data.total);
 				data.result.forEach(function(entry) {
 					$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
