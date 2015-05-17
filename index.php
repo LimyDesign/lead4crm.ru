@@ -68,19 +68,20 @@ if ($cmd[0]) {
 		case 'b24-install':
 		case 'b24-index':
 			// header("Content-Type: text/plain"); print_r($_REQUEST); die();
-			$auth = $_REQUEST['AUTH_ID'];
-			$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
-			$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
-			$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
-			$arRes = json_decode($res, true);
-			$cOptions = array(
-				'request' => $_REQUEST,
-				'isAdmin' => $isAdmin->result,
-				'installURL' => '/b24-install/' . $_SERVER['QUERY_STRING'],
-				'res' => $arRes,
-				'apikey' => $_SESSION['apikey'],
-				'cities' => getCities($arRes['result']['PERSONAL_CITY']),
-				'userData' => getUserData('array'));
+			if ($auth = $_REQUEST['AUTH_ID'];) {
+				$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
+				$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
+				$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
+				$arRes = json_decode($res, true);
+				$cOptions = array(
+					'request' => $_REQUEST,
+					'isAdmin' => $isAdmin->result,
+					'installURL' => '/b24-install/' . $_SERVER['QUERY_STRING'],
+					'res' => $arRes,
+					'apikey' => $_SESSION['apikey'],
+					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
+					'userData' => getUserData('array'));
+			}
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -421,7 +422,6 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
 			pg_close($db);
-			header("Content-Type: text/plain"); print_r($_SESSION); die();
 			header("Location: /cabinet/");
 		}
 	}
