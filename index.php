@@ -76,7 +76,7 @@ if ($cmd[0]) {
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
 				'cities' => getCities($arRes['result']['PERSONAL_CITY']),
-				'userData' => getUserData());
+				'userData' => getUserData('array'));
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -422,8 +422,7 @@ function dbLogin($userId, $userEmail, $provider) {
 	}
 }
 
-function getUserData() {
-	header("Content-Type: text/json");
+function getUserData($return = 'json') {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
@@ -441,8 +440,14 @@ function getUserData() {
 		pg_free_result($result);
 		pg_close($db);
 	}
-	echo json_encode(array('balans' => $balans, 'tariff' => $tariff, 'qty' => $qty));
-	exit();
+	$fullData = array('balans' => $balans, 'tariff' => $tariff, 'qty' => $qty);
+	if ($return == 'json') {
+		header("Content-Type: text/json");
+		echo json_encode($fullData);
+		exit();
+	} elseif ($return == 'array') {
+		return $fullData;
+	}
 }
 
 function newAPIKey() {
