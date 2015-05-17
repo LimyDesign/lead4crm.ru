@@ -144,6 +144,16 @@ BX24.init(function() {
 		$('#selectSearchCity').val(b24CityID);
 	}
 
+	// Добавляем возможно одновременно выделять 
+	// или снимать выделения со всех найденных
+	// фирм в списке таблицы результатов
+	$('#selectAllID').click(function() {
+		var checkedStatus = this.checked;
+		$('#tableResult tbody tr').find('td:first :checkbox').each(function() {
+			$(this).prop('checked', checkedStatus);
+		});
+	});
+
 	// Блокируем кнопку открытия конфигурации
 	// и заодно добавляем немного анимации
 	$('#configForm').submit(function(e) {
@@ -169,7 +179,7 @@ BX24.init(function() {
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
-					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="id" value="'+entry.id+'" checked><input type="hidden" name="hash" value="'+entry.hash+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
 			}, 'json').done(function() {
 				$('#inputSearchText').removeAttr('disabled');
