@@ -163,6 +163,7 @@ BX24.init(function() {
 			$('#searchButton').find('i').removeClass('fa-search')
 				.addClass('fa-circle-o-notch fa-spin');
 			$.post('/getDataSearch/', $(this).serialize(), function(data) {
+				console.log('Data:',data);
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
 					console.log(entry);
