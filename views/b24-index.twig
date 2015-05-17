@@ -164,14 +164,14 @@ BX24.init(function() {
 				searchDomain: '{{request.DOMAIN}}',
 				searchText: $('#inputSearchText').val(),
 				searchCity: $('#selectSearchCity').val()}
-			console.log('formData:',formData);
-			// $.post('/getDataSearch/', formData, function(data) {
-			// 	console.log('Data:',data);
-			// 	$('#qty').number(data.qty, 0, '.', ' ');
-			// 	data.result.forEach(function(entry) {
-			// 		console.log(entry);
-			// 	});
-			// }, 'json');
+			// console.log('formData:',formData);
+			$.post('/getDataSearch/', formData, function(data) {
+				// console.log('Data:',data);
+				$('#qty').number(data.qty, 0, '.', ' ');
+				data.result.forEach(function(entry) {
+					console.log(entry);
+				});
+			}, 'json');
 		}
 	});
 });
