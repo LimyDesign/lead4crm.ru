@@ -164,7 +164,7 @@ BX24.init(function() {
 				.addClass('fa-circle-o-notch fa-spin');
 			var formData = $(this).serialize();
 			console.log('formData:',formData);
-			$.post('/getDataSearch/', , function(data) {
+			$.post('/getDataSearch/', formData, function(data) {
 				console.log('Data:',data);
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
