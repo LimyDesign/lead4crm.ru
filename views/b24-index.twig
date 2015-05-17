@@ -169,7 +169,7 @@ BX24.init(function() {
 				// console.log('Data:',data);
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
-					console.log(entry);
+					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="id" value="'+entry.id+'"><input type="hidden" name="hash" value="'+entry.hash+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
 			}, 'json');
 		}
