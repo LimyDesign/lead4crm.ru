@@ -62,7 +62,7 @@
 								<table class="table table-bordered" id="tableResult">
 									<thead>
 										<tr>
-											<th><input type="checkbox" name="selectAll" id="selectAllID" checked></th>
+											<th class="text-center"><input type="checkbox" name="selectAll" id="selectAllID" checked></th>
 											<th>Название компании</th>
 											<th>Адрес</th>
 											<th>Кол-во филиалов</th>
@@ -179,7 +179,7 @@ BX24.init(function() {
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
-					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+					$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
 			}, 'json').done(function() {
 				$('#inputSearchText').removeAttr('disabled');
