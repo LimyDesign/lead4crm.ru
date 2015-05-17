@@ -36,7 +36,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'getDataSearch':
-			getDataSearch(
+			echo getDataSearch(
 				$_POST['searchAPI'], 
 				$_POST['searchText'], 
 				$_POST['searchCity'],
