@@ -430,7 +430,7 @@ function getB24UserData($apikey) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select name from tariff where id = (select tariffid2 from users where apikey = '{$apikey}'";
+		$query = "select name from tariff where id = (select tariffid2 from users where apikey = '{$apikey}')";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$tariff = $tariff ? $tariff : 'Демо';
