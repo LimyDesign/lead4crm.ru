@@ -128,12 +128,14 @@ BX24.init(function() {
 
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		$('#inputSearchText').attr('disabled', 'disabled');
-		$('#selectSearchCity').attr('disabled', 'disabled');
-		$('#configForm').find('button').attr('disabled', 'disabled');
-		$('#searchButton').attr('disabled', 'disabled');
-		$('#searchButton').find('i').removeClass('fa-search')
-			.addClass('fa-circle-o-notch fa-spin');
+		if ($('#inputSearchText').val() != '') {
+			$('#inputSearchText').attr('disabled', 'disabled');
+			$('#selectSearchCity').attr('disabled', 'disabled');
+			$('#configForm').find('button').attr('disabled', 'disabled');
+			$('#searchButton').attr('disabled', 'disabled');
+			$('#searchButton').find('i').removeClass('fa-search')
+				.addClass('fa-circle-o-notch fa-spin');
+		}
 	});
 
 	// Сохраняем данные формы в Битрикс24
