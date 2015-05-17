@@ -36,7 +36,11 @@ if ($cmd[0]) {
 			break;
 
 		case 'getDataSearch':
-			getDataSearch($_POST['searchAPI'], $_POST['searchText'], $_POST['searchCity']);
+			getDataSearch(
+				$_POST['searchAPI'], 
+				$_POST['searchText'], 
+				$_POST['searchCity'],
+				$_POST['searchDomain']);
 			break;
 
 		case 'newAPIKey':
