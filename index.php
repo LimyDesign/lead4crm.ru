@@ -451,8 +451,8 @@ function getB24UserData($apikey) {
 	exit();
 }
 
-function getDataSearch($apikey, $text, $city, $domain) {
-	$url = 'http://api.cnamrf.ru/getCompanyList/1/?';
+function getDataSearch($apikey, $text, $city, $domain, $page = 1) {
+	$url = "http://api.cnamrf.ru/getCompanyList/{$page}/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
 		'text' => $text,
