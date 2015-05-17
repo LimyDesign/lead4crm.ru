@@ -101,7 +101,6 @@ BX24.init(function() {
 	var qty = '{{userData.qty}}';
 	if (!tariff || !qty) {
 		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
-			console.log(data);
 			$('#tariff').text(data.tariff);
 			$('#qty').number(data.qty, 0, '.', ' ');
 		});

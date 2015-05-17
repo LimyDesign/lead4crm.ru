@@ -421,6 +421,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
 			pg_close($db);
+			header("Content-Type: text/plain"); print_r($_SESSION); die();
 			header("Location: /cabinet/");
 		}
 	}
