@@ -31,6 +31,10 @@ if ($cmd[0]) {
 			getUserData();
 			break;
 
+		case 'getB24UserData':
+			getB24UserData($_POST['apikey']);
+			break;
+
 		case 'newAPIKey':
 			isAuth();
 			newAPIKey();
@@ -420,6 +424,26 @@ function dbLogin($userId, $userEmail, $provider) {
 			header("Location: /cabinet/");
 		}
 	}
+}
+
+function getB24UserData($apikey) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select name from tariff where id = (select tariffid2 from users where apikey = '{$apikey}'";
+		$result = pg_query($query);
+		$tariff = pg_fetch_result($result, 0, 'name');
+		$tariff = $tariff ? $tariff : 'Демо';
+		$query = "select qty from users where apikey = '{$apikey}'";
+		$result = pg_query($query);
+		$qty = pg_fetch_result($result, 0, 'qty');
+		pg_free_result($result);
+		pg_query($db);
+	}
+	$fullData = array('tariff' => $tariff, 'qty' => $qty);
+	header("Content-Type: text/json");
+	echo json_encode($fullData);
+	exit();
 }
 
 function getUserData($return = 'json') {

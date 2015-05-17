@@ -100,7 +100,7 @@ BX24.init(function() {
 	var tariff = '{{userData.tariff}}';
 	var qty = '{{userData.qty}}';
 	if (!tariff || !qty) {
-		$.post('/getB24UserTariff/', {apikey: b24APIKey}, function(data) {
+		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
 			$('#tariff').text(data.tariff);
 			$('#qty').number(data.qty, 0, '.', ' ');
 		});
