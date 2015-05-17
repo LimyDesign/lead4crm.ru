@@ -105,8 +105,10 @@ BX24.init(function() {
 			$('#qty').number(data.qty, 0, '.', ' ');
 		});
 	} else {
-		$('#tariff').text(tariff);
-		$('#qty').number(qty, 0, '.', ' ');
+		if (b24APIKey == '{{apikey}}') {
+			$('#tariff').text(tariff);
+			$('#qty').number(qty, 0, '.', ' ');
+		}
 	}
 
 	// Меняем приветствие в зависимости от времени суток
