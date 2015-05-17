@@ -59,7 +59,7 @@ if ($cmd[0]) {
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
-				'tariffs' => getUserTariff());
+				'tariffs' => getUserTariffList());
 
 		case 'b24-install':
 		case 'b24-index':
@@ -75,7 +75,8 @@ if ($cmd[0]) {
 				'installURL' => '/b24-install/' . $_SERVER['QUERY_STRING'],
 				'res' => $arRes,
 				'apikey' => $_SESSION['apikey'],
-				'cities' => getCities($arRes['result']['PERSONAL_CITY']));
+				'cities' => getCities($arRes['result']['PERSONAL_CITY']),
+				'userData' => getUserData());
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -434,8 +435,13 @@ function getUserData() {
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$tariff = $tariff ? $tariff : 'Демо';
+		$query = "select qty from users where id = {$_SESSION['userid']}";
+		$result = pg_query($query);
+		$qty = pg_fetch_result($result, 0, 'qty');
+		pg_free_result($result);
+		pg_close($db);
 	}
-	echo json_encode(array('balans' => $balans, 'tariff' => $tariff));
+	echo json_encode(array('balans' => $balans, 'tariff' => $tariff, 'qty' => $qty));
 	exit();
 }
 
@@ -662,7 +668,7 @@ function yandexPayments($cmd) {
 	exit();
 }
 
-function getUserTariff() {
+function getUserTariffList() {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
@@ -678,6 +684,19 @@ function getUserTariff() {
 		pg_close($db);
 	}
 	return $tariffs;
+}
+
+function getUserTariff() {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select name from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
+		$result = pg_query($query);
+		$tariff = pg_fetch_result($result, 0, 'name');
+		pg_free_result($result);
+		pg_close($db);
+	}
+	return $tariff;
 }
 
 function setTariff($getTariff) {

@@ -97,9 +97,9 @@ BX24.init(function() {
 	// Показываем текущий тариф пользователя
 	// и остаток кол-ва запросов
 	var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
-	var tariff = '{{tariffName}}';
-	var qty = '{{qty}}';
-	if (!tariff && !qty) {
+	var tariff = '{{userData.tariff}}';
+	var qty = '{{userData.qty}}';
+	if (!tariff || !qty) {
 		$.post('/getB24UserTariff/', {apikey: b24APIKey}, function(data) {
 			$('#tariff').text(data.tariff);
 			$('#qty').text(data.qty);
