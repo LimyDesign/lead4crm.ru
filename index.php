@@ -452,7 +452,7 @@ function getB24UserData($apikey) {
 }
 
 function getDataSearch($apikey, $text, $city, $domain) {
-	$url = 'http://api.cnamrf.ru/getCompanyList/?';
+	$url = 'http://api.cnamrf.ru/getCompanyList/1/?';
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
 		'text' => $text,
