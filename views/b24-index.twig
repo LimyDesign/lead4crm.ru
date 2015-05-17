@@ -53,7 +53,7 @@
 								</div>
 							</form>
 						</div>
-						<div id="search-results" class="hide">
+						<div id="search-results" style="display:none;">
 							<h2>
 								Результаты поиска
 								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска"><i class="fa fa-search"></i></button>
@@ -164,14 +164,21 @@ BX24.init(function() {
 				searchDomain: '{{request.DOMAIN}}',
 				searchText: $('#inputSearchText').val(),
 				searchCity: $('#selectSearchCity').val()}
-			// console.log('formData:',formData);
 			$.post('/getDataSearch/', formData, function(data) {
-				// console.log('Data:',data);
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
 					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="id" value="'+entry.id+'"><input type="hidden" name="hash" value="'+entry.hash+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
-			}, 'json');
+			}, 'json').done(function() {
+				$('#inputSearchText').removeAttr('disabled');
+				$('#selectSearchCity').removeAttr('disabled');
+				$('#configForm').find('button').removeAttr('disabled');
+				$('#searchButton').removeAttr('disabled');
+				$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+					.addClass('fa-search');
+				$('#search-options').slideToggle();
+				$('#search-results').slideToggle();
+			});
 		}
 	});
 });
