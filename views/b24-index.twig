@@ -42,7 +42,7 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
-										<button class="btn btn-primary btn-lg rounded" type="submit">
+										<button class="btn btn-primary btn-lg rounded" type="submit" id="searchButton">
 											<i class="fa fa-search"></i> &nbsp; 
 											Поиск
 										</button>
@@ -112,14 +112,27 @@ BX24.init(function() {
 		}
 	});
 
+	// Выставляем город по-умолчанию из
+	// опций приложения, чтобы сразу можно было искать
 	var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
 	if (b24CityID) {
 		$('#selectSearchCity').val(b24CityID);
 	}
 
+	// Блокируем кнопку открытия конфигурации
+	// и заодно добавляем немного анимации
 	$('#configForm').submit(function(e) {
 		$(this).find('button').attr('disabled', 'disabled');
 		$(this).find('i.fa').addClass('fa-spin');
+	});
+
+	$('#searchForm').submit(function(e) {
+		e.preventDefault();
+		$('#inputSearchText').attr('disabled', 'disabled');
+		$('#selectSearchCity').attr('disabled', 'disabled');
+		$('#searchButton').attr('disabled', 'disabled');
+		$('#searchButton').find('i').removeClass('fa-search')
+			.addClass('fa-circle-o-notch fa-spin');
 	});
 
 	// Сохраняем данные формы в Битрикс24
