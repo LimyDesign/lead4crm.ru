@@ -169,7 +169,7 @@ BX24.init(function() {
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				data.result.forEach(function(entry) {
-					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="id" value="'+entry.id+' checked"><input type="hidden" name="hash" value="'+entry.hash+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+					$('#tableResult').find('tbody').append('<tr><td><input type="checkbox" name="id" value="'+entry.id+'" checked><input type="hidden" name="hash" value="'+entry.hash+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
 			}, 'json').done(function() {
 				$('#inputSearchText').removeAttr('disabled');
