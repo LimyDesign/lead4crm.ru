@@ -212,10 +212,10 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		if (searchText != $('#inputSearchText').val()) {
-			searchText = $('#inputSearchText').val();
-			b24CityID = $('#selectSearchCity').val();
-			if (searchText != '') {
+		if (searchText != '') {
+			if (searchText != $('#inputSearchText').val()) {
+				searchText = $('#inputSearchText').val();
+				b24CityID = $('#selectSearchCity').val();
 				$('#inputSearchText').attr('disabled', 'disabled');
 				$('#selectSearchCity').attr('disabled', 'disabled');
 				$('#configForm').find('button').attr('disabled', 'disabled');
@@ -256,12 +256,12 @@ BX24.init(function() {
 						BX24.fitWindow();
 					});
 				});
+			} else {
+				$('#search-options').slideToggle('fast');
+				$('#search-results').slideToggle('fast',function() {
+					BX24.fitWindow();
+				});
 			}
-		} else {
-			$('#search-options').slideToggle('fast');
-			$('#search-results').slideToggle('fast',function() {
-				BX24.fitWindow();
-			});
 		}
 	});
 });
