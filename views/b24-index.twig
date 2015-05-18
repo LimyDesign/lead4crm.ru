@@ -111,20 +111,22 @@
 </html>
 {% endspaceless %}
 <script>
+// Объявляем переменные
+var page = 1;
+var searchText = '';
+var b24APIKey  = '';
+var b24CityID = 0;
+var tariff = '{{userData.tariff}}';
+var qty = '{{userData.qty}}';
+
 // Инициализируем Битрикс24
 BX24.init(function() {
-	// Объявим переменные, которые необходимы будут для навигации
-	var page = 1;
-	var searchText = '';
-
 	// Подключаем подсказки
 	$('[data-toggle="tooltip"]').tooltip();
 
 	// Показываем текущий тариф пользователя
 	// и остаток кол-ва запросов
-	var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
-	var tariff = '{{userData.tariff}}';
-	var qty = '{{userData.qty}}';
+	b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
 	if (!tariff || !qty) {
 		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
 			$('#tariff').text(data.tariff);
@@ -161,7 +163,7 @@ BX24.init(function() {
 
 	// Выставляем город по-умолчанию из
 	// опций приложения, чтобы сразу можно было искать
-	var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+	b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
 	if (b24CityID) {
 		$('#selectSearchCity').val(b24CityID);
 	}
@@ -204,6 +206,7 @@ BX24.init(function() {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				$('#searching').text($('#inputSearchText').val());
 				$('#resultTotal').text(data.total);
+				$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
 				$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
 				if (data.total > 50) {
 					var page = 2;
