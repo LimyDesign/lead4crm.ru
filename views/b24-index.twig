@@ -219,9 +219,7 @@ BX24.init(function() {
 				$('#inputSearchText').attr('disabled', 'disabled');
 				$('#selectSearchCity').attr('disabled', 'disabled');
 				$('#configForm').find('button').attr('disabled', 'disabled');
-				$('#searchButton').attr('disabled', 'disabled');
-				$('#searchButton').find('i').removeClass('fa-search')
-					.addClass('fa-circle-o-notch fa-spin');
+				$('#searchButton').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск');;
 				var formData = {
 					searchAPI: b24APIKey,
 					searchDomain: '{{request.DOMAIN}}',
