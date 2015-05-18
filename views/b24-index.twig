@@ -214,8 +214,8 @@ BX24.init(function() {
 	$('#showSearchFom').click(function() {
 		$('#search-options').slideToggle('fast');
 		$('#search-results').slideToggle('fast',function() {
-			var widthWraper = $('body').width();
-			var heightWraper = $('body').height();
+			var widthWraper = $('#wraper').width();
+			var heightWraper = $('#wraper').height();
 			BX24.resizeWindow(widthWraper, heightWraper);
 			searchButtonHTML = '<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска';
 			$('#searchButton').html(searchButtonHTML);
