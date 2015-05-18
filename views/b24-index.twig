@@ -316,6 +316,7 @@ function gotoPage(pageTo) {
 		searchCity: b24CityID,
 		searchPage: pageTo};
 	$('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
+	$("html, body").animate({ scrollTop: $('#tableResult').offset().top }, 1000);
 	$.post('/getDataSearch/', formData, function(data) {
 		totalFind = data.total
 		$('#qty').number(data.qty, 0, '.', ' ');
@@ -357,7 +358,6 @@ function gotoPage(pageTo) {
 		});
 		$('#totalInport').find('span').text(totalChecked);
 	}, 'json').done(function() {
-		
 		$('#inputSearchText').removeAttr('disabled');
 		$('#selectSearchCity').removeAttr('disabled');
 		$('#configForm').find('button').removeAttr('disabled');
@@ -367,9 +367,7 @@ function gotoPage(pageTo) {
 		var widthWraper = $('#wraper').width();
 		var heightWraper = $('#wraper').height();
 		BX24.resizeWindow(widthWraper, heightWraper, function() {
-			BX24.fitWindow(function() {
-				$("html, body").animate({ scrollTop: $('#tableResult').offset().top }, 1000);
-			});
+			BX24.fitWindow();
 		});
 	});
 }
