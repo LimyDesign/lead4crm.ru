@@ -79,12 +79,12 @@
 							<nav class="text-center">
 								<ul class="pagination pagination-lg">
 									<li>
-										<a href="#" aria-label="Назад">
+										<a href="javascript:void()" onclick="prevPage()" aria-label="Назад">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<li>
-										<a href="#" aria-label="Далее">
+										<a href="javascript:void()" onclick="nextPage()" aria-label="Далее">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
@@ -113,6 +113,9 @@
 <script>
 // Инициализируем Битрикс24
 BX24.init(function() {
+	// Объявим переменные, которые необходимы будут для навигации
+	var page = 1;
+
 	// Подключаем подсказки
 	$('[data-toggle="tooltip"]').tooltip();
 
@@ -204,7 +207,7 @@ BX24.init(function() {
 				if (data.total > 50) {
 					var page = 2;
 					for (var i = 50; i < data.total; i = i + 50) {
-						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/?searchAPI='+b24APIKey+'&searchText='+searchText+'&searchCity='+searchCity+'&searchDomain={{request.DOMAIN}}">'+page+'</a></li>');
+						$('nav ul.pagination').find('li:last').before('<li><a href="javascrip:void()" onclick=gotoPage('+page+',"'+b24APIKey+'","'+searchText+'",'+searchCity+',"{{request.DOMAIN}}")>'+page+'</a></li>');
 						page++;
 					}
 				}
