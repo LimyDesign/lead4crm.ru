@@ -126,6 +126,7 @@ var tariff = '{{userData.tariff}}';
 var qty = '{{userData.qty}}';
 var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
 var totalChecked = 0;
+var totalFind = 0;
 
 // Инициализируем Битрикс24
 BX24.init(function() {
@@ -193,6 +194,14 @@ BX24.init(function() {
 	// фирм в списке таблицы результатов
 	$('#selectAllID').click(function() {
 		var checkedStatus = this.checked;
+		if (!checkedStatus) totalChecked = 0;
+		else {
+			if (totalFind > 50) {
+				totalChecked = 50;
+			} else {
+				totalChecked = totalFind;
+			}
+		}
 		$('#tableResult tbody tr').find('td:first :checkbox').each(function() {
 			$(this).prop('checked', checkedStatus);
 		});
@@ -283,6 +292,8 @@ BX24.init(function() {
 	});
 });
 
+// Функция меняет итоговое кол-во импортируемых компаний
+// отображаемых пользователю для удобства
 function changeMark(id) {
 	var status = $('input[name="' + id + '"]:checked').length;
 	if (status)
