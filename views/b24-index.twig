@@ -4,6 +4,7 @@
 <html>
 <head>
 	{% include 'layout/header.twig' %}
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
 	<style>
 	.btn-config {
 		position: fixed;
@@ -92,7 +93,7 @@
 								</ul>
 							</nav>
 							<div class="well">
-								<a href="#." class="btn btn-success btn-lg">Импортировать компании</a>
+								<button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
 							</div>
 						</div>
 					</div>
@@ -269,6 +270,8 @@ BX24.init(function() {
 					BX24.fitWindow();
 				});
 			}
+		} else {
+			$('#inputSearchText').addClass('animated bounce');
 		}
 	});
 });
