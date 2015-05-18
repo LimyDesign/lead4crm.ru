@@ -248,6 +248,7 @@ BX24.init(function() {
 					searchText: searchText,
 					searchCity: b24CityID}
 				$.post('/getDataSearch/', formData, function(data) {
+					totalFind = data.total
 					$('#qty').number(data.qty, 0, '.', ' ');
 					$('#searching').text($('#inputSearchText').val());
 					$('#resultTotal').text(data.total);
@@ -264,7 +265,7 @@ BX24.init(function() {
 						$('nav ul.pagination').find('li:last').addClass('disabled');
 					}
 					data.result.forEach(function(entry) {
-						totalChecked++; totalFind++;
+						totalChecked++;
 						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
 					$('#totalInport').find('span').text(totalChecked);
