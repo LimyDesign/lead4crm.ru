@@ -198,14 +198,6 @@ BX24.init(function() {
 		});
 	});
 
-	// Делаем пересчет импортируемых компаний
-	// на основании отмеченных чекбоксов
-	$('[id*="mark"]').change(function() {
-		alert('yo!');
-		totalChecked = $('input:checkbox:checked').length;
-		$('#totalInport').find('span').text(totalChecked);
-	});
-
 	// Делаем возможность показать форму поиска
 	// и меняем название кнопки поиска
 	$('#showSearchFom').click(function() {
@@ -262,7 +254,7 @@ BX24.init(function() {
 					}
 					data.result.forEach(function(entry) {
 						totalChecked++;
-						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" id="mark" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked onclick="changeMark('+entry.id+');"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
 					$('#totalInport').find('span').text(totalChecked);
 				}, 'json').done(function() {
@@ -290,6 +282,15 @@ BX24.init(function() {
 		}
 	});
 });
+
+function changeMark(id) {
+	if ($([name=id]).is(':checked')) {
+		totalChecked--;
+	} else {
+		totalChecked++;
+	}
+	$('#totalInport').find('span').text(totalChecked);
+}
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
