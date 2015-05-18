@@ -58,6 +58,7 @@
 								Результаты поиска
 								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска" id="showSearchFom"><i class="fa fa-search"></i></button>
 							</h2>
+							<p class="lead">По-умолчанию система в автоматическом режиме пытается определить уже имеющиеся компании в вашем справочнике, если находятся совпадения, то данные компании не отмечаются на добавление. Тем не менее желательно просмотреть весь список и по возможности снять отметки с тех компаний, которые могут уже находиться в вашем справочнике, однако, могут называться по другому.</p>
 							<blockquote>
 								По запросу «<strong id="searching"></strong>» найдено записей:
 								<strong id="resultTotal"></strong>
@@ -245,7 +246,7 @@ BX24.init(function() {
 						$('nav ul.pagination').find('li:last').addClass('disabled');
 					}
 					data.result.forEach(function(entry) {
-						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
 				}, 'json').done(function() {
 					$('#inputSearchText').removeAttr('disabled');
