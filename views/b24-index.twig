@@ -118,6 +118,7 @@ var b24APIKey  = '';
 var b24CityID = 0;
 var tariff = '{{userData.tariff}}';
 var qty = '{{userData.qty}}';
+var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
 
 // Инициализируем Битрикс24
 BX24.init(function() {
@@ -170,12 +171,12 @@ BX24.init(function() {
 
 	// Определяем как называть кнопку поиска
 	// в зависимости от введенного текста поиска
-	$('#inputSearchText').keyup(function(event) {
+	$('#inputSearchText').keyup(function() {
 		if (searchText) {
 			if (searchText != $(this).val()) {
 				$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
 			} else {
-				$('#searchButton').html('<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска');
+				$('#searchButton').html(searchButtonHTML);
 			}
 		}
 	});
@@ -198,13 +199,14 @@ BX24.init(function() {
 			var widthWraper = $('#wraper').width();
 			var heightWraper = $('#wraper').height();
 			BX24.resizeWindow(widthWraper, heightWraper);
-			$('#searchButton').html('<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска');
+			searchButtonHTML = '<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска';
+			$('#searchButton').html(searchButtonHTML);
 		});
 	});
 
 	// Блокируем кнопку открытия конфигурации
 	// и заодно добавляем немного анимации
-	$('#configForm').submit(function(e) {
+	$('#configForm').submit(function() {
 		$(this).find('button').attr('disabled', 'disabled');
 		$(this).find('i.fa').addClass('fa-spin');
 	});
@@ -219,7 +221,8 @@ BX24.init(function() {
 				$('#inputSearchText').attr('disabled', 'disabled');
 				$('#selectSearchCity').attr('disabled', 'disabled');
 				$('#configForm').find('button').attr('disabled', 'disabled');
-				$('#searchButton').attr('disabled', 'disabled').html('<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск');;
+				searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
+				$('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
 				var formData = {
 					searchAPI: b24APIKey,
 					searchDomain: '{{request.DOMAIN}}',
