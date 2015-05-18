@@ -285,7 +285,7 @@ BX24.init(function() {
 
 function changeMark(id) {
 	console.log('id:',id);
-	if ($('input[name='+id+']').is(':checked')) {
+	if ($('input[name='+id+']').attr('checked')) {
 		console.log('checked');
 		totalChecked++;
 	} else {
