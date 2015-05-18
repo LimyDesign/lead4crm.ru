@@ -357,7 +357,7 @@ function gotoPage(pageTo) {
 		});
 		$('#totalInport').find('span').text(totalChecked);
 	}, 'json').done(function() {
-		$("html, body").animate({ scrollTop: $('#tableResult').offset().top }, 1000);
+		$("html, body").animate({ scrollTop: $('#wraper').offset().top }, 1000);
 		$('#inputSearchText').removeAttr('disabled');
 		$('#selectSearchCity').removeAttr('disabled');
 		$('#configForm').find('button').removeAttr('disabled');
