@@ -201,7 +201,7 @@ BX24.init(function() {
 				$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active"><span>1 <span class="sr-only">(текущая)</span></span></li>');
 				if (data.total > 50) {
 					var page = 2;
-					for (var i = 0; i < data.total; i = i + 50) {
+					for (var i = 50; i < data.total; i = i + 50) {
 						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/>'+page+'</a></li>');
 						page++;
 					}
