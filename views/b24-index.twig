@@ -202,7 +202,7 @@ BX24.init(function() {
 				if (data.total > 50) {
 					var page = 2;
 					for (var i = 50; i < data.total; i = i + 50) {
-						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/>'+page+'</a></li>');
+						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/">'+page+'</a></li>');
 						page++;
 					}
 				}
