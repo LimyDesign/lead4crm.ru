@@ -284,15 +284,16 @@ BX24.init(function() {
 });
 
 function changeMark(id) {
-	console.log('id:',id);
-	if ($('input[name='+id+']').attr('checked')) {
-		console.log('checked');
-		totalChecked++;
-	} else {
-		console.log('unchecked');
-		totalChecked--;
-	}
-	$('#totalInport').find('span').text(totalChecked);
+	console.log($('input[name="+id+"').is(':checked'));
+
+	// if ($('input[name='+id+']').attr('checked')) {
+	// 	console.log('checked');
+	// 	totalChecked++;
+	// } else {
+	// 	console.log('unchecked');
+	// 	totalChecked--;
+	// }
+	// $('#totalInport').find('span').text(totalChecked);
 }
 
 // Изменяем размер фрейма под текущие контент
