@@ -168,6 +168,12 @@ BX24.init(function() {
 		$('#selectSearchCity').val(b24CityID);
 	}
 
+	// Определяем как называть кнопку поиска
+	// в зависимости от введенного текста поиска
+	$('#inputSearchText').keyup(function() {
+		console.log($(this).val());
+	});
+
 	// Добавляем возможно одновременно выделять 
 	// или снимать выделения со всех найденных
 	// фирм в списке таблицы результатов
@@ -178,6 +184,8 @@ BX24.init(function() {
 		});
 	});
 
+	// Делаем возможность показать форму поиска
+	// и меняем название кнопки поиска
 	$('#showSearchFom').click(function() {
 		$('#search-options').slideToggle('fast');
 		$('#search-results').slideToggle('fast',function() {
