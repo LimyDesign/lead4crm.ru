@@ -116,14 +116,6 @@
 </body>
 </html>
 {% endspaceless %}
-<script type="text/javascript">
-    window.addEventListener("message", listener, false);
-    function listener(event){    
-      if ( event.origin !== "https://lds.bitrix24.ru" )
-        return
-        console.log('Message Received : '+event.data);
-      }
-</script>
 <script>
 // Объявляем переменные
 var page = 1;
@@ -373,7 +365,7 @@ function gotoPage(pageTo) {
 			.addClass('fa-search');
 		var widthWraper = $('#wraper').width();
 		var heightWraper = $('#wraper').height();
-		BX24.resizeWindow(widthWraper, heightWraper, function() {
+		BX24.resizeWindow(0, 0, function() {
 			BX24.fitWindow();
 		});
 	});
