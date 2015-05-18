@@ -56,7 +56,7 @@
 						<div id="search-results" style="display:none;">
 							<h2>
 								Результаты поиска
-								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска"><i class="fa fa-search"></i></button>
+								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска" onclick="showSearchFom()"><i class="fa fa-search"></i></button>
 							</h2>
 							<blockquote>
 								По запросу «<strong id="searching"></strong>» найдено записей:
@@ -229,6 +229,13 @@ BX24.init(function() {
 			});
 		}
 	});
+
+	function showSearchFom() {
+		$('#search-options').slideToggle('fast');
+		$('#search-results').slideToggle('fast',function() {
+			BX24.fitWindow();
+		});
+	}
 });
 
 // Изменяем размер фрейма под текущие контент
