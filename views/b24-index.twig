@@ -44,7 +44,7 @@
 								<div class="form-group">
 									<div class="col-sm-offset-2 col-sm-10">
 										<button class="btn btn-primary btn-lg rounded" type="submit" id="searchButton">
-											<i class="fa fa-search fa-fw"></i> Поиск
+											<i class="fa fa-fw fa-search"></i> Поиск
 										</button> &nbsp; 
 										<button type="button" class="btn btn-default btn-lg rounded" disabled="disabled">
 											Осталось запросов: <span id="qty">0</span>
@@ -171,7 +171,11 @@ BX24.init(function() {
 	// Определяем как называть кнопку поиска
 	// в зависимости от введенного текста поиска
 	$('#inputSearchText').keyup(function() {
-		console.log($(this).val());
+		if (searchText != $(this).val()) {
+			$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
+		} else {
+			$('#searchButton').html('<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска');
+		}
 	});
 
 	// Добавляем возможно одновременно выделять 
