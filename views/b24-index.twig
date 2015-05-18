@@ -337,7 +337,7 @@ function gotoPage(pageTo) {
 		} else {
 			if (totalFind > 50) {
 				var pageNum = 1;
-				for (var i = 50; i < totalFind; i = i + 50) {
+				for (var i = 0; i < totalFind; i = i + 50) {
 					if (pageNum == pageTo) {
 						$('nav ul.pagination').find('li:last').before('<li class="active" id="page'+pageNum+'"><span>'+pageNum+' <span class="sr-only">(текущая)</span></span></li>');
 					} else {
