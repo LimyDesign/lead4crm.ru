@@ -183,8 +183,8 @@ BX24.init(function() {
 		$('#search-results').slideToggle('fast',function() {
 			var widthWraper = $('#wraper').width();
 			var heightWraper = $('#wraper').height();
-			alert(heightWraper);
 			BX24.resizeWindow(widthWraper, heightWraper);
+			$('#searchButton').find('i').removeClass('fa-search').addClass('fa-caret-square-o-down').after(' Открыть результаты поиска');
 		});
 	});
 
