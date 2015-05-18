@@ -349,6 +349,21 @@ function gotoPage(pageTo) {
 				$('nav ul.pagination').find('li:last').addClass('disabled');
 			}
 		}
+		data.result.forEach(function(entry) {
+			totalChecked++;
+			$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+		});
+		$('#totalInport').find('span').text(totalChecked);
+	}, 'json').done(function() {
+		$('#inputSearchText').removeAttr('disabled');
+		$('#selectSearchCity').removeAttr('disabled');
+		$('#configForm').find('button').removeAttr('disabled');
+		$('#searchButton').removeAttr('disabled');
+		$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+			.addClass('fa-search');
+		var widthWraper = $('#wraper').width();
+		var heightWraper = $('#wraper').height();
+		BX24.resizeWindow(widthWraper, heightWraper);
 	});
 }
 
