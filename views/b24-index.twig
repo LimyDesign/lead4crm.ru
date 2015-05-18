@@ -246,21 +246,22 @@ BX24.init(function() {
 					searchAPI: b24APIKey,
 					searchDomain: '{{request.DOMAIN}}',
 					searchText: searchText,
-					searchCity: b24CityID}
+					searchCity: b24CityID,
+					searchPage: page};
 				$.post('/getDataSearch/', formData, function(data) {
 					totalFind = data.total
 					$('#qty').number(data.qty, 0, '.', ' ');
-					$('#searching').text($('#inputSearchText').val());
+					$('#searching').text(searchText);
 					$('#resultTotal').text(data.total);
 					$('nav ul.pagination').find('li:last').removeClass('disabled');
 					$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
 					$('#tableResult tbody').find('tr').remove();
 					$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
 					if (data.total > 50) {
-						var page = 2;
+						var pageNum = 2;
 						for (var i = 50; i < data.total; i = i + 50) {
-							$('nav ul.pagination').find('li:last').before('<li id="page'+page+'"><a href="javascript:gotoPage('+page+')">'+page+'</a></li>');
-							page++;
+							$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+							pageNum++;
 						}
 					} else {
 						$('nav ul.pagination').find('li:last').addClass('disabled');
@@ -305,6 +306,50 @@ function changeMark(id) {
 	else
 		totalChecked--;
 	$('#totalInport').find('span').text(totalChecked);
+}
+
+function gotoPage(pageTo) {
+	var formData = {
+		searchAPI: b24APIKey,
+		searchDomain: '{{request.DOMAIN}}',
+		searchText: searchText,
+		searchCity: b24CityID,
+		searchPage: pageTo};
+	$.post('/getDataSearch/', formData, function(data) {
+		totalFind = data.total
+		$('#qty').number(data.qty, 0, '.', ' ');
+		$('#searching').text(searchText);
+		$('#resultTotal').text(data.total);
+		$('nav ul.pagination').find('li').removeClass('disabled');
+		$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
+		$('#tableResult tbody').find('tr').remove();
+		if (pageTo == 1) {
+			$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+			if (totalFind > 50) {
+				var pageNum = 2;
+				for (var i = 50; i < totalFind; i = i + 50) {
+					$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+					pageNum++;
+				}
+			} else {
+				$('nav ul.pagination').find('li:last').addClass('disabled');
+			}
+		} else {
+			if (totalFind > 50) {
+				var pageNum = 1;
+				for (var i = 50; i < totalFind; i = i + 50) {
+					if (pageNum == pageTo) {
+						$('nav ul.pagination').find('li:last').before('<li class="active" id="page'+pageNum+'"><span>'+pageNum+' <span class="sr-only">(текущая)</span></span></li>');
+					} else {
+						$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+					}
+					pageNum++;
+				}
+			} else {
+				$('nav ul.pagination').find('li:last').addClass('disabled');
+			}
+		}
+	});
 }
 
 // Изменяем размер фрейма под текущие контент

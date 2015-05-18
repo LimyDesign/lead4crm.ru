@@ -40,7 +40,8 @@ if ($cmd[0]) {
 				$_REQUEST['searchAPI'], 
 				$_REQUEST['searchText'], 
 				$_REQUEST['searchCity'],
-				$_REQUEST['searchDomain']);
+				$_REQUEST['searchDomain'],
+				$_REQUEST['searchPage']);
 			break;
 
 		case 'newAPIKey':
