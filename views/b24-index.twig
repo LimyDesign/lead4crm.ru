@@ -212,7 +212,7 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		if (searchText != '') {
+		if ($('#inputSearchText').val() != '') {
 			if (searchText != $('#inputSearchText').val()) {
 				searchText = $('#inputSearchText').val();
 				b24CityID = $('#selectSearchCity').val();
