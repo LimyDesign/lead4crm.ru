@@ -364,9 +364,11 @@ function gotoPage(pageTo) {
 		$('#searchButton').removeAttr('disabled');
 		$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
 			.addClass('fa-search');
-		var widthWraper = $('#wraper').width();
-		var heightWraper = $('#wraper').height();
-		BX24.resizeWindow(widthWraper, heightWraper);
+		setTimeout(function() {
+			var widthWraper = $('#wraper').width();
+			var heightWraper = $('#wraper').height();
+			BX24.resizeWindow(widthWraper, heightWraper);
+		}, 200);
 	});
 }
 
