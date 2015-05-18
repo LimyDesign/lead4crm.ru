@@ -357,7 +357,7 @@ function gotoPage(pageTo) {
 		});
 		$('#totalInport').find('span').text(totalChecked);
 	}, 'json').done(function() {
-		$("html, body").animate({ scrollTop: $('#wraper').offset().top }, 1000);
+		
 		$('#inputSearchText').removeAttr('disabled');
 		$('#selectSearchCity').removeAttr('disabled');
 		$('#configForm').find('button').removeAttr('disabled');
@@ -367,7 +367,9 @@ function gotoPage(pageTo) {
 		var widthWraper = $('#wraper').width();
 		var heightWraper = $('#wraper').height();
 		BX24.resizeWindow(widthWraper, heightWraper, function() {
-			BX24.fitWindow();
+			BX24.fitWindow(function() {
+				$("html, body").animate({ scrollTop: $('#tableResult').offset().top }, 1000);
+			});
 		});
 	});
 }
