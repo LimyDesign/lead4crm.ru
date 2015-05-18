@@ -171,7 +171,7 @@ BX24.init(function() {
 	// Определяем как называть кнопку поиска
 	// в зависимости от введенного текста поиска
 	$('#inputSearchText').keyup(function(event) {
-		if (searchText || event.which != 13) {
+		if (searchText) {
 			if (searchText != $(this).val()) {
 				$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
 			} else {
