@@ -238,7 +238,9 @@ BX24.init(function() {
 function showSearchFom() {
 	$('#search-options').slideToggle('fast');
 	$('#search-results').slideToggle('fast',function() {
-		BX24.fitWindow();
+		var width = $(document).width();
+		var height = $(document).height();
+		BX24.resizeWindow(width, height);
 	});
 }
 
