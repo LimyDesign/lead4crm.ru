@@ -194,8 +194,9 @@ BX24.init(function() {
 	// фирм в списке таблицы результатов
 	$('#selectAllID').click(function() {
 		var checkedStatus = this.checked;
-		if (!checkedStatus) totalChecked = 0;
-		else {
+		if (!checkedStatus) {
+			totalChecked = 0;
+		} else {
 			if (totalFind > 50) {
 				totalChecked = 50;
 			} else {
