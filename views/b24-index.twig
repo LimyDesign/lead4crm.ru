@@ -284,7 +284,7 @@ BX24.init(function() {
 });
 
 function changeMark(id) {
-	if ($([name=id]).is(':checked')) {
+	if ($('input[name='+id+']').is(':checked')) {
 		totalChecked--;
 	} else {
 		totalChecked++;
