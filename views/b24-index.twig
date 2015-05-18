@@ -79,12 +79,12 @@
 							<nav class="text-center">
 								<ul class="pagination pagination-lg">
 									<li>
-										<a href="javascript:void()" onclick="prevPage()" aria-label="Назад">
+										<a href="javascript:prevPage()" aria-label="Назад">
 											<span aria-hidden="true">&laquo;</span>
 										</a>
 									</li>
 									<li>
-										<a href="javascript:void()" onclick="nextPage()" aria-label="Далее">
+										<a href="javascript:nextPage()" aria-label="Далее">
 											<span aria-hidden="true">&raquo;</span>
 										</a>
 									</li>
@@ -115,6 +115,7 @@
 BX24.init(function() {
 	// Объявим переменные, которые необходимы будут для навигации
 	var page = 1;
+	var searchText = '';
 
 	// Подключаем подсказки
 	$('[data-toggle="tooltip"]').tooltip();
@@ -185,8 +186,8 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		var searchText = $('#inputSearchText').val();
-		var searchCity = $('#selectSearchCity').val();
+		searchText = $('#inputSearchText').val();
+		b24CityID = $('#selectSearchCity').val();
 		if (searchText != '') {
 			$('#inputSearchText').attr('disabled', 'disabled');
 			$('#selectSearchCity').attr('disabled', 'disabled');
@@ -198,16 +199,16 @@ BX24.init(function() {
 				searchAPI: b24APIKey,
 				searchDomain: '{{request.DOMAIN}}',
 				searchText: searchText,
-				searchCity: searchCity}
+				searchCity: b24CityID}
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				$('#searching').text($('#inputSearchText').val());
 				$('#resultTotal').text(data.total);
-				$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+				$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
 				if (data.total > 50) {
 					var page = 2;
 					for (var i = 50; i < data.total; i = i + 50) {
-						$('nav ul.pagination').find('li:last').before('<li><a href="javascrip:void()" onclick=gotoPage('+page+',"'+b24APIKey+'","'+searchText+'",'+searchCity+',"{{request.DOMAIN}}")>'+page+'</a></li>');
+						$('nav ul.pagination').find('li:last').before('<li id="page'+page+'"><a href="javascript:gotoPage('+page+')">'+page+'</a></li>');
 						page++;
 					}
 				}
