@@ -171,10 +171,12 @@ BX24.init(function() {
 	// Определяем как называть кнопку поиска
 	// в зависимости от введенного текста поиска
 	$('#inputSearchText').keyup(function() {
-		if (searchText != $(this).val()) {
-			$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
-		} else {
-			$('#searchButton').html('<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска');
+		if (searchText) {
+			if (searchText != $(this).val()) {
+				$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
+			} else {
+				$('#searchButton').html('<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска');
+			}
 		}
 	});
 
