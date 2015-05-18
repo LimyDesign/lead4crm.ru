@@ -229,14 +229,14 @@ BX24.init(function() {
 			});
 		}
 	});
-
-	function showSearchFom() {
-		$('#search-options').slideToggle('fast');
-		$('#search-results').slideToggle('fast',function() {
-			BX24.fitWindow();
-		});
-	}
 });
+
+function showSearchFom() {
+	$('#search-options').slideToggle('fast');
+	$('#search-results').slideToggle('fast',function() {
+		BX24.fitWindow();
+	});
+}
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
