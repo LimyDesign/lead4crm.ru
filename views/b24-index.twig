@@ -94,7 +94,7 @@
 							</nav>
 							<div class="well">
 								<button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
-								<button id="totalInport" class="btn btn-default btn-lg" disabled="disabled">Всего будет импортировано: <span>50</span></button>
+								<button id="totalInport" class="btn btn-default btn-lg" disabled="disabled">Всего будет импортировано: <span>0</span></button>
 							</div>
 						</div>
 					</div>
@@ -125,6 +125,7 @@ var b24CityID = 0;
 var tariff = '{{userData.tariff}}';
 var qty = '{{userData.qty}}';
 var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
+var totalChecked = 0;
 
 // Инициализируем Битрикс24
 BX24.init(function() {
@@ -251,8 +252,10 @@ BX24.init(function() {
 						$('nav ul.pagination').find('li:last').addClass('disabled');
 					}
 					data.result.forEach(function(entry) {
+						totalChecked++;
 						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
+					$('#totalInport').find('span').text(totalChecked);
 				}, 'json').done(function() {
 					$('#inputSearchText').removeAttr('disabled');
 					$('#selectSearchCity').removeAttr('disabled');
