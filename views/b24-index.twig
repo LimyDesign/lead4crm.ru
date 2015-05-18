@@ -254,7 +254,7 @@ BX24.init(function() {
 					}
 					data.result.forEach(function(entry) {
 						totalChecked++;
-						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked onclick="changeMark('+entry.id+');"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick="changeMark('+entry.id+');" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
 					$('#totalInport').find('span').text(totalChecked);
 				}, 'json').done(function() {
