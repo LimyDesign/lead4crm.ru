@@ -203,6 +203,7 @@ BX24.init(function() {
 				totalChecked = totalFind;
 			}
 		}
+		$('#totalInport').find('span').text(totalChecked);
 		$('#tableResult tbody tr').find('td:first :checkbox').each(function() {
 			$(this).prop('checked', checkedStatus);
 		});
