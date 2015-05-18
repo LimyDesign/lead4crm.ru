@@ -198,6 +198,13 @@ BX24.init(function() {
 		});
 	});
 
+	// Делаем пересчет импортируемых компаний
+	// на основании отмеченных чекбоксов
+	$('#tableResult tbody tr').find('td:first :checkbox').click(function() {
+		totalChecked = $(this).length;
+		$('#totalInport').find('span').text(totalChecked);
+	});
+
 	// Делаем возможность показать форму поиска
 	// и меняем название кнопки поиска
 	$('#showSearchFom').click(function() {
