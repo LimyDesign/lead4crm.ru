@@ -238,8 +238,8 @@ BX24.init(function() {
 function showSearchFom() {
 	$('#search-options').slideToggle('fast');
 	$('#search-results').slideToggle('fast',function() {
-		var width = $(document).width();
-		var height = $(document).height();
+		var width = $('#wrapper').width();
+		var height = $('#wrapper').height();
 		BX24.resizeWindow(width, height);
 	});
 }
