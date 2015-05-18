@@ -366,8 +366,10 @@ function gotoPage(pageTo) {
 			.addClass('fa-search');
 		var widthWraper = $('#wraper').width();
 		var heightWraper = $('#wraper').height();
-		BX24.resizeWindow(widthWraper, heightWraper);
-		BX24.fitWindow();
+		BX24.resizeWindow(widthWraper, heightWraper, function(e) {
+			console.log(e);
+			BX24.fitWindow();
+		});
 	});
 }
 
