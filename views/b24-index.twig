@@ -214,8 +214,8 @@ BX24.init(function() {
 	$('#showSearchFom').click(function() {
 		$('#search-options').slideToggle('fast');
 		$('#search-results').slideToggle('fast',function() {
-			var widthWraper = $('#wraper').width();
-			var heightWraper = $('#wraper').height();
+			var widthWraper = $('body').width();
+			var heightWraper = $('body').height();
 			BX24.resizeWindow(widthWraper, heightWraper);
 			searchButtonHTML = '<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска';
 			$('#searchButton').html(searchButtonHTML);
@@ -349,6 +349,7 @@ function gotoPage(pageTo) {
 				$('nav ul.pagination').find('li:last').addClass('disabled');
 			}
 		}
+		totalChecked = 0;
 		data.result.forEach(function(entry) {
 			totalChecked++;
 			$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
@@ -363,7 +364,6 @@ function gotoPage(pageTo) {
 			.addClass('fa-search');
 		var widthWraper = $('body').width();
 		var heightWraper = $('body').height();
-		console.log(heightWraper);
 		BX24.resizeWindow(widthWraper, heightWraper);
 	});
 }
