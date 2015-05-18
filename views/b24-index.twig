@@ -252,6 +252,7 @@ BX24.init(function() {
 					$('#qty').number(data.qty, 0, '.', ' ');
 					$('#searching').text($('#inputSearchText').val());
 					$('#resultTotal').text(data.total);
+					$('nav ul.pagination').find('li:last').removeClass('disabled');
 					$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
 					$('#tableResult tbody').find('tr').remove();
 					$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
