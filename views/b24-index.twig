@@ -56,7 +56,7 @@
 						<div id="search-results" style="display:none;">
 							<h2>
 								Результаты поиска
-								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска" onclick="javascript:showSearchFom();"><i class="fa fa-search"></i></button>
+								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска" id="showSearchFom"><i class="fa fa-search"></i></button>
 							</h2>
 							<blockquote>
 								По запросу «<strong id="searching"></strong>» найдено записей:
@@ -178,6 +178,16 @@ BX24.init(function() {
 		});
 	});
 
+	$('#showSearchFom').click(function() {
+		$('#search-options').slideToggle('fast');
+		$('#search-results').slideToggle('fast',function() {
+			var widthWrapper = $('#wrapper').width();
+			var heightWrapper = $('#wrapper').height();
+			alert(heightWrapper);
+			BX24.resizeWindow(width, height);
+		});
+	})
+
 	// Блокируем кнопку открытия конфигурации
 	// и заодно добавляем немного анимации
 	$('#configForm').submit(function(e) {
@@ -234,16 +244,6 @@ BX24.init(function() {
 		}
 	});
 });
-
-function showSearchFom() {
-	$('#search-options').slideToggle('fast');
-	$('#search-results').slideToggle('fast',function() {
-		var width = $('#wrapper').width();
-		var height = $('#wrapper').height();
-		alert(height);
-		BX24.resizeWindow(width, height);
-	});
-}
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
