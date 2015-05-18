@@ -76,6 +76,20 @@
 									</tbody>
 								</table>
 							</div>
+							<nav>
+								<ul class="pagination">
+									<li>
+										<a href="#" aria-label="Назад">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li>
+										<a href="#" aria-label="Далее">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
 						</div>
 					</div>
 				</div>
@@ -184,6 +198,14 @@ BX24.init(function() {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				$('#searching').text($('#inputSearchText').val());
 				$('#resultTotal').text(data.total);
+				$('nav ul.pagination').find('li:first').addClass('disabled').append('<li class="active"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+				if (data.total > 50) {
+					var page = 1;
+					for (var i = 0; i <= data.total; i = i + 50) {
+						page++;
+						$('nav ul.pagination').find('li:first').append('<li><a href="/getDataSearch/'+page+'/>'+page+'</a></li>');
+					}
+				}
 				data.result.forEach(function(entry) {
 					$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
 				});
