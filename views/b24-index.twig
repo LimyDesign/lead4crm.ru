@@ -223,6 +223,7 @@ BX24.init(function() {
 		e.preventDefault();
 		if ($('#inputSearchText').val() != '') {
 			if (searchText != $('#inputSearchText').val()) {
+				totalChecked = 0;
 				searchText = $('#inputSearchText').val();
 				b24CityID = $('#selectSearchCity').val();
 				$('#inputSearchText').attr('disabled', 'disabled');
