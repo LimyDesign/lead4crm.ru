@@ -200,7 +200,15 @@ BX24.init(function() {
 
 	// Делаем пересчет импортируемых компаний
 	// на основании отмеченных чекбоксов
-	$('#tableResult tbody tr').find('input[type="checkbox"]').click(function() {
+	if ($(input[type="checkbox"]).is(':checked')) {
+		totalChecked--;
+		$('#totalInport').find('span').text(totalChecked);
+	} else {
+		totalChecked++;
+		$('#totalInport').find('span').text(totalChecked);
+	}
+
+	$('#tableResult tbody tr').find('').click(function() {
 		alert('Yo!');
 		totalChecked = 0;
 		$('#tableResult tbody tr').find('td:first :checkbox:checked').each(function() {
