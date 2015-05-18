@@ -315,6 +315,7 @@ function gotoPage(pageTo) {
 		searchText: searchText,
 		searchCity: b24CityID,
 		searchPage: pageTo};
+	$('#page'+pageTo).html('<i class="fa fa-circle-o-notch fa-spin"></i>');
 	$.post('/getDataSearch/', formData, function(data) {
 		totalFind = data.total
 		$('#qty').number(data.qty, 0, '.', ' ');
@@ -356,6 +357,7 @@ function gotoPage(pageTo) {
 		});
 		$('#totalInport').find('span').text(totalChecked);
 	}, 'json').done(function() {
+		$('html,body').animate({scrollTop: $('#tableResult').offset().top}, 400);
 		$('#inputSearchText').removeAttr('disabled');
 		$('#selectSearchCity').removeAttr('disabled');
 		$('#configForm').find('button').removeAttr('disabled');
