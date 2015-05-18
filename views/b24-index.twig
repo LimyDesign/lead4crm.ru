@@ -284,9 +284,12 @@ BX24.init(function() {
 });
 
 function changeMark(id) {
+	console.log('id:',id);
 	if ($('input[name='+id+']').is(':checked')) {
+		console.log('checked');
 		totalChecked++;
 	} else {
+		console.log('unchecked');
 		totalChecked--;
 	}
 	$('#totalInport').find('span').text(totalChecked);
