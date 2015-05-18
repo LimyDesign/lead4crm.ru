@@ -366,7 +366,9 @@ function gotoPage(pageTo) {
 		var widthWraper = $('#wraper').width();
 		var heightWraper = $('#wraper').height();
 		BX24.resizeWindow(1, 1, function() {
-			BX24.fitWindow();
+			BX24.resizeWindow(widthWraper, heightWraper, function() {
+				BX24.fitWindow();
+			});
 		});
 	});
 }
