@@ -182,7 +182,9 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		if ($('#inputSearchText').val() != '') {
+		var searchText = $('#inputSearchText').val();
+		var searchCity = $('#selectSearchCity').val();
+		if (searchText != '') {
 			$('#inputSearchText').attr('disabled', 'disabled');
 			$('#selectSearchCity').attr('disabled', 'disabled');
 			$('#configForm').find('button').attr('disabled', 'disabled');
@@ -192,8 +194,8 @@ BX24.init(function() {
 			var formData = {
 				searchAPI: b24APIKey,
 				searchDomain: '{{request.DOMAIN}}',
-				searchText: $('#inputSearchText').val(),
-				searchCity: $('#selectSearchCity').val()}
+				searchText: searchText,
+				searchCity: searchCity}
 			$.post('/getDataSearch/', formData, function(data) {
 				$('#qty').number(data.qty, 0, '.', ' ');
 				$('#searching').text($('#inputSearchText').val());
@@ -202,7 +204,7 @@ BX24.init(function() {
 				if (data.total > 50) {
 					var page = 2;
 					for (var i = 50; i < data.total; i = i + 50) {
-						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/">'+page+'</a></li>');
+						$('nav ul.pagination').find('li:last').before('<li><a href="/getDataSearch/'+page+'/?searchAPI='+b24APIKey+'&searchText='+searchText+'&searchCity='+searchCity+'&searchDomain={{request.DOMAIN}}">'+page+'</a></li>');
 						page++;
 					}
 				}
