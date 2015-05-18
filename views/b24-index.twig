@@ -198,48 +198,55 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		searchText = $('#inputSearchText').val();
-		b24CityID = $('#selectSearchCity').val();
-		if (searchText != '') {
-			$('#inputSearchText').attr('disabled', 'disabled');
-			$('#selectSearchCity').attr('disabled', 'disabled');
-			$('#configForm').find('button').attr('disabled', 'disabled');
-			$('#searchButton').attr('disabled', 'disabled');
-			$('#searchButton').find('i').removeClass('fa-search')
-				.addClass('fa-circle-o-notch fa-spin');
-			var formData = {
-				searchAPI: b24APIKey,
-				searchDomain: '{{request.DOMAIN}}',
-				searchText: searchText,
-				searchCity: b24CityID}
-			$.post('/getDataSearch/', formData, function(data) {
-				$('#qty').number(data.qty, 0, '.', ' ');
-				$('#searching').text($('#inputSearchText').val());
-				$('#resultTotal').text(data.total);
-				$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
-				$('#tableResult tbody').find('tr').remove();
-				$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
-				if (data.total > 50) {
-					var page = 2;
-					for (var i = 50; i < data.total; i = i + 50) {
-						$('nav ul.pagination').find('li:last').before('<li id="page'+page+'"><a href="javascript:gotoPage('+page+')">'+page+'</a></li>');
-						page++;
+		if (searchText != $('#inputSearchText').val()) {
+			searchText = $('#inputSearchText').val();
+			b24CityID = $('#selectSearchCity').val();
+			if (searchText != '') {
+				$('#inputSearchText').attr('disabled', 'disabled');
+				$('#selectSearchCity').attr('disabled', 'disabled');
+				$('#configForm').find('button').attr('disabled', 'disabled');
+				$('#searchButton').attr('disabled', 'disabled');
+				$('#searchButton').find('i').removeClass('fa-search')
+					.addClass('fa-circle-o-notch fa-spin');
+				var formData = {
+					searchAPI: b24APIKey,
+					searchDomain: '{{request.DOMAIN}}',
+					searchText: searchText,
+					searchCity: b24CityID}
+				$.post('/getDataSearch/', formData, function(data) {
+					$('#qty').number(data.qty, 0, '.', ' ');
+					$('#searching').text($('#inputSearchText').val());
+					$('#resultTotal').text(data.total);
+					$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
+					$('#tableResult tbody').find('tr').remove();
+					$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+					if (data.total > 50) {
+						var page = 2;
+						for (var i = 50; i < data.total; i = i + 50) {
+							$('nav ul.pagination').find('li:last').before('<li id="page'+page+'"><a href="javascript:gotoPage('+page+')">'+page+'</a></li>');
+							page++;
+						}
 					}
-				}
-				data.result.forEach(function(entry) {
-					$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+					data.result.forEach(function(entry) {
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>')
+					});
+				}, 'json').done(function() {
+					$('#inputSearchText').removeAttr('disabled');
+					$('#selectSearchCity').removeAttr('disabled');
+					$('#configForm').find('button').removeAttr('disabled');
+					$('#searchButton').removeAttr('disabled');
+					$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+						.addClass('fa-search');
+					$('#search-options').slideToggle('fast');
+					$('#search-results').slideToggle('fast',function() {
+						BX24.fitWindow();
+					});
 				});
-			}, 'json').done(function() {
-				$('#inputSearchText').removeAttr('disabled');
-				$('#selectSearchCity').removeAttr('disabled');
-				$('#configForm').find('button').removeAttr('disabled');
-				$('#searchButton').removeAttr('disabled');
-				$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
-					.addClass('fa-search');
-				$('#search-options').slideToggle('fast');
-				$('#search-results').slideToggle('fast',function() {
-					BX24.fitWindow();
-				});
+			}
+		} else {
+			$('#search-options').slideToggle('fast');
+			$('#search-results').slideToggle('fast',function() {
+				BX24.fitWindow();
 			});
 		}
 	});
