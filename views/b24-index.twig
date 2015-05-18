@@ -116,6 +116,14 @@
 </body>
 </html>
 {% endspaceless %}
+<script type="text/javascript">
+    window.addEventListener("message", listener, false);
+    function listener(event){    
+      if ( event.origin !== "https://lds.bitrix24.ru" )
+        return
+        console.log('Message Received : '+event.data);
+      }
+</script>
 <script>
 // Объявляем переменные
 var page = 1;
@@ -316,7 +324,6 @@ function gotoPage(pageTo) {
 		searchCity: b24CityID,
 		searchPage: pageTo};
 	$('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
-	$("html, body").animate({ scrollTop: $('#tableResult').offset().top }, 1000);
 	$.post('/getDataSearch/', formData, function(data) {
 		totalFind = data.total
 		$('#qty').number(data.qty, 0, '.', ' ');
