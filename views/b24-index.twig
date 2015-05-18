@@ -181,10 +181,10 @@ BX24.init(function() {
 	$('#showSearchFom').click(function() {
 		$('#search-options').slideToggle('fast');
 		$('#search-results').slideToggle('fast',function() {
-			var widthWrapper = $('#wrapper').width();
-			var heightWrapper = $('#wrapper').height();
+			var widthWraper = $('#wraper').width();
+			var heightWraper = $('#wraper').height();
 			alert(heightWrapper);
-			BX24.resizeWindow(width, height);
+			BX24.resizeWindow(widthWraper, heightWraper);
 		});
 	})
 
