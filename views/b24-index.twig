@@ -315,7 +315,7 @@ function gotoPage(pageTo) {
 		searchText: searchText,
 		searchCity: b24CityID,
 		searchPage: pageTo};
-	$('#page'+pageTo).html('<i class="fa fa-circle-o-notch fa-spin"></i>');
+	$('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
 	$.post('/getDataSearch/', formData, function(data) {
 		totalFind = data.total
 		$('#qty').number(data.qty, 0, '.', ' ');
