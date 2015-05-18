@@ -285,16 +285,11 @@ BX24.init(function() {
 
 function changeMark(id) {
 	var status = $('input[name="' + id + '"]:checked').length;
-	console.log(status);
-
-	// if ($('input[name='+id+']').attr('checked')) {
-	// 	console.log('checked');
-	// 	totalChecked++;
-	// } else {
-	// 	console.log('unchecked');
-	// 	totalChecked--;
-	// }
-	// $('#totalInport').find('span').text(totalChecked);
+	if (status)
+		totalChecked++;
+	else
+		totalChecked--;
+	$('#totalInport').find('span').text(totalChecked);
 }
 
 // Изменяем размер фрейма под текущие контент
