@@ -284,7 +284,8 @@ BX24.init(function() {
 });
 
 function changeMark(id) {
-	console.log($('input[name="'+id+'"]:checked').length);
+	var status = $('input[name="' + id + '"]:checked').length;
+	console.log(status);
 
 	// if ($('input[name='+id+']').attr('checked')) {
 	// 	console.log('checked');
