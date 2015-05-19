@@ -49,7 +49,7 @@ if ($cmd[0]) {
 				$_REQUEST['importAPI'],
 				$_REQUEST['importDomain'],
 				$_REQUEST['importCompanyID'],
-				$_REQUEST['importCompanyHash'])
+				$_REQUEST['importCompanyHash']);
 			break;
 
 		case 'newAPIKey':
