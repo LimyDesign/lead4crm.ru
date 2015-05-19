@@ -44,6 +44,14 @@ if ($cmd[0]) {
 				$_REQUEST['searchPage']);
 			break;
 
+		case 'importCompany':
+			echo importCompany(
+				$_REQUEST['importAPI'],
+				$_REQUEST['importDomain'],
+				$_REQUEST['importCompanyID'],
+				$_REQUEST['importCompanyHash'])
+			break;
+
 		case 'newAPIKey':
 			isAuth();
 			newAPIKey();
@@ -463,6 +471,16 @@ function getDataSearch($apikey, $text, $city, $domain, $page = 1) {
 		'text' => $text,
 		'city' => $city,
 		'domain' => $domain));
+	return file_get_contents($url.$uri);
+}
+
+function importCompany($apikey, $domain, $id, $hash) {
+	$url = "http://api.cnamrf.ru/getCompanyProfile/?";
+	$uri = http_build_query(array(
+		'apikey' => $apikey,
+		'domain' => $domain,
+		'id' => $id,
+		'hash' => $hash));
 	return file_get_contents($url.$uri);
 }
 
