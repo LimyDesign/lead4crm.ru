@@ -222,6 +222,8 @@ BX24.init(function() {
 					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
 					$('#company'+i).prop('checked', 0);
+					totalChecked--;
+					$('#totalInport').find('span').text(totalChecked);
 					// $.post('/importCompany/', importData, function() {
 
 					// }, 'json');
