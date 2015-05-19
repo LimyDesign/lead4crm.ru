@@ -217,11 +217,9 @@ BX24.init(function() {
 		if (totalChecked > 0) {
 			var importCompanyID = '';
 			var importCompanyHash = '';
-			var status = 0;
-			for (var i = 1; i <= totalChecked; i++) {
-				importCompanyID = $('#company'+i).attr('name');
-				status = $('input[name="' + importCompanyID + '"]:checked').length;
-				if (status) {
+			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
+				if ($('#company'+i).is(':checked')) {
+					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
 					console.log('ID:',importCompanyID,'HASH:',importCompanyHash);
 				}
