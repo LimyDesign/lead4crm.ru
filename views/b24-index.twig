@@ -217,21 +217,30 @@ BX24.init(function() {
 		if (totalChecked > 0) {
 			var importCompanyID = '';
 			var importCompanyHash = '';
+			var importData = {
+				importAPI: b24APIKey,
+				importDomain: '{{request.DOMAIN}}'
+			}
 			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
 				if ($('#company'+i).is(':checked')) {
 					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
-					$('#company'+i).prop('checked', 0);
-					totalChecked--;
-					$('#totalInport').find('span').text(totalChecked);
+					importData = {
+						importCompanyID: importCompanyID,
+						importCompanyHash: importCompanyHash
+					}
+					console.log(i, importData);
 					// $.post('/importCompany/', importData, function() {
 
-					// }, 'json');
-					// console.log('#',i,'ID:',importCompanyID,'HASH:',importCompanyHash);
+					// }, 'json').done(function() {
+					// 	$('#company'+i).prop('checked', 0);
+					// 	totalChecked--;
+					// 	$('#totalInport').find('span').text(totalChecked);
+					// });
 				}
 			}
 		}
-	})
+	});
 
 	// Делаем возможность показать форму поиска
 	// и меняем название кнопки поиска
