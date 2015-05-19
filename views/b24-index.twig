@@ -225,10 +225,8 @@ BX24.init(function() {
 				if ($('#company'+i).is(':checked')) {
 					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
-					importData = {
-						importCompanyID: importCompanyID,
-						importCompanyHash: importCompanyHash
-					}
+					importData.importCompanyID = importCompanyID;
+					importData.importCompanyHash = importCompanyHash;
 					console.log(i, importData);
 					// $.post('/importCompany/', importData, function() {
 
