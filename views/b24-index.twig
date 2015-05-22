@@ -230,24 +230,21 @@ BX24.init(function() {
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
 					$.post('/importCompany/', importData, function(data) {
+						var industry_list;
 						BX24.callMethod(
-							"crm.status.list",
+							"crm.status.entity.items",
 							{
-								order: { "SORT": "ASC" },
-								filter: { "ENTITY_ID": "INDUSTRY" }
+								entityId: "INDUSTRY"
 							},
 							function(result)
 							{
 								if (result.error())
 									console.error(result.error());
 								else
-								{
-									console.dir(result.data());
-									if (result.more())
-										result.next();
-								}
+									industry_list = result.data();
 							}
 						);
+						console.log(industry_list);
 						// BX24.callMethod(
 						// 	"crm.company.add",
 						// 	{
