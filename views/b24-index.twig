@@ -241,10 +241,12 @@ BX24.init(function() {
 								if (result.error())
 									console.error(result.error());
 								else
+								{
 									industry_list = result.data();
+									console.log(industry_list);
+								}
 							}
 						);
-						console.log(industry_list);
 						// BX24.callMethod(
 						// 	"crm.company.add",
 						// 	{
