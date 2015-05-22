@@ -229,41 +229,59 @@ BX24.init(function() {
 					importCompanyHash = $('#company'+i).attr('value');
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
-					// console.log(i, importData);
 					$.post('/importCompany/', importData, function(data) {
 						BX24.callMethod(
-							"crm.company.add",
+							"crm.status.list",
 							{
-								fields:
-								{
-									"TITLE": data.name,
-									"COMPANY_TYPE": "PROSPECT",
-									"ADDRESS": data.address,
-									"ADDRESS_2": data.address_2,
-									"ADDRESS_CITY": data.city_name,
-									"ADDRESS_REGION": data.region,
-									"ADDRESS_PROVINCE": data.province,
-									"ADDRESS_POSTAL_CODE": data.postal_code,
-									"INDUSTRY": data.industry,
-									"OPENED": "Y",
-									"COMMENTS": data.comment,
-									"ASSIGNED_BY_ID": bx24userid,
-									"CREATED_BY_ID": bx24userid,
-									"PHONE": data.phone,
-									"EMAIL": data.email,
-									"WEB": data.web,
-									"IM": data.im,
-									"CURRENCY_ID": data.currency
-								},
-								params: { "REGISTER_SONET_EVENT": "Y" }
+								order: { "SORT": "ASC" },
+								filter: { "ENTITY_ID": "INDUSTRY" }
 							},
 							function(result)
 							{
 								if (result.error())
 									console.error(result.error());
 								else
-									console.info("Создана компания с ID " + result.data());
-							});
+								{
+									console.dir(result.data());
+									if (result.more())
+										result.next();
+								}
+							}
+						);
+						// BX24.callMethod(
+						// 	"crm.company.add",
+						// 	{
+						// 		fields:
+						// 		{
+						// 			"TITLE": data.name,
+						// 			"COMPANY_TYPE": "PROSPECT",
+						// 			"ADDRESS": data.address,
+						// 			"ADDRESS_2": data.address_2,
+						// 			"ADDRESS_CITY": data.city_name,
+						// 			"ADDRESS_REGION": data.region,
+						// 			"ADDRESS_PROVINCE": data.province,
+						// 			"ADDRESS_POSTAL_CODE": data.postal_code,
+						// 			"INDUSTRY": data.industry,
+						// 			"OPENED": "Y",
+						// 			"COMMENTS": data.comment,
+						// 			"ASSIGNED_BY_ID": bx24userid,
+						// 			"CREATED_BY_ID": bx24userid,
+						// 			"PHONE": data.phone,
+						// 			"EMAIL": data.email,
+						// 			"WEB": data.web,
+						// 			"IM": data.im,
+						// 			"CURRENCY_ID": data.currency
+						// 		},
+						// 		params: { "REGISTER_SONET_EVENT": "Y" }
+						// 	},
+						// 	function(result)
+						// 	{
+						// 		if (result.error())
+						// 			console.error(result.error());
+						// 		else
+						// 			console.info("Создана компания с ID " + result.data());
+						// 	}
+						// );
 					}, 'json').done(function() {
 						$('#company'+i).prop('checked', 0);
 						totalChecked--;
