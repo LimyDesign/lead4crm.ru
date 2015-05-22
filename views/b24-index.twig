@@ -243,7 +243,8 @@ BX24.init(function() {
 								else
 								{
 									industry_list = result.data();
-									console.log(industry_list);
+									var tmp = "IT";
+									console.log($.inArray(tmp, industry_list));
 								}
 							}
 						);
