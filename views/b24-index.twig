@@ -315,8 +315,7 @@ BX24.init(function() {
 										totalChecked--;
 										$('#totalInport').find('span').text(totalChecked);
 										$('.progress-bar').css('width', function (index, value) {
-											var fWidth = $('.presgress').width();
-											alert(fWidth);
+											var fWidth = $('.progress').width();
 											totalProgress += progressIncrement;
 											return fWidth / (totalChecked + 1);
 										}).text(totalProgress);
