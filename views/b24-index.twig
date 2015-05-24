@@ -399,10 +399,10 @@ BX24.init(function() {
 							"crm.company.list",
 							{
 								filter: { "TITLE": entry.name, "ADDRESS": entry.address },
-								select: "ID"
+								select: [ "ID" ]
 							},
 							function (result) {
-								console.log(result.data().ID);
+								console.log(result.data()[0].ID);
 							});
 						totalChecked++;
 						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
