@@ -311,6 +311,9 @@ BX24.init(function() {
 										params: { "REGISTER_SONET_EVENT": lm }
 									},
 									function () {
+										$('#company'+i).prop('checked', 0);
+										totalChecked--;
+										$('#totalInport').find('span').text(totalChecked);
 										$('.progress-bar').css('width', function (index, value) {
 											totalProgress = parseFloat(value) + progressIncrement;
 											return totalProgress + '%';
@@ -318,13 +321,10 @@ BX24.init(function() {
 									});
 							});
 					}, 'json').done(function() {
-						$('#company'+i).prop('checked', 0);
-						totalChecked--;
-						$('#totalInport').find('span').text(totalChecked);
 					});
 				}
 			}
-			$('.progress').delay(5000).slideUp('slow');
+			$('.progress').delay(15000).slideUp('slow');
 		}
 	});
 
