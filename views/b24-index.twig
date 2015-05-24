@@ -395,6 +395,22 @@ BX24.init(function() {
 						$('nav ul.pagination').find('li:last').addClass('disabled');
 					}
 					data.result.forEach(function(entry) {
+						BX24.callMethod(
+							"crm.company.list",
+							{
+								filter: { "TITLE": entry.name, "ADDRESS": entry.address },
+								select: [ "ID", "TITLE" ]
+							},
+							function (result) {
+								if (result.error())
+									console.error(result.error());
+								else 
+								{
+									console.dir(result.data());
+									if (result.more())
+										result.next();
+								}
+							});
 						totalChecked++;
 						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 					});
