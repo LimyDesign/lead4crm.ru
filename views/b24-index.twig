@@ -315,10 +315,10 @@ BX24.init(function() {
 										totalChecked--;
 										$('#totalInport').find('span').text(totalChecked);
 										$('.progress-bar').css('width', function (index, value) {
+											console.log(totalProgress, parseFloat(value),progressIncrement);
 											totalProgress = parseFloat(value) + progressIncrement;
 											return totalProgress + '%';
 										}).text(totalProgress+'%');
-										console.log(totalProgress);
 										if (totalChecked == 0) {
 											$('.progress').delay(5000).slideUp('slow');
 										}
