@@ -402,7 +402,7 @@ BX24.init(function() {
 								select: [ "ID" ]
 							},
 							function (result) {
-								if (!result.error())
+								if (result.data()[0].ID !== undefined)
 									console.log(result.data()[0].ID);
 							});
 						totalChecked++;
