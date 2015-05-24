@@ -113,12 +113,10 @@
 			<label>Импортируемые компании доступны всем: &nbsp; </label>
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary active">
-					<input type="radio" name="OPENED" value="Y" id="opened_yes" autocomplete="off" checked>
-					Да
+					<input type="radio" name="OPENED" value="Y" autocomplete="off" checked> Да
 				</label>
 				<label class="btn btn-primary">
-					<input type="radio" name="OPENED" value="N" id="opened_no" autocomplete="off">
-					Нет
+					<input type="radio" name="OPENED" value="N" autocomplete="off"> Нет
 				</label>
 			</div>
 		</div>
@@ -126,12 +124,10 @@
 			<label>Импортируемые компании добавлять в живую ленту: &nbsp; </label>
 			<div class="btn-group" data-toggle="buttons">
 				<label class="btn btn-primary active">
-					<input type="radio" name="REGISTER_SONET_EVENT" value="Y" id="lm_yes" autocomplete="off" checked>
-					Да
+					<input type="radio" name="REGISTER_SONET_EVENT" value="Y" autocomplete="off" checked> Да
 				</label>
 				<label class="btn btn-primary">
-					<input type="radio" name="REGISTER_SONET_EVENT" value="N" id="lm_no" autocomplete="off">
-					Нет
+					<input type="radio" name="REGISTER_SONET_EVENT" value="N" autocomplete="off"> Нет
 				</label>
 			</div>
 			<p class="help-block">Дополнительно Вам будет отправлено уведомление в живую ленту.</p>
@@ -261,10 +257,15 @@ BX24.init(function() {
 		if (totalChecked > 0) {
 			var importCompanyID = '';
 			var importCompanyHash = '';
+			var opened = $('input[name="OPENED"]:checked').val();
+			var lm = $('input[name="REGISTER_SONET_EVENT"]:checked').val();
 			var importData = {
 				importAPI: b24APIKey,
 				importDomain: '{{request.DOMAIN}}'
 			}
+			var progressIncrement = Math.floor(100 / totalChecked);
+			var totalProgress = 0;
+			$('.progress').slideDown('fast').children('.progress-bar').addClass('progress-bar-striped active').css('min-width': '2em').text('0%');
 			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
 				if ($('#company'+i).is(':checked')) {
 					importCompanyID = $('#company'+i).attr('name');
@@ -299,7 +300,7 @@ BX24.init(function() {
 											"ADDRESS_REGION": data.region,
 											"ADDRESS_POSTAL_CODE": data.postal_code,
 											"INDUSTRY": data.industry.code,
-											"OPENED": "Y",
+											"OPENED": opened,
 											"COMMENTS": data.comments,
 											"ASSIGNED_BY_ID": bx24userid,
 											"CREATED_BY_ID": bx24userid,
@@ -309,7 +310,7 @@ BX24.init(function() {
 											"IM": data.im,
 											"CURRENCY_ID": data.currency
 										},
-										params: { "REGISTER_SONET_EVENT": "Y" }
+										params: { "REGISTER_SONET_EVENT": lm }
 									},
 									function (result2) {
 										if (result2.error())
@@ -322,9 +323,15 @@ BX24.init(function() {
 						$('#company'+i).prop('checked', 0);
 						totalChecked--;
 						$('#totalInport').find('span').text(totalChecked);
+						$('.progress-bar').css('width', function (index) {
+							totalProgress = index + progressIncrement;
+							return totalProgress + '%';
+						}).text(totalProgress+'%');
 					});
 				}
 			}
+			$('.progress-bar').removeClass('progress-bar-striped active').css('width': '100%').text('100%');
+			$('.progress').delay(5000).slideUp('slow');
 		}
 	});
 
