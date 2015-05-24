@@ -267,7 +267,7 @@ BX24.init(function() {
 			var totalProgress = 0;
 			$('.progress').slideDown('fast', function() {
 				BX24.fitWindow();
-			}).children('.progress-bar').addClass('progress-bar-striped active').css('min-width', '2em').text('0%');
+			}).children('.progress-bar').addClass('progress-bar-striped active').css('width', '0%').text('0%');
 			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
 				if ($('#company'+i).is(':checked')) {
 					importCompanyID = $('#company'+i).attr('name');
@@ -318,6 +318,7 @@ BX24.init(function() {
 											totalProgress = parseFloat(value) + progressIncrement;
 											return totalProgress + '%';
 										}).text(totalProgress+'%');
+										console.log(totalProgress);
 										if (totalChecked == 0) {
 											$('.progress').delay(5000).slideUp('slow');
 										}
