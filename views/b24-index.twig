@@ -311,6 +311,7 @@ BX24.init(function() {
 										params: { "REGISTER_SONET_EVENT": lm }
 									},
 									function () {
+										console.log(totalProgress);
 										$('.progress-bar').css('width', function (index) {
 											totalProgress = index + progressIncrement;
 											return totalProgress + '%';
