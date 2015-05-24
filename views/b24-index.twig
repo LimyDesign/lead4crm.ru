@@ -284,11 +284,7 @@ BX24.init(function() {
 									"STATUS_ID": data.industry.code,
 									"NAME": data.industry.name
 								}
-							}, function (result) {
-								if (result.error())
-									console.error(result.error());
-								else
-									console.info("Создан элемент справочника с ID " + result.data());
+							}, function () {
 								BX24.callMethod(
 									"crm.company.add",
 									{
@@ -314,25 +310,20 @@ BX24.init(function() {
 										},
 										params: { "REGISTER_SONET_EVENT": lm }
 									},
-									function (result2) {
-										if (result2.error())
-											console.error(result2.error());
-										else 
-											console.info("Создана компания с ID " + result2.data());
+									function () {
+										$('.progress-bar').css('width', function (index) {
+											totalProgress = index + progressIncrement;
+											return totalProgress + '%';
+										}).text(totalProgress+'%');
 									});
 							});
 					}, 'json').done(function() {
 						$('#company'+i).prop('checked', 0);
 						totalChecked--;
 						$('#totalInport').find('span').text(totalChecked);
-						$('.progress-bar').css('width', function (index) {
-							totalProgress = index + progressIncrement;
-							return totalProgress + '%';
-						}).text(totalProgress+'%');
 					});
 				}
 			}
-			$('.progress-bar').removeClass('progress-bar-striped active').css('width', '100%').text('100%');
 			$('.progress').delay(5000).slideUp('slow');
 		}
 	});
@@ -515,13 +506,13 @@ function gotoPage(pageTo) {
 		$('#searchButton').removeAttr('disabled');
 		$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
 			.addClass('fa-search');
-		// var widthWraper = $('#wraper').width();
-		// var heightWraper = $('#wraper').height();
-		// BX24.resizeWindow(1, 1, function() {
-		// 	BX24.resizeWindow(widthWraper, heightWraper, function() {
-		// 		BX24.fitWindow();
-		// 	});
-		// });
+		var widthWraper = $('#wraper').width();
+		var heightWraper = $('#wraper').height();
+		BX24.resizeWindow(1, 1, function() {
+			BX24.resizeWindow(widthWraper, heightWraper, function() {
+				BX24.fitWindow();
+			});
+		});
 	});
 }
 
