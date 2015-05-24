@@ -222,7 +222,8 @@ BX24.init(function() {
 		content: function() { return $('#import-settings').html(); },
 		html: true,
 		placement: 'top',
-		title: function() { return $('#import-settings').data('title'); }
+		title: function() { return $('#import-settings').data('title'); },
+		trigger: 'focus'
 	});
 
 	// Определяем как называть кнопку поиска
