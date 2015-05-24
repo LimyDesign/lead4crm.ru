@@ -1,4 +1,6 @@
-{% if isBX24User %}{# {% spaceless %} #}<!DOCTYPE html>
+{% if isBX24User %}
+{# {% spaceless %} #}
+<!DOCTYPE html>
 <html>
 <head>
 	{% include 'layout/header.twig' %}
@@ -499,4 +501,5 @@ function gotoPage(pageTo) {
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
-</script>{% endif %}
+</script>
+{% endif %}
