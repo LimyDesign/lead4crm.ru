@@ -408,6 +408,7 @@ BX24.init(function() {
 									totalChecked++;
 									$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
 								}
+								BX24.fitWindow();
 							});
 					});
 					$('#totalInport').find('span').text(totalChecked);
