@@ -93,7 +93,13 @@
 								</ul>
 							</nav>
 							<div class="well">
-								<button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
+								<div class="btn-group">
+									<button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
+									<button type="buttton" class="btn btn-success btn-lg" data-toggle="import-settings">
+										<span class="caret"></span>
+										<span class="sr-only">Открыть опции импорта</span>
+									</button>
+								</div>
 								<button id="totalInport" class="btn btn-default btn-lg" disabled="disabled">Всего отмечено к импорту: <span>0</span></button>
 								<div class="progress" style="margin: 24px 0 0; display: none;">
 									<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
@@ -104,6 +110,35 @@
 				</div>
 			</div>
 		</section>
+	</div>
+	<div class="hide" id="import-settings" data-title="Настройка импорта">
+		<div class="form-group">
+			<label>Импортируемые компании доступны всем:</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary active">
+					<input type="radio" name="OPENED" value="Y" id="opened_yes" autocomplete="off" checked>
+					Да
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" name="OPENED" value="N" id="opened_no" autocomplete="off">
+					Нет
+				</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Импортируемые компании добавлять в живую ленту:</label>
+			<div class="btn-group" data-toggle="buttons">
+				<label class="btn btn-primary active">
+					<input type="radio" name="REGISTER_SONET_EVENT" value="Y" id="lm_yes" autocomplete="off" checked>
+					Да
+				</label>
+				<label class="btn btn-primary">
+					<input type="radio" name="REGISTER_SONET_EVENT" value="N" id="lm_no" autocomplete="off">
+					Нет
+				</label>
+			</div>
+			<p class="help-block">Дополнительно Вам будет отправлено уведомление в живую ленту.</p>
+		</div>
 	</div>
 	{% if isAdmin %}
 		<form action="/b24-install/" method="post" id="configForm">
@@ -182,6 +217,14 @@ BX24.init(function() {
 		$('#selectSearchCity').val(b24CityID);
 	}
 
+	// Найстройки импорта
+	$('[data-toggle="import-settings"]').popover({
+		content: function() { return $('#import-settings').html(); },
+		html: true,
+		placement: 'top',
+		title: function() { return $('#import-settings').data('title'); }
+	});
+
 	// Определяем как называть кнопку поиска
 	// в зависимости от введенного текста поиска
 	$('#inputSearchText').keyup(function() {
@@ -230,58 +273,52 @@ BX24.init(function() {
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
 					$.post('/importCompany/', importData, function(data) {
-						var industry_list;
 						BX24.callMethod(
-							"crm.status.entity.items",
+							"crm.status.add",
 							{
-								entityId: "INDUSTRY"
-							},
-							function(result)
-							{
+								fields: 
+								{
+									"ENTITY_ID": "INDUSTRY",
+									"STATUS_ID": data.industry.code,
+									"NAME": data.industry.name
+								}
+							}, function (result) {
 								if (result.error())
 									console.error(result.error());
 								else
-								{
-									industry_list = result.data();
-									var tmp = "IT";
-									console.log($.inArray(tmp, industry_list));
-								}
-							}
-						);
-						// BX24.callMethod(
-						// 	"crm.company.add",
-						// 	{
-						// 		fields:
-						// 		{
-						// 			"TITLE": data.name,
-						// 			"COMPANY_TYPE": "PROSPECT",
-						// 			"ADDRESS": data.address,
-						// 			"ADDRESS_2": data.address_2,
-						// 			"ADDRESS_CITY": data.city_name,
-						// 			"ADDRESS_REGION": data.region,
-						// 			"ADDRESS_PROVINCE": data.province,
-						// 			"ADDRESS_POSTAL_CODE": data.postal_code,
-						// 			"INDUSTRY": data.industry,
-						// 			"OPENED": "Y",
-						// 			"COMMENTS": data.comment,
-						// 			"ASSIGNED_BY_ID": bx24userid,
-						// 			"CREATED_BY_ID": bx24userid,
-						// 			"PHONE": data.phone,
-						// 			"EMAIL": data.email,
-						// 			"WEB": data.web,
-						// 			"IM": data.im,
-						// 			"CURRENCY_ID": data.currency
-						// 		},
-						// 		params: { "REGISTER_SONET_EVENT": "Y" }
-						// 	},
-						// 	function(result)
-						// 	{
-						// 		if (result.error())
-						// 			console.error(result.error());
-						// 		else
-						// 			console.info("Создана компания с ID " + result.data());
-						// 	}
-						// );
+									console.info("Создан элемент справочника с ID " + result.data());
+								BX24.callMethod(
+									"crm.company.add",
+									{
+										fields:
+										{
+											"TITLE": data.name,
+											"COMPANY_TYPE": "PROSPECT",
+											"ADDRESS": data.address,
+											"ADDRESS_2": data.address_2,
+											"ADDRESS_CITY": data.city_name,
+											"ADDRESS_REGION": data.region,
+											"ADDRESS_POSTAL_CODE": data.postal_code,
+											"INDUSTRY": data.industry.code,
+											"OPENED": "Y",
+											"COMMENTS": data.comments,
+											"ASSIGNED_BY_ID": bx24userid,
+											"CREATED_BY_ID": bx24userid,
+											"PHONE": data.phone,
+											"EMAIL": data.email,
+											"WEB": data.web,
+											"IM": data.im,
+											"CURRENCY_ID": data.currency
+										},
+										params: { "REGISTER_SONET_EVENT": "Y" }
+									},
+									function (result2) {
+										if (result2.error())
+											console.error(result2.error());
+										else 
+											console.info("Создана компания с ID " + result2.data());
+									});
+							});
 					}, 'json').done(function() {
 						$('#company'+i).prop('checked', 0);
 						totalChecked--;
