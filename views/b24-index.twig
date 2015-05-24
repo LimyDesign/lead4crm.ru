@@ -1,6 +1,4 @@
-{% if isBX24User %}
-{% spaceless %}
-<!DOCTYPE html>
+{% if isBX24User %}{# {% spaceless %} #}<!DOCTYPE html>
 <html>
 <head>
 	{% include 'layout/header.twig' %}
@@ -146,7 +144,7 @@
 	<script type="text/javascript" src="/public/js/jquery.number.min.js"></script>
 </body>
 </html>
-{% endspaceless %}
+{# {% endspaceless %} #}
 <script>
 // Объявляем переменные
 var page = 1;
@@ -501,5 +499,4 @@ function gotoPage(pageTo) {
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
-</script>
-{% endif %}
+</script>{% endif %}
