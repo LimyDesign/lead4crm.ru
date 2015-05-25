@@ -391,25 +391,28 @@ BX24.init(function() {
 						} else {
 							$('nav ul.pagination').find('li:last').addClass('disabled');
 						}
-						data.result.forEach(function(entry) {
-							BX24.callMethod(
-								"crm.company.list",
-								{
-									filter: { "TITLE": entry.name, "ADDRESS": entry.address },
-									select: [ "ID" ]
-								},
-								function (result) {
-									if (result.data().length) {
-										$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-									} else {
-										totalChecked++;
-										$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-									}
-									$('#totalInport').find('span').text(totalChecked);
-									BX24.fitWindow();
-								});
-						});
-						BX24.fitWindow();
+						if (data.result) {
+							data.result.forEach(function(entry) {
+								BX24.callMethod(
+									"crm.company.list",
+									{
+										filter: { "TITLE": entry.name, "ADDRESS": entry.address },
+										select: [ "ID" ]
+									},
+									function (result) {
+										if (result.data().length) {
+											$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+										} else {
+											totalChecked++;
+											$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+										}
+										$('#totalInport').find('span').text(totalChecked);
+										BX24.fitWindow();
+									});
+							});
+						} else {
+							BX24.fitWindow();
+						}
 					}
 				}, 'json').done(function() {
 					$('#inputSearchText').removeAttr('disabled');
