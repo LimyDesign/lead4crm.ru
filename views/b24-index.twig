@@ -410,8 +410,6 @@ BX24.init(function() {
 										BX24.fitWindow();
 									});
 							});
-						} else {
-							BX24.fitWindow();
 						}
 					}
 				}, 'json').done(function() {
@@ -422,7 +420,9 @@ BX24.init(function() {
 					$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
 						.addClass('fa-search');
 					$('#search-options').slideToggle('fast');
-					$('#search-results').slideToggle('fast');
+					$('#search-results').slideToggle('fast',function() {
+						BX24.fitWindow();
+					});
 				});
 			} else {
 				$('#search-options').slideToggle('fast');
