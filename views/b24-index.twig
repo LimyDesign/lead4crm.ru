@@ -409,6 +409,7 @@ BX24.init(function() {
 									BX24.fitWindow();
 								});
 						});
+						BX24.fitWindow();
 					}
 				}, 'json').done(function() {
 					$('#inputSearchText').removeAttr('disabled');
@@ -419,7 +420,6 @@ BX24.init(function() {
 						.addClass('fa-search');
 					$('#search-options').slideToggle('fast');
 					$('#search-results').slideToggle('fast');
-					BX24.fitWindow();
 				});
 			} else {
 				$('#search-options').slideToggle('fast');
