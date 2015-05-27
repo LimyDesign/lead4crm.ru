@@ -288,7 +288,8 @@ BX24.init(function() {
 							function (result_sl)
 							{
 								console.log(result_sl.data(0));
-								if (result_sl.data().0.length > 0) 
+								console.log(result_sl.toString.call(data));
+								if (result_sl.data()[0].length > 0) 
 								{
 									BX24.callMethod(
 										"crm.company.list",
