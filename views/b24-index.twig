@@ -283,117 +283,124 @@ BX24.init(function() {
 									"ENTITY_ID": "INDUSTRY", 
 									"STATUS_ID": data.industry.code,
 									"NAME": data.industry.name
-								},
-								function (result)
-								{
-									if (result.data().length > 0) {
-										BX24.callMethod(
-											"crm.company.list",
-											{
-												order: { "DATE_CREATE": "DESC" },
-												filter: { "TITLE": data.name },
-												select: ["ID"]
-											}, function (result2)
-											{
-												if (result2.data().length > 0) {
-													console.log(result2.data()[0].ID);
-												} else {
-													BX24.callMethod(
-														"crm.company.add",
-														{
-															fields:
-															{
-																"TITLE": data.name,
-																"COMPANY_TYPE": "PROSPECT",
-																"ADDRESS": data.address,
-																"ADDRESS_2": data.address_2,
-																"ADDRESS_CITY": data.city_name,
-																"ADDRESS_REGION": data.region,
-																"ADDRESS_POSTAL_CODE": data.postal_code,
-																"INDUSTRY": data.industry.code,
-																"OPENED": opened,
-																"COMMENTS": data.comments,
-																"ASSIGNED_BY_ID": bx24userid,
-																"CREATED_BY_ID": bx24userid,
-																"PHONE": data.phone,
-																"EMAIL": data.email,
-																"WEB": data.web,
-																"IM": data.im,
-																"CURRENCY_ID": data.currency
-															},
-															params: { "REGISTER_SONET_EVENT": lm }
-														},
-														function () {
-															$('#company'+i).prop('checked', 0);
-															totalChecked--;
-															$('#totalInport').find('span').text(totalChecked);
-															$('.progress-bar').css('width', function (index, value) {
-																var fWidth = $('.progress').width();
-																totalProgress += progressIncrement;
-																return fWidth / (totalChecked + 1);
-															}).text(totalProgress+'%');
-															if (totalChecked == 0) {
-																$('.progress').delay(5000).slideUp('slow');
-															}
-														});
-												}
-											});
-									} else {
-										BX24.callMethod(
-											"crm.company.list",
-											{
-												order: { "DATE_CREATE": "DESC" },
-												filter: { "TITLE": data.name },
-												select: ["ID"]
-											}, function (result2)
-											{
-												if (result2.data().length > 0) {
-													console.log(result2.data()[0].ID);
-												} else {
-													BX24.callMethod(
-														"crm.company.add",
-														{
-															fields:
-															{
-																"TITLE": data.name,
-																"COMPANY_TYPE": "PROSPECT",
-																"ADDRESS": data.address,
-																"ADDRESS_2": data.address_2,
-																"ADDRESS_CITY": data.city_name,
-																"ADDRESS_REGION": data.region,
-																"ADDRESS_POSTAL_CODE": data.postal_code,
-																"INDUSTRY": data.industry.code,
-																"OPENED": opened,
-																"COMMENTS": data.comments,
-																"ASSIGNED_BY_ID": bx24userid,
-																"CREATED_BY_ID": bx24userid,
-																"PHONE": data.phone,
-																"EMAIL": data.email,
-																"WEB": data.web,
-																"IM": data.im,
-																"CURRENCY_ID": data.currency
-															},
-															params: { "REGISTER_SONET_EVENT": lm }
-														},
-														function () {
-															$('#company'+i).prop('checked', 0);
-															totalChecked--;
-															$('#totalInport').find('span').text(totalChecked);
-															$('.progress-bar').css('width', function (index, value) {
-																var fWidth = $('.progress').width();
-																totalProgress += progressIncrement;
-																return fWidth / (totalChecked + 1);
-															}).text(totalProgress+'%');
-															if (totalChecked == 0) {
-																$('.progress').delay(5000).slideUp('slow');
-															}
-														});
-												}
-											});
-									}
 								}
-							});
-						
+							},
+							function (result_sl)
+							{
+								if (result_st.data().length > 0) 
+								{
+									BX24.callMethod(
+										"crm.company.list",
+										{
+											order: { "DATE_CREATE": "DESC" },
+											filter: { "TITLE": data.name },
+											select: ["ID"]
+										}, function (result_cl)
+										{
+											if (result2.data().length > 0) {
+												console.log(result_cl.data()[0].ID);
+											} else {
+												BX24.callMethod(
+													"crm.company.add",
+													{
+														fields:
+														{
+															"TITLE": data.name,
+															"COMPANY_TYPE": "PROSPECT",
+															"ADDRESS": data.address,
+															"ADDRESS_2": data.address_2,
+															"ADDRESS_CITY": data.city_name,
+															"ADDRESS_REGION": data.region,
+															"ADDRESS_POSTAL_CODE": data.postal_code,
+															"INDUSTRY": data.industry.code,
+															"OPENED": opened,
+															"COMMENTS": data.comments,
+															"ASSIGNED_BY_ID": bx24userid,
+															"CREATED_BY_ID": bx24userid,
+															"PHONE": data.phone,
+															"EMAIL": data.email,
+															"WEB": data.web,
+															"IM": data.im,
+															"CURRENCY_ID": data.currency
+														},
+														params: { "REGISTER_SONET_EVENT": lm }
+													},
+													function () {
+														$('#company'+i).prop('checked', 0);
+														totalChecked--;
+														$('#totalInport').find('span').text(totalChecked);
+														$('.progress-bar').css('width', function (index, value) {
+															var fWidth = $('.progress').width();
+															totalProgress += progressIncrement;
+															return fWidth / (totalChecked + 1);
+														}).text(totalProgress+'%');
+														if (totalChecked == 0) {
+															$('.progress').delay(5000).slideUp('slow');
+														}
+													}
+												);
+											}
+										}
+									);
+								} 
+								else 
+								{
+									BX24.callMethod(
+										"crm.company.list",
+										{
+											order: { "DATE_CREATE": "DESC" },
+											filter: { "TITLE": data.name },
+											select: ["ID"]
+										}, function (result_cl)
+										{
+											if (result_cl.data().length > 0) {
+												console.log(result_cl.data()[0].ID);
+											} else {
+												BX24.callMethod(
+													"crm.company.add",
+													{
+														fields:
+														{
+															"TITLE": data.name,
+															"COMPANY_TYPE": "PROSPECT",
+															"ADDRESS": data.address,
+															"ADDRESS_2": data.address_2,
+															"ADDRESS_CITY": data.city_name,
+															"ADDRESS_REGION": data.region,
+															"ADDRESS_POSTAL_CODE": data.postal_code,
+															"INDUSTRY": data.industry.code,
+															"OPENED": opened,
+															"COMMENTS": data.comments,
+															"ASSIGNED_BY_ID": bx24userid,
+															"CREATED_BY_ID": bx24userid,
+															"PHONE": data.phone,
+															"EMAIL": data.email,
+															"WEB": data.web,
+															"IM": data.im,
+															"CURRENCY_ID": data.currency
+														},
+														params: { "REGISTER_SONET_EVENT": lm }
+													},
+													function () {
+														$('#company'+i).prop('checked', 0);
+														totalChecked--;
+														$('#totalInport').find('span').text(totalChecked);
+														$('.progress-bar').css('width', function (index, value) {
+															var fWidth = $('.progress').width();
+															totalProgress += progressIncrement;
+															return fWidth / (totalChecked + 1);
+														}).text(totalProgress+'%');
+														if (totalChecked == 0) {
+															$('.progress').delay(5000).slideUp('slow');
+														}
+													}
+												);
+											}
+										}
+									);
+								}
+							}
+						);
 					}, 'json');
 				}
 			}
