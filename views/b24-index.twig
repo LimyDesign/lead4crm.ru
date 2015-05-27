@@ -287,9 +287,7 @@ BX24.init(function() {
 							},
 							function (result_sl)
 							{
-								console.log(result_sl.data());
-								console.log(result_sl.data().hasOwnProperty('0'));
-								if (result_sl.data()[0].length > 0) 
+								if (result_sl.data().hasOwnProperty('0')) 
 								{
 									BX24.callMethod(
 										"crm.company.list",
@@ -299,8 +297,8 @@ BX24.init(function() {
 											select: ["ID"]
 										}, function (result_cl)
 										{
-											if (result_cl.data()[0].length > 0) {
-												console.log(result_cl.data()[0].ID);
+											if (result_cl.data().hasOwnProperty('0')) {
+												console.log(result_cl.data().{'0'}.ID);
 											} else {
 												BX24.callMethod(
 													"crm.company.add",
@@ -355,8 +353,8 @@ BX24.init(function() {
 											select: ["ID"]
 										}, function (result_cl)
 										{
-											if (result_cl.data()[0].length > 0) {
-												console.log(result_cl.data()[0].ID);
+											if (result_cl.data().hasOwnProperty('0')) {
+												console.log(result_cl.data().{'0'}.ID);
 											} else {
 												BX24.callMethod(
 													"crm.company.add",
