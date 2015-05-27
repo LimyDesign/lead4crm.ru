@@ -275,6 +275,7 @@ BX24.init(function() {
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
 					$.post('/importCompany/', importData, function(data) {
+						console.log(data.industry);
 						BX24.callMethod(
 							"crm.status.list",
 							{
