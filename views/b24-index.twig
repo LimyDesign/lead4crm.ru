@@ -297,6 +297,7 @@ BX24.init(function() {
 											select: ["ID"]
 										}, function (result_cl)
 										{
+											console.log(result_cl.data());
 											if (result_cl.data().hasOwnProperty('0')) {
 												console.log(result_cl.data()['0'].ID);
 											} else {
