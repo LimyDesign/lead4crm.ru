@@ -298,7 +298,7 @@ BX24.init(function() {
 										}, function (result_cl)
 										{
 											if (result_cl.data().hasOwnProperty('0')) {
-												console.log(result_cl.data().{'0'}.ID);
+												console.log(result_cl.data().['0'].ID);
 											} else {
 												BX24.callMethod(
 													"crm.company.add",
@@ -354,7 +354,7 @@ BX24.init(function() {
 										}, function (result_cl)
 										{
 											if (result_cl.data().hasOwnProperty('0')) {
-												console.log(result_cl.data().{'0'}.ID);
+												console.log(result_cl.data().['0'].ID);
 											} else {
 												BX24.callMethod(
 													"crm.company.add",
