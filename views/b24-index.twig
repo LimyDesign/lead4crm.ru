@@ -275,7 +275,6 @@ BX24.init(function() {
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
 					$.post('/importCompany/', importData, function(data) {
-						console.log(data.industry);
 						BX24.callMethod(
 							"crm.status.list",
 							{
@@ -288,8 +287,8 @@ BX24.init(function() {
 							},
 							function (result_sl)
 							{
-								console.log(result_sl.data());
-								if (result_sl.data()[0].length > 0) 
+								console.log(result_sl.data(0));
+								if (result_sl.data().0.length > 0) 
 								{
 									BX24.callMethod(
 										"crm.company.list",
