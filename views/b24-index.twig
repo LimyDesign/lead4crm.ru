@@ -147,6 +147,7 @@
 </body>
 </html>
 {% endspaceless %}
+{% jshrink %}
 <script>
 // Объявляем переменные
 var page = 1;
@@ -741,4 +742,5 @@ function gotoPage(pageTo) {
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
 </script>
+{% endjshrink %}
 {% endif %}
