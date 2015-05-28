@@ -110,7 +110,7 @@ BX24.init(function() {
 						prevURL.href = document.referrer;
 						if (prevURL.hostname == 'www.lead4crm.ru') {
 							console.log(prevURL.href);
-							window.location = prevURL.href;
+							BX24.reloadWindow();
 						}
 					}
 				})

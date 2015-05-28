@@ -85,7 +85,6 @@ if ($cmd[0]) {
 
 		case 'b24-install':
 		case 'b24-index':
-			print_r($_REQUEST); die();
 			if ($auth = $_REQUEST['AUTH_ID']) {
 				$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
 				$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
