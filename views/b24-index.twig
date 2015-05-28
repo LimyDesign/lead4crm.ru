@@ -172,6 +172,7 @@ BX24.init(function() {
 	if (!tariff || !qty) 
 	{
 		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
+			console.log('QTY:',data.qty);
 			$('#tariff').text(data.tariff);
 			$('#qty').number(data.qty, 0, '.', ' ');
 		});
