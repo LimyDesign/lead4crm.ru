@@ -168,13 +168,17 @@ BX24.init(function() {
 	// Показываем текущий тариф пользователя
 	// и остаток кол-ва запросов
 	b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
-	if (!tariff || !qty) {
+	if (!tariff || !qty) 
+	{
 		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
 			$('#tariff').text(data.tariff);
 			$('#qty').number(data.qty, 0, '.', ' ');
 		});
-	} else {
-		if (b24APIKey == '{{apikey}}') {
+	} 
+	else 
+	{
+		if (b24APIKey == '{{apikey}}') 
+		{
 			$('#tariff').text(tariff);
 			$('#qty').number(qty, 0, '.', ' ');
 		}

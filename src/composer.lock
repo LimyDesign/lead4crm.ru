@@ -4,8 +4,73 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "390377faaed68789360a092c889c79e2",
+    "hash": "7541e53136ab17dd7536223042b4753c",
     "packages": [
+        {
+            "name": "salva/jshrink-bundle",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nibsirahsieu/SalvaJshrinkBundle.git",
+                "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nibsirahsieu/SalvaJshrinkBundle/zipball/eead0b0e19ba77f49188282f5167bd537d1a30f4",
+                "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "tedivm/jshrink": "~1.0",
+                "twig/extensions": "~1.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5",
+                "symfony/assetic-bundle": ">=2.6",
+                "symfony/framework-bundle": ">=2.3",
+                "symfony/twig-bundle": ">=2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Salva\\JshrinkBundle\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nibsirahsieu",
+                    "email": "nibsirahsieu@gmail.com",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Emanuele Minotto",
+                    "email": "minottoemanuele@gmail.com",
+                    "homepage": "http://www.emanueleminotto.it",
+                    "role": "Collaborator"
+                }
+            ],
+            "description": "This bundle integrate jshrink library as Assetic filter and twig extension",
+            "homepage": "https://github.com/nibsirahsieu/SalvaJshrinkBundle",
+            "keywords": [
+                "Symfony Bundle",
+                "assetic",
+                "javascript",
+                "jshrink",
+                "minify",
+                "twig"
+            ],
+            "time": "2015-03-01 00:19:51"
+        },
         {
             "name": "tecnick.com/tcpdf",
             "version": "6.2.8",
@@ -68,6 +133,104 @@
                 "qrcode"
             ],
             "time": "2015-04-29 16:13:58"
+        },
+        {
+            "name": "tedivm/jshrink",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tedious/JShrink.git",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "0.4.0",
+                "phpunit/phpunit": "4.0.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JShrink": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Hafner",
+                    "email": "tedivm@tedivm.com"
+                }
+            ],
+            "description": "Javascript Minifier built in PHP",
+            "homepage": "http://github.com/tedious/JShrink",
+            "keywords": [
+                "javascript",
+                "minifier"
+            ],
+            "time": "2014-11-11 03:54:14"
+        },
+        {
+            "name": "twig/extensions",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig-extensions.git",
+                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
+                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
+                "shasum": ""
+            },
+            "require": {
+                "twig/twig": "~1.12"
+            },
+            "require-dev": {
+                "symfony/translation": "~2.3"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Twig_Extensions_": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Common additional features for Twig that do not directly belong in core",
+            "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+            "keywords": [
+                "i18n",
+                "text"
+            ],
+            "time": "2014-10-30 14:30:03"
         },
         {
             "name": "twig/twig",
