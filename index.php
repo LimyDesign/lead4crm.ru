@@ -454,7 +454,7 @@ function getB24UserData($apikey) {
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = (select id from users where apikey = '{$apikey}')) / {$price}) from users where apikey = '{$apikey}'";
+		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = (select id from users where apikey = '{$apikey}')) / {$price}) as qty from users where apikey = '{$apikey}'";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
@@ -499,7 +499,7 @@ function getUserData($return = 'json') {
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = {$_SESSION['userid']}) / {$price}) from users where id = {$_SESSION['userid']}";
+		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = {$_SESSION['userid']}) / {$price}) as qty from users where id = {$_SESSION['userid']}";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
