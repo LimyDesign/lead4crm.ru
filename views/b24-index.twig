@@ -269,7 +269,7 @@ BX24.init(function() {
 				BX24.fitWindow();
 			}).children('.progress-bar').addClass('progress-bar-striped active').css('width', '0%').text('0%');
 			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
-				if ($('[id^="company'+i+'"').is(':checked')) {
+				if ($('[id^="company'+i+'"]').is(':checked')) {
 					alert('Yo!');
 					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
