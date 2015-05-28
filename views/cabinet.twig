@@ -281,6 +281,7 @@
 	{% include 'layout/tariff.twig' %}
 	{% include 'layout/scripts.twig' %}
 	<script src="/public/js/jquery.number.min.js"></script>
+	{% jshrink %}
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$('#inputSum').number(true, 2, '.', ' ');
@@ -372,6 +373,7 @@
 	    }
 	}
 	</script>
+	{% endjshrink %}
 </body>
 </html>
 {% endspaceless %}
