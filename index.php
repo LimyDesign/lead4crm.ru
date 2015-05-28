@@ -449,11 +449,12 @@ function getB24UserData($apikey) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select name from tariff where id = (select tariffid2 from users where apikey = '{$apikey}')";
+		$query = "select name, price from tariff where id = (select tariffid2 from users where apikey = '{$apikey}')";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
+		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty from users where apikey = '{$apikey}'";
+		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = (select id from users where apikey = '{$apikey}')) / {$price}) from users where apikey = '{$apikey}'";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
@@ -493,11 +494,12 @@ function getUserData($return = 'json') {
 		$result = pg_query($query);
 		$balans = pg_fetch_result($result, 0, 'balans');
 		$balans = $balans ? $balans : '0';
-		$query = "select name from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
+		$query = "select name, price from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
+		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty from users where id = {$_SESSION['userid']}";
+		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = {$_SESSION['userid']}) / {$price}) from users where id = {$_SESSION['userid']}";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
