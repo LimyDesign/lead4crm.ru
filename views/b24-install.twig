@@ -105,9 +105,10 @@ BX24.init(function() {
 						// Сообщаем Битрикс24 о том, что все готово
 						// и можно переключаться на приложение.
 						BX24.installFinish();
-						var prevURL = document.referrer;
+						var prevURL = document.createElement('a');
+						prevURL.href = document.referrer;
 						if (prevURL.hostname == 'www.lead4crm.ru') {
-							console.log(prevURL);
+							console.log(prevURL.href);
 							// window.history.go(-1);
 						}
 					}
