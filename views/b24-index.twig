@@ -130,7 +130,7 @@
 					<input type="radio" name="REGISTER_SONET_EVENT" value="N" autocomplete="off"> Нет
 				</label>
 			</div>
-			<p class="help-block">Дополнительно Вам будет отправлено уведомление в живую ленту.</p>
+			<p class="help-block">Дополнительно Вам будет отправлено уведомление в живую ленту в CRM, а не та, которая на главной странице, помните это.</p>
 		</div>
 	</div>
 	{% if isAdmin %}
@@ -252,7 +252,7 @@ BX24.init(function() {
 		});
 	});
 
-	// Запускаем по клику импорт выбранных компаний в справочник
+	// Запускаем по клику импорт выбранных компаний в справочник CRM
 	$('#startImport').click(function() {
 		if (totalChecked > 0) {
 			var importCompanyID = '';
@@ -269,17 +269,18 @@ BX24.init(function() {
 				BX24.fitWindow();
 			}).children('.progress-bar').addClass('progress-bar-striped active').css('width', '0%').text('0%');
 			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
-				if ($('[id^="company'+i+'"]').is(':checked')) {
-					alert('Yo!');
+				if ($('#company'+i).is(':checked')) {
 					importCompanyID = $('#company'+i).attr('name');
 					importCompanyHash = $('#company'+i).attr('value');
 					importData.importCompanyID = importCompanyID;
 					importData.importCompanyHash = importCompanyHash;
 					$.post('/importCompany/', importData, function(data) {
+						// Проверка существования вида деятельности в справочнике
+						// и операции проверки существования, добавления и обновления 
+						// справочника компаний
 						BX24.callMethod(
 							"crm.status.list",
 							{
-								order: { "SORT": "ASC" },
 								filter: { 
 									"ENTITY_ID": "INDUSTRY", 
 									"STATUS_ID": data.industry.code,
@@ -290,18 +291,67 @@ BX24.init(function() {
 							{
 								if (result_sl.data().hasOwnProperty('0')) 
 								{
+									// Проверка существования компании, добавление или обновление
+									// добавляемой компании в зависимости от условий
 									BX24.callMethod(
 										"crm.company.list",
 										{
-											order: { "DATE_CREATE": "DESC" },
-											filter: { "TITLE": data.name },
-											select: ["ID"]
-										}, function (result_cl)
+											filter: { 
+												"TITLE": data.name, 
+												"ADDRESS": data.address,
+												"ADDRESS_CITY": data.city_name
+											},
+											select: [ "ID" ]
+										}, 
+										function (result_cl)
 										{
-											console.log(result_cl.data());
-											if (result_cl.data().hasOwnProperty('0')) {
-												console.log(result_cl.data()['0'].ID);
+											if (result_cl.data().length) 
+											{
+												// Обновление уже существующей компании:
+												// обновляем только доп. информацию об офисе
+												// компании или этаже, сферу деятельности, в
+												// случае изменения основного, обновляем видимость
+												// компании для других и делаем переназначение 
+												// принадлежности компании к текущему пользователю,
+												// также обновляем массив контактных данных 
+												// (телефон, эл. почта и т.п.). 
+												// Выставляем правильную валюту и если надо,
+												// отмечаем данное событие в ленте CRM.
+												BX24.callMethod(
+													"crm.company.update",
+													{
+														id: result_cl.data()['ID'],
+														fields: {
+															"ADDRESS_2": data.address_2,
+															"INDUSTRY": data.industry.code,
+															"OPENED": opened,
+															"ASSIGNED_BY_ID": bx24userid,
+															"PHONE": data.phone,
+															"EMAIL": data.email,
+															"WEB": data.web,
+															"IM": data.im,
+															"CURRENCY_ID": data.currency
+														},
+														params: { "REGISTER_SONET_EVENT": lm }
+													},
+													function() 
+													{
+														$('#company'+i).prop('checked', 0);
+														totalChecked--;
+														$('#totalInport').find('span').text(totalChecked);
+														$('.progress-bar').css('width', function (index, value) {
+															var fWidth = $('.progress').width();
+															totalProgress += progressIncrement;
+															return fWidth / (totalChecked + 1);
+														}).text(totalProgress+'%');
+														if (totalChecked == 0) 
+														{
+															$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
+														}
+													}
+												);
 											} else {
+												// Добавляем новую компанию в справочник CRM
 												BX24.callMethod(
 													"crm.company.add",
 													{
@@ -327,7 +377,8 @@ BX24.init(function() {
 														},
 														params: { "REGISTER_SONET_EVENT": lm }
 													},
-													function () {
+													function () 
+													{
 														$('#company'+i).prop('checked', 0);
 														totalChecked--;
 														$('#totalInport').find('span').text(totalChecked);
@@ -336,8 +387,9 @@ BX24.init(function() {
 															totalProgress += progressIncrement;
 															return fWidth / (totalChecked + 1);
 														}).text(totalProgress+'%');
-														if (totalChecked == 0) {
-															$('.progress').delay(5000).slideUp('slow');
+														if (totalChecked == 0) 
+														{
+															$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
 														}
 													}
 												);
@@ -347,57 +399,130 @@ BX24.init(function() {
 								} 
 								else 
 								{
+									// Добавление новой записи в справочник видов деятельности
+									// и затем добавление или обновление компании
 									BX24.callMethod(
-										"crm.company.list",
+										"crm.status.add",
 										{
-											order: { "DATE_CREATE": "DESC" },
-											filter: { "TITLE": data.name },
-											select: ["ID"]
-										}, function (result_cl)
-										{
-											if (result_cl.data().hasOwnProperty('0')) {
-												console.log(result_cl.data()['0'].ID);
-											} else {
-												BX24.callMethod(
-													"crm.company.add",
-													{
-														fields:
-														{
-															"TITLE": data.name,
-															"COMPANY_TYPE": "PROSPECT",
-															"ADDRESS": data.address,
-															"ADDRESS_2": data.address_2,
-															"ADDRESS_CITY": data.city_name,
-															"ADDRESS_REGION": data.region,
-															"ADDRESS_POSTAL_CODE": data.postal_code,
-															"INDUSTRY": data.industry.code,
-															"OPENED": opened,
-															"COMMENTS": data.comments,
-															"ASSIGNED_BY_ID": bx24userid,
-															"CREATED_BY_ID": bx24userid,
-															"PHONE": data.phone,
-															"EMAIL": data.email,
-															"WEB": data.web,
-															"IM": data.im,
-															"CURRENCY_ID": data.currency
-														},
-														params: { "REGISTER_SONET_EVENT": lm }
-													},
-													function () {
-														$('#company'+i).prop('checked', 0);
-														totalChecked--;
-														$('#totalInport').find('span').text(totalChecked);
-														$('.progress-bar').css('width', function (index, value) {
-															var fWidth = $('.progress').width();
-															totalProgress += progressIncrement;
-															return fWidth / (totalChecked + 1);
-														}).text(totalProgress+'%');
-														if (totalChecked == 0) {
-															$('.progress').delay(5000).slideUp('slow');
-														}
-													}
-												);
+											fields: {
+												"ENTITY_ID": "INDUSTRY",
+												"STATUS_ID": data.industry.code,
+												"NAME": data.industry.name
 											}
+										},
+										function() 
+										{
+											// Проверка существования компании, добавление 
+											// или обновление добавляемой компании 
+											// в зависимости от условий
+											BX24.callMethod(
+												"crm.company.list",
+												{
+													filter: { 
+														"TITLE": data.name, 
+														"ADDRESS": data.address,
+														"ADDRESS_CITY": data.city_name
+													},
+													select: [ "ID" ]
+												}, 
+												function (result_cl)
+												{
+													if (result_cl.data().length) 
+													{
+														// Обновление уже существующей компании:
+														// обновляем только доп. информацию об
+														// офисе компании или этаже, сферу
+														// деятельности, в случае изменения
+														// основного, обновляем видимость компании
+														// для других и делаем переназначение
+														// принадлежности компании к текущему
+														// пользователю, также обновляем массив
+														// контактных данных (телефон, эл. почта и
+														// т.п.). Выставляем правильную валюту и
+														// если надо, отмечаем данное событие в
+														// ленте CRM.
+														BX24.callMethod(
+															"crm.company.update",
+															{
+																id: result_cl.data()['ID'],
+																fields: {
+																	"ADDRESS_2": data.address_2,
+																	"INDUSTRY": data.industry.code,
+																	"OPENED": opened,
+																	"ASSIGNED_BY_ID": bx24userid,
+																	"CREATED_BY_ID": bx24userid,
+																	"PHONE": data.phone,
+																	"EMAIL": data.email,
+																	"WEB": data.web,
+																	"IM": data.im,
+																	"CURRENCY_ID": data.currency
+																},
+																params: { "REGISTER_SONET_EVENT": lm }
+															},
+															function() {
+																$('#company'+i).prop('checked', 0);
+																totalChecked--;
+																$('#totalInport').find('span').text(totalChecked);
+																$('.progress-bar').css('width', function (index, value) {
+																	var fWidth = $('.progress').width();
+																	totalProgress += progressIncrement;
+																	return fWidth / (totalChecked + 1);
+																}).text(totalProgress+'%');
+																if (totalChecked == 0) 
+																{
+																	$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
+																}
+															}
+														);
+													} 
+													else 
+													{
+														// Добавляем новую компанию в 
+														// справочник CRM
+														BX24.callMethod(
+															"crm.company.add",
+															{
+																fields:
+																{
+																	"TITLE": data.name,
+																	"COMPANY_TYPE": "PROSPECT",
+																	"ADDRESS": data.address,
+																	"ADDRESS_2": data.address_2,
+																	"ADDRESS_CITY": data.city_name,
+																	"ADDRESS_REGION": data.region,
+																	"ADDRESS_POSTAL_CODE": data.postal_code,
+																	"INDUSTRY": data.industry.code,
+																	"OPENED": opened,
+																	"COMMENTS": data.comments,
+																	"ASSIGNED_BY_ID": bx24userid,
+																	"CREATED_BY_ID": bx24userid,
+																	"PHONE": data.phone,
+																	"EMAIL": data.email,
+																	"WEB": data.web,
+																	"IM": data.im,
+																	"CURRENCY_ID": data.currency
+																},
+																params: { "REGISTER_SONET_EVENT": lm }
+															},
+															function () 
+															{
+																$('#company'+i).prop('checked', 0);
+																totalChecked--;
+																$('#totalInport').find('span').text(totalChecked);
+																$('.progress-bar').css('width', function (index, value) {
+																	var fWidth = $('.progress').width();
+																	totalProgress += progressIncrement;
+																	return fWidth / (totalChecked + 1);
+																}).text(totalProgress+'%');
+																if (totalChecked == 0) 
+																{
+																	$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
+																}
+															}
+														);
+													}
+												}
+											);
 										}
 									);
 								}
