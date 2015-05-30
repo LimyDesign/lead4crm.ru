@@ -582,6 +582,7 @@ BX24.init(function() {
 					searchCity: b24CityID,
 					searchPage: page};
 				$.post('/getDataSearch/', formData, function(data) {
+					console.log(data);
 					if (!data.error) {
 						console.log(data.error);
 						alert(data.message);
