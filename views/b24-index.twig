@@ -637,6 +637,8 @@ BX24.init(function() {
 					$('#search-results').slideToggle('fast',function() {
 						BX24.fitWindow();
 					});
+				}).fail(function() {
+					alert('error');
 				});
 			} else {
 				$('#search-options').slideToggle('fast');
