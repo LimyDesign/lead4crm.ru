@@ -143,7 +143,7 @@ function getCities($userCity) {
 	global $conf;
 	$cities = array();
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = 'select * from cities order by name asc';
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
@@ -395,7 +395,7 @@ function yalogin() {
 function dbLogin($userId, $userEmail, $provider) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		if ($_SESSION['userid']) {
 			$query = "UPDATE users SET {$provider} = {$userId} WHERE id = {$_SESSION['userid']}";
 			$result = pg_query($query);
@@ -448,7 +448,7 @@ function dbLogin($userId, $userEmail, $provider) {
 function getB24UserData($apikey) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "select name, price from tariff where id = (select tariffid2 from users where apikey = '{$apikey}')";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
@@ -489,7 +489,7 @@ function importCompany($apikey, $domain, $id, $hash) {
 function getUserData($return = 'json') {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "select (sum(debet) - sum(credit)) as balans from log where uid = {$_SESSION['userid']}";
 		$result = pg_query($query);
 		$balans = pg_fetch_result($result, 0, 'balans');
@@ -519,7 +519,7 @@ function newAPIKey() {
 	global $conf;
 	if ($conf->db->type == 'postgres')
 	{
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$userid = $_SESSION['userid'];
 		$apikey = sha1($_SERVER['HTTP_USER_AGENT'].time());
 		$query = "update users set apikey = '{$apikey}' where id = {$userid}";
@@ -585,7 +585,7 @@ function generateInvoice($userSumm, $userCompany) {
 function writeInvoice($num, $sum, $system = 'bank') {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "insert into invoices (invoice, uid, sum, system) values ({$num}, {$_SESSION['userid']}, '{$sum}', '{$system}')";
 		pg_query($query);
 		pg_close($db);
@@ -597,7 +597,7 @@ function setUserCompany($company) {
 	global $conf;
 	if ($company != $_SESSION['company']) {
 		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 			$company = pg_escape_string($company);
 			$query = "update users set company = '{$company}' where id = {$_SESSION['userid']}";
 			pg_query($query);
@@ -680,7 +680,7 @@ function yandexPayments($cmd) {
 		} else {
 			$code = '0';
 			if ($conf->db->type == 'postgres') {
-				$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 				$system = 'yamoney:'.$_POST['paymentType'];
 				$query = "insert into invoices (invoice, uid, sum, system) values ({$yaInvoiceId}, {$yaCustomerNumber}, {$yaOrderSumAmount}, '{$system}')";
 				$result = pg_query($query);
@@ -701,7 +701,7 @@ function yandexPayments($cmd) {
 	elseif ($cmd == 'aviso') 
 	{
 		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 			$query = "select id, uid, invoice, sum from invoices where uid = {$yaCustomerNumber} and invoice = {$yaInvoiceId} and sum = {$yaOrderSumAmount}";
 			$result = pg_query($query);
 			$iid = pg_fetch_result($result, 0, 'id');
@@ -741,7 +741,7 @@ function yandexPayments($cmd) {
 function getUserTariffList() {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "select * from tariff where domain = 'lead4crm.ru' and sum <= (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']})";
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
@@ -759,7 +759,7 @@ function getUserTariffList() {
 function getUserTariff() {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "select name from tariff where id = (select tariffid2 from users where id = {$_SESSION['userid']})";
 		$result = pg_query($query);
 		$tariff = pg_fetch_result($result, 0, 'name');
@@ -773,7 +773,7 @@ function setTariff($getTariff) {
 	global $conf;
 	if ($conf->db->type == 'postgres')
 	{
-		$db = pg_connect('dbname='.$conf->db->database) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$tariff = $_POST['tariff'] ? $_POST['tariff'] : $getTariff;
 		if ($tariff != 'demo') {
 			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), qty = qty + (select queries from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') returning id";
