@@ -473,8 +473,7 @@ function getDataSearch($apikey, $text, $city, $domain, $page = 1) {
 		'text' => $text,
 		'city' => $city,
 		'domain' => $domain));
-	return 'fuuuu';
-	// return file_get_contents($url.$uri);
+	return file_get_contents($url.$uri);
 }
 
 function importCompany($apikey, $domain, $id, $hash) {
