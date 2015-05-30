@@ -582,7 +582,6 @@ BX24.init(function() {
 					searchCity: b24CityID,
 					searchPage: page};
 				$.post('/getDataSearch/', formData, function(data) {
-					console.log(data);
 					if (!data.error) {
 						console.log(data.error);
 						alert(data.message);
@@ -637,8 +636,6 @@ BX24.init(function() {
 					$('#search-results').slideToggle('fast',function() {
 						BX24.fitWindow();
 					});
-				}).fail(function(error) {
-					console.error('Error',error);
 				});
 			} else {
 				$('#search-options').slideToggle('fast');
