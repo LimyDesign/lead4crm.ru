@@ -567,8 +567,12 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
-		if (qty == 0)
+		if (qty == 0) {
+			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', functuion() {
+				$(this).removeClass('animated tada');
+			})
 			return;
+		}
 		if ($('#inputSearchText').val() != '') {
 			if (searchText != $('#inputSearchText').val()) {
 				totalChecked = 0;
