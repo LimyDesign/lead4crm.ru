@@ -568,9 +568,9 @@ BX24.init(function() {
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
 		if (qty == 0) {
-			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', functuion() {
+			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
 				$(this).removeClass('animated tada');
-			})
+			});
 			return;
 		}
 		if ($('#inputSearchText').val() != '') {
