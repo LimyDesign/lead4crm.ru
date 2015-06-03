@@ -260,6 +260,8 @@ BX24.init(function() {
 
 	// Запускаем по клику импорт выбранных компаний в справочник CRM
 	$('#startImport').click(function() {
+		if (qty < totalChecked)
+			return;
 		if (totalChecked > 0) {
 			var importCompanyID = '';
 			var importCompanyHash = '';
