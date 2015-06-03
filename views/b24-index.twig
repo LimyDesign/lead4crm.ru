@@ -567,6 +567,8 @@ BX24.init(function() {
 	// Выполняем поиск предприятий по заданным критериям
 	$('#searchForm').submit(function(e) {
 		e.preventDefault();
+		if (qty == 0)
+			return;
 		if ($('#inputSearchText').val() != '') {
 			if (searchText != $('#inputSearchText').val()) {
 				totalChecked = 0;
