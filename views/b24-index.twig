@@ -571,6 +571,7 @@ BX24.init(function() {
 		if (qty == 0) {
 			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
 				$(this).removeClass('animated tada');
+				alert('У вас кончились оплаченные запросы. Перейдите на сайт www.lead4crm.ru и пополните баланс любым удобным способом.');
 			});
 			return;
 		}
