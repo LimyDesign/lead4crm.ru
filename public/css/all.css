@@ -13,8 +13,8 @@ body {
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
-.area .table > tbody > tr > td,
-.area .table > thead > tr > th {
+.table-price > tbody > tr > td,
+.table-price > thead > tr > th {
   font-size: 2.1rem;
   line-height: 1.524;
 }
