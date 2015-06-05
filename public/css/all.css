@@ -19,7 +19,7 @@ body {
   line-height: 1.524;
 }
 
-.table-price > tbody > tr > td:not(:first) {
+.table-price > tbody > tr > td:not(:first-child) {
   text-align: right;
 }
 
