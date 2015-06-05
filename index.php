@@ -498,7 +498,7 @@ function getSupportCities() {
 	} else {
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-			$query = "select name from cities";
+			$query = "select name from cities order by name asc";
 			$result = pg_query($query);
 			$i = 0;
 			while ($row = pg_fetch_assoc($result)) {
