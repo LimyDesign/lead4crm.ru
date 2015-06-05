@@ -19,7 +19,7 @@ body {
   line-height: 1.524;
 }
 
-.table-hover > tbody > tr:hover {
+.area .table-hover > tbody > tr:hover {
   background-color: #fff;
 }
 
