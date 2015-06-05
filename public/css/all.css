@@ -14,7 +14,7 @@ body {
   font-family: "Roboto", sans-serif; }*/
 
 table tr>td,
-table th>th {
+table tr>th {
   font-size: 2.1rem;
   line-height: 1.524;
 }
