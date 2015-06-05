@@ -54,7 +54,7 @@
 	<script src="/public/js/modalEffects.min.js"></script>
 	<script>
 		$(document).ready(function() {
-			$.post('/getCities/', function(data) {
+			$.post('/getSupportCities/', function(data) {
 				data.city.forEach(function(entry) {
 					$('#cities').append('<li>'+entry.name+'</li>')
 				})
