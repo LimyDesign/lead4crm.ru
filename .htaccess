@@ -3,7 +3,11 @@ Header set Access-Control-Allow-Origin "*"
 Options +FollowSymLinks
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !=/apache-stats
+RewriteCond %{HTTPS} off
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
