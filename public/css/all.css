@@ -19,6 +19,10 @@ body {
   line-height: 1.524;
 }
 
+.table-price > tbody > tr > td:not(:first) {
+  text-align: right;
+}
+
 .area .table-hover > tbody > tr:hover {
   background-color: #fff;
 }
