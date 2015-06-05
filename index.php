@@ -27,6 +27,10 @@ if ($cmd[0]) {
 			logout();
 			break;
 
+		case 'getSupportCities':
+			getSupportCities();
+			break;
+
 		case 'getUserData':
 			isAuth();
 			getUserData();
@@ -484,6 +488,30 @@ function importCompany($apikey, $domain, $id, $hash) {
 		'id' => $id,
 		'hash' => $hash));
 	return file_get_contents($url.$uri);
+}
+
+function getSupportCities() {
+	global $conf;
+	header("Content-Type: text/json");
+	if (file_exists(__DIR__.'/cities.json')) {
+		echo file_get_contents(__DIR__.'/cities.json');
+	} else {
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+			$query = "select name from cities";
+			$result = pg_query($query);
+			$i = 0;
+			while ($row = pg_fetch_assoc($result)) {
+				$city[$i]['name'] = $row['name'];
+				$i++;
+			}
+			$json_array = array('city' => $city);
+			$json = json_encode($json_array);
+			file_put_contents(__DIR__.'/cities.json', $json);
+			echo $json;
+		}
+	}
+	exit();
 }
 
 function getUserData($return = 'json') {
