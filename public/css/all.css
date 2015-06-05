@@ -13,6 +13,12 @@ body {
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
+table tr>td,
+table th>th {
+  font-size: 2.1rem;
+  line-height: 1.524;
+}
+
 .btn, a {
   -webkit-transition: color linear .4s, background-color linear .4s, border-color linear .4s;
   transition: color linear .4s, background-color linear .4s, border-color linear .4s; }
