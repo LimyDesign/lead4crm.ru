@@ -22,7 +22,7 @@
 							</div>
 							<div class="form-group">
 								<label for="selectCityName">Выберите ваш город</label>
-								<select name="city" class="selectpicker form-control input-lg" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%">
+								<select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="form-control input-lg">
 									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										{% if city.selected %}
