@@ -44,6 +44,7 @@
 	</div>
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
+	<script src="/public/js/bootstrap-select.js"></script>
 </body>
 </html>
 {% endspaceless %}
@@ -71,6 +72,11 @@ BX24.init(function() {
 				}
 			}
 		}
+	});
+
+	// Делаем удобный выбор городов, иначе полная лабуда
+	$('.selectpicker').selectpicker({
+		live-search: true
 	});
 
 	// Меняем заголов в Битрикс24
