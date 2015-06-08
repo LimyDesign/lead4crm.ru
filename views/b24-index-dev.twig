@@ -1,0 +1,757 @@
+{% if isBX24User %}
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'layout/header.twig' %}
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+	<style>
+	.btn-config {
+		position: fixed;
+		top: 0;
+		right: 0;
+	}
+	</style>
+</head>
+<body>
+	<div id="wraper">
+		<section class="main">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div id="search-options">
+							<h2><span id="greeting">Добрый день!</span> &nbsp; 
+								<small>Тариф компании: <span id="tariff">Демо</span></small></h2>
+							<p class="lead">Начните с ввода вида деятельности. И если есть необходимость поменять город, также укажите город в котором будете производить поиск.</p>
+							<form id="searchForm" class="form-horizontal">
+								<div class="form-group form-group-lg">
+									<label for="inputSearchText" class="control-label col-sm-2">Поиск:</label>
+									<div class="col-sm-10">
+										<input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
+										<span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, каждый поисковый запрос тарифицируется.</mark></span>
+									</div>
+								</div>
+								<div class="form-group form-group-lg">
+									<label for="selectSearchCity" class="control-label col-sm-2">Город:</label>
+									<div class="col-sm-10">
+										<select name="searchCity" class="form-control" id="selectSearchCity" aria-describedby="helpSearchCity">
+											{% for city in cities %}
+												<option value="{{city.code}}">{{city.name}}</option>
+											{% endfor %}
+										</select>
+										<span id="helpSearchCity" class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button class="btn btn-primary btn-lg rounded" type="submit" id="searchButton">
+											<i class="fa fa-fw fa-search"></i> Поиск
+										</button> &nbsp; 
+										<button type="button" class="btn btn-default btn-lg rounded" disabled="disabled" id="qtybutton">
+											Осталось запросов: <span id="qty">0</span>
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div id="search-results" style="display:none;">
+							<h2>
+								Результаты поиска
+								<button class="btn btn-success rounded" data-toggle="tooltip" data-placement="right" title="Открыть форму поиска" id="showSearchFom"><i class="fa fa-search"></i></button>
+							</h2>
+							<p class="lead">По-умолчанию система в автоматическом режиме пытается определить уже имеющиеся компании в вашем справочнике, если находятся совпадения, то данные компании не отмечаются на добавление. Тем не менее желательно просмотреть весь список и по возможности снять отметки с тех компаний, которые могут уже находиться в вашем справочнике, однако, могут называться по другому.</p>
+							<blockquote>
+								По запросу «<strong id="searching"></strong>» найдено записей:
+								<strong id="resultTotal"></strong>
+							</blockquote>
+							<div class="table-responsive">
+								<table class="table table-bordered" id="tableResult">
+									<thead>
+										<tr>
+											<th class="text-center"><input type="checkbox" name="selectAll" id="selectAllID" checked></th>
+											<th>Название компании</th>
+											<th>Адрес</th>
+											<th>Кол-во филиалов</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							<nav class="text-center">
+								<ul class="pagination pagination-lg">
+									<li>
+										<a href="javascript:prevPage()" aria-label="Назад">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									<li>
+										<a href="javascript:nextPage()" aria-label="Далее">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+							<div class="well">
+								<button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
+								<button id="totalInport" class="btn btn-default btn-lg" disabled="disabled">Всего отмечено к импорту: <span>0</span></button>
+								<div class="progress" style="margin: 24px 0 0; display: none;">
+									<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+								</div>
+							</div>
+							<div class="well">
+								<h3>Настройка импорта</h3>
+								<form class="form-horizontal">
+									<div class="form-group">
+										<div class="col-sm-10">
+											<label>Импортируемые компании доступны всем:</label>
+											<p class="help-block">Есть есть необходимость импортировать компании только персонально для себя, чтобы никто, кроме вас не смог бы видеть определенные компании, то отметьте переключать в положение «Нет».</p>
+										</div>
+										<div class="col-sm-2">
+											<div class="btn-group" data-toggle="buttons">
+												<label class="btn btn-primary active">
+													<input type="radio" name="OPENED" value="Y" autocomplete="off" checked> Да
+												</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="OPENED" value="N" autocomplete="off"> Нет
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-10">
+											<label>Импортируемые компании добавлять в живую ленту:</label>
+											<p class="help-block">Дополнительно Вам будет отправлено уведомление в живую ленту в CRM, а не та, которая на главной странице, помните это.</p>
+										</div>
+										<div class="col-sm-2">
+											<div class="btn-group" data-toggle="buttons">
+												<label class="btn btn-primary active">
+													<input type="radio" name="REGISTER_SONET_EVENT" value="Y" autocomplete="off" checked> Да
+												</label>
+												<label class="btn btn-primary">
+													<input type="radio" name="REGISTER_SONET_EVENT" value="N" autocomplete="off"> Нет
+												</label>
+											</div>
+											
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	{% if isAdmin %}
+		<form action="/b24-install/" method="post" id="configForm">
+			{% for name, value in request %}
+				<input type="hidden" name="{{name}}" value="{{value}}">
+			{% endfor %}
+			<button type="submit" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></button>
+		</form>
+	{% endif %}
+	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
+	{% include 'layout/scripts.twig' %}
+	<script type="text/javascript" src="/public/js/jquery.number.min.js"></script>
+</body>
+</html>
+{% endspaceless %}
+{% jshrink %}
+<script>
+// Объявляем переменные
+var page = 1;
+var searchText = '';
+var b24APIKey  = '';
+var b24CityID = 0;
+var tariff = '{{userData.tariff}}';
+var qty = '{{userData.qty}}';
+var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
+var totalChecked = 0;
+var totalFind = 0;
+var bx24userid = 1;
+
+// Инициализируем Битрикс24
+BX24.init(function() {
+	// Подключаем подсказки
+	$('[data-toggle="tooltip"]').tooltip();
+
+	// Показываем текущий тариф пользователя
+	// и остаток кол-ва запросов
+	b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
+	if (!tariff || !qty) 
+	{
+		$.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
+			console.log('QTY:',data.qty);
+			$('#tariff').text(data.tariff);
+			$('#qty').number(data.qty, 0, '.', ' ');
+		});
+	} 
+	else 
+	{
+		if (b24APIKey == '{{apikey}}') 
+		{
+			$('#tariff').text(tariff);
+			$('#qty').number(qty, 0, '.', ' ');
+		}
+	}
+
+	// Меняем приветствие в зависимости от времени суток
+	BX24.callMethod('user.current', {}, function(res) {
+		d = new Date();
+		h = d.getHours();
+		g = $('#greeting');
+		bx24userid = res.data().ID;
+		if (h >= 5 && h < 12) {
+			g.text('Доброе утро, ' + res.data().NAME + '!');
+		} else {
+			if (h >= 12 && h < 18) {
+				g.text('Добрый день, ' + res.data().NAME + '!');
+			} else {
+				if (h >= 18 && h < 24) {
+					g.text('Добрый вечер, ' + res.data().NAME + '!');
+				} else {
+					if (h >= 0 && h < 5) {
+						g.text('Доброй ночи, ' + res.data().NAME + '!');
+					}
+				}
+			}
+		}
+	});
+
+	// Выставляем город по-умолчанию из
+	// опций приложения, чтобы сразу можно было искать
+	b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+	if (b24CityID) {
+		$('#selectSearchCity').val(b24CityID);
+	}
+
+	// Определяем как называть кнопку поиска
+	// в зависимости от введенного текста поиска
+	$('#inputSearchText').keyup(function() {
+		if (searchText) {
+			if (searchText != $(this).val()) {
+				$('#searchButton').html('<i class="fa fa-fw fa-search"></i> Поиск');
+			} else {
+				$('#searchButton').html(searchButtonHTML);
+			}
+		}
+	});
+
+	// Добавляем возможно одновременно выделять 
+	// или снимать выделения со всех найденных
+	// фирм в списке таблицы результатов
+	$('#selectAllID').click(function() {
+		var checkedStatus = this.checked;
+		if (!checkedStatus) {
+			totalChecked = 0;
+		} else {
+			if (totalFind > 50) {
+				totalChecked = 50;
+			} else {
+				totalChecked = totalFind;
+			}
+		}
+		$('#totalInport').find('span').text(totalChecked);
+		$('#tableResult tbody tr').find('td:first :checkbox').each(function() {
+			$(this).prop('checked', checkedStatus);
+		});
+	});
+
+	// Запускаем по клику импорт выбранных компаний в справочник CRM
+	$('#startImport').click(function() {
+		if (qty < totalChecked)
+			return;
+		if (totalChecked > 0) {
+			var importCompanyID = '';
+			var importCompanyHash = '';
+			var opened = $('input[name="OPENED"]:checked').val();
+			var lm = $('input[name="REGISTER_SONET_EVENT"]:checked').val();
+			var importData = {
+				importAPI: b24APIKey,
+				importDomain: '{{request.DOMAIN}}'
+			}
+			var progressIncrement = Math.floor(100 / totalChecked);
+			var totalProgress = 0;
+			$('.progress').slideDown('fast', function() {
+				BX24.fitWindow();
+			}).children('.progress-bar').addClass('progress-bar-striped active').css('width', '0%').text('0%');
+			for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
+				if ($('#company'+i).is(':checked')) {
+					importCompanyID = $('#company'+i).attr('name');
+					importCompanyHash = $('#company'+i).attr('value');
+					importData.importCompanyID = importCompanyID;
+					importData.importCompanyHash = importCompanyHash;
+					$.post('/importCompany/', importData, function(data) {
+						// Проверка существования вида деятельности в справочнике
+						// и операции проверки существования, добавления и обновления 
+						// справочника компаний
+						BX24.callMethod(
+							"crm.status.list",
+							{
+								filter: { 
+									"ENTITY_ID": "INDUSTRY", 
+									"STATUS_ID": data.industry.code,
+									"NAME": data.industry.name
+								}
+							},
+							function (result_sl)
+							{
+								if (result_sl.data().hasOwnProperty('0')) 
+								{
+									// Проверка существования компании, добавление или обновление
+									// добавляемой компании в зависимости от условий
+									BX24.callMethod(
+										"crm.company.list",
+										{
+											filter: { 
+												"TITLE": data.name, 
+												"ADDRESS": data.address,
+												"ADDRESS_CITY": data.city_name
+											},
+											select: [ "ID" ]
+										}, 
+										function (result_cl)
+										{
+											if (result_cl.data().length) 
+											{
+												// Обновление уже существующей компании:
+												// обновляем только доп. информацию об офисе
+												// компании или этаже, сферу деятельности, в
+												// случае изменения основного, обновляем видимость
+												// компании для других и делаем переназначение 
+												// принадлежности компании к текущему пользователю,
+												// также обновляем массив контактных данных 
+												// (телефон, эл. почта и т.п.). 
+												// Выставляем правильную валюту и если надо,
+												// отмечаем данное событие в ленте CRM.
+												BX24.callMethod(
+													"crm.company.update",
+													{
+														id: result_cl.data()['ID'],
+														fields: {
+															"ADDRESS_2": data.address_2,
+															"INDUSTRY": data.industry.code,
+															"OPENED": opened,
+															"ASSIGNED_BY_ID": bx24userid,
+															"PHONE": data.phone,
+															"EMAIL": data.email,
+															"WEB": data.web,
+															"IM": data.im,
+															"CURRENCY_ID": data.currency
+														},
+														params: { "REGISTER_SONET_EVENT": lm }
+													},
+													function() 
+													{
+														$('#company'+i).prop('checked', 0);
+														totalChecked--;
+														$('#totalInport').find('span').text(totalChecked);
+														$('.progress-bar').css('width', function (index, value) {
+															var fWidth = $('.progress').width();
+															totalProgress += progressIncrement;
+															return fWidth / (totalChecked + 1);
+														}).text(totalProgress+'%');
+														if (totalChecked == 0) 
+														{
+															$('.progress-bar').removeClass('progress-bar-striped active').css('width', '100%').text('100%');
+															$('.progress').delay(5000).slideUp('slow');
+														}
+													}
+												);
+											} else {
+												// Добавляем новую компанию в справочник CRM
+												BX24.callMethod(
+													"crm.company.add",
+													{
+														fields:
+														{
+															"TITLE": data.name,
+															"COMPANY_TYPE": "PROSPECT",
+															"ADDRESS": data.address,
+															"ADDRESS_2": data.address_2,
+															"ADDRESS_CITY": data.city_name,
+															"ADDRESS_REGION": data.region,
+															"ADDRESS_POSTAL_CODE": data.postal_code,
+															"INDUSTRY": data.industry.code,
+															"OPENED": opened,
+															"COMMENTS": data.comments,
+															"ASSIGNED_BY_ID": bx24userid,
+															"CREATED_BY_ID": bx24userid,
+															"PHONE": data.phone,
+															"EMAIL": data.email,
+															"WEB": data.web,
+															"IM": data.im,
+															"CURRENCY_ID": data.currency
+														},
+														params: { "REGISTER_SONET_EVENT": lm }
+													},
+													function () 
+													{
+														$('#company'+i).prop('checked', 0);
+														totalChecked--;
+														$('#totalInport').find('span').text(totalChecked);
+														$('.progress-bar').css('width', function (index, value) {
+															var fWidth = $('.progress').width();
+															totalProgress += progressIncrement;
+															return fWidth / (totalChecked + 1);
+														}).text(totalProgress+'%');
+														if (totalChecked == 0) 
+														{
+															$('.progress-bar').removeClass('progress-bar-striped active').css('width', '100%').text('100%');
+															$('.progress').delay(5000).slideUp('slow');
+														}
+													}
+												);
+											}
+										}
+									);
+								} 
+								else 
+								{
+									// Добавление новой записи в справочник видов деятельности
+									// и затем добавление или обновление компании
+									BX24.callMethod(
+										"crm.status.add",
+										{
+											fields: {
+												"ENTITY_ID": "INDUSTRY",
+												"STATUS_ID": data.industry.code,
+												"NAME": data.industry.name
+											}
+										},
+										function() 
+										{
+											// Проверка существования компании, добавление 
+											// или обновление добавляемой компании 
+											// в зависимости от условий
+											BX24.callMethod(
+												"crm.company.list",
+												{
+													filter: { 
+														"TITLE": data.name, 
+														"ADDRESS": data.address,
+														"ADDRESS_CITY": data.city_name
+													},
+													select: [ "ID" ]
+												}, 
+												function (result_cl)
+												{
+													if (result_cl.data().length) 
+													{
+														// Обновление уже существующей компании:
+														// обновляем только доп. информацию об
+														// офисе компании или этаже, сферу
+														// деятельности, в случае изменения
+														// основного, обновляем видимость компании
+														// для других и делаем переназначение
+														// принадлежности компании к текущему
+														// пользователю, также обновляем массив
+														// контактных данных (телефон, эл. почта и
+														// т.п.). Выставляем правильную валюту и
+														// если надо, отмечаем данное событие в
+														// ленте CRM.
+														BX24.callMethod(
+															"crm.company.update",
+															{
+																id: result_cl.data()['ID'],
+																fields: {
+																	"ADDRESS_2": data.address_2,
+																	"INDUSTRY": data.industry.code,
+																	"OPENED": opened,
+																	"ASSIGNED_BY_ID": bx24userid,
+																	"CREATED_BY_ID": bx24userid,
+																	"PHONE": data.phone,
+																	"EMAIL": data.email,
+																	"WEB": data.web,
+																	"IM": data.im,
+																	"CURRENCY_ID": data.currency
+																},
+																params: { "REGISTER_SONET_EVENT": lm }
+															},
+															function() {
+																$('#company'+i).prop('checked', 0);
+																totalChecked--;
+																$('#totalInport').find('span').text(totalChecked);
+																$('.progress-bar').css('width', function (index, value) {
+																	var fWidth = $('.progress').width();
+																	totalProgress += progressIncrement;
+																	return fWidth / (totalChecked + 1);
+																}).text(totalProgress+'%');
+																if (totalChecked == 0) 
+																{
+																	$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
+																}
+															}
+														);
+													} 
+													else 
+													{
+														// Добавляем новую компанию в 
+														// справочник CRM
+														BX24.callMethod(
+															"crm.company.add",
+															{
+																fields:
+																{
+																	"TITLE": data.name,
+																	"COMPANY_TYPE": "PROSPECT",
+																	"ADDRESS": data.address,
+																	"ADDRESS_2": data.address_2,
+																	"ADDRESS_CITY": data.city_name,
+																	"ADDRESS_REGION": data.region,
+																	"ADDRESS_POSTAL_CODE": data.postal_code,
+																	"INDUSTRY": data.industry.code,
+																	"OPENED": opened,
+																	"COMMENTS": data.comments,
+																	"ASSIGNED_BY_ID": bx24userid,
+																	"CREATED_BY_ID": bx24userid,
+																	"PHONE": data.phone,
+																	"EMAIL": data.email,
+																	"WEB": data.web,
+																	"IM": data.im,
+																	"CURRENCY_ID": data.currency
+																},
+																params: { "REGISTER_SONET_EVENT": lm }
+															},
+															function () 
+															{
+																$('#company'+i).prop('checked', 0);
+																totalChecked--;
+																$('#totalInport').find('span').text(totalChecked);
+																$('.progress-bar').css('width', function (index, value) {
+																	var fWidth = $('.progress').width();
+																	totalProgress += progressIncrement;
+																	return fWidth / (totalChecked + 1);
+																}).text(totalProgress+'%');
+																if (totalChecked == 0) 
+																{
+																	$('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
+																}
+															}
+														);
+													}
+												}
+											);
+										}
+									);
+								}
+							}
+						);
+					}, 'json');
+				}
+			}
+		}
+	});
+
+	// Делаем возможность показать форму поиска
+	// и меняем название кнопки поиска
+	$('#showSearchFom').click(function() {
+		$('#search-options').slideToggle('fast');
+		$('#search-results').slideToggle('fast',function() {
+			var widthWraper = $('#wraper').width();
+			var heightWraper = $('#wraper').height();
+			BX24.resizeWindow(widthWraper, heightWraper);
+			searchButtonHTML = '<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска';
+			$('#searchButton').html(searchButtonHTML);
+		});
+	});
+
+	// Блокируем кнопку открытия конфигурации
+	// и заодно добавляем немного анимации
+	$('#configForm').submit(function() {
+		$(this).find('button').attr('disabled', 'disabled');
+		$(this).find('i.fa').addClass('fa-spin');
+	});
+
+	// Выполняем поиск предприятий по заданным критериям
+	$('#searchForm').submit(function(e) {
+		e.preventDefault();
+		qty = $('#qty').text();
+		if (qty == 0) {
+			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+				$(this).removeClass('animated tada');
+				alert('У вас кончились оплаченные запросы. Перейдите на сайт www.lead4crm.ru и пополните баланс любым удобным способом.');
+			});
+			return;
+		}
+		if ($('#inputSearchText').val() != '') {
+			if (searchText != $('#inputSearchText').val()) {
+				totalChecked = 0;
+				searchText = $('#inputSearchText').val();
+				b24CityID = $('#selectSearchCity').val();
+				$('#inputSearchText').attr('disabled', 'disabled');
+				$('#selectSearchCity').attr('disabled', 'disabled');
+				$('#configForm').find('button').attr('disabled', 'disabled');
+				searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
+				$('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
+				var formData = {
+					searchAPI: b24APIKey,
+					searchDomain: '{{request.DOMAIN}}',
+					searchText: searchText,
+					searchCity: b24CityID,
+					searchPage: page};
+				$.post('/getDataSearch/', formData, function(data) {
+					if (!data.error) {
+						console.log(data.error);
+						alert(data.message);
+					} else {
+						totalFind = data.total
+						$('#qty').number(data.qty, 0, '.', ' ');
+						$('#searching').text(searchText);
+						$('#resultTotal').text(data.total);
+						$('nav ul.pagination').find('li:last').removeClass('disabled');
+						$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
+						$('#tableResult tbody').find('tr').remove();
+						$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+						if (data.total > 50) {
+							var pageNum = 2;
+							for (var i = 50; i < data.total; i = i + 50) {
+								$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+								pageNum++;
+							}
+						} else {
+							$('nav ul.pagination').find('li:last').addClass('disabled');
+						}
+						if (data.result) {
+							data.result.forEach(function(entry, index) {
+								var cId = index + 1;
+								BX24.callMethod(
+									"crm.company.list",
+									{
+										filter: { "TITLE": entry.name, "ADDRESS": entry.address },
+										select: [ "ID" ]
+									},
+									function (result) {
+										if (result.data().length) {
+											$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+										} else {
+											totalChecked++;
+											$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+										}
+										$('#totalInport').find('span').text(totalChecked);
+										BX24.fitWindow();
+									});
+							});
+						}
+					}
+				}, 'json').done(function() {
+					$('#inputSearchText').removeAttr('disabled');
+					$('#selectSearchCity').removeAttr('disabled');
+					$('#configForm').find('button').removeAttr('disabled');
+					$('#searchButton').removeAttr('disabled');
+					$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+						.addClass('fa-search');
+					$('#search-options').slideToggle('fast');
+					$('#search-results').slideToggle('fast',function() {
+						BX24.fitWindow();
+					});
+				});
+			} else {
+				$('#search-options').slideToggle('fast');
+				$('#search-results').slideToggle('fast',function() {
+					BX24.fitWindow();
+				});
+			}
+		} else {
+			$('#inputSearchText').removeClass('animated pulse').addClass('animated pulse').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+				$(this).removeClass('animated pulse');
+			});
+		}
+	});
+});
+
+// Функция меняет итоговое кол-во импортируемых компаний
+// отображаемых пользователю для удобства
+function changeMark(id) {
+	var status = $('input[name="' + id + '"]:checked').length;
+	if (status)
+		totalChecked++;
+	else
+		totalChecked--;
+	$('#totalInport').find('span').text(totalChecked);
+}
+
+function gotoPage(pageTo) {
+	var formData = {
+		searchAPI: b24APIKey,
+		searchDomain: '{{request.DOMAIN}}',
+		searchText: searchText,
+		searchCity: b24CityID,
+		searchPage: pageTo};
+	$('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
+	$.post('/getDataSearch/', formData, function(data) {
+		totalFind = data.total
+		$('#qty').number(data.qty, 0, '.', ' ');
+		$('#searching').text(searchText);
+		$('#resultTotal').text(data.total);
+		$('nav ul.pagination').find('li').removeClass('disabled');
+		$('nav ul.pagination').find('li:not(:first):not(:last)').remove();
+		$('#tableResult tbody').find('tr').remove();
+		if (pageTo == 1) {
+			$('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+			if (totalFind > 50) {
+				var pageNum = 2;
+				for (var i = 50; i < totalFind; i = i + 50) {
+					$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+					pageNum++;
+				}
+			} else
+				$('nav ul.pagination').find('li:last').addClass('disabled');
+		} else {
+			if (totalFind > 50) {
+				var pageNum = 1;
+				for (var i = 0; i < totalFind; i = i + 50) {
+					if (pageNum == pageTo) {
+						$('nav ul.pagination').find('li:last').before('<li class="active" id="page'+pageNum+'"><span>'+pageNum+' <span class="sr-only">(текущая)</span></span></li>');
+					} else {
+						$('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+					}
+					pageNum++;
+				}
+				if (Math.ceil(totalFind / 50) == pageTo)
+					$('nav ul.pagination').find('li:last').addClass('disabled');
+			} else
+				$('nav ul.pagination').find('li:last').addClass('disabled');
+		}
+		totalChecked = 0;
+		data.result.forEach(function(entry) {
+			BX24.callMethod(
+				"crm.company.list",
+				{
+					filter: { "TITLE": entry.name, "ADDRESS": entry.address },
+					select: [ "ID" ]
+				},
+				function (result) {
+					if (result.data().length) {
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+					} else {
+						totalChecked++;
+						$('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+					}
+					$('#totalInport').find('span').text(totalChecked);
+					BX24.fitWindow();
+				});
+		});
+	}, 'json').done(function() {
+		$('#inputSearchText').removeAttr('disabled');
+		$('#selectSearchCity').removeAttr('disabled');
+		$('#configForm').find('button').removeAttr('disabled');
+		$('#searchButton').removeAttr('disabled');
+		$('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+			.addClass('fa-search');
+		var widthWraper = $('#wraper').width();
+		var heightWraper = $('#wraper').height();
+		BX24.resizeWindow(1, 1, function() {
+			BX24.resizeWindow(widthWraper, heightWraper, function() {
+				BX24.fitWindow();
+			});
+		});
+	});
+}
+
+// Изменяем размер фрейма под текущие контент
+BX24.fitWindow();
+</script>
+{% endjshrink %}
+{% endif %}

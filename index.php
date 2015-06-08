@@ -105,6 +105,24 @@ if ($cmd[0]) {
 					'userData' => getUserData('array'));
 			}
 
+		case 'b24-install-dev':
+		case 'b24-index-dev':
+			if ($auth = $_REQUEST['AUTH_ID']) {
+				$domain = ($_REQUEST['PROTOCOL'] == 0 ? 'http' : 'https') . '://'. $_REQUEST['DOMAIN'];
+				$isAdmin = json_decode(file_get_contents($domain.'/rest/user.admin.json?auth='.$auth));
+				$res = file_get_contents($domain.'/rest/user.current.json?auth='.$auth);
+				$arRes = json_decode($res, true);
+				$cOptions = array(
+					'isBX24User' => true,
+					'request' => $_REQUEST,
+					'isAdmin' => $isAdmin->result,
+					'installURL' => '/b24-install-dev/' . $_SERVER['QUERY_STRING'],
+					'res' => $arRes,
+					'apikey' => $_SESSION['apikey'],
+					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
+					'userData' => getUserData('array'));
+			}
+
 		case $cmd[0]:
 			switch ($cmd[0]) {
 				case 'about-project': $title = 'О проекте'; break;
