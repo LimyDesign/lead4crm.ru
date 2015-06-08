@@ -4,6 +4,7 @@
 <html>
 <head>
 	{% include 'layout/header.twig' %}
+	<link rel="stylesheet" href="/public/css/bootstrap-select.min.css">
 </head>
 <body>
 	<div id="wraper">
@@ -21,7 +22,7 @@
 							</div>
 							<div class="form-group">
 								<label for="selectCityName">Выберите ваш город</label>
-								<select name="city" class="form-control input-lg" id="selectCityName" aria-describedby="helpCityName">
+								<select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="input-lg">
 									<option value="0">[ выберите ваш город ]</option>
 									{% for city in cities %}
 										{% if city.selected %}
@@ -44,12 +45,15 @@
 	</div>
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
-	<script src="/public/js/bootstrap-select.js"></script>
+	<script src="/public/js/bootstrap-select.min.js"></script>
 </body>
 </html>
 {% endspaceless %}
 {% jshrink %}
 <script>
+// Делаем удобный выбор городов, иначе полная лабуда
+$('.selectpicker').selectpicker();
+
 // Инициализируем Битрикс24
 BX24.init(function() {
 	// Меняем приветствие в зависимости от времени суток
@@ -73,9 +77,6 @@ BX24.init(function() {
 			}
 		}
 	});
-
-	// Делаем удобный выбор городов, иначе полная лабуда
-	$('.selectpicker').selectpicker();
 
 	// Меняем заголов в Битрикс24
 	BX24.setTitle('Настройка приложения «Генератор лидов»');
