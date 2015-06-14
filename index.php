@@ -192,7 +192,7 @@ function getCounties($userCity) {
 			pg_free_result($result2);
 			$countries[$row['id']]['cities'] = $cities;
 		}
-		pg_free_result($result)
+		pg_free_result($result);
 		pg_close($db);
 	}
 	return $countries;
