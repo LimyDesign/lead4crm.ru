@@ -22,14 +22,21 @@
 							</div>
 							<div class="form-group">
 								<label for="selectCityName">Выберите ваш город</label>
-								<select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="input-lg">
-									<option value="0">[ выберите ваш город ]</option>
-									{% for city in cities %}
-										{% if city.selected %}
-											<option value="{{city.code}}" selected>{{city.name}}</option>
-										{% else %}
-											<option value="{{city.code}}">{{city.name}}</option>
-										{% endif %}
+								<select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="input-lg" title="[ выберите ваш город ]">
+									{% for country in countries %}
+										<optgroup label="{{country.name}}">
+											{% for city in country.cities %}
+												{% if city.selected %}
+													<option value="{{city.code}}" data-subtext="{{city.children}}" selected>
+														{{city.name}}
+													</option>
+												{% else %}
+													<option value="{{city.code}}" data-subtext="{{city.children}}">
+														{{city.name}}
+													</option>
+												{% endif %}
+											{% endfor %}
+										</optgroup>
 									{% endfor %}
 								</select>
 								<span id="helpCityname" class="help-block">Выберите город в котором работает ваша компания. По-умолчанию выбирается тот город, который указан в вашей карточке, если конечно данное поле заполнено правильно и ваш город есть в списке поддерживаемых городов.</span>

@@ -102,6 +102,7 @@ if ($cmd[0]) {
 					'res' => $arRes,
 					'apikey' => $_SESSION['apikey'],
 					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
+					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
 
@@ -120,6 +121,7 @@ if ($cmd[0]) {
 					'res' => $arRes,
 					'apikey' => $_SESSION['apikey'],
 					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
+					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
 
@@ -159,6 +161,41 @@ if ($cmd[0]) {
 		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
+}
+
+function getCounties($userCity) {
+	global $conf;
+	$countries = array();
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = 'selecy id, name from country order by sort asc, name asc';
+		$result = pg_query($query);
+		while ($row = pg_fetch_assoc($result)) {
+			$countries[$row['id']]['id'] = $row['id'];
+			$countries[$row['id']]['name'] = $row['name'];
+
+			$query2 = "select id, name, parent_id from cities where country_id = {$row['id']} order by name asc";
+			$result2 = pg_query($query2);
+			$cities = array();
+			while ($row2 = pg_fetch_assoc($result2)) {
+				if ($row2['parent_id']) {
+					$cities[$row2['parent_id']]['children'] = $cities[$row2['parent_id']]['children'] ? $cities[$row2['parent_id']]['children'] . ', ' . $row2['name'] : $row2['name'];
+					if ($userCity == $row2['name'])
+						$cities[$row2['parent_id']]['selected'] = 1;
+				} else {
+					$cities[$row2['id']]['code'] = $row2['id'];
+					$cities[$row2['id']]['name'] = $row2['name'];
+					if ($userCity == $row2['name'])
+						$cities[$row2['id']]['selected'] = 1;
+				}
+			}
+			pg_free_result($result2);
+			$countries[$row['id']]['cities'] = $cities;
+		}
+		pg_free_result($result)
+		pg_close($db);
+	}
+	return $countries;
 }
 
 function getCities($userCity) {
