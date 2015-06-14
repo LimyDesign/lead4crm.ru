@@ -163,7 +163,7 @@ if ($cmd[0]) {
 	echo $twig->render('index.twig', $options);
 }
 
-function getCounties($userCity) {
+function getCountries($userCity) {
 	global $conf;
 	$countries = array();
 	if ($conf->db->type == 'postgres') {
