@@ -869,7 +869,7 @@
         // Get correct width if element is hidden
         var $selectClone = this.$menu.parent().clone().appendTo('body'),
             $selectClone2 = this.options.container ? this.$newElement.clone().appendTo('body') : $selectClone,
-            ulWidth = $selectClone.children('.dropdown-menu').outerWidth(),
+            // ulWidth = $selectClone.children('.dropdown-menu').outerWidth(),
             btnWidth = $selectClone2.css('width', 'auto').children('button').outerWidth();
 
         $selectClone.remove();
