@@ -167,7 +167,7 @@ function getCountries($userCity) {
 	$countries = array();
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = 'selecy id, name from country order by sort asc, name asc';
+		$query = 'select id, name from country order by sort asc, name asc';
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
 			$countries[$row['id']]['id'] = $row['id'];
