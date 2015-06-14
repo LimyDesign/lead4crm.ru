@@ -87,7 +87,7 @@
   width: 100%;
 }
 .bootstrap-select.btn-group .dropdown-menu {
-  min-width: 100%;
+  /*min-width: 100%;*/
   z-index: 1035;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;

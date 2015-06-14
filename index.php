@@ -178,7 +178,7 @@ function getCountries($userCity) {
 			$cities = array();
 			while ($row2 = pg_fetch_assoc($result2)) {
 				if ($row2['parent_id']) {
-					$cities[$row2['parent_id']]['children'] = $cities[$row2['parent_id']]['children'] ? $cities[$row2['parent_id']]['children'] . ',<br>' . $row2['name'] : $row2['name'];
+					$cities[$row2['parent_id']]['children'] = $cities[$row2['parent_id']]['children'] ? $cities[$row2['parent_id']]['children'] . ', ' . $row2['name'] : $row2['name'];
 					if ($userCity == $row2['name'])
 						$cities[$row2['parent_id']]['selected'] = 1;
 				} else {
