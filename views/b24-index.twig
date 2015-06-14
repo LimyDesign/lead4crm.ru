@@ -5,12 +5,16 @@
 <head>
 	{% include 'layout/header.twig' %}
 	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css">
+	<link rel="stylesheet" href="/public/css/bootstrap-select.min.css">
 	<style>
-	.btn-config {
-		position: fixed;
-		top: 0;
-		right: 0;
-	}
+		.btn-config {
+			position: fixed;
+			top: 0;
+			right: 0;
+		}
+		.dropdown-menu > li > a {
+			white-space: normal;
+		}
 	</style>
 </head>
 <body>
@@ -34,9 +38,21 @@
 								<div class="form-group form-group-lg">
 									<label for="selectSearchCity" class="control-label col-sm-2">Город:</label>
 									<div class="col-sm-10">
-										<select name="searchCity" class="form-control" id="selectSearchCity" aria-describedby="helpSearchCity">
-											{% for city in cities %}
-												<option value="{{city.code}}">{{city.name}}</option>
+										<select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="input-lg" title="[ выберите ваш город ]">
+											{% for country in countries %}
+												<optgroup label="{{country.name}}">
+													{% for city in country.cities %}
+														{% if city.selected %}
+															<option value="{{city.code}}" data-subtext="{{city.children}}" selected>
+																{{city.name}}
+															</option>
+														{% else %}
+															<option value="{{city.code}}" data-subtext="{{city.children}}">
+																{{city.name}}
+															</option>
+														{% endif %}
+													{% endfor %}
+												</optgroup>
 											{% endfor %}
 										</select>
 										<span id="helpSearchCity" class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</span>
@@ -154,6 +170,7 @@
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
 	<script type="text/javascript" src="/public/js/jquery.number.min.js"></script>
+	<script src="/public/js/bootstrap-select.min.js"></script>
 </body>
 </html>
 {% endspaceless %}
@@ -170,6 +187,9 @@ var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
 var totalChecked = 0;
 var totalFind = 0;
 var bx24userid = 1;
+
+// Делаем удобный выбор городов, иначе полная лабуда
+$('.selectpicker').selectpicker();
 
 // Инициализируем Битрикс24
 BX24.init(function() {
