@@ -239,7 +239,7 @@ function arrayOAuthLoginURL() {
 		'client_id' => $conf->provider->odnoklassniki->CLIENT_ID,
 		'scope' => 'GET_EMAIL',
 		'response_type' => 'code',
-		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/odnoklassniki/',
+		'redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/login/odnoklassniki/',
 		'state' => $state));
 	$fblogin = http_build_query(array(
 		'client_id' => $conf->provider->facebook->CLIENT_ID,
@@ -249,7 +249,7 @@ function arrayOAuthLoginURL() {
 	$gplogin = http_build_query(array(
 		'client_id' => $conf->provider->{"google-plus"}->CLIENT_ID,
 		'scope' => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/google-plus/',
+		'redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/login/google-plus/',
 		'response_type' => 'code',
 		'state' => $state,
 		'access_type' => 'online',
@@ -259,7 +259,7 @@ function arrayOAuthLoginURL() {
 	$mrlogin = http_build_query(array(
 		'client_id' => $conf->provider->mailru->CLIENT_ID,
 		'response_type' => 'code',
-		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/mailru/'));
+		'redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/login/mailru/'));
 	$yalogin = http_build_query(array(
 		'client_id' => $conf->provider->yandex->CLIENT_ID,
 		'response_type' => 'code',
