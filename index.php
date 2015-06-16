@@ -82,6 +82,7 @@ if ($cmd[0]) {
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
+				'userid' => $_SESSION['userid'],
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
