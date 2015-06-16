@@ -825,7 +825,7 @@ function getUserTariffList() {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select * from tariff where domain = 'lead4crm.ru' and sum <= (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']})";
+		$query = "select * from tariff where domain = 'lead4crm.ru' and sum <= (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) order by sum asc";
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
 			$tariffs[$row['id']]['name'] = $row['name'];
