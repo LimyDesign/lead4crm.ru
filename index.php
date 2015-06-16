@@ -320,7 +320,7 @@ function getDataLogin($provider) {
 
 function fblogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/facebook/';
+	$redirect_uri = 'https://'.$_SERVER['SERVER_NAME'].'/login/facebook/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -337,7 +337,7 @@ function fblogin() {
 
 function vklogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/vkontakte/';
+	$redirect_uri = 'https://'.$_SERVER['SERVER_NAME'].'/login/vkontakte/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -352,7 +352,7 @@ function vklogin() {
 
 function gplogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/google-plus/';
+	$redirect_uri = 'https://'.$_SERVER['SERVER_NAME'].'/login/google-plus/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data =  http_build_query(array(
@@ -373,7 +373,7 @@ function gplogin() {
 
 function oklogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/odnoklassniki/';
+	$redirect_uri = 'https://'.$_SERVER['SERVER_NAME'].'/login/odnoklassniki/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
@@ -405,7 +405,7 @@ function oklogin() {
 
 function mrlogin() {
 	global $conf;
-	$redirect_uri = 'http://'.$_SERVER['SERVER_NAME'].'/login/mailru/';
+	$redirect_uri = 'https://'.$_SERVER['SERVER_NAME'].'/login/mailru/';
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data = http_build_query(array(
