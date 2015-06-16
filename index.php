@@ -270,7 +270,7 @@ function arrayOAuthLoginURL() {
 		'fblogin' => 'https://www.facebook.com/dialog/oauth?' . $fblogin,
 		'gplogin' => 'https://accounts.google.com/o/oauth2/auth?' . $gplogin,
 		'mrlogin' => 'https://connect.mail.ru/oauth/authorize?' . $mrlogin,
-		'yalogin' => 'https://oauth.yandex.ru/authorize?' . $yandex);
+		'yalogin' => 'https://oauth.yandex.ru/authorize?' . $yalogin);
 }
 
 function arrayMenuUrl() {
