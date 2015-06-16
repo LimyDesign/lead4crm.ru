@@ -230,7 +230,7 @@ function arrayOAuthLoginURL() {
 	$vklogin = http_build_query(array(
 		'client_id' => $conf->provider->vkontakte->CLIENT_ID,
 		'scope' => 'email',
-		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/vkontakte/',
+		'redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/login/vkontakte/',
 		'response_type' => 'code',
 		'v' => '5.29',
 		'state' => $state,
@@ -244,7 +244,7 @@ function arrayOAuthLoginURL() {
 	$fblogin = http_build_query(array(
 		'client_id' => $conf->provider->facebook->CLIENT_ID,
 		'scope' => 'email',
-		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/facebook/',
+		'redirect_uri' => 'https://' . $_SERVER['SERVER_NAME'] . '/login/facebook/',
 		'response_type' => 'code'));
 	$gplogin = http_build_query(array(
 		'client_id' => $conf->provider->{"google-plus"}->CLIENT_ID,
