@@ -247,7 +247,7 @@ function arrayOAuthLoginURL() {
 		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/facebook/',
 		'response_type' => 'code'));
 	$gplogin = http_build_query(array(
-		'client_id' => $conf->provider->{google-plus}->CLIENT_ID,
+		'client_id' => $conf->provider->{"google-plus"}->CLIENT_ID,
 		'scope' => 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
 		'redirect_uri' => 'http://' . $_SERVER['SERVER_NAME'] . '/login/google-plus/',
 		'response_type' => 'code',
@@ -356,8 +356,8 @@ function gplogin() {
 	$curl = curl_init();
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	$data =  http_build_query(array(
-		'client_id' => $conf->provider->{google-plus}->CLIENT_ID,
-		'client_secret' => $conf->provider->{google-plus}->CLIENT_SECRET,
+		'client_id' => $conf->provider->{"google-plus"}->CLIENT_ID,
+		'client_secret' => $conf->provider->{"google-plus"}->CLIENT_SECRET,
 		'code' => $_GET['code'],
 		'redirect_uri' => $redirect_uri,
 		'grant_type' => 'authorization_code'));
