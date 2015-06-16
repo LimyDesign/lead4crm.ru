@@ -275,12 +275,12 @@ function arrayOAuthLoginURL() {
 
 function arrayMenuUrl() {
 	return array(
-		'mainpage_url' => 'http://' . $_SERVER['SERVER_NAME'],
-		'aboutproject_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/about-project/',
-		'aboutours_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/about-us/',
-		'prices_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/price/',
-		'support_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/support/',
-		'cabinet_url' => 'http://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
+		'mainpage_url' => 'https://' . $_SERVER['SERVER_NAME'],
+		'aboutproject_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/about-project/',
+		'aboutours_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/about-us/',
+		'prices_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/price/',
+		'support_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/support/',
+		'cabinet_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
 		);
 }
 
