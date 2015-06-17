@@ -281,6 +281,7 @@ function arrayMenuUrl() {
 		'aboutours_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/about-us/',
 		'prices_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/price/',
 		'support_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/support/',
+		'blog_url' => 'http://blog.lead4crm.ru/',
 		'cabinet_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
 		);
 }
