@@ -303,7 +303,9 @@ BX24.init(function() {
 				backdrop: 'static',
 				show: true
 			});
-			$modalMessage.modal('handleUpdate');
+			$modalMessage.on('shown.bs.modal', function() {
+				$(this).modal('handleUpdate');
+			});
 			return;
 		}
 		if (totalChecked > 0) {
