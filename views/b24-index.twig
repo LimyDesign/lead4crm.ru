@@ -167,6 +167,21 @@
 			<button type="submit" class="btn btn-lg btn-warning rounded btn-config" data-toggle="tooltip" data-placement="left" title="Настройка приложения"><i class="fa fa-cog"></i></button>
 		</form>
 	{% endif %}
+	<div class="modal fade" id="userMessage" tabindex="-1" role="dialog" aria-labelledby="userMessageTitle">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="userMessageTitle"></h4>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript" src="//api.bitrix24.com/api/v1/"></script>
 	{% include 'layout/scripts.twig' %}
 	<script type="text/javascript" src="/public/js/jquery.number.min.js"></script>
@@ -280,8 +295,16 @@ BX24.init(function() {
 
 	// Запускаем по клику импорт выбранных компаний в справочник CRM
 	$('#startImport').click(function() {
-		if (qty < totalChecked)
+		if (qty < totalChecked) {
+			var $modalMessage = $('#userMessage');
+			$modalMessage.find('#userMessageTitle').text('Превышение лимита');
+			$modalMessage.find('.modal-body').html('<p>На текущий момент вы можете импортировать только <b>'+qty+'</b> '+decOfNum(qty, ['компанию', 'компании', 'компаний'])+'. Однако вы выбрали <b>'+totalChecked+'</b> '+decOfNum(qty, ['компанию', 'компании', 'компаний'])+'</p><p>Либо уменьшите кол-во импортируемых компаний, либо пополните баланс в личном кабинете на сайте: <a href="https://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a></p>');
+			$modalMessage.modal({
+				backdrop: false,
+				show: true
+			});
 			return;
+		}
 		if (totalChecked > 0) {
 			var importCompanyID = '';
 			var importCompanyHash = '';
@@ -774,6 +797,13 @@ function gotoPage(pageTo) {
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
+
+// Функция числительных склонений
+function decOfNum(number, titles)
+{
+	cases = [2, 0, 1, 1, 1, 2];
+	return titles[(number%100 > 4 && number%100 < 20) ? 2 : cases[(number%10 < 5) ? number%10 : 5]];
+}
 </script>
 {% endjshrink %}
 {% endif %}
