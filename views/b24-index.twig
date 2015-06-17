@@ -299,7 +299,7 @@ BX24.init(function() {
 			var $modalMessage = $('#userMessage');
 			$modalMessage.find('#userMessageTitle').text('Превышение лимита');
 			$modalMessage.find('.modal-body').html('<p>На текущий момент вы можете импортировать только <b>'+qty+'</b> '+decOfNum(qty, ['компанию', 'компании', 'компаний'])+'. Однако вы выбрали <b>'+totalChecked+'</b> '+decOfNum(qty, ['компанию', 'компании', 'компаний'])+'</p><p>Либо уменьшите кол-во импортируемых компаний, либо пополните баланс в личном кабинете на сайте: <a href="https://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a></p>');
-			$('body,html', window.parent).animate({scrollTop:0}, 'fast');
+			$('body,html').animate({scrollTop:0}, 'fast');
 			$modalMessage.modal({
 				backdrop: 'static',
 				show: true
