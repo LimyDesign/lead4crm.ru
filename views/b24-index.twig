@@ -616,7 +616,8 @@ BX24.init(function() {
 						console.log(data.error);
 						alert(data.message);
 					} else {
-						console.log('QTY after search:',data.qty);
+						console.log('Form data:',formData);
+						console.log('QTY after search:', data.qty);
 						totalFind = data.total;
 						$('#qty').number(data.qty, 0, '.', ' ');
 						$('#searching').text(searchText);
