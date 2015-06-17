@@ -303,9 +303,7 @@ BX24.init(function() {
 				backdrop: 'static',
 				show: true
 			});
-			$modalMessage.on('shown.bs.modal', function() {
-				$(this).modal('handleUpdate');
-			});
+			$('body,html', window.parent).animate({scrollTop:0}, 'fast');
 			return;
 		}
 		if (totalChecked > 0) {
