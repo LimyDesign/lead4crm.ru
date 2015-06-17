@@ -616,7 +616,13 @@ BX24.init(function() {
 		if (qty == 0) {
 			$('#qtybutton').removeClass('animated tada').addClass('animated tada').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
 				$(this).removeClass('animated tada');
-				alert('У вас кончились оплаченные запросы. Перейдите на сайт www.lead4crm.ru и пополните баланс любым удобным способом.');
+				var $modalMessage = $('#userMessage');
+				$modalMessage.find('#userMessageTitle').text('Отсутствуют запросы');
+				$modalMessage.find('.modal-body').html('<p>Сейчас вы не можете пользоваться поиском, до момента пополнения баланса. Пополните баланс в личном кабинете на сайте: <a href="https://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>. Также не забудьте выбрать подходящий тарифный план, без которого вам не будет засчитано ни одного запроса.</p>');
+				$modalMessage.modal({
+					backdrop: 'static',
+					show: true
+				});
 			});
 			return;
 		}
@@ -641,8 +647,6 @@ BX24.init(function() {
 						console.log(data.error);
 						alert(data.message);
 					} else {
-						console.log('Form data:',formData);
-						console.log('QTY after search:', data.qty);
 						totalFind = data.total;
 						$('#qty').number(data.qty, 0, '.', ' ');
 						$('#searching').text(searchText);
