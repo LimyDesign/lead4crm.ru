@@ -599,7 +599,9 @@ BX24.init(function() {
 			var heightWraper = $('#wraper').height();
 			searchButtonHTML = '<i class="fa fa-fw fa-caret-square-o-down"></i> Открыть результаты поиска';
 			$('#searchButton').html(searchButtonHTML);
-			BX24.resizeWindow(widthWraper, heightWraper);
+			BX24.resizeWindow(widthWraper, heightWraper, function() {
+				BX24.fitWindow();
+			});
 		});
 	});
 
