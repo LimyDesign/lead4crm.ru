@@ -98,6 +98,7 @@ BX24.init(function() {
 	if (b24APIKey && b24CityID) {
 		$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
 		$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
+		$('#bxAppOptionsForm').find('select[name="city"]').selectpicker('render');
 	}
 
 	// Сохраняем данные формы в Битрикс24

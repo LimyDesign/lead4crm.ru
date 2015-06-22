@@ -260,6 +260,7 @@ BX24.init(function() {
 	b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
 	if (b24CityID) {
 		$('#selectSearchCity').val(b24CityID);
+		$('#selectSearchCity').selectpicker('render');
 	}
 
 	// Определяем как называть кнопку поиска

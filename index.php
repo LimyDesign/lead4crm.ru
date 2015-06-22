@@ -103,7 +103,7 @@ if ($cmd[0]) {
 					'res' => $arRes,
 					'apikey' => $_SESSION['apikey'],
 					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
-					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
+					'countries' => getCountries(),
 					'userData' => getUserData('array'));
 			}
 
