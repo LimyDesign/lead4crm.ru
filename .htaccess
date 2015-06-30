@@ -11,3 +11,9 @@ RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
+
+<Files ~ "\.json">
+	Order deny,allow
+	Deny from all
+	Allow from 127.0.0.1
+</Files>
