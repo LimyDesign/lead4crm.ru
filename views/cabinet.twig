@@ -296,14 +296,16 @@
 			selectText('apikey');
 		});
 
-		$('body').on('click','.option li',function(e) {
-			e.preventDefault();
+		$('body').on('click','.option li',function() {
 			var i = $(this).parents('.select').attr('id');
 			var v = $(this).children().html();
 			var o = $(this).attr('id');
 			$('#'+i+' .selected').attr('id',o);
 			$('input[name="paymentType"]').val(o);
 			$('#'+i+' .selected').html(v);
+		});
+		$('body').on('click', '.option li a', function(e) {
+			e.preventDefault();
 		});
 
 		$('body').on('click', '#newapikey', function() {
