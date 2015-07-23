@@ -296,7 +296,8 @@
 			selectText('apikey');
 		});
 
-		$('body').on('click','.option li',function() {
+		$('body').on('click','.option li',function(e) {
+			e.preventDefault();
 			var i = $(this).parents('.select').attr('id');
 			var v = $(this).children().html();
 			var o = $(this).attr('id');
