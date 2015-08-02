@@ -163,6 +163,7 @@ function downloadRubrics() {
     var pointer = setInterval(function() {
       if (percent > 100) {
         clearInterval(pointer);
+        $('.progress-bar').removeClass('progress-bar-striped');
         setTimeout(function() {
           $('.progress').slideUp('fast');
         }, 1000);
