@@ -27,7 +27,7 @@
               </div>
               <div class="form-group">
                 <label for="selectCityName">Выберите ваш город</label>
-                <select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="input-lg" title="[ выберите ваш город ]">
+                <select name="city" class="selectpicker" id="selectCityName" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите ваш город ]">
                   {% for country in countries %}
                     <optgroup label="{{country.name}}">
                       {% for city in country.cities %}
@@ -49,7 +49,7 @@
               <button class="btn btn-primary btn-lg rounded" type="submit">
                 <i class="fa fa-floppy-o fa-fw"></i> Сохранить
               </button>&nbsp;&nbsp;&nbsp;
-              <button class="btn btn-default btn-lg rounded" id="downloadRubrics">
+              <button class="btn btn-link btn-lg rounded" id="downloadRubrics">
                 <i class="fa fa-cloud-download fa-fw"></i> Загрузить рубрикатор
               </button>
             </form>
