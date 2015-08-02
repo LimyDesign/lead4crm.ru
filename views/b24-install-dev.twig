@@ -158,6 +158,7 @@ BX24.fitWindow();
 // Функция загрузки сфер деятельности в Битрикс24
 function downloadRubrics() {
   $('.progress').slideDown('fast', function() {
+    BX24.fitWindow();
     var percent = 0;
     var pointer = setInterval(function() {
       if (percent > 100) {
