@@ -157,7 +157,17 @@ BX24.fitWindow();
 
 // Функция загрузки сфер деятельности в Битрикс24
 function downloadRubrics() {
-
+  $('.progress').slideDown('fast', function() {
+    var percent = 0;
+    var pointer = setInterval(function() {
+      if (percent > 100) {
+        clearInterval(pointer);
+        return;
+      }
+      $('.progress-bar').css('width',percent+'%').attr('aria-valuenow', percent).text(percent+'%');
+      percent++;
+    }, 100);
+  });
 }
 </script>
 {% endjshrink %}
