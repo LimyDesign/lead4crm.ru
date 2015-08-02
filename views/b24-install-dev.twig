@@ -163,7 +163,9 @@ function downloadRubrics() {
     var pointer = setInterval(function() {
       if (percent > 100) {
         clearInterval(pointer);
-        $('.progress').slideUp('fast');
+        setTimeout(function() {
+          $('.progress').slideUp('fast');
+        }, 1000);
         return;
       }
       $('.progress-bar').css('width',percent+'%').attr('aria-valuenow', percent).text(percent+'%');
