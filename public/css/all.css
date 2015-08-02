@@ -42,9 +42,10 @@ body {
   background: #f4f4f4;
   border-radius: 3px;
   font-weight: bold;
-  font-size: 1.4rem;
-  line-height: 1.3571428;
-  padding: 7px 24px; }
+  /*font-size: 1.4rem;*/
+  /*line-height: 1.3571428;*/
+  /*padding: 7px 24px; */
+}
   .btn-link:hover {
     background: #e0e0e0; }
 
