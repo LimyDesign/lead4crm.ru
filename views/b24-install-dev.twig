@@ -46,13 +46,18 @@
                 </select>
                 <span id="helpCityname" class="help-block">Выберите город в котором работает ваша компания. По-умолчанию выбирается тот город, который указан в вашей карточке, если конечно данное поле заполнено правильно и ваш город есть в списке поддерживаемых городов.</span>
               </div>
-              <button class="btn btn-primary btn-lg rounded" type="submit">
+              <button class="btn btn-primary btn-lg rounded" id="saveSettings" type="submit">
                 <i class="fa fa-floppy-o fa-fw"></i> Сохранить
               </button>&nbsp;&nbsp;&nbsp;
               <button class="btn btn-link btn-lg rounded" id="downloadRubrics" type="button">
                 <i class="fa fa-cloud-download fa-fw"></i> Загрузить сферы деятельности
               </button>
             </form>
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                60%
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -103,6 +108,9 @@ BX24.init(function() {
     $('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
     $('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
   }
+  if (b24Rubrics) {
+    $('#downloadRubrics').hide();
+  }
 
   // Сохраняем данные формы в Битрикс24
   // и переходим после в само приложение
@@ -137,10 +145,20 @@ BX24.init(function() {
       }
     });
   });
+
+  // Загружаем сферы деятельности в Битрикс24
+  $('#downloadRubrics').click(function() {
+    downloadRubrics();
+  });
 });
 
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
+
+// Функция загрузки сфер деятельности в Битрикс24
+function downloadRubrics() {
+
+}
 </script>
 {% endjshrink %}
 {% endif %}
