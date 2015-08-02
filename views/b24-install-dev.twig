@@ -49,6 +49,9 @@
 							<button class="btn btn-primary btn-lg rounded" type="submit">
 								<i class="fa fa-floppy-o fa-fw"></i> Сохранить
 							</button>
+							<button class="btn btn-default btn-lg rounded" id="downloadRubrics">
+								<i class="fa fa-cloud-download fa-fw"></i> Загрузить рубрикатор
+							</button>
 						</form>
 					</div>
 				</div>
@@ -95,6 +98,7 @@ BX24.init(function() {
 
 	var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
 	var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
+	var b24Rubrics= BX24.appOption.get('LEAD4CRM_RUBRICS');
 	if (b24APIKey && b24CityID) {
 		$('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
 		$('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
