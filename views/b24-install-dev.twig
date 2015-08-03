@@ -161,7 +161,7 @@ function downloadRubrics(apikey, domain) {
   $('.progress').slideDown('fast', function() {
     BX24.fitWindow();
     $('.progress-bar').addClass('progress-bar-striped');
-    var percent = percentRound = industry = 0;
+    var percent = 0, percentRound = 0, industry = 0;
     var importOptions = {
       importAPI: apikey,
       importDomain: domain
@@ -170,32 +170,32 @@ function downloadRubrics(apikey, domain) {
       var industryTotal = data.rubrics.length;
       if (!data.error && industryTotal) {
         data.rubrics.forEarch(function(entry) {
-        BX24.callMethod('crm.status.add', 
-        {
-          fields:
+          BX24.callMethod('crm.status.add', 
           {
-            "ENTITY_ID": "INDUSTRY",
-            "STATUS_ID": entry.code,
-            "NAME": entry.name
-          },
-          function() {
-            industry++;
-            percent = industryTotal * 100 / industry;
-            percentRound = Math.round(percentText);
-            $('.progress-bar')
-              .css('width',percentRound+'%')
-              .attr('aria-valuenow', percentRound)
-              .text(percent.toFixed(2)+'%');
-            if (industry > industryTotal) {
-              $('.progress-bar').removeClass('progress-bar-striped');
-              BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                if (callback.LEAD4CRM_RUBRICS) {
-                  $('.progress').slideUp('fast');
-                }
-              });
+            fields:
+            {
+              "ENTITY_ID": "INDUSTRY",
+              "STATUS_ID": entry.code,
+              "NAME": entry.name
+            },
+            function() {
+              industry++;
+              percent = industryTotal * 100 / industry;
+              percentRound = Math.round(percentText);
+              $('.progress-bar')
+                .css('width',percentRound+'%')
+                .attr('aria-valuenow', percentRound)
+                .text(percent.toFixed(2)+'%');
+              if (industry > industryTotal) {
+                $('.progress-bar').removeClass('progress-bar-striped');
+                BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                  if (callback.LEAD4CRM_RUBRICS) {
+                    $('.progress').slideUp('fast');
+                  }
+                });
+              }
             }
-          }
-        });
+          });
         });
       } else {
         $('.progress-bar').removeClass('progress-bar-striped');
