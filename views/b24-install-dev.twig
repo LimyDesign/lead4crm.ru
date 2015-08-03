@@ -104,6 +104,7 @@ BX24.init(function() {
   var b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
   var b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
   var b24Rubrics= BX24.appOption.get('LEAD4CRM_RUBRICS');
+  var b24Domain = '{{request.DOMAIN}}';
   if (b24APIKey && b24CityID) {
     $('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
     $('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
@@ -148,7 +149,7 @@ BX24.init(function() {
 
   // Загружаем сферы деятельности в Битрикс24
   $('#downloadRubrics').click(function() {
-    downloadRubrics();
+    downloadRubrics(b24APIKey, b24Domain);
   });
 });
 
@@ -156,23 +157,46 @@ BX24.init(function() {
 BX24.fitWindow();
 
 // Функция загрузки сфер деятельности в Битрикс24
-function downloadRubrics() {
+function downloadRubrics(apikey, domain) {
   $('.progress').slideDown('fast', function() {
     BX24.fitWindow();
     $('.progress-bar').addClass('progress-bar-striped');
-    var percent = 0;
-    var pointer = setInterval(function() {
-      if (percent > 100) {
-        clearInterval(pointer);
-        $('.progress-bar').removeClass('progress-bar-striped');
-        setTimeout(function() {
-          $('.progress').slideUp('fast');
-        }, 1000);
-        return;
-      }
-      $('.progress-bar').css('width',percent+'%').attr('aria-valuenow', percent).text(percent+'%');
-      percent++;
-    }, 100);
+    var percent = percentRound = industry = 0;
+    var importOptions = {
+      importAPI: apikey,
+      importDomain: domain
+    };
+    $.post('/importRubrics/', importOptions, function(data) {
+      var industryTotal = data.rubrics.length;
+      data.rubrics.forEarch(function(entry) {
+        BX24.callMethod('crm.status.add', 
+        {
+          fields:
+          {
+            "ENTITY_ID": "INDUSTRY",
+            "STATUS_ID": entry.code,
+            "NAME": entry.name
+          },
+          function() {
+            industry++;
+            percent = industryTotal * 100 / industry;
+            percentRound = Math.round(percentText);
+            $('.progress-bar')
+              .css('width',percentRound+'%')
+              .attr('aria-valuenow', percentRound)
+              .text(percent.toFixed(2)+'%');
+            if (industry > industryTotal) {
+              $('.progress-bar').removeClass('progress-bar-striped');
+              BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                if (callback.LEAD4CRM_RUBRICS) {
+                  $('.progress').slideUp('fast');
+                }
+              });
+            }
+          }
+        });
+      });
+    }, 'json');
   });
 }
 </script>
