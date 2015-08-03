@@ -200,7 +200,9 @@ function downloadRubrics(apikey, domain) {
       } else {
         $('.progress-bar').removeClass('progress-bar-striped');
         $('.progress').slideUp('fast', function() {
-          alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+          setTimeout(function() {
+            alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+          }, 100);
         });
       }
     }, 'json');
