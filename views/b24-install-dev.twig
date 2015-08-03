@@ -187,7 +187,7 @@ function downloadRubrics(apikey, domain) {
               .css('width',percentRound+'%')
               .attr('aria-valuenow', percentRound)
               .text(percent.toFixed(2)+'%');
-            if (industry > industryTotal) {
+            if (industry >= industryTotal) {
               $('.progress-bar').removeClass('progress-bar-striped');
               BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
                 if (callback.LEAD4CRM_RUBRICS) {
