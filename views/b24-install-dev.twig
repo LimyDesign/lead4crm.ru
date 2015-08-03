@@ -182,7 +182,7 @@ function downloadRubrics(apikey, domain) {
           function() {
             industry++;
             percent = industryTotal * 100 / industry;
-            percentRound = Math.round(percentText);
+            percentRound = Math.round(percent);
             $('.progress-bar')
               .css('width',percentRound+'%')
               .attr('aria-valuenow', percentRound)
