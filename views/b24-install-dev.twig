@@ -168,7 +168,8 @@ function downloadRubrics(apikey, domain) {
     };
     $.post('/importRubrics/', importOptions, function(data) {
       var industryTotal = data.rubrics.length;
-      data.rubrics.forEarch(function(entry) {
+      if (!data.error && industryTotal) {
+        data.rubrics.forEarch(function(entry) {
         BX24.callMethod('crm.status.add', 
         {
           fields:
@@ -195,7 +196,12 @@ function downloadRubrics(apikey, domain) {
             }
           }
         });
-      });
+        });
+      } else {
+        $('.progress-bar').removeClass('progress-bar-striped');
+        $('.progress').slideUp('fast');
+        alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+      }
     }, 'json');
   });
 }
