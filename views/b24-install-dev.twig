@@ -177,23 +177,23 @@ function downloadRubrics(apikey, domain) {
               "ENTITY_ID": "INDUSTRY",
               "STATUS_ID": entry.code,
               "NAME": entry.name
-            },
-            function() {
-              industry++;
-              percent = industryTotal * 100 / industry;
-              percentRound = Math.round(percentText);
-              $('.progress-bar')
-                .css('width',percentRound+'%')
-                .attr('aria-valuenow', percentRound)
-                .text(percent.toFixed(2)+'%');
-              if (industry > industryTotal) {
-                $('.progress-bar').removeClass('progress-bar-striped');
-                BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                  if (callback.LEAD4CRM_RUBRICS) {
-                    $('.progress').slideUp('fast');
-                  }
-                });
-              }
+            }
+          },
+          function() {
+            industry++;
+            percent = industryTotal * 100 / industry;
+            percentRound = Math.round(percentText);
+            $('.progress-bar')
+              .css('width',percentRound+'%')
+              .attr('aria-valuenow', percentRound)
+              .text(percent.toFixed(2)+'%');
+            if (industry > industryTotal) {
+              $('.progress-bar').removeClass('progress-bar-striped');
+              BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                if (callback.LEAD4CRM_RUBRICS) {
+                  $('.progress').slideUp('fast');
+                }
+              });
             }
           });
         });
