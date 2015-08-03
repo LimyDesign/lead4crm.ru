@@ -191,7 +191,9 @@ function downloadRubrics(apikey, domain) {
               $('.progress-bar').removeClass('progress-bar-striped');
               BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
                 if (callback.LEAD4CRM_RUBRICS) {
-                  $('.progress').slideUp('fast');
+                  setTimeout(function() {
+                    $('.progress').slideUp('fast');
+                  }, 1000);
                 }
               });
             }
