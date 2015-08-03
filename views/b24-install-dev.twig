@@ -168,6 +168,7 @@ function downloadRubrics(apikey, domain) {
     };
     $.post('/importRubrics/', importOptions, function(data) {
       var industryTotal = data.rubrics.length;
+      console.log(data);
       if (!data.error && industryTotal) {
         data.rubrics.forEarch(function(entry) {
           BX24.callMethod('crm.status.add', 
