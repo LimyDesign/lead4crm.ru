@@ -195,6 +195,7 @@ function downloadRubrics(apikey, domain, callback) {
     };
     $.post('/importRubrics/', importOptions, function(data) {
       if (data.error == 0) {
+        console.log(data.rubrics);
         var industryTotal = data.rubrics.length;
         data.rubrics.forEach(function(entry) {
           BX24.callMethod('crm.status.add', 
