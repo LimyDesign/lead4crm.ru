@@ -139,10 +139,8 @@ BX24.init(function() {
               // Если сферы деятельности не импортировались, 
               // то выполняем импорт вызовом нужной функции
               downloadRubrics(k, b24Domain, function(status) {
-                console.log(status);
                 if (status)
                 {
-                  console.log('quiwye');
                   // Сообщаем Битрикс24 о том, что все готово
                   // и можно переключаться на приложение.
                   BX24.installFinish();
@@ -151,6 +149,16 @@ BX24.init(function() {
                   if (prevURL.hostname == 'www.lead4crm.ru') {
                     BX24.reloadWindow();
                   }
+                } else {
+                  // В случае неудачи возвращаем все обратно, 
+                  // чтобы пользователь смог снова ввести все необходимые настройки
+                  // и попытаться снова сохранить настройки.
+                  $('#bxAppOptionsForm').find('button').removeAttr('disabled');
+                  $('#bxAppOptionsForm').find('input[name="apikey"]').removeAttr('disabled');
+                  $('#bxAppOptionsForm').find('select[name="city"]').removeAttr('disabled');
+                  $('#bxAppOptionsForm').find('button i').removeClass('fa-spinner fa-pulse');
+                  $('#bxAppOptionsForm').find('#saveSettings i').addClass('fa-floppy-o');
+                  $('#bxAppOptionsForm').find('#downloadRubrics i').addClass('fa-cloud-download');
                 }
               });  
             }
@@ -158,7 +166,6 @@ BX24.init(function() {
             // просто завершаем установку Битрикс24
             else
             {
-              console.log('Fuck');
               // Сообщаем Битрикс24 о том, что все готово
               // и можно переключаться на приложение.
               BX24.installFinish();
