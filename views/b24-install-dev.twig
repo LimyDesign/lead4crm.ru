@@ -134,7 +134,7 @@ BX24.init(function() {
         BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
           if (callback.LEAD4CRM_CITYID) {
             // Проверяем был ли импорт сфер деятельности
-            if (!b24Rubrics) 
+            if (b24Rubrics) 
             {
               // Если сферы деятельности не импортировались, 
               // то выполняем импорт вызовом нужной функции
