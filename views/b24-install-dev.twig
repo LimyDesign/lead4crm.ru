@@ -224,7 +224,7 @@ function downloadRubrics(apikey, domain, callback) {
                     setTimeout(function() {
                       $('.progress').slideUp('fast');
                       if (callback && typeof(callback) === "function") {
-                        callback('1');
+                        callback(true);
                       }
                     }, 1000);
                   }
@@ -240,7 +240,7 @@ function downloadRubrics(apikey, domain, callback) {
             setTimeout(function() {
               alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
               if (callback && typeof(callback) === "function") {
-                callback('0');
+                callback(false);
               }
             }, 100);
           });
@@ -253,7 +253,7 @@ function downloadRubrics(apikey, domain, callback) {
           setTimeout(function() {
             alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
             if (callback && typeof(callback) === "function") {
-              callback('0');
+              callback(false);
             }
           }, 100);
         });
