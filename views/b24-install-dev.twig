@@ -133,13 +133,37 @@ BX24.init(function() {
       if (callback.LEAD4CRM_APIKEY) {
         BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
           if (callback.LEAD4CRM_CITYID) {
-            // Сообщаем Битрикс24 о том, что все готово
-            // и можно переключаться на приложение.
-            BX24.installFinish();
-            var prevURL = document.createElement('a');
-            prevURL.href = document.referrer;
-            if (prevURL.hostname == 'www.lead4crm.ru') {
-              BX24.reloadWindow();
+            // Проверяем был ли импорт сфер деятельности
+            if (!b24Rubrics) 
+            {
+              // Если сферы деятельности не импортировались, 
+              // то выполняем импорт вызовом нужной функции
+              downloadRubrics(k, b24Domain, function(status) {
+                if (status)
+                {
+                  // Сообщаем Битрикс24 о том, что все готово
+                  // и можно переключаться на приложение.
+                  BX24.installFinish();
+                  var prevURL = document.createElement('a');
+                  prevURL.href = document.referrer;
+                  if (prevURL.hostname == 'www.lead4crm.ru') {
+                    BX24.reloadWindow();
+                  }
+                }
+              });  
+            }
+            // В случае уже созданных сфер деятельности, 
+            // просто завершаем установку Битрикс24
+            else
+            {
+              // Сообщаем Битрикс24 о том, что все готово
+              // и можно переключаться на приложение.
+              BX24.installFinish();
+              var prevURL = document.createElement('a');
+              prevURL.href = document.referrer;
+              if (prevURL.hostname == 'www.lead4crm.ru') {
+                BX24.reloadWindow();
+              }
             }
           }
         })
@@ -157,7 +181,7 @@ BX24.init(function() {
 BX24.fitWindow();
 
 // Функция загрузки сфер деятельности в Битрикс24
-function downloadRubrics(apikey, domain) {
+function downloadRubrics(apikey, domain, callback) {
   $('.progress').slideDown('fast', function() {
     BX24.fitWindow();
     $('.progress-bar').addClass('progress-bar-striped');
@@ -193,6 +217,9 @@ function downloadRubrics(apikey, domain) {
                 if (callback.LEAD4CRM_RUBRICS) {
                   setTimeout(function() {
                     $('.progress').slideUp('fast');
+                    if (callback && typeof(callback) === "function") {
+                      callback(true);
+                    }
                   }, 1000);
                 }
               });
@@ -204,6 +231,9 @@ function downloadRubrics(apikey, domain) {
         $('.progress').slideUp('fast', function() {
           setTimeout(function() {
             alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+            if (callback && typeof(callback) === "function") {
+              callback(false);
+            }
           }, 100);
         });
       }
