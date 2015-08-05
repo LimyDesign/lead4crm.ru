@@ -194,8 +194,8 @@ function downloadRubrics(apikey, domain, callback) {
       importDomain: domain
     };
     $.post('/importRubrics/', importOptions, function(data) {
-      var industryTotal = data.rubrics.length;
-      if (data.error == 0  && industryTotal > 0) {
+      if (data.error == 0) {
+        var industryTotal = data.rubrics.length;
         data.rubrics.forEach(function(entry) {
           BX24.callMethod('crm.status.add', 
           {
