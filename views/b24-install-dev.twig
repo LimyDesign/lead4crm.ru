@@ -197,6 +197,7 @@ BX24.fitWindow();
 
 // Функция загрузки сфер деятельности в Битрикс24
 function downloadRubrics(apikey, domain, callback) {
+  var error_msg = "Ошибка импорта сфер деятельности.\nСкорее всего указан не верный ключ доступа.";
   $('.progress').slideDown('fast', function() {
     BX24.fitWindow();
     $('.progress-bar').addClass('progress-bar-striped');
@@ -250,7 +251,7 @@ function downloadRubrics(apikey, domain, callback) {
           $('.progress-bar').removeClass('progress-bar-striped');
           $('.progress').slideUp('fast', function() {
             setTimeout(function() {
-              alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+              alert(error_msg);
               if (callback && typeof(callback) === "function") {
                 callback(false);
               }
@@ -263,7 +264,7 @@ function downloadRubrics(apikey, domain, callback) {
         $('.progress-bar').removeClass('progress-bar-striped');
         $('.progress').slideUp('fast', function() {
           setTimeout(function() {
-            alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+            alert(error_msg);
             if (callback && typeof(callback) === "function") {
               callback(false);
             }
