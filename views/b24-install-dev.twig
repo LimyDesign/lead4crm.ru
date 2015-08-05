@@ -140,7 +140,7 @@ BX24.init(function() {
               // то выполняем импорт вызовом нужной функции
               downloadRubrics(k, b24Domain, function(status) {
                 console.log(status);
-                if (status)
+                if (status > 0)
                 {
                   console.log('quiwye');
                   // Сообщаем Битрикс24 о том, что все готово
