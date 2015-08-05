@@ -194,43 +194,60 @@ function downloadRubrics(apikey, domain, callback) {
       importDomain: domain
     };
     $.post('/importRubrics/', importOptions, function(data) {
-      if (data.error == 0) {
-        console.log(data.rubrics);
-        var industryTotal = data.rubrics.length;
-        data.rubrics.forEach(function(entry) {
-          BX24.callMethod('crm.status.add', 
-          {
-            fields:
+      if (data.error == 0) 
+      {
+        if (data.rubrics)
+        {
+          var industryTotal = data.rubrics.length;
+          data.rubrics.forEach(function(entry) {
+            BX24.callMethod('crm.status.add', 
             {
-              "ENTITY_ID": "INDUSTRY",
-              "STATUS_ID": entry.code,
-              "NAME": entry.name
-            }
-          },
-          function() {
-            industry++;
-            percent = industryTotal * 100 / industry;
-            percentRound = Math.round(percent);
-            $('.progress-bar')
-              .css('width',percentRound+'%')
-              .attr('aria-valuenow', percentRound)
-              .text(percent.toFixed(2)+'%');
-            if (industry >= industryTotal) {
-              $('.progress-bar').removeClass('progress-bar-striped');
-              BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                if (callback.LEAD4CRM_RUBRICS) {
-                  setTimeout(function() {
-                    $('.progress').slideUp('fast');
-                    if (callback && typeof(callback) === "function") {
-                      callback('1');
-                    }
-                  }, 1000);
-                }
-              });
-            }
+              fields:
+              {
+                "ENTITY_ID": "INDUSTRY",
+                "STATUS_ID": entry.code,
+                "NAME": entry.name
+              }
+            },
+            function() {
+              industry++;
+              percent = industryTotal * 100 / industry;
+              percentRound = Math.round(percent);
+              $('.progress-bar')
+                .css('width',percentRound+'%')
+                .attr('aria-valuenow', percentRound)
+                .text(percent.toFixed(2)+'%');
+              if (industry >= industryTotal) {
+                $('.progress-bar').removeClass('progress-bar-striped');
+                BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                  if (callback.LEAD4CRM_RUBRICS) {
+                    setTimeout(function() {
+                      $('.progress').slideUp('fast');
+                      if (callback && typeof(callback) === "function") {
+                        callback('1');
+                      }
+                    }, 1000);
+                  }
+                });
+              }
+            });
           });
-        });
-      } else {
+        }
+        else
+        {
+          $('.progress-bar').removeClass('progress-bar-striped');
+          $('.progress').slideUp('fast', function() {
+            setTimeout(function() {
+              alert('Ошибка импорта сфер деятельности. Возможно указан не верный API ключ.');
+              if (callback && typeof(callback) === "function") {
+                callback('0');
+              }
+            }, 100);
+          });
+        }
+      } 
+      else 
+      {
         $('.progress-bar').removeClass('progress-bar-striped');
         $('.progress').slideUp('fast', function() {
           setTimeout(function() {
