@@ -29,7 +29,7 @@
               <p class="lead">Начните с ввода вида деятельности. И если есть необходимость поменять город, также укажите город в котором будете производить поиск.</p>
               <form id="searchForm" class="form-horizontal">
                 <div class="form-group form-group-lg" id="searchGroupText">
-                  <label for="inputSearchText" class="control-label col-sm-2">
+                  <label for="inputSearchText" class="control-label col-sm-3">
                     Текстовый поиск:<br>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
@@ -37,23 +37,23 @@
                     </span>
                     <a href="#." id="changeToRubrics">вид деятельности</a>
                   </label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-9">
                     <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
                     <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, вы не сможете импортировать компаний больше, чем позволяет ваш остаточной баланс по запросам.</mark></span>
                   </div>
                 </div>
                 <div class="form-group form-group-lg" id="searchGroupRubrics" style="display:none;">
-                  <label for="inputSearchText" class="control-label col-sm-2">
+                  <label for="inputSearchText" class="control-label col-sm-3">
                     Вид деятельности:
                   </label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-9">
                     <select name="selectRubrics" class="selectpicker" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
                     <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, вы не сможете импортировать компаний больше, чем позволяет ваш остаточной баланс по запросам.</mark></span>
                   </div>
                 </div>
                 <div class="form-group form-group-lg">
-                  <label for="selectSearchCity" class="control-label col-sm-2">Город:</label>
-                  <div class="col-sm-10">
+                  <label for="selectSearchCity" class="control-label col-sm-3">Город:</label>
+                  <div class="col-sm-9">
                     <select name="selectSearchCity" class="selectpicker" id="selectSearchCity" aria-describedby="helpCityName" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите ваш город ]">
                       {% for country in countries %}
                         <optgroup label="{{country.name}}">
