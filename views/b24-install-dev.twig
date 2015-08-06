@@ -108,6 +108,7 @@ BX24.init(function() {
   if (b24APIKey && b24CityID) {
     $('#bxAppOptionsForm').find('input[name="apikey"]').val(b24APIKey);
     $('#bxAppOptionsForm').find('select[name="city"]').val(b24CityID);
+    $('#bxAppOptionsForm').find('select[name="city"]').selectpicker('render');
   }
   if (b24Rubrics) {
     $('#downloadRubrics').hide();
@@ -144,27 +145,32 @@ BX24.init(function() {
                 // модуля, в случае неудачи оставляем пользователя
                 // на странице настроек до тех пор пока не будет выполнена
                 // правильная настройка модуля.
-                console.log(status);
                 if (status)
                 {
                   // Сообщаем Битрикс24 о том, что все готово
                   // и можно переключаться на приложение.
-                  BX24.installFinish();
-                  var prevURL = document.createElement('a');
-                  prevURL.href = document.referrer;
-                  if (prevURL.hostname == 'www.lead4crm.ru') {
-                    BX24.reloadWindow();
-                  }
+                  BX24.appOption.set('LEAD4CRM_RUBRICS', '1', 
+                    function(callback) 
+                    {
+                      if (callback.LEAD4CRM_RUBRICS) 
+                      {
+                        BX24.installFinish();
+                        var prevURL = document.createElement('a');
+                        prevURL.href = document.referrer;
+                        if (prevURL.hostname == 'www.lead4crm.ru') {
+                          BX24.reloadWindow();
+                        }
+                      } else {
+                        alert('Не удалось сохранить параметры. Попробуйте еще раз.');
+                        unblockSettings();
+                      }
+                    }
+                  );
                 } else {
                   // В случае неудачи возвращаем все обратно, 
                   // чтобы пользователь смог снова ввести все необходимые настройки
                   // и попытаться снова сохранить настройки.
-                  $('#bxAppOptionsForm').find('button').removeAttr('disabled');
-                  $('#bxAppOptionsForm').find('input[name="apikey"]').removeAttr('disabled');
-                  $('#bxAppOptionsForm').find('select[name="city"]').removeAttr('disabled');
-                  $('#bxAppOptionsForm').find('button i').removeClass('fa-spinner fa-pulse');
-                  $('#bxAppOptionsForm').find('#saveSettings i').addClass('fa-floppy-o');
-                  $('#bxAppOptionsForm').find('#downloadRubrics i').addClass('fa-cloud-download');
+                  unblockSettings();
                 }
               });  
             }
@@ -196,7 +202,25 @@ BX24.init(function() {
 // Изменяем размер фрейма под текущие контент
 BX24.fitWindow();
 
-// Функция загрузки сфер деятельности в Битрикс24
+/**
+ * Функция разблокировки формы настроек приложения
+ */
+function unblockSettings() {
+  $('#bxAppOptionsForm').find('button').removeAttr('disabled');
+  $('#bxAppOptionsForm').find('input[name="apikey"]').removeAttr('disabled');
+  $('#bxAppOptionsForm').find('select[name="city"]').removeAttr('disabled');
+  $('#bxAppOptionsForm').find('button i').removeClass('fa-spinner fa-pulse');
+  $('#bxAppOptionsForm').find('#saveSettings i').addClass('fa-floppy-o');
+  $('#bxAppOptionsForm').find('#downloadRubrics i').addClass('fa-cloud-download');
+}
+
+
+/**
+ * Функция загрузки сфер деятельности в Битрикс24
+ * @param  {String}   apikey   Пользовательский ключ доступа
+ * @param  {String}   domain   Пользовательский домен Битрикс24
+ * @param  {Function} callback Возвращает результат выполнения импорта
+ */
 function downloadRubrics(apikey, domain, callback) {
   var error_msg = "Ошибка импорта сфер деятельности.\nСкорее всего указан не верный ключ доступа.";
   $('.progress').slideDown('fast', function() {
@@ -330,6 +354,11 @@ function downloadRubrics(apikey, domain, callback) {
   });
 }
 
+/**
+ * Функция проверки численного значения
+ * @param  {Any type}  n Данное значение будет проверяться как целочисленное
+ * @return {Boolean}   В случае если переменная n является числом, возвращает true, иначе false
+ */
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
