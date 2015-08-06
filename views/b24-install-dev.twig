@@ -229,41 +229,44 @@ function downloadRubrics(apikey, domain, callback) {
                 {
                   if (isNumeric(i))
                   {
-                    if (answer[i].STATUS_ID == entry.code)
+                    if (answer[i].STATUS_ID != entry.code)
                     {
-                      BX24.callMethod('crm.status.add', 
-                      {
-                        fields:
+                      BX24.callMethod(
+                        'crm.status.add', 
                         {
-                          "ENTITY_ID": "INDUSTRY",
-                          "STATUS_ID": entry.code,
-                          "NAME": entry.name,
-                          "SORT": sort
+                          fields:
+                          {
+                            "ENTITY_ID": "INDUSTRY",
+                            "STATUS_ID": entry.code,
+                            "NAME": entry.name,
+                            "SORT": sort
+                          }
+                        },
+                        function() 
+                        {
+                          industry++;
+                          sort += 10;
+                          percent = industryTotal * 100 / industry;
+                          percentRound = Math.round(percent);
+                          $('.progress-bar')
+                            .css('width',percentRound+'%')
+                            .attr('aria-valuenow', percentRound)
+                            .text(percent.toFixed(2)+'%');
+                          if (industry >= industryTotal) {
+                            $('.progress-bar').removeClass('progress-bar-striped');
+                            BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                              if (callback.LEAD4CRM_RUBRICS) {
+                                setTimeout(function() {
+                                  $('.progress').slideUp('fast');
+                                  if (callback && typeof(callback) === "function") {
+                                    callback(true);
+                                  }
+                                }, 1000);
+                              }
+                            });
+                          }
                         }
-                      },
-                      function() {
-                        industry++;
-                        sort += 10;
-                        percent = industryTotal * 100 / industry;
-                        percentRound = Math.round(percent);
-                        $('.progress-bar')
-                          .css('width',percentRound+'%')
-                          .attr('aria-valuenow', percentRound)
-                          .text(percent.toFixed(2)+'%');
-                        if (industry >= industryTotal) {
-                          $('.progress-bar').removeClass('progress-bar-striped');
-                          BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                            if (callback.LEAD4CRM_RUBRICS) {
-                              setTimeout(function() {
-                                $('.progress').slideUp('fast');
-                                if (callback && typeof(callback) === "function") {
-                                  callback(true);
-                                }
-                              }, 1000);
-                            }
-                          });
-                        }
-                      });
+                      );
                       break;
                     }
                   }
