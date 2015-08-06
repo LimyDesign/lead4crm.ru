@@ -823,7 +823,7 @@ BX24.init(function() {
                             statusExist = 0;
                           }
                         }
-                        if (!statusExist)
+                        if (statusExist)
                         {
                           $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
                         }
@@ -947,7 +947,7 @@ BX24.init(function() {
                             statusExist = 0;
                           }
                         }
-                        if (!statusExist)
+                        if (statusExist)
                         {
                           $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
                         }
