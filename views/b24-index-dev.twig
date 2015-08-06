@@ -35,7 +35,8 @@
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-spinner fa-pulse fa-stack-1x fa-inverse"></i>
                     </span>
-                    <strong id="changeToRubrics">&nbsp;<u>Вид деятельности</u></strong>
+                    <strong id="changeToRubricsLoading">&nbsp;<u>Вид деятельности</u></strong>
+                    <a href="#." id="changeToRubrics" class="hide">Вид деятельности</a>
                   </label>
                   <div class="col-sm-9">
                     <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
@@ -323,8 +324,8 @@ BX24.init(function() {
     });
     $('#selectRubrics').selectpicker('render');
     $('label[for="inputSearchText"]').find('i.fa-stack-1x').removeClass('fa-spinner fa-pulse').addClass('fa-exchange fa-rotate-90');
-    var changeToRubricsText = $('strong#changeToRubrics').text();
-    $('strong#changeToRubrics').after('<a href="#." id="changeToRubrics">'+changeToRubricsText+'</a>').remove();
+    $('#changeToRubricsLoading').remove();
+    $('#changeToRubrics').removeClass('hide');
   }
   else
   {
@@ -363,8 +364,8 @@ BX24.init(function() {
       }
     }, 'json').done(function() {
       $('label[for="inputSearchText"]').find('i.fa-stack-1x').removeClass('fa-spinner fa-pulse').addClass('fa-exchange fa-rotate-90');
-      var changeToRubricsText = $('strong#changeToRubrics').text();
-      $('strong#changeToRubrics').after('<a href="#." id="changeToRubrics">'+changeToRubricsText+'</a>').remove();
+      $('#changeToRubricsLoading').remove();
+      $('#changeToRubrics').removeClass('hide');
     });
   }
 
