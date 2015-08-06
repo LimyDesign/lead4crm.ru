@@ -276,6 +276,15 @@ function downloadRubrics(apikey, domain, callback) {
                     }
                   );
                 }
+                else
+                {
+                  setTimeout(function() {
+                    $('.progress').slideUp('fast');
+                    if (callback && typeof(callback) === "function") {
+                      callback(false);
+                    }
+                  }, 100);
+                }
               });
             }
           );
