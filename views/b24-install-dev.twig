@@ -222,12 +222,13 @@ function downloadRubrics(apikey, domain, callback) {
             function (result_sl)
             {
               var sort = 777110;
+              var answer = result_sl.data();
               data.rubrics.forEach(function(entry) 
               {
-                for (var i in result_sl.data())
+                for (var i in answer)
                 {
-                  console.log(result_sl.data());
-                  if (result_sl.data()[i]['STATUS_ID'] == entry.code)
+                  console.log(answer);
+                  if (answer[i]['STATUS_ID'] == entry.code)
                   {
                     BX24.callMethod('crm.status.add', 
                     {
