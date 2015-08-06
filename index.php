@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 session_start();
 require_once __DIR__.'/src/vendor/autoload.php';
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
