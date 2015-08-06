@@ -322,6 +322,9 @@ BX24.init(function() {
       }
     });
     $('#selectRubrics').selectpicker('render');
+    $('label[for="inputSearchText"]').find('i.fa-stack-1x').removeClass('fa-spinner fa-pulse').addClass('fa-exchange fa-rotate-90');
+    var changeToRubricsText = $('strong#changeToRubrics').text();
+    $('strong#changeToRubrics').after('<a href="#." id="changeToRubrics">'+changeToRubricsText+'</a>');
   }
   else
   {
@@ -359,7 +362,9 @@ BX24.init(function() {
         }
       }
     }, 'json').done(function() {
-
+      $('label[for="inputSearchText"]').find('i.fa-stack-1x').removeClass('fa-spinner fa-pulse').addClass('fa-exchange fa-rotate-90');
+      var changeToRubricsText = $('strong#changeToRubrics').text();
+      $('strong#changeToRubrics').after('<a href="#." id="changeToRubrics">'+changeToRubricsText+'</a>');
     });
   }
 
