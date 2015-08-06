@@ -802,7 +802,7 @@ BX24.init(function() {
                     selected: [ "ID", "TITLE", "ADDRESS" ]
                   },
                   function (result_cl) {
-                    if (result.error())
+                    if (result_cl.error())
                       console.error(result_cl.error())
                     else
                     {
