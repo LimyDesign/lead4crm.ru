@@ -299,6 +299,7 @@ BX24.init(function() {
   // из локальной в базы пользователя 
   // или с сервера генератора лидов
   localStorage.setItem('Name', 'Value');
+  console.log(localStorage['Name']);
   var postData = {
     importAPI: b24APIKey,
     importDomain: '{{request.DOMAIN}}'
