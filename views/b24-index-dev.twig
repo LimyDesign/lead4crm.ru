@@ -754,6 +754,7 @@ BX24.init(function() {
           selectedRubrics = $('#selectRubrics').val();
           b24CityID = $('#selectSearchCity').val();
           $('#searchGroupRubrics').attr('disabled', 'disabled');
+          $('#selectSearchCity').attr('disabled', 'disabled').selectpicker('render');
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
@@ -842,6 +843,7 @@ BX24.init(function() {
             }
           }, 'json').done(function() {
             $('#searchGroupRubrics').removeAttr('disabled');
+            $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
             $('#configForm').find('button').removeAttr('disabled');
             $('#searchButton').removeAttr('disabled');
             $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
@@ -882,6 +884,7 @@ BX24.init(function() {
           searchText = $('#inputSearchText').val();
           b24CityID = $('#selectSearchCity').val();
           $('#searchGroupText').attr('disabled', 'disabled');
+          $('#selectSearchCity').attr('disabled', 'disabled');
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
@@ -966,6 +969,7 @@ BX24.init(function() {
             }
           }, 'json').done(function() {
             $('#searchGroupText').removeAttr('disabled');
+            $('#selectSearchCity').removeAttr('disabled');
             $('#configForm').find('button').removeAttr('disabled');
             $('#searchButton').removeAttr('disabled');
             $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
