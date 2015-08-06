@@ -743,88 +743,95 @@ BX24.init(function() {
       });
       return;
     }
-    if ($('#inputSearchText').val() != '') {
-      if (searchText != $('#inputSearchText').val()) {
-        totalChecked = 0;
-        searchText = $('#inputSearchText').val();
-        b24CityID = $('#selectSearchCity').val();
-        $('#inputSearchText').attr('disabled', 'disabled');
-        $('#selectSearchCity').attr('disabled', 'disabled');
-        $('#configForm').find('button').attr('disabled', 'disabled');
-        searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
-        $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-        var formData = {
-          searchAPI: b24APIKey,
-          searchDomain: '{{request.DOMAIN}}',
-          searchText: searchText,
-          searchCity: b24CityID,
-          searchPage: page};
-        $.post('/getDataSearch/', formData, function(data) {
-          if (!data.error) {
-            console.log(data.error);
-            alert(data.message);
-          } else {
-            totalFind = data.total;
-            $('#qty').number(data.qty, 0, '.', ' ');
-            $('#searching').text(searchText);
-            $('#resultTotal').text(data.total);
-            $('nav ul.pagination').find('li:last').removeClass('disabled');
-            $('nav ul.pagination').find('li:not(:first):not(:last)').remove();
-            $('#tableResult tbody').find('tr').remove();
-            $('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
-            if (data.total > 50) {
-              var pageNum = 2;
-              for (var i = 50; i < data.total; i = i + 50) {
-                $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
-                pageNum++;
-              }
+    if ($('#searchGroupText').prop('disabled'))
+    {
+      alert('Yo!');
+    }
+    else
+    {
+      if ($('#inputSearchText').val() != '') {
+        if (searchText != $('#inputSearchText').val()) {
+          totalChecked = 0;
+          searchText = $('#inputSearchText').val();
+          b24CityID = $('#selectSearchCity').val();
+          $('#inputSearchText').attr('disabled', 'disabled');
+          $('#selectSearchCity').attr('disabled', 'disabled');
+          $('#configForm').find('button').attr('disabled', 'disabled');
+          searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
+          $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
+          var formData = {
+            searchAPI: b24APIKey,
+            searchDomain: '{{request.DOMAIN}}',
+            searchText: searchText,
+            searchCity: b24CityID,
+            searchPage: page};
+          $.post('/getDataSearch/', formData, function(data) {
+            if (!data.error) {
+              console.log(data.error);
+              alert(data.message);
             } else {
-              $('nav ul.pagination').find('li:last').addClass('disabled');
+              totalFind = data.total;
+              $('#qty').number(data.qty, 0, '.', ' ');
+              $('#searching').text(searchText);
+              $('#resultTotal').text(data.total);
+              $('nav ul.pagination').find('li:last').removeClass('disabled');
+              $('nav ul.pagination').find('li:not(:first):not(:last)').remove();
+              $('#tableResult tbody').find('tr').remove();
+              $('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+              if (data.total > 50) {
+                var pageNum = 2;
+                for (var i = 50; i < data.total; i = i + 50) {
+                  $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+                  pageNum++;
+                }
+              } else {
+                $('nav ul.pagination').find('li:last').addClass('disabled');
+              }
+              if (data.result) {
+                data.result.forEach(function(entry, index) {
+                  var cId = index + 1;
+                  BX24.callMethod(
+                    "crm.company.list",
+                    {
+                      filter: { "TITLE": entry.name, "ADDRESS": entry.address },
+                      select: [ "ID" ]
+                    },
+                    function (result) {
+                      if (result.data().length) {
+                        $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                      } else {
+                        totalChecked++;
+                        $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                      }
+                      $('#totalInport').find('span').text(totalChecked);
+                      BX24.fitWindow();
+                    });
+                });
+              }
             }
-            if (data.result) {
-              data.result.forEach(function(entry, index) {
-                var cId = index + 1;
-                BX24.callMethod(
-                  "crm.company.list",
-                  {
-                    filter: { "TITLE": entry.name, "ADDRESS": entry.address },
-                    select: [ "ID" ]
-                  },
-                  function (result) {
-                    if (result.data().length) {
-                      $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                    } else {
-                      totalChecked++;
-                      $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                    }
-                    $('#totalInport').find('span').text(totalChecked);
-                    BX24.fitWindow();
-                  });
-              });
-            }
-          }
-        }, 'json').done(function() {
-          $('#inputSearchText').removeAttr('disabled');
-          $('#selectSearchCity').removeAttr('disabled');
-          $('#configForm').find('button').removeAttr('disabled');
-          $('#searchButton').removeAttr('disabled');
-          $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
-            .addClass('fa-search');
+          }, 'json').done(function() {
+            $('#inputSearchText').removeAttr('disabled');
+            $('#selectSearchCity').removeAttr('disabled');
+            $('#configForm').find('button').removeAttr('disabled');
+            $('#searchButton').removeAttr('disabled');
+            $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+              .addClass('fa-search');
+            $('#search-options').slideToggle('fast');
+            $('#search-results').slideToggle('fast',function() {
+              BX24.fitWindow();
+            });
+          });
+        } else {
           $('#search-options').slideToggle('fast');
           $('#search-results').slideToggle('fast',function() {
             BX24.fitWindow();
           });
-        });
+        }
       } else {
-        $('#search-options').slideToggle('fast');
-        $('#search-results').slideToggle('fast',function() {
-          BX24.fitWindow();
+        $('#inputSearchText').removeClass('animated pulse').addClass('animated pulse').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+          $(this).removeClass('animated pulse');
         });
       }
-    } else {
-      $('#inputSearchText').removeClass('animated pulse').addClass('animated pulse').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-        $(this).removeClass('animated pulse');
-      });
     }
   });
 });
