@@ -563,8 +563,8 @@ function getDataSearchRubric($apikey, $rubric, $city, $domain, $page = 1) {
 	$url = "http://api.cnamrf.ru/getCompanyListByRubric/{$page}/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
-		'rubric' = $rubric,
-		'city' = $city,
+		'rubric' => $rubric,
+		'city' => $city,
 		'domain' => $domain));
 	return file_get_contents($url.$uri);
 }
