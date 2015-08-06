@@ -278,6 +278,9 @@ BX24.init(function() {
     }
   }
 
+  // Список пользователей Б24
+  console.log(BX24.callMethod('get.user', {}));
+
   // Меняем приветствие в зависимости от времени суток
   BX24.callMethod('user.current', {}, function(res) {
     d = new Date();
