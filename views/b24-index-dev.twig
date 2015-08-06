@@ -114,6 +114,7 @@
                       <th>Название компании</th>
                       <th>Адрес</th>
                       <th>Кол-во филиалов</th>
+                      <th>Ответственный</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -229,6 +230,7 @@ var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
 var totalChecked = 0;
 var totalFind = 0;
 var bx24userid = 1;
+var userList = null;
 
 // Делаем удобный выбор городов, иначе полная лабуда
 $('.selectpicker').selectpicker();
@@ -278,8 +280,10 @@ BX24.init(function() {
     }
   }
 
-  // Список пользователей Б24
-  console.log(BX24.callMethod('get.user', {}));
+  // Список активных пользователей Битрикс24
+  BX24.callMethod('user.get', {"ACTIVE":true}, function (result_ul) {
+    userList = result_ul.data();
+  });
 
   // Меняем приветствие в зависимости от времени суток
   BX24.callMethod('user.current', {}, function(res) {
@@ -829,12 +833,12 @@ BX24.init(function() {
                         }
                         if (statusExist)
                         {
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Я</td></tr>');
                         }
                         else
                         {
                           totalChecked++;
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Я</td></tr>');
                         }
                       });
                       $('#totalInport').find('span').text(totalChecked);
@@ -955,12 +959,12 @@ BX24.init(function() {
                         }
                         if (statusExist)
                         {
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Я</td></tr>');
                         }
                         else
                         {
                           totalChecked++;
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
+                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Я</td></tr>');
                         }
                       });
                       $('#totalInport').find('span').text(totalChecked);
