@@ -213,45 +213,58 @@ function downloadRubrics(apikey, domain, callback) {
         if (data.rubrics)
         {
           var industryTotal = data.rubrics.length;
-          data.rubrics.forEach(function(entry) {
-            BX24.callMethod('crm.status.get',
+          BX24.callMethod('cmr.status.list', {
             {
-              id: entry.code
+              order: { "SORT": "ASC" },
+              filter: { "ENTITY_ID": "INDUSTRY" }
             },
-            function (result) {
-              console.log(result);
-            });
-            BX24.callMethod('crm.status.add', 
+            function (result_sl)
             {
-              fields:
+              var sort = 777110;
+              data.rubrics.forEach(function(entry) 
               {
-                "ENTITY_ID": "INDUSTRY",
-                "STATUS_ID": entry.code,
-                "NAME": entry.name
-              }
-            },
-            function() {
-              industry++;
-              percent = industryTotal * 100 / industry;
-              percentRound = Math.round(percent);
-              $('.progress-bar')
-                .css('width',percentRound+'%')
-                .attr('aria-valuenow', percentRound)
-                .text(percent.toFixed(2)+'%');
-              if (industry >= industryTotal) {
-                $('.progress-bar').removeClass('progress-bar-striped');
-                BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                  if (callback.LEAD4CRM_RUBRICS) {
-                    setTimeout(function() {
-                      $('.progress').slideUp('fast');
-                      if (callback && typeof(callback) === "function") {
-                        callback(true);
+                for (var i in result_sl.data())
+                {
+                  if (result_sl.data().i.STATUS_ID == entry.code)
+                  {
+                    BX24.callMethod('crm.status.add', 
+                    {
+                      fields:
+                      {
+                        "ENTITY_ID": "INDUSTRY",
+                        "STATUS_ID": entry.code,
+                        "NAME": entry.name
+                        "SORT": sort
                       }
-                    }, 1000);
+                    },
+                    function() {
+                      industry++;
+                      sort += 10;
+                      percent = industryTotal * 100 / industry;
+                      percentRound = Math.round(percent);
+                      $('.progress-bar')
+                        .css('width',percentRound+'%')
+                        .attr('aria-valuenow', percentRound)
+                        .text(percent.toFixed(2)+'%');
+                      if (industry >= industryTotal) {
+                        $('.progress-bar').removeClass('progress-bar-striped');
+                        BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
+                          if (callback.LEAD4CRM_RUBRICS) {
+                            setTimeout(function() {
+                              $('.progress').slideUp('fast');
+                              if (callback && typeof(callback) === "function") {
+                                callback(true);
+                              }
+                            }, 1000);
+                          }
+                        });
+                      }
+                    });
+                    break;
                   }
-                });
-              }
-            });
+                }
+              });
+            }
           });
         }
         else
