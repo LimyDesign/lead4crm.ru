@@ -747,16 +747,24 @@ BX24.init(function() {
     {
       if ($('#selectRubrics').val() != '') 
       {
-        alert('Yo!');
+        alert($('#selectRubrics').text());
       }
       else
       {
-        alert($('#selectRubrics').text());
+        $('#selectRubrics')
+          .removeClass('animated pulse')
+          .addClass('animated pulse')
+          .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+            function() {
+              $(this).removeClass('animated pulse');
+            }
+          );
       }
     }
     else
     {
-      if ($('#inputSearchText').val() != '') {
+      if ($('#inputSearchText').val() != '') 
+      {
         if (searchText != $('#inputSearchText').val()) {
           totalChecked = 0;
           searchText = $('#inputSearchText').val();
@@ -834,7 +842,9 @@ BX24.init(function() {
             BX24.fitWindow();
           });
         }
-      } else {
+      } 
+      else 
+      {
         $('#inputSearchText').removeClass('animated pulse').addClass('animated pulse').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
           $(this).removeClass('animated pulse');
         });
