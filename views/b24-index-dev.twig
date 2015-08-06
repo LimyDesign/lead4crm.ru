@@ -745,7 +745,14 @@ BX24.init(function() {
     }
     if ($('#searchGroupText').prop('disabled'))
     {
-      alert('Yo!');
+      if ($('#selectRubrics').val() != '') 
+      {
+        alert('Yo!');
+      }
+      else
+      {
+        alert($('#selectRubrics').text());
+      }
     }
     else
     {
