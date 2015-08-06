@@ -213,7 +213,8 @@ function downloadRubrics(apikey, domain, callback) {
         if (data.rubrics)
         {
           var industryTotal = data.rubrics.length;
-          BX24.callMethod('crm.status.list',
+          BX24.callMethod(
+            "crm.status.list",
             {
               order: { "SORT": "ASC" },
               filter: { "ENTITY_ID": "INDUSTRY" }
@@ -233,7 +234,7 @@ function downloadRubrics(apikey, domain, callback) {
                       {
                         "ENTITY_ID": "INDUSTRY",
                         "STATUS_ID": entry.code,
-                        "NAME": entry.name
+                        "NAME": entry.name,
                         "SORT": sort
                       }
                     },
@@ -264,7 +265,8 @@ function downloadRubrics(apikey, domain, callback) {
                   }
                 }
               });
-            });
+            }
+          );
         }
         else
         {
