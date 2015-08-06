@@ -319,7 +319,7 @@ BX24.init(function() {
       }
       else if (level3 == entry.parent)
       {
-        $('#selectRubrics').append('<option value="'+entry.id+'"><span class=\'text-muted\'>&mdash;&nbsp;&mdash;&nbsp;</span>'+entry.name+'</option>');
+        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="<span class=\'text-muted\'>&mdash;&nbsp;&mdash;&nbsp;</span><span class=\'text\'>'+entry.name+'</span>">'+entry.name+'</option>');
       }
     });
     $('#selectRubrics').selectpicker('render');
