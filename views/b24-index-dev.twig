@@ -35,7 +35,7 @@
                       <i class="fa fa-circle fa-stack-2x"></i>
                       <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
                     </span>
-                    <a href="#." id="changeToRubrics" class="disabled">&nbsp;Вид деятельности</a>
+                    <strong id="changeToRubrics">&nbsp;Вид деятельности</strong>
                   </label>
                   <div class="col-sm-9">
                     <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
@@ -228,13 +228,13 @@ var bx24userid = 1;
 $('.selectpicker').selectpicker();
 
 // Переключатель видов поиска
-$('#changeToRubrics').click(function(e) {
+$('a#changeToRubrics').click(function(e) {
   e.preventDefault();
   $('#searchGroupText').hide("fast", function() {
     $('#searchGroupRubrics').show("fast");
   });
 });
-$('#changeToText').click(function(e) {
+$('a#changeToText').click(function(e) {
   e.preventDefault();
   $('#searchGroupRubrics').hide("fast", function() {
     $('#searchGroupText').show("fast");
