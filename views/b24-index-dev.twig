@@ -28,35 +28,39 @@
                 <small>Тариф компании: <span id="tariff">Демо</span></small></h2>
               <p class="lead">Получите ваших потенциальных клиентов за пару кликов. Начните искать по любым нужным критериям с помощью текстового ассоциативного поиска или точечно по видам деятельности.</p>
               <form id="searchForm" class="form-horizontal">
-                <div class="form-group form-group-lg" id="searchGroupText">
-                  <label for="inputSearchText" class="control-label col-sm-3">
-                    Текстовый поиск:<br>
-                    <span class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-spinner fa-pulse fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <strong id="changeToRubricsLoading">&nbsp;<u>Вид деятельности</u></strong>
-                    <a href="#." id="changeToRubrics" class="hide">Вид деятельности</a>
-                  </label>
-                  <div class="col-sm-9">
-                    <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
-                    <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска потенциальных клиентов. Поиск такой же как и в справочнике 2ГИС. Этот поиск ассоциативный и порой может выводить довольно большой список компаний, если вам требуется точечная выборка по определенным видам деятельности, то рекомендуем вам переключиться в поиск по виду деятельности, однако, там поиск будет производиться строго по выбранной деятельности.</span>
+                <fieldset id="searchGroupText">
+                  <div class="form-group form-group-lg">
+                    <label for="inputSearchText" class="control-label col-sm-3">
+                      Текстовый поиск:<br>
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-spinner fa-pulse fa-stack-1x fa-inverse"></i>
+                      </span>
+                      <strong id="changeToRubricsLoading">&nbsp;<u>Вид деятельности</u></strong>
+                      <a href="#." id="changeToRubrics" class="hide">Вид деятельности</a>
+                    </label>
+                    <div class="col-sm-9">
+                      <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
+                      <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска потенциальных клиентов. Поиск такой же как и в справочнике 2ГИС. Этот поиск ассоциативный и порой может выводить довольно большой список компаний, если вам требуется точечная выборка по определенным видам деятельности, то рекомендуем вам переключиться в поиск по виду деятельности, однако, там поиск будет производиться строго по выбранной деятельности.</span>
+                    </div>
                   </div>
-                </div>
-                <div class="form-group form-group-lg" id="searchGroupRubrics" style="display:none;">
-                  <label for="inputSearchText" class="control-label col-sm-3">
-                    Вид деятельности:<br>
-                    <span class="fa-stack fa-lg">
-                      <i class="fa fa-circle fa-stack-2x"></i>
-                      <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <a href="#." id="changeToText">&nbsp;Текстовый поиск</a>
-                  </label>
-                  <div class="col-sm-9">
-                    <select name="selectRubrics" class="form-control" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
-                    <span id="helpSearchText" class="help-block">Выберите вид деятельности в котором собираетесь искать потенциальных клиентов. Этот рубрикатор даст более точную выборку компаний нежели ассоциативный текстовый поиск, в том случае, если вы не можете найти подходящий вид деятельности, то вы можете переключиться обратно в текстовый поиск и там ввести искомую комбинацию.</span>
+                </fieldset>
+                <fieldset id="searchGroupRubrics" style="display:none;">
+                  <div class="form-group form-group-lg">
+                    <label for="inputSearchText" class="control-label col-sm-3">
+                      Вид деятельности:<br>
+                      <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x"></i>
+                        <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
+                      </span>
+                      <a href="#." id="changeToText">&nbsp;Текстовый поиск</a>
+                    </label>
+                    <div class="col-sm-9">
+                      <select name="selectRubrics" class="form-control" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
+                      <span id="helpSearchText" class="help-block">Выберите вид деятельности в котором собираетесь искать потенциальных клиентов. Этот рубрикатор даст более точную выборку компаний нежели ассоциативный текстовый поиск, в том случае, если вы не можете найти подходящий вид деятельности, то вы можете переключиться обратно в текстовый поиск и там ввести искомую комбинацию.</span>
+                    </div>
                   </div>
-                </div>
+                </fieldset>
                 <div class="form-group form-group-lg">
                   <label for="selectSearchCity" class="control-label col-sm-3">Город:</label>
                   <div class="col-sm-9">
@@ -232,6 +236,7 @@ $('.selectpicker').selectpicker();
 $('a#changeToRubrics').click(function(e) {
   e.preventDefault();
   $('#searchGroupText').hide("fast", function() {
+    $(this).
     $('#searchGroupRubrics').show("fast");
   });
 });
