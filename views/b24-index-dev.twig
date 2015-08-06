@@ -299,6 +299,10 @@ BX24.init(function() {
   // Подгружаем список видов деятельности 
   // из локальной в базы пользователя 
   // или с сервера генератора лидов
+  if (Modernizr.localstorage) 
+  {
+    console.log('Yo!');
+  }
   var postData = {
     importAPI: b24APIKey,
     importDomain: '{{request.DOMAIN}}'
