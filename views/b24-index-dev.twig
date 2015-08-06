@@ -303,9 +303,9 @@ BX24.init(function() {
     importDomain: '{{request.DOMAIN}}'
   };
   $.post('/getRubricList/', postData, function (data) {
+    console.log(data.error);
     if (data.error == 0) 
     {
-      console.log(data.rubrics);
       if (data.rubrics)
       {
         localStorage.setItem('2GISRubrics', JSON.stringify(data.rubrics));
