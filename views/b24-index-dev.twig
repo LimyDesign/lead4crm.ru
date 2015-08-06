@@ -300,7 +300,29 @@ BX24.init(function() {
   // или с сервера генератора лидов
   if (localStorage.getItem('2GISRubrics'))
   {
-    console.log(localStorage['2GISRubrics']);
+    var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
+    var level2 = null, 
+        level3 = null,
+        child1 = '<span class="text-muted">&mdash;&nbsp;</span>',
+        child2 = '<span class="text-muted">&mdash;&nbsp;&mdash;&nbsp;</span>';
+    data.rubrics.forEach(function (entry) {
+      if (!entry.parent) 
+      {
+        $('#selectRubrics')
+          .append('<option data-divider="true"></option>')
+          .append('<option value="'+entry.id+'">'+entry.name+'</option>');
+        level2 = entry.id;
+      }
+      else if (level2 == entry.parent)
+      {
+        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child1+'">'+entry.name+'</option>');
+        level3 = entry.id;
+      }
+      else if (level3 == entry.parent)
+      {
+        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child2+'">'+entry.name+'</option>');
+      }
+    });
   }
   else
   {
