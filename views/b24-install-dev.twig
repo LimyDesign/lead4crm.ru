@@ -212,7 +212,6 @@ function downloadRubrics(apikey, domain, callback) {
       {
         if (data.rubrics)
         {
-          var industryTotal = data.rubrics.length;
           BX24.callMethod(
             "crm.status.list",
             {
@@ -221,6 +220,7 @@ function downloadRubrics(apikey, domain, callback) {
             },
             function (result_sl)
             {
+              var industryTotal = data.rubrics.length;
               var sort = 7110;
               var answer = result_sl.data();
               var statusExist = 0;
@@ -234,6 +234,10 @@ function downloadRubrics(apikey, domain, callback) {
                     {
                       statusExist = 1;
                       break;
+                    }
+                    else
+                    {
+                      statusExist = 0;
                     }
                   }
                 }
@@ -260,18 +264,15 @@ function downloadRubrics(apikey, domain, callback) {
                         .css('width',percentRound+'%')
                         .attr('aria-valuenow', percentRound)
                         .text(percent.toFixed(2)+'%');
-                      if (industry >= industryTotal) {
+                      if (industry == industryTotal) 
+                      {
                         $('.progress-bar').removeClass('progress-bar-striped');
-                        BX24.appOption.set('LEAD4CRM_RUBRICS', '1', function(callback) {
-                          if (callback.LEAD4CRM_RUBRICS) {
-                            setTimeout(function() {
-                              $('.progress').slideUp('fast');
-                              if (callback && typeof(callback) === "function") {
-                                callback(true);
-                              }
-                            }, 1000);
+                        setTimeout(function() {
+                          $('.progress').slideUp('fast');
+                          if (callback && typeof(callback) === "function") {
+                            callback(true);
                           }
-                        });
+                        }, 1000);
                       }
                     }
                   );
@@ -285,7 +286,8 @@ function downloadRubrics(apikey, domain, callback) {
                     .css('width',percentRound+'%')
                     .attr('aria-valuenow', percentRound)
                     .text(percent.toFixed(2)+'%');
-                  if (industry >= industryTotal) {
+                  if (industry == industryTotal) 
+                  {
                     $('.progress-bar').removeClass('progress-bar-striped');
                     setTimeout(function() {
                       $('.progress').slideUp('fast');
