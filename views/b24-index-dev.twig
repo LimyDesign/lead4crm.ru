@@ -28,19 +28,24 @@
                 <small>Тариф компании: <span id="tariff">Демо</span></small></h2>
               <p class="lead">Начните с ввода вида деятельности. И если есть необходимость поменять город, также укажите город в котором будете производить поиск.</p>
               <form id="searchForm" class="form-horizontal">
-                <div class="form-group form-group-lg">
-                  <label for="inputSearchText" class="control-label col-sm-2">Поиск:</label>
+                <div class="form-group form-group-lg" id="searchGroupText">
+                  <label for="inputSearchText" class="control-label col-sm-2">
+                    Поиск:<br>
+                    <button class="btn btn-default btn-lg rounded" id="changeToRubrics">
+                      <i class="fa fa-industry"></i>
+                    </button>
+                  </label>
                   <div class="col-sm-10">
-                    <div class="input-group" id="searchGroupText">
-                      <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
-                      <span class="input-group-btn">
-                        <button class="btn btn-lg btn-default" id="changeToRubrics" data-toggle="tooltip" data-placement="left" title="Виды деятельности"><i class="fa fa-industry"></i></button>
-                      </span>
-                    </div>
-                    <div class="btn-group" id="searchGroupRubrics" style="display:none;">
-                      <button class="btn btn-lg btn-default" id="changeToText" data-toggle="tooltip" data-placement="right" title="Текстовый поиск"><i class="fa fa-i-cursor"></i></button>
-                      <select name="selectRubrics" class="selectpicker" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
-                    </div>
+                    <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
+                    <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, вы не сможете импортировать компаний больше, чем позволяет ваш остаточной баланс по запросам.</mark></span>
+                  </div>
+                </div>
+                <div class="form-group form-group-lg" id="searchGroupRubrics" style="display:none;">
+                  <label for="inputSearchText" class="control-label col-sm-2">
+                    Вид деятельности:
+                  </label>
+                  <div class="col-sm-10">
+                    <select name="selectRubrics" class="selectpicker" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
                     <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или еще какой-нибудь критерий поиска фирм, также как и в справочнике 2ГИС. <mark>Помните, вы не сможете импортировать компаний больше, чем позволяет ваш остаточной баланс по запросам.</mark></span>
                   </div>
                 </div>
@@ -218,8 +223,8 @@ $('.selectpicker').selectpicker();
 // Переключатель видов поиска
 $('#changeToRubrics').click(function(e) {
   e.preventDefault();
-  $('#searchGroupText').hide("slide", { direction: "left" }, 1000);
-  $('#searchGroupRubrics').show("slide", { direction: "right" }, 1000);
+  $('#searchGroupText').hide("slide", { direction: "up" }, 1000);
+  $('#searchGroupRubrics').show("slide", { direction: "down" }, 1000);
 });
 
 // Инициализируем Битрикс24
