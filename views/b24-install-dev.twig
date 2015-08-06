@@ -214,13 +214,9 @@ function downloadRubrics(apikey, domain, callback) {
         {
           var industryTotal = data.rubrics.length;
           data.rubrics.forEach(function(entry) {
-            BX24.callMethod('crm.status.list',
+            BX24.callMethod('crm.status.get',
             {
-              fields:
-              {
-                "ENTITY_ID": "INDUSTRY",
-                "STATUS_ID": entry.code
-              }
+              id: entry.code
             },
             function (result) {
               console.log(result);
