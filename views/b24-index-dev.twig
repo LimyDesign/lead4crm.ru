@@ -303,7 +303,6 @@ BX24.init(function() {
     importDomain: '{{request.DOMAIN}}'
   };
   $.post('/getRubricList/', postData, function (data) {
-    console.log(data);
     if (data.error == 0) 
     {
       if (data.rubrics)
