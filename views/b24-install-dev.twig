@@ -226,7 +226,7 @@ function downloadRubrics(apikey, domain, callback) {
               {
                 for (var i in result_sl.data())
                 {
-                  if (result_sl.data().i.STATUS_ID == entry.code)
+                  if (result_sl.data()[i]['STATUS_ID'] == entry.code)
                   {
                     BX24.callMethod('crm.status.add', 
                     {
