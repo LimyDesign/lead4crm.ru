@@ -248,6 +248,7 @@ $('a#changeToText').click(function(e) {
     $(this).attr('disabled', 'disabled');
     $('#searchGroupText').show("fast", function() {
       $(this).removeAttr('disabled');
+      $(this).find('input').focus();
     });
   });
 });
