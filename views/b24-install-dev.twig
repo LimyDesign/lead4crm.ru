@@ -227,7 +227,7 @@ function downloadRubrics(apikey, domain, callback) {
               {
                 for (var i in answer)
                 {
-                  console.log(Number.isInteger(i));
+                  console.log(isNumeric(i));
                   if (answer[i]['STATUS_ID'] == entry.code)
                   {
                     BX24.callMethod('crm.status.add', 
@@ -297,6 +297,10 @@ function downloadRubrics(apikey, domain, callback) {
       }
     }, 'json');
   });
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 }
 </script>
 {# {% endjshrink %} #}
