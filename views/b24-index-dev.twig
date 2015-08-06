@@ -236,13 +236,14 @@ $('.selectpicker').selectpicker();
 $('a#changeToRubrics').click(function(e) {
   e.preventDefault();
   $('#searchGroupText').hide("fast", function() {
-    // $(this).
+    $(this).attr('disabled', 'disabled');
     $('#searchGroupRubrics').show("fast");
   });
 });
 $('a#changeToText').click(function(e) {
   e.preventDefault();
   $('#searchGroupRubrics').hide("fast", function() {
+    $(this).attr('disabled', 'disabled');
     $('#searchGroupText').show("fast");
   });
 });
