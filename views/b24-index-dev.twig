@@ -215,6 +215,13 @@ var bx24userid = 1;
 // Делаем удобный выбор городов, иначе полная лабуда
 $('.selectpicker').selectpicker();
 
+// Переключатель видов поиска
+$('#changeToRubrics').click(function(e) {
+  e.preventDefault();
+  $('#searchGroupText').hide("slide", { direction: "left" }, 1000);
+  $('#searchGroupRubrics').show("slide", { direction: "left" }, 1000);
+});
+
 // Инициализируем Битрикс24
 BX24.init(function() {
   // Подключаем подсказки
