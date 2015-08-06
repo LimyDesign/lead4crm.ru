@@ -45,6 +45,11 @@
                 <div class="form-group form-group-lg" id="searchGroupRubrics" style="display:none;">
                   <label for="inputSearchText" class="control-label col-sm-3">
                     Вид деятельности:
+                    <span class="fa-stack fa-lg">
+                      <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <a href="#." id="changeToText">&nbsp;Текстовый поиск</a>
                   </label>
                   <div class="col-sm-9">
                     <select name="selectRubrics" class="selectpicker" id="selectRubrics" aria-describedby="helpRubrics" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выберите вид деятельности ]"></select>
@@ -227,6 +232,12 @@ $('#changeToRubrics').click(function(e) {
   e.preventDefault();
   $('#searchGroupText').hide("fast", function() {
     $('#searchGroupRubrics').show("fast");
+  });
+});
+$('#changeToText').click(function(e) {
+  e.preventDefault();
+  $('#searchGroupRubrics').hide("fast", function() {
+    $('#searchGroupText').show("fast");
   });
 });
 
