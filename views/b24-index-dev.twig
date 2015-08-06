@@ -252,7 +252,6 @@ BX24.init(function() {
   if (!tariff || !qty) 
   {
     $.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
-      console.log('QTY:',data.qty);
       $('#tariff').text(data.tariff);
       $('#qty').number(data.qty, 0, '.', ' ');
     });
@@ -302,6 +301,10 @@ BX24.init(function() {
   if (Modernizr.localstorage) 
   {
     console.log('Yo!');
+  }
+  else
+  {
+    console.log('Fuck!');
   }
   var postData = {
     importAPI: b24APIKey,
