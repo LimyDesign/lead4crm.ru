@@ -323,6 +323,7 @@ BX24.init(function() {
         $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child2+'">'+entry.name+'</option>');
       }
     });
+    $('#selectRubrics').selectpicker('render');
   }
   else
   {
@@ -358,6 +359,7 @@ BX24.init(function() {
               $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child2+'">'+entry.name+'</option>');
             }
           });
+          $('#selectRubrics').selectpicker('render');
         }
       }
     }, 'json');
