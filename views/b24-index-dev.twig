@@ -33,9 +33,9 @@
                     Текстовый поиск:<br>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
+                      <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
                     </span>
-                    <a href="#." id="changeToRubrics">&nbsp;Вид деятельности</a>
+                    <a href="#." id="changeToRubrics" class="disabled">&nbsp;Вид деятельности</a>
                   </label>
                   <div class="col-sm-9">
                     <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
@@ -47,7 +47,7 @@
                     Вид деятельности:<br>
                     <span class="fa-stack fa-lg">
                       <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
+                      <i class="fa fa-exchange fa-rotate-90 fa-stack-1x fa-inverse"></i>
                     </span>
                     <a href="#." id="changeToText">&nbsp;Текстовый поиск</a>
                   </label>
@@ -336,9 +336,7 @@ BX24.init(function() {
         {
           localStorage.setItem('2GISRubrics', JSON.stringify(data.rubrics));
           var level2 = null, 
-              level3 = null,
-              child1 = '<span class="text-muted">&mdash;&nbsp;</span>',
-              child2 = '<span class="text-muted">&mdash;&nbsp;&mdash;&nbsp;</span>';
+              level3 = null;
           data.rubrics.forEach(function (entry) {
             if (!entry.parent) 
             {
@@ -349,18 +347,20 @@ BX24.init(function() {
             }
             else if (level2 == entry.parent)
             {
-              $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child1+'">'+entry.name+'</option>');
+              $('#selectRubrics').append('<option value="'+entry.id+'" data-content="<span class=\'text-muted\'>&mdash;&nbsp;</span><span class=\'text\'>'+entry.name+'</span>">'+entry.name+'</option>');
               level3 = entry.id;
             }
             else if (level3 == entry.parent)
             {
-              $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child2+'">'+entry.name+'</option>');
+              $('#selectRubrics').append('<option value="'+entry.id+'" data-content="<span class=\'text-muted\'>&mdash;&nbsp;&mdash;&nbsp;</span><span class=\'text\'>'+entry.name+'</span>">'+entry.name+'</option>');
             }
           });
           $('#selectRubrics').selectpicker('render');
         }
       }
-    }, 'json');
+    }, 'json').done(function() {
+
+    });
   }
 
   // Определяем как называть кнопку поиска
