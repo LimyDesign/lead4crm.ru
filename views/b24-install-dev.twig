@@ -77,7 +77,7 @@ $('.selectpicker').selectpicker();
 // Инициализируем Битрикс24
 BX24.init(function() {
   // Меняем приветствие в зависимости от времени суток
-  BX24.callMethod('user.current', {}, function(res) {
+  BX24.callMethod('user.current', {}, function (res) {
     d = new Date();
     h = d.getHours();
     g = $('#greeting');
@@ -135,7 +135,7 @@ BX24.init(function() {
         BX24.appOption.set('LEAD4CRM_CITYID', c, function(callback) {
           if (callback.LEAD4CRM_CITYID) {
             // Проверяем был ли импорт сфер деятельности
-            if (b24Rubrics) 
+            if (!b24Rubrics) 
             {
               // Если сферы деятельности не импортировались, 
               // то выполняем импорт вызовом нужной функции
@@ -150,7 +150,7 @@ BX24.init(function() {
                   // Сообщаем Битрикс24 о том, что все готово
                   // и можно переключаться на приложение.
                   BX24.appOption.set('LEAD4CRM_RUBRICS', '1', 
-                    function(callback) 
+                    function (callback) 
                     {
                       if (callback.LEAD4CRM_RUBRICS) 
                       {
@@ -180,6 +180,7 @@ BX24.init(function() {
             {
               // Сообщаем Битрикс24 о том, что все готово
               // и можно переключаться на приложение.
+              console.log('Hoy!');
               BX24.installFinish();
               var prevURL = document.createElement('a');
               prevURL.href = document.referrer;
