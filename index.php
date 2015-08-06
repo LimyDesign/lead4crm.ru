@@ -49,6 +49,13 @@ if ($cmd[0]) {
 				$_REQUEST['searchPage']);
 			break;
 
+		case 'getRubricList':
+			echo importRubrics(
+				$_REQUEST['importAPI'],
+				$_REQUEST['importDomain'],
+				true);
+			break;
+
 		case 'importRubrics':
 			echo importRubrics(
 				$_REQUEST['importAPI'],
@@ -543,11 +550,12 @@ function getDataSearch($apikey, $text, $city, $domain, $page = 1) {
 	return file_get_contents($url.$uri);
 }
 
-function importRubrics($apikey, $domain) {
+function importRubrics($apikey, $domain, $full = false) {
 	$url = "http://api.cnamrf.ru/getRubricList/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
-		'domain' => $domain));
+		'domain' => $domain,
+		'full'	 => $full));
 	return file_get_contents($url.$uri);
 }
 
