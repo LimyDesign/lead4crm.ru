@@ -278,12 +278,22 @@ function downloadRubrics(apikey, domain, callback) {
                 }
                 else
                 {
-                  setTimeout(function() {
-                    $('.progress').slideUp('fast');
-                    if (callback && typeof(callback) === "function") {
-                      callback(false);
-                    }
-                  }, 100);
+                  industry++;
+                  percent = industryTotal * 100 / industry;
+                  percentRound = Math.round(percent);
+                  $('.progress-bar')
+                    .css('width',percentRound+'%')
+                    .attr('aria-valuenow', percentRound)
+                    .text(percent.toFixed(2)+'%');
+                  if (industry >= industryTotal) {
+                    $('.progress-bar').removeClass('progress-bar-striped');
+                    setTimeout(function() {
+                      $('.progress').slideUp('fast');
+                      if (callback && typeof(callback) === "function") {
+                        callback(true);
+                      }
+                    }, 1000);
+                  }
                 }
               });
             }
