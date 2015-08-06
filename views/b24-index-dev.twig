@@ -237,14 +237,18 @@ $('a#changeToRubrics').click(function(e) {
   e.preventDefault();
   $('#searchGroupText').hide("fast", function() {
     $(this).attr('disabled', 'disabled');
-    $('#searchGroupRubrics').show("fast");
+    $('#searchGroupRubrics').show("fast", function() {
+      $(this).removeAttr('disabled');
+    });
   });
 });
 $('a#changeToText').click(function(e) {
   e.preventDefault();
   $('#searchGroupRubrics').hide("fast", function() {
     $(this).attr('disabled', 'disabled');
-    $('#searchGroupText').show("fast");
+    $('#searchGroupText').show("fast", function() {
+      $(this).removeAttr('disabled');
+    });
   });
 });
 
