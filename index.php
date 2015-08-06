@@ -49,6 +49,15 @@ if ($cmd[0]) {
 				$_REQUEST['searchPage']);
 			break;
 
+		case 'getDataSearchRubric':
+			echo getDataSearchRubric(
+				$_REQUEST['searchAPI'],
+				$_REQUEST['searchRubric'],
+				$_REQUEST['searchCity'],
+				$_REQUEST['searchDomain'],
+				$_REQUEST['searchPage']);
+			break;
+
 		case 'getRubricList':
 			echo importRubrics(
 				$_REQUEST['importAPI'],
@@ -546,6 +555,16 @@ function getDataSearch($apikey, $text, $city, $domain, $page = 1) {
 		'apikey' => $apikey,
 		'text' => $text,
 		'city' => $city,
+		'domain' => $domain));
+	return file_get_contents($url.$uri);
+}
+
+function getDataSearchRubric($apikey, $rubric, $city, $domain, $page = 1) {
+	$url = "http://api.cnamrf.ru/getCompanyListByRubric/{$page}/?";
+	$uri = http_build_query(array(
+		'apikey' => $apikey,
+		'rubric' = $rubric,
+		'city' = $city,
 		'domain' => $domain));
 	return file_get_contents($url.$uri);
 }
