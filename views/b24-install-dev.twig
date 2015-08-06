@@ -213,7 +213,7 @@ function downloadRubrics(apikey, domain, callback) {
         if (data.rubrics)
         {
           var industryTotal = data.rubrics.length;
-          BX24.callMethod('cmr.status.list', {
+          BX24.callMethod('cmr.status.list',
             {
               order: { "SORT": "ASC" },
               filter: { "ENTITY_ID": "INDUSTRY" }
@@ -264,8 +264,7 @@ function downloadRubrics(apikey, domain, callback) {
                   }
                 }
               });
-            }
-          });
+            });
         }
         else
         {
