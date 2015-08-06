@@ -302,9 +302,7 @@ BX24.init(function() {
   {
     var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
     var level2 = null, 
-        level3 = null,
-        child1 = "<span class=\"text-muted\">&mdash;&nbsp;</span>",
-        child2 = "<span class=\"text-muted\">&mdash;&nbsp;&mdash;&nbsp;</span>";
+        level3 = null;
     rubrics.forEach(function (entry) {
       if (!entry.parent) 
       {
@@ -316,12 +314,12 @@ BX24.init(function() {
       else if (level2 == entry.parent)
       {
         console.log(entry.name);
-        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child1+'">'+entry.name+'</option>');
+        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="<span class=\'text-muted\'>&mdash;&nbsp;</span>">'+entry.name+'</option>');
         level3 = entry.id;
       }
       else if (level3 == entry.parent)
       {
-        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="'+child2+'">'+entry.name+'</option>');
+        $('#selectRubrics').append('<option value="'+entry.id+'" data-content="<span class=\'text-muted\'>&mdash;&nbsp;&mdash;&nbsp;</span>">'+entry.name+'</option>');
       }
     });
     $('#selectRubrics').selectpicker('render');
