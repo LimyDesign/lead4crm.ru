@@ -223,8 +223,9 @@ $('.selectpicker').selectpicker();
 // Переключатель видов поиска
 $('#changeToRubrics').click(function(e) {
   e.preventDefault();
-  $('#searchGroupText').hide("slide", { direction: "up" }, 1000);
-  $('#searchGroupRubrics').show("slide", { direction: "down" }, 1000);
+  $('#searchGroupText').hide("fast", function() {
+    $('#searchGroupRubrics').show("fast");
+  });
 });
 
 // Инициализируем Битрикс24
