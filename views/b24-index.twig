@@ -114,6 +114,7 @@
                       <th>Название компании</th>
                       <th>Адрес</th>
                       <th>Кол-во филиалов</th>
+                      <th>Ответственный</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -138,7 +139,7 @@
                 <button id="startImport" class="btn btn-success btn-lg">Импортировать компании</button>
                 <button id="totalInport" class="btn btn-default btn-lg" disabled="disabled">Всего отмечено к импорту: <span>0</span></button>
                 <div class="progress" style="margin: 24px 0 0; display: none;">
-                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%"></div>
+                  <div class="progress-bar progress-bar-warning active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width:2em;width:0%"></div>
                 </div>
               </div>
               <div class="well">
@@ -220,6 +221,7 @@
 // Объявляем переменные
 var page = 1;
 var searchText = '';
+var searchRubric = '';
 var selectedRubrics = 0;
 var b24APIKey  = '';
 var b24CityID = 0;
@@ -229,6 +231,8 @@ var searchButtonHTML = '<i class="fa fa-fw fa-search"></i> Поиск';
 var totalChecked = 0;
 var totalFind = 0;
 var bx24userid = 1;
+var userList = null;
+var selectUserList = '';
 
 // Делаем удобный выбор городов, иначе полная лабуда
 $('.selectpicker').selectpicker();
@@ -278,8 +282,10 @@ BX24.init(function() {
     }
   }
 
-  // Список пользователей Б24
-  // console.log(BX24.callMethod('get.user', {}));
+  // Список активных пользователей Битрикс24
+  BX24.callMethod('user.get', {"ACTIVE":true}, function (result_ul) {
+    userList = result_ul.data();
+  });
 
   // Меняем приветствие в зависимости от времени суток
   BX24.callMethod('user.current', {}, function(res) {
@@ -440,273 +446,162 @@ BX24.init(function() {
       var progressIncrement = Math.floor(100 / totalChecked);
       var totalProgress = 0;
       $('.progress').slideDown('fast', function() {
-        BX24.fitWindow();
-      }).children('.progress-bar').addClass('progress-bar-striped active').css('width', '0%').text('0%');
-      for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++) {
-        if ($('#company'+i).is(':checked')) {
-          importCompanyID = $('#company'+i).attr('name');
-          importCompanyHash = $('#company'+i).attr('value');
-          importData.importCompanyID = importCompanyID;
-          importData.importCompanyHash = importCompanyHash;
-          $.post('/importCompany/', importData, function(data) {
-            // Проверка существования вида деятельности в справочнике
-            // и операции проверки существования, добавления и обновления 
-            // справочника компаний
-            BX24.callMethod(
-              "crm.status.list",
+        $('.progress-bar')
+          .addClass('progress-bar-striped')
+          .css('width', '0%')
+          .text('0%');
+        BX24.callMethod(
+          "crm.company.list",
+          {
+            order: { "DATE_CREATE": "ASC" },
+            select: [ "ID", "TITLE", "ADDRESS", "ADDRESS_CITY" ]
+          },
+          function (result_cl) {
+            if (result_cl.error())
+            {
+              console.error(result_cl.error());
+            }
+            else
+            {
+              var companyList = result_cl.data();
+              var statusExist = 0,
+                  index = 1,
+                  assignedUserId = 0,
+                  companyId = null;
+              for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++)
               {
-                filter: { 
-                  "ENTITY_ID": "INDUSTRY", 
-                  "STATUS_ID": data.industry.code,
-                  "NAME": data.industry.name
-                }
-              },
-              function (result_sl)
-              {
-                if (result_sl.data().hasOwnProperty('0')) 
+                if ($('#company'+index).prop('checked'))
                 {
-                  // Проверка существования компании, добавление или обновление
-                  // добавляемой компании в зависимости от условий
-                  BX24.callMethod(
-                    "crm.company.list",
+                  importCompanyID = $('#company'+index).attr('name');
+                  importCompanyHash = $('#company'+index).attr('value');
+                  importData.importCompanyID = importCompanyID;
+                  importData.importCompanyHash = importCompanyHash;
+                  importData.assignedUserId = $('#assigned'+index).val();
+                  $('#company'+index)
+                    .prop('checked', 0)
+                    .parent().parent().addClass('active');
+                  $.post('/importCompany/', importData, function (data) {
+                    for (var i in companyList)
                     {
-                      filter: { 
-                        "TITLE": data.name, 
-                        "ADDRESS": data.address,
-                        "ADDRESS_CITY": data.city_name
-                      },
-                      select: [ "ID" ]
-                    }, 
-                    function (result_cl)
-                    {
-                      if (result_cl.data().length) 
+                      if (companyList[i].TITLE == data.name &&
+                          companyList[i].ADDRESS_CITY == data.city_name &&
+                          companyList[i].ADDRESS == data.address)
                       {
-                        // Обновление уже существующей компании:
-                        // обновляем только доп. информацию об офисе
-                        // компании или этаже, сферу деятельности, в
-                        // случае изменения основного, обновляем видимость
-                        // компании для других и делаем переназначение 
-                        // принадлежности компании к текущему пользователю,
-                        // также обновляем массив контактных данных 
-                        // (телефон, эл. почта и т.п.). 
-                        // Выставляем правильную валюту и если надо,
-                        // отмечаем данное событие в ленте CRM.
-                        BX24.callMethod(
-                          "crm.company.update",
-                          {
-                            id: result_cl.data()['ID'],
-                            fields: {
-                              "ADDRESS_2": data.address_2,
-                              "INDUSTRY": data.industry.code,
-                              "OPENED": opened,
-                              "ASSIGNED_BY_ID": bx24userid,
-                              "PHONE": data.phone,
-                              "EMAIL": data.email,
-                              "WEB": data.web,
-                              "IM": data.im,
-                              "CURRENCY_ID": data.currency
-                            },
-                            params: { "REGISTER_SONET_EVENT": lm }
-                          },
-                          function() 
-                          {
-                            $('#company'+i).prop('checked', 0);
-                            totalChecked--;
-                            $('#totalInport').find('span').text(totalChecked);
-                            $('.progress-bar').css('width', function (index, value) {
-                              var fWidth = $('.progress').width();
-                              totalProgress += progressIncrement;
-                              return fWidth / (totalChecked + 1);
-                            }).text(totalProgress+'%');
-                            if (totalChecked == 0) 
-                            {
-                              $('.progress-bar').removeClass('progress-bar-striped active').css('width', '100%').text('100%');
-                              $('.progress').delay(5000).slideUp('slow');
-                            }
-                          }
-                        );
-                      } else {
-                        // Добавляем новую компанию в справочник CRM
-                        BX24.callMethod(
-                          "crm.company.add",
-                          {
-                            fields:
-                            {
-                              "TITLE": data.name,
-                              "COMPANY_TYPE": "PROSPECT",
-                              "ADDRESS": data.address,
-                              "ADDRESS_2": data.address_2,
-                              "ADDRESS_CITY": data.city_name,
-                              "ADDRESS_REGION": data.region,
-                              "ADDRESS_POSTAL_CODE": data.postal_code,
-                              "INDUSTRY": data.industry.code,
-                              "OPENED": opened,
-                              "COMMENTS": data.comments,
-                              "ASSIGNED_BY_ID": bx24userid,
-                              "CREATED_BY_ID": bx24userid,
-                              "PHONE": data.phone,
-                              "EMAIL": data.email,
-                              "WEB": data.web,
-                              "IM": data.im,
-                              "CURRENCY_ID": data.currency
-                            },
-                            params: { "REGISTER_SONET_EVENT": lm }
-                          },
-                          function () 
-                          {
-                            $('#company'+i).prop('checked', 0);
-                            totalChecked--;
-                            $('#totalInport').find('span').text(totalChecked);
-                            $('.progress-bar').css('width', function (index, value) {
-                              var fWidth = $('.progress').width();
-                              totalProgress += progressIncrement;
-                              return fWidth / (totalChecked + 1);
-                            }).text(totalProgress+'%');
-                            if (totalChecked == 0) 
-                            {
-                              $('.progress-bar').removeClass('progress-bar-striped active').css('width', '100%').text('100%');
-                              $('.progress').delay(5000).slideUp('slow');
-                            }
-                          }
-                        );
+                        statusExist = 1;
+                        companyId = companyList[i].ID;
+                        break;
+                      }
+                      else
+                      {
+                        statusExist = 0;
+                        companyId = null;
                       }
                     }
-                  );
-                } 
-                else 
-                {
-                  // Добавление новой записи в справочник видов деятельности
-                  // и затем добавление или обновление компании
-                  BX24.callMethod(
-                    "crm.status.add",
+                    if (statusExist)
                     {
-                      fields: {
-                        "ENTITY_ID": "INDUSTRY",
-                        "STATUS_ID": data.industry.code,
-                        "NAME": data.industry.name
-                      }
-                    },
-                    function() 
-                    {
-                      // Проверка существования компании, добавление 
-                      // или обновление добавляемой компании 
-                      // в зависимости от условий
                       BX24.callMethod(
-                        "crm.company.list",
+                        "crm.company.update",
                         {
-                          filter: { 
-                            "TITLE": data.name, 
-                            "ADDRESS": data.address,
-                            "ADDRESS_CITY": data.city_name
+                          id: companyId,
+                          fields: {
+                            "ADDRESS_2": data.address_2,
+                            "INDUSTRY": data.industry.code,
+                            "OPENED": opened,
+                            "ASSIGNED_BY_ID": data.auid,
+                            "PHONE": data.phone,
+                            "EMAIL": data.email,
+                            "WEB": data.web,
+                            "IM": data.im,
+                            "CURRENCY_ID": data.currency
                           },
-                          select: [ "ID" ]
-                        }, 
-                        function (result_cl)
-                        {
-                          if (result_cl.data().length) 
+                          params: { "REGISTER_SONET_EVENT": lm }
+                        },
+                        function (result_cu) {
+                          if (result_cu.error())
                           {
-                            // Обновление уже существующей компании:
-                            // обновляем только доп. информацию об
-                            // офисе компании или этаже, сферу
-                            // деятельности, в случае изменения
-                            // основного, обновляем видимость компании
-                            // для других и делаем переназначение
-                            // принадлежности компании к текущему
-                            // пользователю, также обновляем массив
-                            // контактных данных (телефон, эл. почта и
-                            // т.п.). Выставляем правильную валюту и
-                            // если надо, отмечаем данное событие в
-                            // ленте CRM.
-                            BX24.callMethod(
-                              "crm.company.update",
-                              {
-                                id: result_cl.data()['ID'],
-                                fields: {
-                                  "ADDRESS_2": data.address_2,
-                                  "INDUSTRY": data.industry.code,
-                                  "OPENED": opened,
-                                  "ASSIGNED_BY_ID": bx24userid,
-                                  "CREATED_BY_ID": bx24userid,
-                                  "PHONE": data.phone,
-                                  "EMAIL": data.email,
-                                  "WEB": data.web,
-                                  "IM": data.im,
-                                  "CURRENCY_ID": data.currency
-                                },
-                                params: { "REGISTER_SONET_EVENT": lm }
-                              },
-                              function() {
-                                $('#company'+i).prop('checked', 0);
-                                totalChecked--;
-                                $('#totalInport').find('span').text(totalChecked);
-                                $('.progress-bar').css('width', function (index, value) {
-                                  var fWidth = $('.progress').width();
-                                  totalProgress += progressIncrement;
-                                  return fWidth / (totalChecked + 1);
-                                }).text(totalProgress+'%');
-                                if (totalChecked == 0) 
-                                {
-                                  $('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
-                                }
-                              }
-                            );
-                          } 
-                          else 
+                            console.error(result_cu.error());
+                          }
+                          else
                           {
-                            // Добавляем новую компанию в 
-                            // справочник CRM
-                            BX24.callMethod(
-                              "crm.company.add",
-                              {
-                                fields:
-                                {
-                                  "TITLE": data.name,
-                                  "COMPANY_TYPE": "PROSPECT",
-                                  "ADDRESS": data.address,
-                                  "ADDRESS_2": data.address_2,
-                                  "ADDRESS_CITY": data.city_name,
-                                  "ADDRESS_REGION": data.region,
-                                  "ADDRESS_POSTAL_CODE": data.postal_code,
-                                  "INDUSTRY": data.industry.code,
-                                  "OPENED": opened,
-                                  "COMMENTS": data.comments,
-                                  "ASSIGNED_BY_ID": bx24userid,
-                                  "CREATED_BY_ID": bx24userid,
-                                  "PHONE": data.phone,
-                                  "EMAIL": data.email,
-                                  "WEB": data.web,
-                                  "IM": data.im,
-                                  "CURRENCY_ID": data.currency
-                                },
-                                params: { "REGISTER_SONET_EVENT": lm }
-                              },
-                              function () 
-                              {
-                                $('#company'+i).prop('checked', 0);
-                                totalChecked--;
-                                $('#totalInport').find('span').text(totalChecked);
-                                $('.progress-bar').css('width', function (index, value) {
-                                  var fWidth = $('.progress').width();
-                                  totalProgress += progressIncrement;
-                                  return fWidth / (totalChecked + 1);
-                                }).text(totalProgress+'%');
-                                if (totalChecked == 0) 
-                                {
-                                  $('.progress').removeClass('progress-bar-striped active').css('width', '100%').text('100%').delay(5000).slideUp('slow');
-                                }
-                              }
-                            );
+                            totalChecked--;
+                            $('#totalInport').find('span').text(totalChecked);
+                            $('.progress-bar').css('width', function (index, value) {
+                              var fWidth = $('.progress').width();
+                              totalProgress += progressIncrement;
+                              return fWidth / (totalChecked + 1);
+                            }).text(totalProgress+'%');
+                            if (totalChecked == 0) 
+                            {
+                              $('.progress-bar')
+                                .removeClass('progress-bar-striped')
+                                .css('width', '100%')
+                                .text('100%');
+                              $('.progress').delay(2000).slideUp('slow');
+                            }
                           }
                         }
                       );
                     }
-                  );
+                    else
+                    {
+                      BX24.callMethod(
+                        "crm.company.add",
+                        {
+                          fields:
+                          {
+                            "TITLE": data.name,
+                            "COMPANY_TYPE": "PROSPECT",
+                            "ADDRESS": data.address,
+                            "ADDRESS_2": data.address_2,
+                            "ADDRESS_CITY": data.city_name,
+                            "ADDRESS_REGION": data.region,
+                            "ADDRESS_POSTAL_CODE": data.postal_code,
+                            "INDUSTRY": data.industry.code,
+                            "OPENED": opened,
+                            "COMMENTS": data.comments,
+                            "ASSIGNED_BY_ID": data.auid,
+                            "CREATED_BY_ID": bx24userid,
+                            "PHONE": data.phone,
+                            "EMAIL": data.email,
+                            "WEB": data.web,
+                            "IM": data.im,
+                            "CURRENCY_ID": data.currency
+                          },
+                          params: { "REGISTER_SONET_EVENT": lm }
+                        },
+                        function (result_ca) {
+                          if (result_ca.error())
+                          {
+                            console.log(result_ca.error());
+                          }
+                          else
+                          {
+                            totalChecked--;
+                            $('#totalInport').find('span').text(totalChecked);
+                            $('.progress-bar').css('width', function (index, value) {
+                              var fWidth = $('.progress').width();
+                              totalProgress += progressIncrement;
+                              return fWidth / (totalChecked + 1);
+                            }).text(totalProgress+'%');
+                            if (totalChecked == 0) 
+                            {
+                              $('.progress-bar')
+                                .removeClass('progress-bar-striped')
+                                .css('width', '100%')
+                                .text('100%');
+                              $('.progress').delay(2000).slideUp('slow');
+                            }
+                          }
+                        }
+                      );
+                    }
+                  }, 'json');
                 }
               }
-            );
-          }, 'json');
-        }
-      }
+            }
+          }
+        );
+      });
     }
   });
 
@@ -753,98 +648,15 @@ BX24.init(function() {
       {
         if (selectedRubrics != $('#selectRubrics').val())
         {
-          totalChecked = 0;
           selectedRubrics = $('#selectRubrics').val();
+          searchRubric = $('#selectRubrics option:selected').text();
           b24CityID = $('#selectSearchCity').val();
           $('#searchGroupRubrics').attr('disabled', 'disabled');
           $('#selectSearchCity').attr('disabled', 'disabled').selectpicker('render');
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          var formData = {
-            searchAPI: b24APIKey,
-            searchDomain: '{{request.DOMAIN}}',
-            searchRubric: $('#selectRubrics option:selected').text(),
-            searchCity: b24CityID,
-            searchPage: page
-          };
-          $.post('/getDataSearchRubric/', formData, function (data) {
-            if (!data.error) 
-            {
-              console.log(data.error);
-              alert(data.message);
-            }
-            else
-            {
-              totalFind = data.total;
-              $('#qty').number(data.qty, 0, '.', ' ');
-              $('#searching').text($('#selectRubrics option:selected').text());
-              $('#resultTotal').text(data.total);
-              $('nav ul.pagination').find('li:last').removeClass('disabled');
-              $('nav ul.pagination').find('li:not(:first):not(:last)').remove();
-              $('#tableResult tbody').find('tr').remove();
-              $('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
-              if (data.total > 50) 
-              {
-                var pageNum = 2;
-                for (var i = 50; i < data.total; i = i + 50) {
-                  $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
-                  pageNum++;
-                }
-              } 
-              else 
-              {
-                $('nav ul.pagination').find('li:last').addClass('disabled');
-              }
-              if (data.result) 
-              {
-                var companyList = null;
-                BX24.callMethod(
-                  "crm.company.list",
-                  {
-                    order: { "DATE_CREATE": "ASC" },
-                    selected: [ "ID", "TITLE", "ADDRESS" ]
-                  },
-                  function (result_cl) {
-                    if (result_cl.error())
-                      console.error(result_cl.error())
-                    else
-                    {
-                      var companyList = result_cl.data();
-                      var statusExist = 0;
-                      data.result.forEach(function(entry, index) {
-                        var cId = index + 1;
-                        for (var i in companyList)
-                        {
-                          if (companyList[i].ADDRESS == entry.address && 
-                              companyList[i].TITLE == entry.name)
-                          {
-                            statusExist = 1;
-                            break;
-                          }
-                          else
-                          {
-                            statusExist = 0;
-                          }
-                        }
-                        if (statusExist)
-                        {
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                        }
-                        else
-                        {
-                          totalChecked++;
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                        }
-                      });
-                      $('#totalInport').find('span').text(totalChecked);
-                      BX24.fitWindow();
-                    }
-                  }
-                );
-              }
-            }
-          }, 'json').done(function() {
+          gotoPage('1', 'rubric', function() {
             $('#searchGroupRubrics').removeAttr('disabled');
             $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
             $('#configForm').find('button').removeAttr('disabled');
@@ -883,7 +695,6 @@ BX24.init(function() {
       {
         if (searchText != $('#inputSearchText').val()) 
         {
-          totalChecked = 0;
           searchText = $('#inputSearchText').val();
           b24CityID = $('#selectSearchCity').val();
           $('#searchGroupText').attr('disabled', 'disabled');
@@ -891,86 +702,7 @@ BX24.init(function() {
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          var formData = {
-            searchAPI: b24APIKey,
-            searchDomain: '{{request.DOMAIN}}',
-            searchText: searchText,
-            searchCity: b24CityID,
-            searchPage: page};
-          $.post('/getDataSearch/', formData, function (data) {
-            if (!data.error) {
-              console.log(data.error);
-              alert(data.message);
-            } else {
-              totalFind = data.total;
-              $('#qty').number(data.qty, 0, '.', ' ');
-              $('#searching').text(searchText);
-              $('#resultTotal').text(data.total);
-              $('nav ul.pagination').find('li:last').removeClass('disabled');
-              $('nav ul.pagination').find('li:not(:first):not(:last)').remove();
-              $('#tableResult tbody').find('tr').remove();
-              $('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
-              if (data.total > 50) 
-              {
-                var pageNum = 2;
-                for (var i = 50; i < data.total; i = i + 50) {
-                  $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
-                  pageNum++;
-                }
-              } 
-              else 
-              {
-                $('nav ul.pagination').find('li:last').addClass('disabled');
-              }
-              if (data.result) 
-              {
-                var companyList = null;
-                BX24.callMethod(
-                  "crm.company.list",
-                  {
-                    order: { "DATE_CREATE": "ASC" },
-                    selected: [ "ID", "TITLE", "ADDRESS" ]
-                  },
-                  function (result_cl) {
-                    if (result_cl.error())
-                      console.error(result_cl.error())
-                    else
-                    {
-                      var companyList = result_cl.data();
-                      var statusExist = 0;
-                      data.result.forEach(function(entry, index) {
-                        var cId = index + 1;
-                        for (var i in companyList)
-                        {
-                          if (companyList[i].ADDRESS == entry.address && 
-                              companyList[i].TITLE == entry.name)
-                          {
-                            statusExist = 1;
-                            break;
-                          }
-                          else
-                          {
-                            statusExist = 0;
-                          }
-                        }
-                        if (statusExist)
-                        {
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                        }
-                        else
-                        {
-                          totalChecked++;
-                          $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-                        }
-                      });
-                      $('#totalInport').find('span').text(totalChecked);
-                      BX24.fitWindow();
-                    }
-                  }
-                );
-              }
-            }
-          }, 'json').done(function() {
+          gotoPage('1', 'text', function() {
             $('#searchGroupText').removeAttr('disabled');
             $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
             $('#configForm').find('button').removeAttr('disabled');
@@ -1001,6 +733,9 @@ BX24.init(function() {
   });
 });
 
+// Изменяем размер фрейма под текущие контент
+BX24.fitWindow();
+
 // Функция меняет итоговое кол-во импортируемых компаний
 // отображаемых пользователю для удобства
 function changeMark(id) {
@@ -1013,86 +748,155 @@ function changeMark(id) {
 }
 
 // Функция листания страниц результатов поиска
-function gotoPage(pageTo) {
+function gotoPage(pageTo, type, callback) 
+{
+  totalChecked = 0;
+  
   var formData = {
     searchAPI: b24APIKey,
     searchDomain: '{{request.DOMAIN}}',
-    searchText: searchText,
     searchCity: b24CityID,
-    searchPage: pageTo};
+    searchPage: pageTo
+  };
+
+  var requestURL = '',
+      searchingText = '',
+      unlockFiledset = '';
+
   $('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
-  $.post('/getDataSearch/', formData, function(data) {
-    totalFind = data.total
+
+  if (type == 'rubric')
+  {
+    formData.searchRubric = searchRubric;
+    requestURL = '/getDataSearchRubric/';
+    searchingText = searchRubric;
+    unlockFiledset = '#searchGroupRubrics';
+  }
+  else
+  {
+    formData.searchText = searchText;
+    requestURL = '/getDataSearch/';
+    searchingText = searchText;
+    unlockFiledset = '#searchGroupText';
+  }
+  $.post(requestURL, formData, function (data) {
+    totalFind = data.total;
     $('#qty').number(data.qty, 0, '.', ' ');
-    $('#searching').text(searchText);
+    $('#searching').text(searchingText);
     $('#resultTotal').text(data.total);
     $('nav ul.pagination').find('li').removeClass('disabled');
     $('nav ul.pagination').find('li:not(:first):not(:last)').remove();
     $('#tableResult tbody').find('tr').remove();
-    if (pageTo == 1) {
+    if (pageTo == 1) 
+    {
       $('nav ul.pagination').find('li:first').addClass('disabled').after('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
-      if (totalFind > 50) {
+      if (totalFind > 50) 
+      {
         var pageNum = 2;
-        for (var i = 50; i < totalFind; i = i + 50) {
-          $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+        for (var i = 50; i < totalFind; i = i + 50) 
+        {
+          $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+',\''+type+'\')">'+pageNum+'</a></li>');
           pageNum++;
         }
-      } else
+      } 
+      else
+      {
         $('nav ul.pagination').find('li:last').addClass('disabled');
-    } else {
-      if (totalFind > 50) {
+      }
+    } 
+    else 
+    {
+      if (totalFind > 50) 
+      {
         var pageNum = 1;
-        for (var i = 0; i < totalFind; i = i + 50) {
-          if (pageNum == pageTo) {
+        for (var i = 0; i < totalFind; i = i + 50) 
+        {
+          if (pageNum == pageTo) 
+          {
             $('nav ul.pagination').find('li:last').before('<li class="active" id="page'+pageNum+'"><span>'+pageNum+' <span class="sr-only">(текущая)</span></span></li>');
-          } else {
-            $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+          } 
+          else 
+          {
+            $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+',\''+type+'\')">'+pageNum+'</a></li>');
           }
           pageNum++;
         }
         if (Math.ceil(totalFind / 50) == pageTo)
-          $('nav ul.pagination').find('li:last').addClass('disabled');
-      } else
-        $('nav ul.pagination').find('li:last').addClass('disabled');
-    }
-    totalChecked = 0;
-    data.result.forEach(function(entry) {
-      BX24.callMethod(
-        "crm.company.list",
         {
-          filter: { "TITLE": entry.name, "ADDRESS": entry.address },
-          select: [ "ID" ]
-        },
-        function (result) {
-          if (result.data().length) {
-            $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-          } else {
-            totalChecked++;
-            $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+totalChecked+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td></tr>');
-          }
+          $('nav ul.pagination').find('li:last').addClass('disabled');
+        }
+      } 
+      else
+      {
+        $('nav ul.pagination').find('li:last').addClass('disabled');
+      }
+    }
+    
+    BX24.callMethod(
+      "crm.company.list",
+      {
+        order: { "DATE_CREATE": "ASC" },
+        select: [ "ID", "TITLE", "ADDRESS", "ASSIGNED_BY_ID" ]
+      },
+      function (result_cl) {
+        if (result_cl.error())
+          console.error(result_cl.error())
+        else
+        {
+          var companyList = result_cl.data();
+          var statusExist = 0,
+              assignedUserId = 0;
+          userList.forEach(function (entry) {
+            selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.LAST_NAME+'</option>';
+          });
+          data.result.forEach(function(entry, index) {
+            var cId = index + 1;
+            for (var i in companyList)
+            {
+              if (companyList[i].ADDRESS == entry.address && 
+                  companyList[i].TITLE == entry.name)
+              {
+                statusExist = 1;
+                assignedUserId = companyList[i].ASSIGNED_BY_ID;
+                break;
+              }
+              else
+              {
+                statusExist = assignedUserId = 0;
+              }
+            }
+            if (statusExist)
+            {
+              $('#tableResult').find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+              $('#assigned'+cId).val(assignedUserId).selectpicker('render');
+            }
+            else
+            {
+              totalChecked++;
+              $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+              $('#assigned'+cId).val(bx24userid).selectpicker('render');
+            }
+          });
           $('#totalInport').find('span').text(totalChecked);
+        }
+      }
+    );
+  }, 'json').done(function() {
+    if (callback && typeof(callback) === 'function')
+    {
+      callback();
+    }
+    setTimeout(function() {
+      var widthWraper = $('#wraper').width();
+      var heightWraper = $('#wraper').height();
+      BX24.resizeWindow(1, 1, function() {
+        BX24.resizeWindow(widthWraper, heightWraper, function() {
           BX24.fitWindow();
         });
-    });
-  }, 'json').done(function() {
-    $('#inputSearchText').removeAttr('disabled');
-    $('#selectSearchCity').removeAttr('disabled');
-    $('#configForm').find('button').removeAttr('disabled');
-    $('#searchButton').removeAttr('disabled');
-    $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
-      .addClass('fa-search');
-    var widthWraper = $('#wraper').width();
-    var heightWraper = $('#wraper').height();
-    BX24.resizeWindow(1, 1, function() {
-      BX24.resizeWindow(widthWraper, heightWraper, function() {
-        BX24.fitWindow();
       });
-    });
+    }, 1000);
   });
 }
-
-// Изменяем размер фрейма под текущие контент
-BX24.fitWindow();
 
 // Функция числительных склонений
 function decOfNum(number, titles)
