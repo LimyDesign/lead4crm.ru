@@ -476,6 +476,7 @@ BX24.init(function() {
                   importCompanyHash = $('#company'+index).attr('value');
                   importData.importCompanyID = importCompanyID;
                   importData.importCompanyHash = importCompanyHash;
+                  importData.assignedUserId = $('#assigned'+index).val();
                   $('#company'+index)
                     .prop('checked', 0)
                     .parent().parent().addClass('active');
@@ -496,7 +497,6 @@ BX24.init(function() {
                         companyId = null;
                       }
                     }
-                    assignedUserId = $('#assigned'+index).val();
                     if (statusExist)
                     {
                       BX24.callMethod(
@@ -507,7 +507,7 @@ BX24.init(function() {
                             "ADDRESS_2": data.address_2,
                             "INDUSTRY": data.industry.code,
                             "OPENED": opened,
-                            "ASSIGNED_BY_ID": assignedUserId,
+                            "ASSIGNED_BY_ID": data.auid,
                             "PHONE": data.phone,
                             "EMAIL": data.email,
                             "WEB": data.web,
@@ -559,7 +559,7 @@ BX24.init(function() {
                             "INDUSTRY": data.industry.code,
                             "OPENED": opened,
                             "COMMENTS": data.comments,
-                            "ASSIGNED_BY_ID": assignedUserId,
+                            "ASSIGNED_BY_ID": data.auid,
                             "CREATED_BY_ID": bx24userid,
                             "PHONE": data.phone,
                             "EMAIL": data.email,

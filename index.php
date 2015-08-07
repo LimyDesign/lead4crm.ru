@@ -77,7 +77,8 @@ if ($cmd[0]) {
 				$_REQUEST['importAPI'],
 				$_REQUEST['importDomain'],
 				$_REQUEST['importCompanyID'],
-				$_REQUEST['importCompanyHash']);
+				$_REQUEST['importCompanyHash'],
+				$_REQUEST['assignedUserId']);
 			break;
 
 		case 'newAPIKey':
@@ -579,13 +580,14 @@ function importRubrics($apikey, $domain, $full = false) {
 	return file_get_contents($url.$uri);
 }
 
-function importCompany($apikey, $domain, $id, $hash) {
+function importCompany($apikey, $domain, $id, $hash, $auid) {
 	$url = "http://api.cnamrf.ru/getCompanyProfile/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
 		'domain' => $domain,
 		'id' => $id,
-		'hash' => $hash));
+		'hash' => $hash,
+		'auid' => $auid));
 	return file_get_contents($url.$uri);
 }
 
