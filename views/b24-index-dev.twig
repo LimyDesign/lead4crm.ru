@@ -1115,7 +1115,7 @@ function gotoPage(pageTo, type, callback)
           } 
           else 
           {
-            $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+            $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+', \''+type+'\')">'+pageNum+'</a></li>');
           }
           pageNum++;
         }
