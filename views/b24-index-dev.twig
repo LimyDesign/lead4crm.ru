@@ -445,12 +445,11 @@ BX24.init(function() {
       var progressIncrement = Math.floor(100 / totalChecked);
       var totalProgress = 0;
       $('.progress').slideDown('fast', function() {
-        console.log('Huy!');
         $('.progress-bar')
           .addClass('progress-bar-striped')
           .css('width', '0%')
           .text('0%');
-        BX24.fitWindow(
+        BX24.callMethod(
           "crm.company.list",
           {
             order: { "DATE_CREATE": "ASC" },
