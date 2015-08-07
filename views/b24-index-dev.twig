@@ -474,8 +474,6 @@ BX24.init(function() {
                 {
                   importCompanyID = $('#company'+index).attr('name');
                   importCompanyHash = $('#company'+index).attr('value');
-                  assignedUserId = $('#assigned'+index).val();
-                  console.log(assignedUserId);
                   importData.importCompanyID = importCompanyID;
                   importData.importCompanyHash = importCompanyHash;
                   $('#company'+index).prop('checked', 0);
@@ -496,6 +494,7 @@ BX24.init(function() {
                         companyId = null;
                       }
                     }
+                    assignedUserId = $('#assigned'+index).val();
                     if (statusExist)
                     {
                       BX24.callMethod(
