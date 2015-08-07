@@ -463,14 +463,15 @@ BX24.init(function() {
             else
             {
               var companyList = result_cl.data();
-              var statusExist = 0,
+              var statusExist = 0
+                  index = 1,
                   companyId = null;
-              for (var i = 1; i <= (totalFind > 50 ? 50 : totalFind); i++)
+              for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++)
               {
-                if ($('#company'+i).is(':checked'))
+                if ($('#company'+index).prop('checked'))
                 {
-                  importCompanyID = $('#company'+i).attr('name');
-                  importCompanyHash = $('#company'+i).attr('value');
+                  importCompanyID = $('#company'+index).attr('name');
+                  importCompanyHash = $('#company'+index).attr('value');
                   importData.importCompanyID = importCompanyID;
                   importData.importCompanyHash = importCompanyHash;
                   $.post('/importCompany/', importData, function (data) {
@@ -517,7 +518,7 @@ BX24.init(function() {
                           else
                           {
                             totalChecked--;
-                            $('#company'+i).prop('checked', 0);
+                            $('#company'+index).prop('checked', 0);
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
                               var fWidth = $('.progress').width();
@@ -562,7 +563,7 @@ BX24.init(function() {
                           }
                           else
                           {
-                            $('#company'+i).prop('checked', 0);
+                            $('#company'+index).prop('checked', 0);
                             totalChecked--;
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
