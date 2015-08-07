@@ -1055,6 +1055,7 @@ function gotoPage(pageTo, callback)
     searchingText = searchText;
     unlockFiledset = '#searchGroupText';
   }
+  console.log(requestURL, formData);
   $.post(requestURL, formData, function (data) {
     console.log(data);
     totalFind = data.total;
