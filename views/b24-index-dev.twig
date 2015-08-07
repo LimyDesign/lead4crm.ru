@@ -232,6 +232,7 @@ var totalChecked = 0;
 var totalFind = 0;
 var bx24userid = 1;
 var userList = null;
+var selectUserList = '';
 
 // Делаем удобный выбор городов, иначе полная лабуда
 $('.selectpicker').selectpicker();
@@ -840,6 +841,9 @@ function gotoPage(pageTo, type, callback)
         {
           var companyList = result_cl.data();
           var statusExist = 0;
+          userList.forEach(function (entry) {
+            selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.SECOND_NAME+'</option>';
+          });
           data.result.forEach(function(entry, index) {
             var cId = index + 1;
             for (var i in companyList)
@@ -857,7 +861,7 @@ function gotoPage(pageTo, type, callback)
             }
             if (statusExist)
             {
-              $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Я</td></tr>');
+              $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId'" data-live-search="true" data-width="100%" data-style="btn-default input-xs">'+selectUserList+'</select></td></tr>');
             }
             else
             {
