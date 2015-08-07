@@ -767,7 +767,7 @@ BX24.init(function() {
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          gotoPage('1');
+          gotoPage('1', 'rubric');
           // var formData = {
           //   searchAPI: b24APIKey,
           //   searchDomain: '{{request.DOMAIN}}',
@@ -898,7 +898,7 @@ BX24.init(function() {
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          gotoPage('1');
+          gotoPage('1', 'text');
           // var formData = {
           //   searchAPI: b24APIKey,
           //   searchDomain: '{{request.DOMAIN}}',
@@ -1024,7 +1024,7 @@ function changeMark(id) {
 }
 
 // Функция листания страниц результатов поиска
-function gotoPage(pageTo, callback) 
+function gotoPage(pageTo, type) 
 {
   totalChecked = 0;
   
@@ -1041,7 +1041,7 @@ function gotoPage(pageTo, callback)
 
   $('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
 
-  if ($('#searchGroupText').prop('disabled'))
+  if (type == 'rubric')
   {
     formData.searchRubric = searchRubric;
     requestURL = '/getDataSearchRubric/';
