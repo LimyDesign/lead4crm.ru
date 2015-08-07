@@ -843,7 +843,7 @@ function gotoPage(pageTo, type, callback)
           var statusExist = 0,
               assignedUserId = 0;
           userList.forEach(function (entry) {
-            selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.SECOND_NAME+'</option>';
+            selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.LAST_NAME+'</option>';
           });
           data.result.forEach(function(entry, index) {
             var cId = index + 1;
