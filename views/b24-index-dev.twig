@@ -767,7 +767,18 @@ BX24.init(function() {
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          gotoPage('1', 'rubric');
+          gotoPage('1', 'rubric', function() {
+            $('#searchGroupRubrics').removeAttr('disabled');
+            $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
+            $('#configForm').find('button').removeAttr('disabled');
+            $('#searchButton').removeAttr('disabled');
+            $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+              .addClass('fa-search');
+            $('#search-options').slideToggle('fast');
+            $('#search-results').slideToggle('fast',function() {
+              BX24.fitWindow();
+            });
+          });
           // var formData = {
           //   searchAPI: b24APIKey,
           //   searchDomain: '{{request.DOMAIN}}',
@@ -898,7 +909,18 @@ BX24.init(function() {
           $('#configForm').find('button').attr('disabled', 'disabled');
           searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
           $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
-          gotoPage('1', 'text');
+          gotoPage('1', 'text', function() {
+            $('#searchGroupText').removeAttr('disabled');
+            $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
+            $('#configForm').find('button').removeAttr('disabled');
+            $('#searchButton').removeAttr('disabled');
+            $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+              .addClass('fa-search');
+            $('#search-options').slideToggle('fast');
+            $('#search-results').slideToggle('fast',function() {
+              BX24.fitWindow();
+            });
+          });
           // var formData = {
           //   searchAPI: b24APIKey,
           //   searchDomain: '{{request.DOMAIN}}',
@@ -1024,7 +1046,7 @@ function changeMark(id) {
 }
 
 // Функция листания страниц результатов поиска
-function gotoPage(pageTo, type) 
+function gotoPage(pageTo, type, callback) 
 {
   totalChecked = 0;
   
@@ -1072,7 +1094,7 @@ function gotoPage(pageTo, type)
         var pageNum = 2;
         for (var i = 50; i < totalFind; i = i + 50) 
         {
-          $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+')">'+pageNum+'</a></li>');
+          $('nav ul.pagination').find('li:last').before('<li id="page'+pageNum+'"><a href="javascript:gotoPage('+pageNum+',\''+type+'\')">'+pageNum+'</a></li>');
           pageNum++;
         }
       } 
@@ -1152,17 +1174,22 @@ function gotoPage(pageTo, type)
       }
     );
   }, 'json').done(function() {
-    $(unlockFiledset).removeAttr('disabled');
-    $('#selectSearchCity').removeAttr('disabled');
-    $('#configForm').find('button').removeAttr('disabled');
-    $('#searchButton').removeAttr('disabled');
-    $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
-      .addClass('fa-search');
+    // $(unlockFiledset).removeAttr('disabled');
+    // $('#selectSearchCity').removeAttr('disabled');
+    // $('#configForm').find('button').removeAttr('disabled');
+    // $('#searchButton').removeAttr('disabled');
+    // $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
+    //   .addClass('fa-search');
     var widthWraper = $('#wraper').width();
     var heightWraper = $('#wraper').height();
     BX24.resizeWindow(1, 1, function() {
       BX24.resizeWindow(widthWraper, heightWraper, function() {
-        BX24.fitWindow();
+        BX24.fitWindow(function() {
+          if (callback && typeof(callback) === 'function')
+          {
+            callback();
+          }
+        });
       });
     });
   });
