@@ -457,7 +457,8 @@ BX24.init(function() {
           },
           function (result_cl) {
             if (result_cl.error())
-              console.error('Ошибка',result_cl.error())
+              console.log('Huy!');
+              console.error(result_cl.error());
             else
             {
               var companyList = result_cl.data();
