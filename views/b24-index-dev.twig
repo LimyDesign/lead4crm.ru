@@ -518,7 +518,8 @@ BX24.init(function() {
                           else
                           {
                             totalChecked--;
-                            $('#company'+index).prop('checked', false);
+                            console.log('#company'+index);
+                            $('#company'+index).prop('checked', 0);
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
                               var fWidth = $('.progress').width();
@@ -571,8 +572,9 @@ BX24.init(function() {
                           }
                           else
                           {
-                            $('#company'+index).prop('checked', false);
                             totalChecked--;
+                            console.log('#company'+index);
+                            $('#company'+index).prop('checked', 0);
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
                               var fWidth = $('.progress').width();
