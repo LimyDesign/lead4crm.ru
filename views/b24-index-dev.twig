@@ -1173,24 +1173,19 @@ function gotoPage(pageTo, type, callback)
       }
     );
   }, 'json').done(function() {
-    // $(unlockFiledset).removeAttr('disabled');
-    // $('#selectSearchCity').removeAttr('disabled');
-    // $('#configForm').find('button').removeAttr('disabled');
-    // $('#searchButton').removeAttr('disabled');
-    // $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
-    //   .addClass('fa-search');
-    var widthWraper = $('#wraper').width();
-    var heightWraper = $('#wraper').height();
-    BX24.resizeWindow(1, 1, function() {
-      BX24.resizeWindow(widthWraper, heightWraper, function() {
-        BX24.fitWindow(function() {
-          if (callback && typeof(callback) === 'function')
-          {
-            callback();
-          }
+    if (callback && typeof(callback) === 'function')
+    {
+      callback();
+    }
+    setTimeout(function() {
+      var widthWraper = $('#wraper').width();
+      var heightWraper = $('#wraper').height();
+      BX24.resizeWindow(1, 1, function() {
+        BX24.resizeWindow(widthWraper, heightWraper, function() {
+          BX24.fitWindow();
         });
       });
-    });
+    }, 1000);
   });
 }
 
