@@ -464,8 +464,9 @@ BX24.init(function() {
             else
             {
               var companyList = result_cl.data();
-              var statusExist = 0
+              var statusExist = 0,
                   index = 1,
+                  assignedUserId = 0,
                   companyId = null;
               for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++)
               {
@@ -473,6 +474,7 @@ BX24.init(function() {
                 {
                   importCompanyID = $('#company'+index).attr('name');
                   importCompanyHash = $('#company'+index).attr('value');
+                  assignedUserId = $('#assigned'+index).val();
                   importData.importCompanyID = importCompanyID;
                   importData.importCompanyHash = importCompanyHash;
                   $('#company'+index).prop('checked', 0);
@@ -503,7 +505,7 @@ BX24.init(function() {
                             "ADDRESS_2": data.address_2,
                             "INDUSTRY": data.industry.code,
                             "OPENED": opened,
-                            "ASSIGNED_BY_ID": bx24userid,
+                            "ASSIGNED_BY_ID": assignedUserId,
                             "PHONE": data.phone,
                             "EMAIL": data.email,
                             "WEB": data.web,
@@ -555,7 +557,7 @@ BX24.init(function() {
                             "INDUSTRY": data.industry.code,
                             "OPENED": opened,
                             "COMMENTS": data.comments,
-                            "ASSIGNED_BY_ID": bx24userid,
+                            "ASSIGNED_BY_ID": assignedUserId,
                             "CREATED_BY_ID": bx24userid,
                             "PHONE": data.phone,
                             "EMAIL": data.email,
