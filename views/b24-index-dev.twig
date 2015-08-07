@@ -518,7 +518,7 @@ BX24.init(function() {
                           else
                           {
                             totalChecked--;
-                            $('#company'+index).prop('checked', 0);
+                            $('#company'+index).prop('checked', false);
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
                               var fWidth = $('.progress').width();
@@ -571,7 +571,7 @@ BX24.init(function() {
                           }
                           else
                           {
-                            $('#company'+index).prop('checked', 0);
+                            $('#company'+index).prop('checked', false);
                             totalChecked--;
                             $('#totalInport').find('span').text(totalChecked);
                             $('.progress-bar').css('width', function (index, value) {
