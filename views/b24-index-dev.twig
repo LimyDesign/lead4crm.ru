@@ -525,6 +525,14 @@ BX24.init(function() {
                               totalProgress += progressIncrement;
                               return fWidth / (totalChecked + 1);
                             }).text(totalProgress+'%');
+                            if (totalChecked == 0) 
+                            {
+                              $('.progress-bar')
+                                .removeClass('progress-bar-striped')
+                                .css('width', '100%')
+                                .text('100%');
+                              $('.progress').delay(2000).slideUp('slow');
+                            }
                           }
                         }
                       );
@@ -571,20 +579,20 @@ BX24.init(function() {
                               totalProgress += progressIncrement;
                               return fWidth / (totalChecked + 1);
                             }).text(totalProgress+'%');
+                            if (totalChecked == 0) 
+                            {
+                              $('.progress-bar')
+                                .removeClass('progress-bar-striped')
+                                .css('width', '100%')
+                                .text('100%');
+                              $('.progress').delay(2000).slideUp('slow');
+                            }
                           }
                         }
                       );
                     }
                   }, 'json');
                 }
-              }
-              if (totalChecked == 0) 
-              {
-                $('.progress-bar')
-                  .removeClass('progress-bar-striped')
-                  .css('width', '100%')
-                  .text('100%');
-                $('.progress').delay(2000).slideUp('slow');
               }
             }
           }
