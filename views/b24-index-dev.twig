@@ -1057,7 +1057,6 @@ function gotoPage(pageTo, callback)
   }
   console.log(requestURL, formData);
   $.post(requestURL, formData, function (data) {
-    console.log(data);
     totalFind = data.total;
     $('#qty').number(data.qty, 0, '.', ' ');
     $('#searching').text(searchingText);
