@@ -1077,7 +1077,6 @@ function gotoPage(pageTo, type, callback)
     searchingText = searchText;
     unlockFiledset = '#searchGroupText';
   }
-  console.log(requestURL, formData);
   $.post(requestURL, formData, function (data) {
     totalFind = data.total;
     $('#qty').number(data.qty, 0, '.', ' ');
