@@ -808,13 +808,14 @@ body {
     .footer-holder .logo + p {
       line-height: 21px; }
   .footer-holder h4 {
+    padding: 28px 0 0;
     margin: 0 0 14px;
     font-size: 1.6rem;
     line-height: 1.5;
     font-weight: bold; }
   .footer-holder ul {
     margin: 0;
-    padding: 28px 0 0;
+    padding: 0;
     list-style: none;
     font-weight: bold;
     font-size: 1.5rem;
