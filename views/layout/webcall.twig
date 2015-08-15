@@ -1,0 +1,37 @@
+<div class="md-modal md-effect-12" id="webcall">
+	<div class="md-content">
+		<h3>Заказ обратного звонка</h3>
+		<div>
+			<form action="http://customer.voipexchange.ru/cgi-bin/Exchange.dll/FreeWebCall" method="post" class="form-horizontal">
+				<input type="hidden" name="ID" value="11330825822127927985835358067356">
+				<div class="form-group">
+					<label for="phone" class="col-sm-2 control-label">Ваш телефон:</label>
+					<div class="col-sm-10">
+						<input type="text" name="phone" maxlength="32" class="form-contorl" id="phone" placeholder="+74997046917">
+						<p class="help-block">Телефон должен включать код страны и города, например: +74997046917.</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="delay" class="col-sm-2 control-label">Позвонить через:</label>
+					<div class="col-sm-10">
+						<select name="Delay" id="delay" class="form-control">
+							<option value="0" selected>Без задержки</option>
+							<option value="10">10 секунд</option>
+							<option value="20">20 секунд</option>
+							<option value="30">30 секунд</option>
+							<option value="60">1 минуту</option>
+							<option value="120">2 минуты</option>
+							<option value="180">3 минуты</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button class="btn btn-primary">Позвонить мне</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="md-overlay"></div>
