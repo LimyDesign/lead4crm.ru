@@ -814,7 +814,7 @@ body {
     font-weight: bold; }
   .footer-holder ul {
     margin: 0;
-    padding: 0;
+    padding: 28px 0 0;
     list-style: none;
     font-weight: bold;
     font-size: 1.5rem;
