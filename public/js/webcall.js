@@ -4,7 +4,8 @@ $(document).ready(function() {
 		var action = $(this).attr('action');
 		var formData = $(this).serialize();
 		$.post(action, formData, function(data) {
-			$('#webcallmsg').removeClass('hide').html(data);
+			console.log(data);
+			// $('#webcallmsg').removeClass('hide').html(data);
 		});
 	}, 'json');
 });
