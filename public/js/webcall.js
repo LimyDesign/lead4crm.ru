@@ -6,6 +6,6 @@ $(document).ready(function() {
 		$.post(action, formData, function(data) {
 			console.log(data);
 			// $('#webcallmsg').removeClass('hide').html(data);
-		});
-	}, 'json');
+		}, 'json');
+	});
 });
