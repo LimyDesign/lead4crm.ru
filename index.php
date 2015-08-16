@@ -211,7 +211,7 @@ if ($cmd[0]) {
 function getWebCall($phone, $delay = 0) {
 	global $conf;
 	$sipnet_url = "https://api.sipnet.ru/cgi-bin/Exchange.dll/sip_balance".
-				  "?operation=getCall".
+				  "?operation=genCall".
 				  "&sipuid=".$conf->sipnet->id.
 				  "&password=".$conf->sipnet->password.
 				  "&SrcPhone=".$conf->sipnet->phone.

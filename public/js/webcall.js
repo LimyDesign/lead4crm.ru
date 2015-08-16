@@ -4,8 +4,14 @@ $(document).ready(function() {
 		var action = $(this).attr('action');
 		var formData = $(this).serialize();
 		$.post(action, formData, function(data) {
-			console.log(data);
-			// $('#webcallmsg').removeClass('hide').html(data);
+			if (data.Result)
+			{
+				$('#webcallmsg').removeClass().addClass('alert alert-success').text(data.gencall);
+			}
+			else
+			{
+				$('#webcallmsg').removeClass().addClass('alert alert-danger').text(data.ErrorStr);
+			}
 		}, 'json');
 	});
 });
