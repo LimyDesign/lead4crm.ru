@@ -5,7 +5,7 @@ $(document).ready(function() {
 		var action = $(this).attr('action');
 		var formData = $(this).serialize();
 		$(this).find('fieldset').attr('disabled', 'disabled');
-		$('#webcallmsg').removeClass().addClass('alert alert-info').html('<i class="fa fa-fw spinner fa-pulse"></i> Попытка установить соединение...');
+		$('#webcallmsg').removeClass().addClass('alert alert-info').html('<i class="fa fa-fw fa-spinner fa-pulse"></i> Попытка установить соединение...');
 		$.post(action, formData, function(data) {
 			if (data.Result)
 			{
