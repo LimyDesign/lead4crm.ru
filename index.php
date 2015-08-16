@@ -46,6 +46,7 @@ if ($cmd[0]) {
 
 		case 'webcall':
 			echo getWebCall($_POST['phone'], $_POST['delay']);
+			break;
 
 		case 'getSupportCities':
 			getSupportCities();
