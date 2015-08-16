@@ -6,11 +6,11 @@ $(document).ready(function() {
 		$.post(action, formData, function(data) {
 			if (data.Result)
 			{
-				$('#webcallmsg').removeClass().addClass('alert alert-success').text(data.gencall);
+				$('#webcallmsg').removeClass().addClass('alert alert-success').text(data.gencall).delay(5000).hide();
 			}
 			else
 			{
-				$('#webcallmsg').removeClass().addClass('alert alert-danger').text(data.ErrorStr);
+				$('#webcallmsg').removeClass().addClass('alert alert-danger').text(data.ErrorStr).delay(5000).hide();
 			}
 		}, 'json');
 	});
