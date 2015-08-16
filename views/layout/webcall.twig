@@ -2,8 +2,7 @@
 	<div class="md-content">
 		<h3>Заказ обратного звонка</h3>
 		<div>
-			<form action="https://customer.voipexchange.ru/cgi-bin/Exchange.dll/FreeWebCall" method="post" class="form-horizontal">
-				<input type="hidden" name="ID" value="11330825822127927985835358067356">
+			<form action="/webcall/" method="post" class="form-horizontal">
 				<div class="form-group">
 					<label for="phone" class="col-sm-4 control-label">Ваш телефон:</label>
 					<div class="col-sm-8">
@@ -12,16 +11,16 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="delay" class="col-sm-4 control-label">Позвонить через:</label>
+					<label for="delay" class="col-sm-4 control-label">Позвонить:</label>
 					<div class="col-sm-8">
-						<select name="Delay" id="delay" class="form-control">
+						<select name="delay" id="delay" class="form-control">
 							<option value="0" selected>Прямо сейчас</option>
-							<option value="10">10 секунд</option>
-							<option value="20">20 секунд</option>
-							<option value="30">30 секунд</option>
-							<option value="60">1 минуту</option>
-							<option value="120">2 минуты</option>
-							<option value="180">3 минуты</option>
+							<option value="10">Через 10 секунд</option>
+							<option value="20">Через 20 секунд</option>
+							<option value="30">Через 30 секунд</option>
+							<option value="60">Через 1 минуту</option>
+							<option value="120">Через 2 минуты</option>
+							<option value="180">Через 3 минуты</option>
 						</select>
 					</div>
 				</div>

@@ -44,6 +44,9 @@ if ($cmd[0]) {
 			logout();
 			break;
 
+		case 'webcall':
+			echo getWebCall($_POST['phone'], $_POST['delay']);
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -202,6 +205,20 @@ if ($cmd[0]) {
 		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
+}
+
+function getWebCall($phone, $delay = 0) {
+	global $conf;
+	$sipnet_url = "https://api.sipnet.ru/cgi-bin/Exchange.dll/sip_balance".
+				  "?operation=getCall".
+				  "&sipuid=".$conf->sipnet->id.
+				  "&password=".$conf->sipnet->password.
+				  "&SrcPhone=".$conf->sipnet->phone.
+				  "&DstPhone=".$phone.
+				  "&Delay=".$delay.
+				  "&format=2".
+				  "&lang=ru";
+	return file_get_contents($sipnet_url);
 }
 
 function getCountries($userCity) {
