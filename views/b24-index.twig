@@ -464,8 +464,6 @@ BX24.init(function() {
             else
             {
               var companyList = result_cl.data();
-              console.log('Company List:', companyList);
-              console.log('Company List 2:', result.next());
               var statusExist = 0,
                   index = 1,
                   assignedUserId = 0,
@@ -846,14 +844,6 @@ function gotoPage(pageTo, type, callback)
         else
         {
           var companyList = result_cl.data();
-          console.log(result_cl.more())
-          if (result_cl.more())
-          {
-            var companyListMore = result_cl.next();
-            console.log(companyListMore);
-            Array.prototype.push.apply(companyList, companyListMore);
-            console.dir(companyList);
-          }
           var statusExist = 0,
               assignedUserId = 0;
           userList.forEach(function (entry) {
