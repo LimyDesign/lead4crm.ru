@@ -846,6 +846,7 @@ function gotoPage(pageTo, type, callback)
         else
         {
           var companyList = result_cl.data();
+          console.log(result_cl.more())
           if (result_cl.more())
           {
             result_cl.next();
