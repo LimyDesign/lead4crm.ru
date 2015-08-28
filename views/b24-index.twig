@@ -846,8 +846,10 @@ function gotoPage(pageTo, type, callback)
         else
         {
           var companyList = result_cl.data();
-          console.log(companyList);
-          console.log(result_cl.next());
+          if (result_cl.more())
+          {
+            companyList += result_cl.next();
+          }
           var statusExist = 0,
               assignedUserId = 0;
           userList.forEach(function (entry) {
