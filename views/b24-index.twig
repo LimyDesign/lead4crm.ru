@@ -850,6 +850,7 @@ function gotoPage(pageTo, type, callback)
           {
             result_cl.next();
             Array.prototype.push.apply(companyList, result_cl.data());
+            console.dir(companyList);
           }
           var statusExist = 0,
               assignedUserId = 0;
