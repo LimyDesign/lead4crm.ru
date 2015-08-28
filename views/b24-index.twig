@@ -849,8 +849,8 @@ function gotoPage(pageTo, type, callback)
           console.log(result_cl.more())
           if (result_cl.more())
           {
-            result_cl.next();
-            Array.prototype.push.apply(companyList, result_cl.next().data());
+            var companyListMore = result_cl.next();
+            Array.prototype.push.apply(companyList, companyListMore);
             console.dir(companyList);
           }
           var statusExist = 0,
