@@ -850,6 +850,7 @@ function gotoPage(pageTo, type, callback)
           if (result_cl.more())
           {
             var companyListMore = result_cl.next();
+            console.log(companyListMore);
             Array.prototype.push.apply(companyList, companyListMore);
             console.dir(companyList);
           }
