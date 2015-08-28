@@ -481,7 +481,11 @@ BX24.init(function() {
                     .prop('checked', 0)
                     .parent().parent().addClass('active');
                   $.post('/importCompany/', importData, function (data) {
-                    console.log(data.name, data.count_contacts);
+                    if (data.error)
+                    {
+                      alert(data.message);
+                      return;
+                    }
                     for (var i in companyList)
                     {
                       if (companyList[i].TITLE == data.name &&
