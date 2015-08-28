@@ -849,7 +849,7 @@ function gotoPage(pageTo, type, callback)
           if (result_cl.more())
           {
             result_cl.next();
-            Array.prototype.push.apply(companyList, result_cl.data());
+            Array.prototype.push.apply(companyList, result_cl.next().data());
             console.dir(companyList);
           }
           var statusExist = 0,
