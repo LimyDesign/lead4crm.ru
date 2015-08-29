@@ -770,6 +770,7 @@ function gotoPage(pageTo, type, callback)
       companyList = [];
 
   $('#page'+pageTo).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
+  $('#tableResult tbody').append('<tr><td colspan="5"><i class="fa fa-fw fa-spinner fa-pulse"></i> Проверка уже импортированных компаний... Если в CRM компаний больше 1000, то процедура может занять некоторое время.</td></tr>');
 
   if (type == 'rubric')
   {
