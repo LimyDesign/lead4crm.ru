@@ -481,7 +481,7 @@ BX24.init(function() {
                     .prop('checked', 0)
                     .parent().parent().addClass('active');
                   $.post('/importCompany/', importData, function (data) {
-                    if (data.error)
+                    if (data.error != '0')
                     {
                       alert(data.message);
                       return;
