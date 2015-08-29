@@ -437,6 +437,7 @@ BX24.init(function() {
     if (totalChecked > 0) {
       var importCompanyID = '';
       var importCompanyHash = '';
+      var companyList = [];
       var opened = $('input[name="OPENED"]:checked').val();
       var lm = $('input[name="REGISTER_SONET_EVENT"]:checked').val();
       var importData = {
@@ -463,144 +464,149 @@ BX24.init(function() {
             }
             else
             {
-              var companyList = result_cl.data();
-              var statusExist = 0,
-                  index = 1,
-                  assignedUserId = 0,
-                  companyId = null;
-              for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++)
+              companyList = companyList.concat(result_cl.data());
+              if (result_cl.more())
+                result_cl.next();
+              else
               {
-                if ($('#company'+index).prop('checked'))
+                var statusExist = 0,
+                    index = 1,
+                    assignedUserId = 0,
+                    companyId = null;
+                for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++)
                 {
-                  importCompanyID = $('#company'+index).attr('name');
-                  importCompanyHash = $('#company'+index).attr('value');
-                  importData.importCompanyID = importCompanyID;
-                  importData.importCompanyHash = importCompanyHash;
-                  importData.assignedUserId = $('#assigned'+index).val();
-                  $('#company'+index)
-                    .prop('checked', 0)
-                    .parent().parent().addClass('active');
-                  $.post('/importCompany/', importData, function (data) {
-                    if (data.error != '0')
-                    {
-                      alert(data.message);
-                      return;
-                    }
-                    for (var i in companyList)
-                    {
-                      if (companyList[i].TITLE == data.name &&
-                          companyList[i].ADDRESS_CITY == data.city_name &&
-                          companyList[i].ADDRESS == data.address)
+                  if ($('#company'+index).prop('checked'))
+                  {
+                    importCompanyID = $('#company'+index).attr('name');
+                    importCompanyHash = $('#company'+index).attr('value');
+                    importData.importCompanyID = importCompanyID;
+                    importData.importCompanyHash = importCompanyHash;
+                    importData.assignedUserId = $('#assigned'+index).val();
+                    $('#company'+index)
+                      .prop('checked', 0)
+                      .parent().parent().addClass('active');
+                    $.post('/importCompany/', importData, function (data) {
+                      if (data.error != '0')
                       {
-                        statusExist = 1;
-                        companyId = companyList[i].ID;
-                        break;
+                        alert(data.message);
+                        return;
+                      }
+                      for (var i in companyList)
+                      {
+                        if (companyList[i].TITLE == data.name &&
+                            companyList[i].ADDRESS_CITY == data.city_name &&
+                            companyList[i].ADDRESS == data.address)
+                        {
+                          statusExist = 1;
+                          companyId = companyList[i].ID;
+                          break;
+                        }
+                        else
+                        {
+                          statusExist = 0;
+                          companyId = null;
+                        }
+                      }
+                      if (statusExist)
+                      {
+                        BX24.callMethod(
+                          "crm.company.update",
+                          {
+                            id: companyId,
+                            fields: {
+                              "ADDRESS_2": data.address_2,
+                              "INDUSTRY": data.industry.code,
+                              "OPENED": opened,
+                              "ASSIGNED_BY_ID": data.auid,
+                              "PHONE": data.phone,
+                              "EMAIL": data.email,
+                              "WEB": data.web,
+                              "IM": data.im,
+                              "CURRENCY_ID": data.currency
+                            },
+                            params: { "REGISTER_SONET_EVENT": lm }
+                          },
+                          function (result_cu) {
+                            if (result_cu.error())
+                            {
+                              console.error(result_cu.error());
+                            }
+                            else
+                            {
+                              totalChecked--;
+                              $('#totalInport').find('span').text(totalChecked);
+                              $('.progress-bar').css('width', function (index, value) {
+                                var fWidth = $('.progress').width();
+                                totalProgress += progressIncrement;
+                                return fWidth / (totalChecked + 1);
+                              }).text(totalProgress+'%');
+                              if (totalChecked == 0) 
+                              {
+                                $('.progress-bar')
+                                  .removeClass('progress-bar-striped')
+                                  .css('width', '100%')
+                                  .text('100%');
+                                $('.progress').delay(2000).slideUp('slow');
+                              }
+                            }
+                          }
+                        );
                       }
                       else
                       {
-                        statusExist = 0;
-                        companyId = null;
+                        BX24.callMethod(
+                          "crm.company.add",
+                          {
+                            fields:
+                            {
+                              "TITLE": data.name,
+                              "COMPANY_TYPE": "PROSPECT",
+                              "ADDRESS": data.address,
+                              "ADDRESS_2": data.address_2,
+                              "ADDRESS_CITY": data.city_name,
+                              "ADDRESS_REGION": data.region,
+                              "ADDRESS_POSTAL_CODE": data.postal_code,
+                              "INDUSTRY": data.industry.code,
+                              "OPENED": opened,
+                              "COMMENTS": data.comments,
+                              "ASSIGNED_BY_ID": data.auid,
+                              "CREATED_BY_ID": bx24userid,
+                              "PHONE": data.phone,
+                              "EMAIL": data.email,
+                              "WEB": data.web,
+                              "IM": data.im,
+                              "CURRENCY_ID": data.currency
+                            },
+                            params: { "REGISTER_SONET_EVENT": lm }
+                          },
+                          function (result_ca) {
+                            if (result_ca.error())
+                            {
+                              console.log(result_ca.error());
+                            }
+                            else
+                            {
+                              totalChecked--;
+                              $('#totalInport').find('span').text(totalChecked);
+                              $('.progress-bar').css('width', function (index, value) {
+                                var fWidth = $('.progress').width();
+                                totalProgress += progressIncrement;
+                                return fWidth / (totalChecked + 1);
+                              }).text(totalProgress+'%');
+                              if (totalChecked == 0) 
+                              {
+                                $('.progress-bar')
+                                  .removeClass('progress-bar-striped')
+                                  .css('width', '100%')
+                                  .text('100%');
+                                $('.progress').delay(2000).slideUp('slow');
+                              }
+                            }
+                          }
+                        );
                       }
-                    }
-                    if (statusExist)
-                    {
-                      BX24.callMethod(
-                        "crm.company.update",
-                        {
-                          id: companyId,
-                          fields: {
-                            "ADDRESS_2": data.address_2,
-                            "INDUSTRY": data.industry.code,
-                            "OPENED": opened,
-                            "ASSIGNED_BY_ID": data.auid,
-                            "PHONE": data.phone,
-                            "EMAIL": data.email,
-                            "WEB": data.web,
-                            "IM": data.im,
-                            "CURRENCY_ID": data.currency
-                          },
-                          params: { "REGISTER_SONET_EVENT": lm }
-                        },
-                        function (result_cu) {
-                          if (result_cu.error())
-                          {
-                            console.error(result_cu.error());
-                          }
-                          else
-                          {
-                            totalChecked--;
-                            $('#totalInport').find('span').text(totalChecked);
-                            $('.progress-bar').css('width', function (index, value) {
-                              var fWidth = $('.progress').width();
-                              totalProgress += progressIncrement;
-                              return fWidth / (totalChecked + 1);
-                            }).text(totalProgress+'%');
-                            if (totalChecked == 0) 
-                            {
-                              $('.progress-bar')
-                                .removeClass('progress-bar-striped')
-                                .css('width', '100%')
-                                .text('100%');
-                              $('.progress').delay(2000).slideUp('slow');
-                            }
-                          }
-                        }
-                      );
-                    }
-                    else
-                    {
-                      BX24.callMethod(
-                        "crm.company.add",
-                        {
-                          fields:
-                          {
-                            "TITLE": data.name,
-                            "COMPANY_TYPE": "PROSPECT",
-                            "ADDRESS": data.address,
-                            "ADDRESS_2": data.address_2,
-                            "ADDRESS_CITY": data.city_name,
-                            "ADDRESS_REGION": data.region,
-                            "ADDRESS_POSTAL_CODE": data.postal_code,
-                            "INDUSTRY": data.industry.code,
-                            "OPENED": opened,
-                            "COMMENTS": data.comments,
-                            "ASSIGNED_BY_ID": data.auid,
-                            "CREATED_BY_ID": bx24userid,
-                            "PHONE": data.phone,
-                            "EMAIL": data.email,
-                            "WEB": data.web,
-                            "IM": data.im,
-                            "CURRENCY_ID": data.currency
-                          },
-                          params: { "REGISTER_SONET_EVENT": lm }
-                        },
-                        function (result_ca) {
-                          if (result_ca.error())
-                          {
-                            console.log(result_ca.error());
-                          }
-                          else
-                          {
-                            totalChecked--;
-                            $('#totalInport').find('span').text(totalChecked);
-                            $('.progress-bar').css('width', function (index, value) {
-                              var fWidth = $('.progress').width();
-                              totalProgress += progressIncrement;
-                              return fWidth / (totalChecked + 1);
-                            }).text(totalProgress+'%');
-                            if (totalChecked == 0) 
-                            {
-                              $('.progress-bar')
-                                .removeClass('progress-bar-striped')
-                                .css('width', '100%')
-                                .text('100%');
-                              $('.progress').delay(2000).slideUp('slow');
-                            }
-                          }
-                        }
-                      );
-                    }
-                  }, 'json');
+                    }, 'json');
+                  }
                 }
               }
             }
