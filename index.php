@@ -275,7 +275,7 @@ function wizard($crm_id, $step) {
 		$return_array['message'] = 'Отсутствует обязательный параметр.';
 	}
 	
-	echo json_encode($return_array);
+	echo json_encode($return_array, JSON_UNESCAPED_UNICODE);
 }
 
 function getCountries($userCity) {
