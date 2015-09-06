@@ -83,51 +83,11 @@
 						<form action="/step-2/" id="wizard-form">
 							<div class="form-group">
 								<label>Название и версия CRM:</label>
-								<div class="input-group-btn select" id="select_crm">
-									<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-										<span class="selected" id="AC">
-											<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
-											<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
-											<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
-											Оплата с произвольной банковской карты
-										</span>
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu option" role="menu">
-										<li id="PC">
-											<a href="#.">
-												<img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги">
-												Оплата из кошелька в Яндекс.Деньгах
-											</a>
-										</li>
-										<li id="AC">
-											<a href="#.">
-												<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
-												<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
-												<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
-												Оплата с произвольной банковской карты
-											</a>
-										</li>
-										<li id="GP">
-											<a href="#.">
-												<i class="fa fa-money" style="color:green"></i>
-												Оплата наличными через кассы и терминалы
-											</a>
-										</li>
-										<li id="WM">
-											<a href="#.">
-												<img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney">
-												Оплата из кошелька в системе WebMoney
-											</a>
-										</li>
-										<li id="AB">
-											<a href="#.">
-												<img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик">
-												Оплата через Альфа-Клик
-											</a>
-										</li>
-									</ul>
-								</div>
+								<select name="crm" id="selectCRM" class="selectpicker" aria-describedby="helpCRM" data-live-search="true" data-width="100%" data-style="btn-default input-lg" title="[ выборите вашу CRM ]">
+									<optgroup label="Битрикс24">
+										<option value="bx24" data-subtext="(онлайн)">Битрикс24</option>
+									</optgroup>
+								</select>
 							</div>
 							<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
 						</form>
@@ -359,6 +319,7 @@
 	<script src="/public/js/classie.min.js"></script>
 	<script src="/public/js/modalEffects.min.js"></script>
 	<script src="/public/js/webcall.js"></script>
+	<script src="/public/js/bootstrap-select.min.js"></script>
 	{% jshrink %}
 	<script type="text/javascript">
 	$(document).ready(function() {
