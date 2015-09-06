@@ -332,6 +332,10 @@
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
 		selectText('apikey');
 
+		$('#wizard-form').submit(function(event) {
+			event.preventDefault();
+		});
+
 		$('body').on('mouseup', '.well', function() {
 			selectText('apikey');
 		});
@@ -362,7 +366,7 @@
 
 		$('#yaform').submit(function(event) {
 			$('#inputSum').number(true, 2, '.', '');
-			if ($('#inputSum').val() >= 1) {
+			if ($('#inputSum').val() >= 100) {
 				return true;
 			} else {
 				$('#inputSum').number(true, 2, '.', ' ');
