@@ -48,6 +48,10 @@ if ($cmd[0]) {
 			echo getWebCall($_POST['phone'], $_POST['delay']);
 			break;
 
+		case 'step-2':
+			wizard($_POST['crm_id'], 2);
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -247,6 +251,23 @@ function getCRM() {
 		pg_close($db);
 	}
 	return $crm_list;
+}
+
+function wizard($crm_id, $step) {
+	global $conf;
+	header("Content-Type: text/json");
+	$return_array = array();
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select module from crm_versions where id = {$crm_id}";
+		$result = pg_query($query);
+		if ($module = pg_fetch_result($result, 0, 'module')) {
+			$return_array['module'] = $module;
+		} else {
+			$return_array['module'] = '';
+		}
+	}
+	echo json_encode($return_array);
 }
 
 function getCountries($userCity) {
@@ -667,6 +688,8 @@ function getSupportCities() {
 				$city[$i]['name'] = $row['name'];
 				$i++;
 			}
+			pg_free_result($result);
+			pg_close($db);
 			$json_array = array('city' => $city);
 			$json = json_encode($json_array);
 			file_put_contents(__DIR__.'/cities.json', $json);

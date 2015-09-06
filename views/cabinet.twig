@@ -81,20 +81,22 @@
 					<div class="col-md-6">
 						<h3>&nbsp;</h3>
 						<form action="/step-2/" id="wizard-form">
-							<div class="form-group">
-								<label>Название и версия CRM/ERP/BPM:</label>
-								<select name="crm" id="selectCRM" class="form-control">
-									<option value="nocrm" selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
-									{% for crm_systems in crm_list %}
-										<optgroup label="{{crm_systems.name}}">
-											{% for crm in crm_systems.versions %}
-												<option value="{{crm.id}}">{{crm.version}}</option>
-											{% endfor %}
-										</optgroup>
-									{% endfor %}
-								</select>
-							</div>
-							<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+							<fieldset>
+								<div class="form-group">
+									<label>Название и версия CRM/ERP/BPM:</label>
+									<select name="crm" id="selectCRM" class="form-control">
+										<option value="nocrm" selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
+										{% for crm_systems in crm_list %}
+											<optgroup label="{{crm_systems.name}}">
+												{% for crm in crm_systems.versions %}
+													<option value="{{crm.id}}">{{crm.version}}</option>
+												{% endfor %}
+											</optgroup>
+										{% endfor %}
+									</select>
+								</div>
+								<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+							</fieldset>
 						</form>
 					</div>
 				</div>
@@ -336,8 +338,12 @@
 			event.preventDefault();
 			var form_action = $(this).attr('action');
 			var crm_id = $(this).find('#selectCRM').val();
+			$(this).find('fieldset').attr('disabled', 'disabled');
 			if (crm_id != null) {
 				console.log(form_action, crm_id);
+				$.post(form_action, {crm_id: crm_id}, function(data) {
+					$('#wizard-form').find('fieldset').removeAttr('disabled');
+				}, 'json');
 			}
 		});
 
