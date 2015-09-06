@@ -257,16 +257,24 @@ function wizard($crm_id, $step) {
 	global $conf;
 	header("Content-Type: text/json");
 	$return_array = array();
-	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select module from crm_versions where id = {$crm_id}";
-		$result = pg_query($query);
-		if ($module = pg_fetch_result($result, 0, 'module')) {
-			$return_array['module'] = $module;
-		} else {
-			$return_array['module'] = '';
+	if ($crm_id && $step) {
+		if ($step == 1) {
+			if ($conf->db->type == 'postgres') {
+				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+				$query = "select module from crm_versions where id = {$crm_id}";
+				$result = pg_query($query);
+				if ($module = pg_fetch_result($result, 0, 'module')) {
+					$return_array['module'] = $module;
+				} else {
+					$return_array['module'] = '';
+				}
+			}
 		}
+	} else {
+		$return_array['error'] = '500';
+		$return_array['message'] = 'Отсутствует обязательный параметр.';
 	}
+	
 	echo json_encode($return_array);
 }
 
