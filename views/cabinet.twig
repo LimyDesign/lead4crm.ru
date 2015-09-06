@@ -69,6 +69,68 @@
 						<p>Вы авторизовались на сайте системы моментального экспорта данных из справочника 2ГИС. Вы можете прямо из личного кабинета собрать выборку из 2ГИС, предварительно оплатив необходимый объем данных, либо воспользоваться удобным модулем для вашей CRM, если таковой модуль имеется. Для сбора выборки из базы следуйте указаниям мастера ниже. Ваши выборки будут храниться вечно и вы в любое время сможете вернуться за ними, однако, помните о том, что данные устаревают и, возможно, некоторые профили в сохраненных выборках уже не актуальны.</p>
 					</div>
 				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-6">
+						<h3>Мастер сборок &mdash; Шаг 1</h3>
+						<p>Выберите из списка вашу CRM. Если используемой вами CRM нет в списке, вы можете написать нам письмо с предложением добавить используемую вами CRM. Мы гарантируем реализацию экспорта данных в вашу CRM систему в течении 14 дней, при условии, что мы не заняты в этот момент другой CRM, тогда все будет зависеть от очереди заказов.</p>
+					</div>
+					<div class="col-md-6">
+						<h3>&nbsp;</h3>
+						<form action="/step-2/" id="wizard">
+							<div class="form-group">
+								<label>Название и версия CRM:</label>
+								<div class="input-group-btn select" id="select_crm">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										<span class="selected" id="AC">
+											<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+											<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+											<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+											Оплата с произвольной банковской карты
+										</span>
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu option" role="menu">
+										<li id="PC">
+											<a href="#.">
+												<img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги">
+												Оплата из кошелька в Яндекс.Деньгах
+											</a>
+										</li>
+										<li id="AC">
+											<a href="#.">
+												<img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+												<img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+												<img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+												Оплата с произвольной банковской карты
+											</a>
+										</li>
+										<li id="GP">
+											<a href="#.">
+												<i class="fa fa-money" style="color:green"></i>
+												Оплата наличными через кассы и терминалы
+											</a>
+										</li>
+										<li id="WM">
+											<a href="#.">
+												<img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney">
+												Оплата из кошелька в системе WebMoney
+											</a>
+										</li>
+										<li id="AB">
+											<a href="#.">
+												<img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик">
+												Оплата через Альфа-Клик
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+						</form>
+					</div>
+				</div>
+				<hr>
 				<div class="row">
 					<div class="col-md-6">
 						<h3>Ваши социальные аккаунты</h3>
