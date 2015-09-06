@@ -82,16 +82,16 @@
 						<h3>&nbsp;</h3>
 						<form action="/step-2/" id="wizard-form">
 							<div class="form-group">
-								<label>Название и версия CRM:</label>
+								<label>Название и версия CRM/ERP/BPM:</label>
 								<select name="crm" id="selectCRM" class="form-control">
-									<option value="nocrm" selected disabled>[ выборите вашу CRM ]</option>
-									<optgroup label="1C-Битрикс24 — коробочная версия">
-										<option value="1cbx24lv">1С-Битрикс24 последняя версия</option>
-										<option value="1cbx24v155">1C-Битрикс24 версия 15.5</option>
-									</optgroup>
-									<optgroup label="Битрикс24">
-										<option value="bx24">Битрикс24 онлайн версия</option>
-									</optgroup>
+									<option value="nocrm" selected disabled>[ выборите вашу CRM/ERP/BPM ]</option>
+									{% for crm_systems in crm_list %}
+										<optgroup label="{{crm_systems.name}}">
+											{% for crm in crm_systems.versions %}
+												<option value="{{crm.id}}">{{crm.version}}</option>
+											{% endfor %}
+										</optgroup>
+									{% endfor %}
 								</select>
 							</div>
 							<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>

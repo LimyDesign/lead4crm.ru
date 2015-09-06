@@ -127,6 +127,7 @@ if ($cmd[0]) {
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
+				'crm_list' => getCRM(),
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
@@ -220,6 +221,32 @@ function getWebCall($phone, $delay = 0) {
 				  "&format=2".
 				  "&lang=ru";
 	return file_get_contents($sipnet_url);
+}
+
+function getCRM() {
+	global $conf;
+	$crm_list = array();
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select id, name from crm_systems order by name asc";
+		$result = pg_query($query);
+		while ($row = pg_fetch_assoc($result)) {
+			$crm_list[$row['id']]['id'] = $row['id'];
+			$crm_list[$row['id']]['name'] = $row['name'];
+			$query2 = "select id, version from crm_versions where crmid = {$row['id']} order by version asc";
+			$result2 = pg_query($query2);
+			$crm = array();
+			while ($row2 = pg_fetch_assoc($result2)) {
+				$crm[$row2['id']]['id'] = $row2['id'];
+				$crm[$row2['id']]['version'] = $row2['version'];
+			}
+			pg_free_result($result2);
+			$crm_list[$row['id']]['versions'] = $crm;
+		}
+		pg_free_result($result);
+		pg_close($db);
+	}
+	return $crm_list;
 }
 
 function getCountries($userCity) {

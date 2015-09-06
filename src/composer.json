@@ -2,6 +2,7 @@
     "require": {
         "tecnick.com/tcpdf": "^6.2",
         "twig/twig": "^1.18",
-        "salva/jshrink-bundle": "^1.1"
+        "salva/jshrink-bundle": "^1.1",
+        "phpoffice/phpexcel": "^1.8"
     }
 }
