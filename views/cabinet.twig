@@ -334,9 +334,11 @@
 
 		$('#wizard-form').submit(function(event) {
 			event.preventDefault();
+			var form_action = $(this).attr('action');
 			var crm_id = $(this).find('#selectCRM').val();
-			if (crm_id != null)
-				alert(crm_id);
+			if (crm_id != null) {
+				console.log(form_action, crm_id);
+			}
 		});
 
 		$('body').on('mouseup', '.well', function() {
