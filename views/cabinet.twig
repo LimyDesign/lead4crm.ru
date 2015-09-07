@@ -340,7 +340,6 @@
 			var crm_id = $(this).find('#selectCRM').val();
 			$(this).find('fieldset').attr('disabled', 'disabled');
 			if (crm_id != null) {
-				console.log(form_action, crm_id);
 				$.post(form_action, {crm_id: crm_id}, function(data) {
 					$('#wizard-form').find('fieldset').removeAttr('disabled');
 					if (!data.error) {
