@@ -346,10 +346,10 @@
 						if (data.module) {
 							$("#wizard-helper").find('h3').html('Мастер выборок &mdash; Финиш');
 							$('#wizard-helper').find('p').text('Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.');
-							$('#wizard-form').find('fieldset').empty().html('<a href="'+data.module+'" target="_blank" class="btn btn-block btn-primary btn-lg">Установить модуль в «'+data.name+'»</a>');
+							$('#wizard-form').attr('action', 'step-1');
+							$('#wizard-form').find('fieldset').empty().html('<a href="'+data.module+'" target="_blank" class="btn btn-block btn-primary btn-lg">Установить модуль в «'+data.name+'»</a><button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>');
 						}
 					}
-					console.log(data);
 				}, 'json');
 			}
 		});
