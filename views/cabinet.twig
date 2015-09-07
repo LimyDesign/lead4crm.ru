@@ -342,12 +342,12 @@
 			var wizard_form = $(this).find('fieldset').html();
 			var crm_id = $(this).find('#selectCRM').val();
 			$(this).find('fieldset').attr('disabled', 'disabled');
-			if (form_action == 'step-1') {
+			if (form_action == '/step-1/') {
 				$('#wizard-form').find('fieldset').removeAttr('disabled');
 				$('#wizard-helper').find('h3').html(wizard_title);
 				$('#wizard-helper').find('p').text(wizard_desciption);
 				$('#wizard-form').find('fieldset').html(wizard_form);
-			} else if (form_action == 'step-2') {
+			} else if (form_action == '/step-2/') {
 				if (crm_id != null) {
 					$.post(form_action, {crm_id: crm_id}, function(data) {
 						$('#wizard-form').find('fieldset').removeAttr('disabled');
