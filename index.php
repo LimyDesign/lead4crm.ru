@@ -264,8 +264,10 @@ function wizard($crm_id, $step) {
 				$query = "select module from crm_versions where id = {$crm_id}";
 				$result = pg_query($query);
 				if ($module = pg_fetch_result($result, 0, 'module')) {
+					$return_array['error'] = '0';
 					$return_array['module'] = $module;
 				} else {
+					$return_array['error'] = '0';
 					$return_array['module'] = '';
 				}
 			}

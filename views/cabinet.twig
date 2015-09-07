@@ -343,6 +343,12 @@
 				console.log(form_action, crm_id);
 				$.post(form_action, {crm_id: crm_id}, function(data) {
 					$('#wizard-form').find('fieldset').removeAttr('disabled');
+					if (!data.error) {
+						if (data.module) {
+							$("#wizard-helper").find('h3').text('Мастер выборок &mdash; Финиш');
+							$('#wizard-helper').find('p').text('Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.');
+						}
+					}
 					console.log(data);
 				}, 'json');
 			}
