@@ -337,20 +337,30 @@
 		$('#wizard-form').submit(function(event) {
 			event.preventDefault();
 			var form_action = $(this).attr('action');
+			var wizard_title = $('#wizard-helper').find('h3').hmtl();
+			var wizard_desciption = $('#wizard-helper').find('p').text();
+			var wizard_form = $(this).find('fieldset').html();
 			var crm_id = $(this).find('#selectCRM').val();
 			$(this).find('fieldset').attr('disabled', 'disabled');
-			if (crm_id != null) {
-				$.post(form_action, {crm_id: crm_id}, function(data) {
-					$('#wizard-form').find('fieldset').removeAttr('disabled');
-					if (data.error == '0') {
-						if (data.module) {
-							$("#wizard-helper").find('h3').html('Мастер выборок &mdash; Финиш');
-							$('#wizard-helper').find('p').text('Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.');
-							$('#wizard-form').attr('action', 'step-1');
-							$('#wizard-form').find('fieldset').empty().html('<a href="'+data.module+'" target="_blank" class="btn btn-block btn-primary btn-lg">Установить модуль в «'+data.name+'»</a><button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>');
+			if (form_action == 'step-1') {
+				$('#wizard-form').find('fieldset').removeAttr('disabled');
+				$('#wizard-helper').find('h3').html(wizard_title);
+				$('#wizard-helper').find('p').text(wizard_desciption);
+				$('#wizard-form').find('fieldset').html(wizard_form);
+			} else if (form_action == 'step-2') {
+				if (crm_id != null) {
+					$.post(form_action, {crm_id: crm_id}, function(data) {
+						$('#wizard-form').find('fieldset').removeAttr('disabled');
+						if (data.error == '0') {
+							if (data.module) {
+								$("#wizard-helper").find('h3').html('Мастер выборок &mdash; Финиш');
+								$('#wizard-helper').find('p').text('Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.');
+								$('#wizard-form').attr('action', 'step-1');
+								$('#wizard-form').find('fieldset').empty().html('<a href="'+data.module+'" target="_blank" class="btn btn-block btn-primary btn-lg">Установить модуль в «'+data.name+'»</a><button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>');
+							}
 						}
-					}
-				}, 'json');
+					}, 'json');
+				}
 			}
 		});
 
