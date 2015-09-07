@@ -334,12 +334,12 @@
 		$('#inputInvoiceSum').number(true, 2, '.', ' ');
 		selectText('apikey');
 
+		var wizard_title = $('#wizard-helper').find('h3').html();
+		var wizard_desciption = $('#wizard-helper').find('p').text();
+		var wizard_form = $(this).find('fieldset').html();
 		$('#wizard-form').submit(function(event) {
 			event.preventDefault();
 			var form_action = $(this).attr('action');
-			var wizard_title = $('#wizard-helper').find('h3').html();
-			var wizard_desciption = $('#wizard-helper').find('p').text();
-			var wizard_form = $(this).find('fieldset').html();
 			var crm_id = $(this).find('#selectCRM').val();
 			$(this).find('fieldset').attr('disabled', 'disabled');
 			if (form_action == '/step-1/') {
