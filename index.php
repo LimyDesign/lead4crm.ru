@@ -258,7 +258,7 @@ function wizard($crm_id, $step) {
 	header("Content-Type: text/json");
 	$return_array = array();
 	if ($crm_id && $step) {
-		if ($step == 1) {
+		if ($step == 2) {
 			if ($conf->db->type == 'postgres') {
 				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 				$query = "select module from crm_versions where id = {$crm_id}";
