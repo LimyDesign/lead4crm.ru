@@ -95,7 +95,7 @@
                 <div class="form-group">
                   <label>Название и версия CRM/ERP/BPM:</label>
                   <select name="crm" id="selectCRM" class="form-control">
-                    <option value="nocrm" selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
+                    <option selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
                     {% for crm_systems in crm_list %}
                       <optgroup label="{{crm_systems.name}}">
                         {% for crm in crm_systems.versions %}
@@ -109,16 +109,9 @@
               </fieldset>
               <fieldset id="step-2" style="display:none;">
                 <div class="form-group">
-                  <label>Название и версия CRM/ERP/BPM:</label>
-                  <select name="crm" id="selectCRM" class="form-control">
-                    <option value="nocrm" selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
-                    {% for crm_systems in crm_list %}
-                      <optgroup label="{{crm_systems.name}}">
-                        {% for crm in crm_systems.versions %}
-                          <option value="{{crm.id}}">{{crm.version}}</option>
-                        {% endfor %}
-                      </optgroup>
-                    {% endfor %}
+                  <label>Город для выборки:</label>
+                  <select name="city" id="selectCity" class="form-control">
+                    <option selected disabled>[ выберите город ]</option>
                   </select>
                 </div>
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
