@@ -75,13 +75,23 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6" id="wizard-helper">
-						<h3>Мастер выборок &mdash; Шаг 1</h3>
-						<p>Выберите из списка вашу CRM, ERP или BPM систему. Если используемой вами CRM, ERP или BPM системы нет в списке, вы можете написать нам письмо с предложением добавить используемую вами систему. Мы гарантируем реализацию экспорта данных в вашу систему в течении 14 дней, при условии, что мы не заняты в этот момент другой CRM/ERP/BPM, тогда все будет зависеть от очереди заказов.</p>
+						<div id="step-1">
+							<h3>Мастер выборок &mdash; Шаг 1</h3>
+							<p>Выберите из списка вашу CRM, ERP или BPM систему. Если используемой вами CRM, ERP или BPM системы нет в списке, вы можете написать нам письмо с предложением добавить используемую вами систему. Мы гарантируем реализацию экспорта данных в вашу систему в течении 14 дней, при условии, что мы не заняты в этот момент другой CRM/ERP/BPM, тогда все будет зависеть от очереди заказов.</p>
+						</div>
+						<div id="step-2" class="hide">
+							<h3>Мастер выборок &mdash; Шаг 2</h3>
+							<p>Выберите город в котором вы хотите сделать выборку компаний из справочника 2ГИС. Для вашего удобства, мы попробовали автоматически определить ваш город, если все верно, можно переходить к следующему шагу.</p>
+						</div>
+						<div id="finish-module" class="hide">
+							<h3>Мастер выборок &mdash; Финиш</h3>
+							<p>Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.</p>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<h3>&nbsp;</h3>
 						<form action="/step-2/" id="wizard-form">
-							<fieldset>
+							<fieldset id="step-1">
 								<div class="form-group">
 									<label>Название и версия CRM/ERP/BPM:</label>
 									<select name="crm" id="selectCRM" class="form-control">
@@ -96,6 +106,26 @@
 									</select>
 								</div>
 								<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+							</fieldset>
+							<fieldset id="step-2" class="hide">
+								<div class="form-group">
+									<label>Название и версия CRM/ERP/BPM:</label>
+									<select name="crm" id="selectCRM" class="form-control">
+										<option value="nocrm" selected disabled>[ выберите вашу CRM/ERP/BPM ]</option>
+										{% for crm_systems in crm_list %}
+											<optgroup label="{{crm_systems.name}}">
+												{% for crm in crm_systems.versions %}
+													<option value="{{crm.id}}">{{crm.version}}</option>
+												{% endfor %}
+											</optgroup>
+										{% endfor %}
+									</select>
+								</div>
+								<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+							</fieldset>
+							<fieldset id="finish-module" class="hide">
+								<a href="" target="_blank" class="btn btn-block btn-primary btn-lg" id="module-link">Установить модуль в «<span id="module-name"></span>»</a>
+								<button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>
 							</fieldset>
 						</form>
 					</div>
@@ -354,10 +384,20 @@
 						$('#wizard-form').find('fieldset').removeAttr('disabled');
 						if (data.error == '0') {
 							if (data.module) {
-								$("#wizard-helper").find('h3').html('Мастер выборок &mdash; Финиш');
-								$('#wizard-helper').find('p').text('Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.');
 								$('#wizard-form').attr('action', '/step-1/');
-								$('#wizard-form').find('fieldset').empty().html('<a href="'+data.module+'" target="_blank" class="btn btn-block btn-primary btn-lg">Установить модуль в «'+data.name+'»</a><button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>');
+								$('#wizard-helper #step-1').hide('1000', function() {
+									$('#wizard-helper #step-2').show('1000');
+								});
+								$('#wizard-form #step-1').hide('1000', function() {
+									$('#wizard-form #finish-module').find('#module-link').attr('href', data.module);
+									$('#wizard-form #finish-module').find('#module-name').text(data.name);
+									$('#wizard-form #finish-module').show('1000');
+								});
+							} else {
+								$('#wizard-helper').find('h3').html('Мастер выборок &mdash Шаг 2');
+								$('#wizard-helper').find('p').text('Выберите город в котором вы хотите сделать выборку компаний из справочника 2ГИС. Для вашего удобства, мы попробовали автоматически определить ваш город, если все верно, можно переходить к следующему шагу.');
+								$('#wizard-form').attr('action', '/step-3/');
+								$('#wizard-form').find('fieldset').empty().hmtl('<a href=');
 							}
 						}
 					}, 'json');
