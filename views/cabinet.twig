@@ -83,7 +83,7 @@
 							<h3>Мастер выборок &mdash; Шаг 2</h3>
 							<p>Выберите город в котором вы хотите сделать выборку компаний из справочника 2ГИС. Для вашего удобства, мы попробовали автоматически определить ваш город, если все верно, можно переходить к следующему шагу.</p>
 						</div>
-						<div id="finish-module" class="hide">
+						<div id="finish-module" style="display:none;">
 							<h3>Мастер выборок &mdash; Финиш</h3>
 							<p>Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.</p>
 						</div>
@@ -123,7 +123,7 @@
 								</div>
 								<button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
 							</fieldset>
-							<fieldset id="finish-module" class="hide">
+							<fieldset id="finish-module" style="display:none;">
 								<a href="" target="_blank" class="btn btn-block btn-primary btn-lg" id="module-link">Установить модуль в «<span id="module-name"></span>»</a>
 								<button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>
 							</fieldset>
@@ -386,7 +386,7 @@
 							if (data.module) {
 								$('#wizard-form').attr('action', '/step-1/');
 								$('#wizard-helper #step-1').hide('1000', function() {
-									$('#wizard-helper #step-2').show('1000');
+									$('#wizard-helper #finish-module').show('1000');
 								});
 								$('#wizard-form #step-1').hide('1000', function() {
 									$('#wizard-form #finish-module').find('#module-link').attr('href', data.module);
