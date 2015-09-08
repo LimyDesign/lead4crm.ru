@@ -385,13 +385,13 @@
 						if (data.error == '0') {
 							if (data.module) {
 								$('#wizard-form').attr('action', '/step-1/');
-								$('#wizard-helper #step-1').hide('1000', function() {
-									$('#wizard-helper #finish-module').show('1000');
+								$('#wizard-helper #step-1').fadeOut('1000', function() {
+									$('#wizard-helper #finish-module').fadeIn('1000');
 								});
-								$('#wizard-form #step-1').hide('1000', function() {
+								$('#wizard-form #step-1').fadeOut('1000', function() {
 									$('#wizard-form #finish-module').find('#module-link').attr('href', data.module);
 									$('#wizard-form #finish-module').find('#module-name').text(data.name);
-									$('#wizard-form #finish-module').show('1000');
+									$('#wizard-form #finish-module').fadeIn('1000');
 								});
 							} else {
 								$('#wizard-helper').find('h3').html('Мастер выборок &mdash Шаг 2');
