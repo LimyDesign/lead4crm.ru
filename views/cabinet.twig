@@ -111,9 +111,20 @@
                 <div class="form-group">
                   <label>Город для выборки:</label>
                   <select name="city" id="selectCity" class="form-control">
-                    <option selected disabled>[ выберите город ]</option>
+                    {% for country in countries %}
+                      <optgroup label="{{country.name}}">
+                        {% for city in country.cities %}
+                          {% if city.selected %}
+                            <option value="{{city.code}}" selected>{{city.name}}</option>
+                          {% else %}
+                            <option value="{{city.code}}">{{city.name}}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </optgroup>
+                    {% endfor %}
                   </select>
                 </div>
+                <button type="button" class="btn btn-lg btn-link" onclick="javascript:wzdStep('1');">Назад <i class="fa fa-fw fa-arrow-left"></i></button>
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
@@ -411,6 +422,17 @@
         }
       }
     });
+
+    function wzdStep(step) {
+      var curr_step = step + 1;
+      $('#wizard-form').attr('action', '/step-'+step+'/');
+      $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
+        $('#wizard-helper #step-'+step).fadeIn('fast');
+      });
+      $('#wizard-form #step-'+curr_step).fadeOut('fast', function() {
+        $('#wizard-form #step-'+step).fadeIn('fast');
+      });
+    }
 
     /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
        копировать ключ полностью и без погрешности ошибки при выделении пользователем

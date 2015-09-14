@@ -132,6 +132,7 @@ if ($cmd[0]) {
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
 				'crm_list' => getCRM(),
+				'countries' => getCountries(getUserCityByIP()),
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
@@ -151,7 +152,6 @@ if ($cmd[0]) {
 					'installURL' => '/b24-install/' . $_SERVER['QUERY_STRING'],
 					'res' => $arRes,
 					'apikey' => $_SESSION['apikey'],
-					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
@@ -170,7 +170,6 @@ if ($cmd[0]) {
 					'installURL' => '/b24-install-dev/' . $_SERVER['QUERY_STRING'],
 					'res' => $arRes,
 					'apikey' => $_SESSION['apikey'],
-					'cities' => getCities($arRes['result']['PERSONAL_CITY']),
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
@@ -272,6 +271,8 @@ function wizard($crm_id, $step) {
 					$return_array['module'] = '';
 				}
 			}
+		} else if ($step = 3) {
+
 		}
 	} else {
 		$return_array['error'] = '500';
@@ -279,6 +280,28 @@ function wizard($crm_id, $step) {
 	}
 	
 	echo json_encode($return_array, JSON_UNESCAPED_UNICODE);
+}
+
+function getUserCityByIP() {
+	$ipaddress = '';
+	if ($_SERVER('HTTP_CLIENT_IP'))
+		$ipaddress = $_SERVER('HTTP_CLIENT_IP');
+	else if ($_SERVER('HTTP_X_FORWARDED_FOR'))
+		$ipaddress = $_SERVER('HTTP_X_FORWARDED_FOR');
+	else if ($_SERVER('HTTP_X_FORWARDED'))
+		$ipaddress = $_SERVER('HTTP_X_FORWARDED');
+	else if ($_SERVER('HTTP_FORWARDED_FOR'))
+		$ipaddress = $_SERVER('HTTP_FORWARDED_FOR');
+	else if ($_SERVER('HTTP_FORWARDED'))
+		$ipaddress = $_SERVER('HTTP_FORWARDED');
+	else if ($_SERVER('REMOTE_ADDR'))
+		$ipaddress = $_SERVER('REMOTE_ADDR');
+	else
+		$ipaddress = '77.88.8.8';
+	
+	$geoDataJSON = file_get_contents('http://api.sypexgeo.net/json/'.$ipaddress);
+	$geoData = json_decode($geoDataJSON);
+	return $geoData->city->name_ru;
 }
 
 function getCountries($userCity) {
