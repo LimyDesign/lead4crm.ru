@@ -124,7 +124,7 @@
                     {% endfor %}
                   </select>
                 </div>
-                <button type="button" class="btn btn-lg btn-primary" onclick="wzdStep('1')">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep('1')">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
@@ -423,17 +423,6 @@
       }
     });
 
-    function wzdStep(step) {
-      var curr_step = step + 1;
-      $('#wizard-form').attr('action', '/step-'+step+'/');
-      $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
-        $('#wizard-helper #step-'+step).fadeIn('fast');
-      });
-      $('#wizard-form #step-'+curr_step).fadeOut('fast', function() {
-        $('#wizard-form #step-'+step).fadeIn('fast');
-      });
-    }
-
     /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
        копировать ключ полностью и без погрешности ошибки при выделении пользователем
        самостоятельно.
@@ -533,6 +522,17 @@
           g.html('Доброй ночи&hellip;');
       }
     }
+  }
+
+  function wizardStep(step) {
+    var curr_step = step + 1;
+    $('#wizard-form').attr('action', '/step-'+step+'/');
+    $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
+      $('#wizard-helper #step-'+step).fadeIn('fast');
+    });
+    $('#wizard-form #step-'+curr_step).fadeOut('fast', function() {
+      $('#wizard-form #step-'+step).fadeIn('fast');
+    });
   }
 
   function selectText(element) {
