@@ -527,7 +527,7 @@
   }
 
   function wizardStep(step) {
-    console.log('Current step:' + current_step, 'Prev step:' + step);
+    console.log('Current step:' + curr_step, 'Prev step:' + step);
     var curr_step = step + 1;
     $('#wizard-form').attr('action', '/step-'+step+'/');
     $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
