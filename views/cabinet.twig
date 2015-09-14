@@ -381,6 +381,7 @@
       event.preventDefault();
       var form_action = $(this).attr('action');
       var crm_id = $(this).find('#selectCRM').val();
+      var city = $(this).find('#selectCity').val();
       $(this).find('fieldset').attr('disabled', 'disabled');
       if (form_action == '/step-1/') {
         $(this).find('fieldset').removeAttr('disabled');
@@ -422,6 +423,8 @@
         } else {
           $('#wizard-form').find('fieldset').removeAttr('disabled');
         }
+      } else if (form_action == '/step-3/') {
+        console.log(crm_id, city);
       }
     });
 
