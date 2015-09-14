@@ -392,9 +392,9 @@
           $('#wizard-form #step-1').fadeIn('fast');
         });
       } else if (form_action == '/step-2/') {
+        $('#wizard-form').find('fieldset').removeAttr('disabled');
         if (crm_id != null) {
           $.post(form_action, {crm_id: crm_id}, function(data) {
-            $('#wizard-form').find('fieldset').removeAttr('disabled');
             if (data.error == '0') {
               if (data.module) {
                 current_step = 9999;
