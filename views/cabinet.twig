@@ -450,7 +450,7 @@
             }
           }, 'json');
         } else {
-          $('.overlay').offset({ top: 0, left: 0 }).fadeOut();
+          $('.overlay').fadeOut().offset({ top: 0, left: 0 });
           $('#wizard-form').find('fieldset').removeAttr('disabled');
         }
       } else if (form_action == '/step-3/') {
