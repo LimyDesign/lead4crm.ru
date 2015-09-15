@@ -514,7 +514,10 @@
           });
         }
       } else if (form_action == '/showSearchDialog/') {
-        $('#searchDialog-'+searchType).modal('show');
+        $('#searchDialog-'+searchType).modal({
+          backdrop: false,
+          keyboard: false
+        });
       }
     });
 
@@ -522,11 +525,6 @@
       $(this).parent().parent().find('label.active').removeClass('active');
       $(this).parent().addClass('active');
     });
-
-    $('[id^=searchDialog-]').modal({
-      backdrop: false,
-      keyboard: false
-    })
 
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
       $('.overlay').fadeOut();
