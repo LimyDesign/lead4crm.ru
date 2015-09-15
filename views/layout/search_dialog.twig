@@ -6,14 +6,31 @@
 				<h4 class="modal-title">Ассоциативный поиск</h4>
 			</div>
 			<div class="modal-body">
-				<form>
+				<form id="searchForm">
 					<div class="form-group">
 						<label for="searchInput" class="control-label">Текст поиска:</label>
 						<input type="text" class="form-control" id="searchInput">
 					</div>
 				</form>
 				<hr>
-				
+				<h4>Результаты поиска:</h4>
+				<form id="searchResult">
+					<table class="table">
+						<thead>
+							<tr>
+								<th><input type="checkbox"id="selectAll"></th>
+								<th>Название компании</th>
+								<th>Кол-во филиалов</th>
+								<th>Действие</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="disabled">
+								<td colspan="4">Пока ничего не найдено&hellip;</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Отменить</button>
