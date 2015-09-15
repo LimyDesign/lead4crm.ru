@@ -10,8 +10,8 @@
     .selected {padding-right:10px;}
     .option {width:100%;} 
     #kk_help {border-bottom: 1px dashed #333; cursor: help;}
-    .overlay {position: relative;display: none; background-color: rgba(227,223,237,.7);}
     .wizard {background-color: #e3dfed;}
+    .overlay {position: relative;display: none; background-color: rgba(227,223,237,.7);}
   </style>
 </head>
 <body>
@@ -401,7 +401,11 @@
       var form_action = $(this).attr('action');
       var crm_id = $(this).find('#selectCRM').val();
       var city = $(this).find('#selectCity').val();
+      var wzd_pos = $('.wizard').offset(),
+          wzd_height = $('.wizard').height();
       $(this).find('fieldset').attr('disabled', 'disabled');
+      $('.overlay').offset(wzd_pos.top, wzd_pos.left).height(wzd_height).fadeIn('fast');
+      console.log(wzd_pos, wzd_height);
       if (form_action == '/step-1/') {
         $(this).find('fieldset').removeAttr('disabled');
         $(this).attr('action', '/step-2/');
