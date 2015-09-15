@@ -28,7 +28,7 @@
           <div class="nav-drop">
             <ul>
               <li>
-                Доступно <span id="kk_help" title="Карточек Компаний" data-toggle="tooltip">КК</span>: <span id="qty">0</span>
+                Доступно <span id="kk_help" title="Карточек Компаний">КК</span>: <span id="qty">0</span>
               </li>
               <li>
                 Баланс: <span id="balans">0</span>&nbsp;<i class="fa fa-rub"></i>
@@ -372,6 +372,7 @@
        и показываем данные пользователя о текущем балансе и тарифе.
     ========================================================================================= */
     greeting('#greeting');
+    $('#kk_help').tooltip('show');
     $.post('/getUserData/', function(data) {
       $('#balans').number(data.balans, 2, '.', ' ');
       $('#tariff').text(data.tariff);
