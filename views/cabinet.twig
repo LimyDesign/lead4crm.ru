@@ -526,6 +526,7 @@
 
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
       $('.overlay').fadeOut();
+      $('#wizard-form').find('fieldset').removeAttr('disabled');
       console.log(e);
     });
 
