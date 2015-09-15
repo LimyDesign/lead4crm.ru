@@ -375,6 +375,7 @@
     $.post('/getUserData/', function(data) {
       $('#balans').number(data.balans, 2, '.', ' ');
       $('#tariff').text(data.tariff);
+      $('#qty').number(data.qty, 0, '.', ' ');
     }, 'json');
 
     /* Мастер экспорта данных из 2ГИС
