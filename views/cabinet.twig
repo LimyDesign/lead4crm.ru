@@ -531,6 +531,11 @@
       $('#wizard-form').find('fieldset').removeAttr('disabled');
     });
 
+    $('#searchDialog-0').on('shown.bs.modal', function() {
+      var modal = $(this);
+      modal.find('input[type="text"]').focus();
+    });
+
     /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
        копировать ключ полностью и без погрешности ошибки при выделении пользователем
        самостоятельно.
