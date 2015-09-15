@@ -411,7 +411,9 @@
       $('.overlay').offset({ top: wzd_pos.top, left: wzd_pos.left }).height(wzd_height).fadeIn('fast');
       console.log(wzd_pos, wzd_height);
       if (form_action == '/step-1/') {
-        $(this).find('fieldset').removeAttr('disabled');
+        $('.overlay').fadeOut('fast', function() {
+          $(this).find('fieldset').removeAttr('disabled');
+        });
         $(this).attr('action', '/step-2/');
         $('#wizard-helper #step-'+current_step).fadeOut('fast', function() {
           $('#wizard-helper #step-1').fadeIn('fast');
@@ -422,7 +424,9 @@
       } else if (form_action == '/step-2/') {
         if (crm_id != null) {
           $.post(form_action, {crm_id: crm_id}, function(data) {
-            $('#wizard-form').find('fieldset').removeAttr('disabled');
+            $('.overlay').fadeOut('fast', function() {
+              $('#wizard-form').find('fieldset').removeAttr('disabled');
+            });
             if (data.error == '0') {
               if (data.module) {
                 current_step = 9999;
@@ -448,13 +452,17 @@
             }
           }, 'json');
         } else {
-          $('#wizard-form').find('fieldset').removeAttr('disabled');
+          $('.overlay').fadeOut('fast', function() {
+            $('#wizard-form').find('fieldset').removeAttr('disabled');
+          });
         }
       } else if (form_action == '/step-3/') {
         if (city != null) {
 
         } else {
-          $('#wizard-form').find('fieldset').removeAttr('disabled');
+          $('.overlay').fadeOut('fast', function() {
+            $('#wizard-form').find('fieldset').removeAttr('disabled');
+          });
         }
       }
     });
