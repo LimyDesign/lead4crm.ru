@@ -91,6 +91,14 @@
               <h3>Мастер выборок &mdash; Шаг 2</h3>
               <p>Выберите город в котором вы хотите сделать выборку компаний из справочника 2ГИС. Для вашего удобства, мы попробовали автоматически определить ваш город, если все верно, можно переходить к следующему шагу.</p>
             </div>
+            <div id="step-3" style="display:none;">
+              <h3>Мастер выборок &mdash; Шаг 3</h3>
+              <p>Выберите тип поиска компаний. Например, в ассоциативном поиске есть возможность самостоятельно указывать текст поиска, можно указать что угодно — вид деятельности, название компании или любые другие ключевые слова. А в точечный поиск позволяет более плотно выполнять поиск по видам деятельности, тем самым отсеивая ненужные компании, которые не занимаются тем или иным видом деятельности.</p>
+            </div>
+            <div id="step-9998">
+              <h3>Мастер выборок &mdash; Финиш</h3>
+              <p>Скачайте сформированную выборку из списка выборок. Или же вы можете создать новую выборку нажав на соответствующую кнопку. Если такой кнопки нет, то скорее всего вы уже делали выборку за текущие сутки и в этом случае вы можете дополнить созданную ранее выборку.</p>
+            </div>
             <div id="step-9999" style="display:none;">
               <h3>Мастер выборок &mdash; Финиш</h3>
               <p>Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.</p>
@@ -134,6 +142,25 @@
                 </div>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(1)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+              </fieldset>
+              <fieldset id="step-3" style="display:none;">
+                <div class="form-group">Тип поиска:</div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="searchType" value="0">
+                    Ассоциативный поиск
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="searchType" value="1" checked>
+                    Точечный поиск
+                  </label>
+                </div>
+                <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(2)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
+                <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
+              </fieldset>
+              <fieldset id="step-9998" style="display:none;">
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
                 <a href="" target="_blank" class="btn btn-block btn-primary btn-lg" id="module-link">Установить модуль в «<span id="module-name"></span>»</a>
@@ -405,6 +432,7 @@
       var form_action = $(this).attr('action');
       var crm_id = $(this).find('#selectCRM').val();
       var city = $(this).find('#selectCity').val();
+      var searchType = $(this).find('input[name="searchType"]:checked').val();
       var wzd_pos = $('.wizard').offset(),
           wzd_height = $('.wizard').height();
       console.log(wzd_pos.top, wzd_pos.left, wzd_height);
@@ -455,7 +483,16 @@
         }
       } else if (form_action == '/step-3/') {
         if (city != null) {
-
+          $('.overlay').fadeOut();
+          $('#wizard-form').find('fieldset').removeAttr('disabled');
+          current_step = 3;
+          $('#wizard-form').attr('action', '/step-9998/');
+          $('#wizard-helper #step-2').fadeOut('fast', function() {
+            $('#wizard-helper #step-3').fadeIn('fast');
+          });
+          $('#wizard-form #step-2').fadeOut('fast', function() {
+            $('#wizard-form #step-3').fadeIn('fast');
+          });
         } else {
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
