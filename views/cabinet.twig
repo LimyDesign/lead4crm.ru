@@ -409,7 +409,7 @@
           wzd_height = $('.wizard').height();
       console.log(wzd_pos.top, wzd_pos.left, wzd_height);
       $(this).find('fieldset').attr('disabled', 'disabled');
-      $('.overlay').offset({ top: wzd_pos.top, left: wzd_pos.left }).height(wzd_height).fadeIn('fast');
+      $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
       if (form_action == '/step-1/') {
         $('.overlay').fadeOut();
         $(this).find('fieldset').removeAttr('disabled');
