@@ -159,6 +159,9 @@
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
               </fieldset>
               <fieldset id="step-9998" style="display:none;">
+                <div class="list-group">
+                  <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
+                </div>
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
                 <a href="" target="_blank" class="btn btn-block btn-primary btn-lg" id="module-link">Установить модуль в «<span id="module-name"></span>»</a>
@@ -494,6 +497,19 @@
         } else {
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
+        }
+      } else if (form_action == '/step-4/') {
+        if (searchType != null) {
+          $('.overlay').fadeOut();
+          $('#wizard-form').find('fieldset').removeAttr('disabled');
+          current_step = 4;
+          $('#wizard-form').attr('action', '/showSearchDialog/');
+          $('#wizard-helper #step-3').fadeOut('fast', function() {
+            $('#wizard-helper #step-9998').fadeIn('fast');
+          });
+          $('#wizard-form #step-3').fadeOut('fast', function() {
+            $('#wizard-form #step-9998').fadeIn('fast');
+          });
         }
       }
     });
