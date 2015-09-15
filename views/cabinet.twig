@@ -28,6 +28,9 @@
           <div class="nav-drop">
             <ul>
               <li>
+                Доступно компаний: <span id="qty">0</span>
+              </li>
+              <li>
                 Баланс: <span id="balans">0</span>&nbsp;<i class="fa fa-rub"></i>
               </li>
               <li>
@@ -424,7 +427,11 @@
           $('#wizard-form').find('fieldset').removeAttr('disabled');
         }
       } else if (form_action == '/step-3/') {
-        console.log(crm_id, city);
+        if (city != null) {
+
+        } else {
+          $('#wizard-form').find('fieldset').removeAttr('disabled');
+        }
       }
     });
 
