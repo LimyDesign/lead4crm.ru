@@ -499,7 +499,7 @@
     });
 
     $('input[name="searchType"]').click(function() {
-      $(this).parent().parent().find('label.active').removeClass('active');
+      $(this).parent().addClass('active').parent().find('label.active').removeClass('active');
     });
 
     /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
