@@ -95,7 +95,7 @@
               <h3>Мастер выборок &mdash; Шаг 3</h3>
               <p>Выберите тип поиска компаний. Например, в ассоциативном поиске есть возможность самостоятельно указывать текст поиска, можно указать что угодно — вид деятельности, название компании или любые другие ключевые слова. А в точечный поиск позволяет более плотно выполнять поиск по видам деятельности, тем самым отсеивая ненужные компании, которые не занимаются тем или иным видом деятельности.</p>
             </div>
-            <div id="step-9998" style="display:none;">
+            <div id="step-4" style="display:none;">
               <h3>Мастер выборок &mdash; Финиш</h3>
               <p>Скачайте сформированную выборку из списка выборок. Или же вы можете создать новую выборку нажав на соответствующую кнопку. Если такой кнопки нет, то скорее всего вы уже делали выборку за текущие сутки и в этом случае вы можете дополнить созданную ранее выборку.</p>
             </div>
@@ -158,7 +158,7 @@
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(2)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
               </fieldset>
-              <fieldset id="step-9998" style="display:none;">
+              <fieldset id="step-4" style="display:none;">
                 <div class="list-group">
                   <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
                 </div>
@@ -489,7 +489,7 @@
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 3;
-          $('#wizard-form').attr('action', '/step-9998/');
+          $('#wizard-form').attr('action', '/step-4/');
           $('#wizard-helper #step-2').fadeOut('fast', function() {
             $('#wizard-helper #step-3').fadeIn('fast');
           });
@@ -500,17 +500,17 @@
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
         }
-      } else if (form_action == '/step-9998/') {
+      } else if (form_action == '/step-4/') {
         if (searchType != null) {
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 4;
           $('#wizard-form').attr('action', '/showSearchDialog/');
           $('#wizard-helper #step-3').fadeOut('fast', function() {
-            $('#wizard-helper #step-9998').fadeIn('fast');
+            $('#wizard-helper #step-4').fadeIn('fast');
           });
           $('#wizard-form #step-3').fadeOut('fast', function() {
-            $('#wizard-form #step-9998').fadeIn('fast');
+            $('#wizard-form #step-4').fadeIn('fast');
           });
         }
       }
