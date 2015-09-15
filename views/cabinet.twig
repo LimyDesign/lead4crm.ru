@@ -439,7 +439,6 @@
       var searchType = $(this).find('input[name="searchType"]:checked').val();
       var wzd_pos = $('.wizard').offset(),
           wzd_height = $('.wizard').height();
-      console.log(wzd_pos.top, wzd_pos.left, wzd_height);
       $(this).find('fieldset').attr('disabled', 'disabled');
       $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
       if (form_action == '/step-1/') {
@@ -527,7 +526,6 @@
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
       $('.overlay').fadeOut();
       $('#wizard-form').find('fieldset').removeAttr('disabled');
-      console.log(e);
     });
 
     /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
