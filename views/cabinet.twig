@@ -402,6 +402,7 @@
     </section>
     {% include 'layout/footer.twig' %}
   </div>
+  {% include 'layout/search_dialog.twig' %}
   {% include 'layout/tariff.twig' %}
   {% include 'layout/login.twig' %}
   {% include 'layout/webcall.twig' %}
@@ -513,6 +514,8 @@
             $('#wizard-form #step-4').fadeIn('fast');
           });
         }
+      } else if (form_action == '/showSearchDialog/') {
+        $('#searchDialog-'+searchType).modal('show');
       }
     });
 
