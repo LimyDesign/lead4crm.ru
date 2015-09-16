@@ -23,7 +23,7 @@
           <table class="table">
             <thead>
               <tr>
-                <th><input type="checkbox" name="selectAll" id="selectAllID" checked></th>
+                <th><input type="checkbox" name="selectAll" onclick="selectAll(0)" checked></th>
                 <th>Название компании</th>
                 <th>Адрес</th>
                 <th>Кол-во филиалов</th>
@@ -57,6 +57,28 @@
         <h5>Выберите вид деятельности для составления выборки:</h5>
         <p id="helper"><mark>Помните! Некоторые виды деятельности могут не содержать ни одной компании для того или иного города.</mark></p>
         <dl class="dl-horizontal"></dl>
+        <div style="display:none;">
+          <hr>
+          <h5>Результаты поиска:</h5>
+          <form id="searchResult">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" name="selectAll" onclick="selectAll(1)" checked></th>
+                  <th>Название компании</th>
+                  <th>Адрес</th>
+                  <th>Кол-во филиалов</th>
+                  <th>Действие</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="warning">
+                  <td colspan="5" class="text-center">Пока ничего не найдено&hellip;</td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

@@ -522,28 +522,25 @@
           $('#searchDialog-'+searchType).find('dl').empty();
           if (localStorage.getItem('2GISRubrics')) {
             var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
-            var level2 = null,
-                level3 = null;
-            rubrics.forEach(function (entry) {
-              if (!entry.parent)
-              {
-                $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#." title="'+entry.name+'" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dt>');
-                level2 = entry.id;
-              } else if (level2 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dd>');
-                level3 = entry.id;
-              } else if (level3 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a>');
-              }
-            });
+            rubricListConstructor(rubrics);
+            showSearchDialog(searchType);
           } else {
-
+            var postData = {
+              importAPI: '{{apikey}}',
+              importDomain: 'www.lead4crm.ru'
+            };
+            $.post('/getRubricList/', postData, function (data) {
+              if (data.error == 0) {
+                if (data.rubrics) {
+                  localStorage.setItem('2GISRubrics', JSON.stringify(data.rubrics));
+                  rubricListConstructor(data.rubrics);
+                }
+              }
+            }, 'json').done(function() {
+              showSearchDialog(searchType);
+            });
           }
-        }
-        $('#searchDialog-'+searchType).modal({
-          backdrop: 'static',
-          keyboard: false
-        });
+        } else showSearchDialog(searchType);
       }
     });
 
@@ -685,16 +682,57 @@
     });
   }
 
+  function showSearchDialog(number) {
+    $('#searchDialog-'+number).modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  }
+
+  function rubricListConstructor(rubrics) {
+    var level2 = null,
+        level3 = null;
+    rubrics.forEach(function (entry) {
+      if (!entry.parent)
+      {
+        $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#." title="'+entry.name+'" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dt>');
+        level2 = entry.id;
+      } else if (level2 == entry.parent) {
+        $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dd>');
+        level3 = entry.id;
+      } else if (level3 == entry.parent) {
+        $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a>');
+      }
+    });
+  }
+
   function searchByID(rubric_id) {
     console.log(rubric_id);
     if (rubric_id == 0) {
       $('#searchDialog-1 #helper').empty().html('Кликните по любому виду деятельности. <em>Это не страшно.</em> &#128521;');
       $('.dl-horizontal').show();
+      $('#searchDialog-1').find('#resultTable').hide();
     } else {
       var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
       $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
       $('.dl-horizontal').hide();
+      $.$.post('/path/to/file', {param1: 'value1'}, function(data, textStatus, xhr) {
+        /*optional stuff to do after success */
+      });
     }
+  }
+
+  function selectAll(sdn) {
+    var saCheck = $('#searchDialog-'+sdn).find('input[name="selectAll"]'),
+        checkedStatus = saCheck.checked;
+    if (!checkedStatus) {
+      totalChecked = 0;
+    } else {
+      totalChecked = 50;
+    }
+    $('#searchDialog-'+sdn+' tbody tr').find('td:first :checkbox').each(function() {
+      $(this).prop('checked', checkedStatus);
+    });
   }
 
   /* Функция выбора полного текста указанного элемента.
