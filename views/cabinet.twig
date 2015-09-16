@@ -734,7 +734,9 @@
     } else {
       var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
       $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
-      $('.dl-horizontal').hide();
+      $('.dl-horizontal').hide(400, function() {
+        $('#searchDialog-1 #searchResult').show();
+      });
       renderPage(1, search_text);
     }
   }
