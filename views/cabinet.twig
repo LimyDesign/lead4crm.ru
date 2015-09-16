@@ -687,6 +687,7 @@
     console.log(rubric_id);
     var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
     $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <kbd>'+search_text+'</kbd>');
+    $('.dl-horizontal').hide();
   }
 
   /* Функция выбора полного текста указанного элемента.
