@@ -515,6 +515,7 @@
         }
       } else if (form_action == '/showSearchDialog/') {
         if (searchType == 1) {
+          $('#searchDialog-'+searchType).find('dl').empty();
           if (localStorage.getItem('2GISRubrics')) {
             var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
             var level2 = null,
@@ -532,7 +533,7 @@
               }
             });
           } else {
-            
+
           }
         }
         $('#searchDialog-'+searchType).modal({
