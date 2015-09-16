@@ -695,13 +695,13 @@
     rubrics.forEach(function (entry) {
       if (!entry.parent)
       {
-        $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#." title="'+entry.name+'" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dt>');
+        $('#searchDialog-1').find('dl').append('<dt><a href="#." title="'+entry.name+'" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dt>');
         level2 = entry.id;
       } else if (level2 == entry.parent) {
-        $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dd>');
+        $('#searchDialog-1').find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dd>');
         level3 = entry.id;
       } else if (level3 == entry.parent) {
-        $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a>');
+        $('#searchDialog-1').find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a>');
       }
     });
   }
