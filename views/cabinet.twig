@@ -16,6 +16,7 @@
     .overlay .row {display:table-cell;vertical-align:middle;height:100%;}
     .dl-horizontal dt a {margin: 6px 0; line-height: 2.5; border-bottom: 1px dashed #8d81ac;}
     .dl-horizontal dd .btn {margin: 5px 3px;}
+    .btn-invert { background-color: #333; color: #fff; }
   </style>
 </head>
 <body>
@@ -686,7 +687,7 @@
   function searchByID(rubric_id) {
     console.log(rubric_id);
     var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
-    $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <kbd>'+search_text+'</kbd>');
+    $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger">&times;</button>');
     $('.dl-horizontal').hide();
   }
 
