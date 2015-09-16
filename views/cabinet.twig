@@ -787,7 +787,7 @@
         $('#searchDialog-'+type+' .pagination').append('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
         if (totalFind > 50) {
           var page = 2;
-          for (var i = 50; i < totalFind; i = i + 50) {
+          for (var i = 100; i < totalFind; i = i + 50) {
             $('#searchDialog-'+type+' .pagination').append('<li id="page'+page+'"><a href="#." onclick="renderPage('+page+',\''+search_text+'\')">'+page+'</a></li>');
             page++;
           }
