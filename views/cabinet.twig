@@ -514,6 +514,8 @@
           });
         }
       } else if (form_action == '/showSearchDialog/') {
+        if (searchType == 1)
+          console.log('Yo!');
         $('#searchDialog-'+searchType).modal({
           backdrop: 'static',
           keyboard: false
@@ -521,16 +523,23 @@
       }
     });
 
+    /* Меняем класс активности на кнопках в зависимости от выбранного радио.
+    ========================================================================================= */
     $('input[name="searchType"]').click(function() {
       $(this).parent().parent().find('label.active').removeClass('active');
       $(this).parent().addClass('active');
     });
 
+    /* После закрытия диалогового окна поиска разблокируем форму мастера выборок.
+    ========================================================================================= */
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
       $('.overlay').fadeOut();
       $('#wizard-form').find('fieldset').removeAttr('disabled');
     });
 
+    /* Устанавливаем фокус в поисковой строке ассоциативного поиска, при открытии диалога
+       поиска.
+    ========================================================================================= */
     $('#searchDialog-0').on('shown.bs.modal', function() {
       var modal = $(this);
       modal.find('input[type="text"]').focus();
@@ -617,6 +626,8 @@
     });
   });
 
+  /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
+  ========================================================================================= */
   function greeting(element) {
     var d = new Date(),
       h = d.getHours(),
@@ -637,6 +648,8 @@
     }
   }
 
+  /* Функция перехода к предыдущему шагу в мастере выборок.
+  ========================================================================================= */
   function wizardStep(step) {
     var curr_step = step + 1;
     $('#wizard-form').attr('action', '/step-'+curr_step+'/');
@@ -648,6 +661,8 @@
     });
   }
 
+  /* Функция выбора полного текста указанного элемента.
+  ========================================================================================= */
   function selectText(element) {
       var doc = document;
       var text = doc.getElementById(element);    
