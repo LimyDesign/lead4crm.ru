@@ -816,6 +816,7 @@
       data.result.forEach(function (entry, index) {
         var cId = index + 1;
         for (var i in companyList) {
+          console.log(companyList[i]);
           if (companyList[i].id == entry.id && companyList[i].hash == entry.hash) {
             statusExist = 1;
             break;
