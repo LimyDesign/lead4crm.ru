@@ -514,8 +514,27 @@
           });
         }
       } else if (form_action == '/showSearchDialog/') {
-        if (searchType == 1)
-          console.log('Yo!');
+        if (searchType == 1) {
+          if (localStorage.getItem('2GISRubrics')) {
+            var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
+            var level2 = null,
+                level3 = null;
+            rubrics.forEach(function (entry) {
+              if (!entry.parent)
+              {
+                $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#.">'+entry.name+'</a></dt>');
+                level2 = entry.id;
+              } else if (level2 == entry.parent) {
+                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#.">'+entry.name+'</a></dd>');
+                level3 = entry.id;
+              } else if (level3 == entry.parent) {
+                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <small>'+entry.name+'</small>');
+              }
+            });
+          } else {
+            
+          }
+        }
         $('#searchDialog-'+searchType).modal({
           backdrop: 'static',
           keyboard: false
