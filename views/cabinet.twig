@@ -811,8 +811,22 @@
         }
       }
       var user_cache = null;
-      data.result.forEarch(function (entry, index) {
+      data.result.forEach(function (entry, index) {
         var cId = index + 1;
+        for (var i in companyList) {
+          if (companyList[i].id == entry.id && companyList[i].hash == entry.hash) {
+            statusExist = 1;
+            break;
+          } else {
+            statusExist = 0;
+          }
+        }
+        if (statusExist) {
+          $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td></td></tr>');
+        } else {
+          totalChecked++;
+          $('#searchDialog-'+type).find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td></td></tr>');
+        }
       });
     }, 'json').done(function() {
       if (callback && typeof(callback) === 'function') {
