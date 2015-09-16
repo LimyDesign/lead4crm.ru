@@ -419,6 +419,11 @@
   <script type="text/javascript">
   $(document).ready(function() 
   {
+    /* Объявляем глобальные переменные
+    ========================================================================================= */
+    var totalChecked = 0,
+        totalFind = 0;
+
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
        и показываем данные пользователя о текущем балансе и тарифе.
     ========================================================================================= */
@@ -457,6 +462,7 @@
         });
       } else if (form_action == '/step-2/') {
         if (crm_id != null) {
+          localStorage.setItem('crm_id', crm_id);
           $.post(form_action, {crm_id: crm_id}, function(data) {
             $('.overlay').fadeOut();
             $('#wizard-form').find('fieldset').removeAttr('disabled');
@@ -490,6 +496,7 @@
         }
       } else if (form_action == '/step-3/') {
         if (city != null) {
+          localStorage.setItem('city_id', city);
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 3;
@@ -506,6 +513,7 @@
         }
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
+          localStorage.setItem('search_id', searchType);
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 4;
@@ -523,7 +531,7 @@
           if (localStorage.getItem('2GISRubrics')) {
             var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
             rubricListConstructor(rubrics);
-            showSearchDialog(searchType);
+            showSearchDialog(searchType, crm_id, city);
           } else {
             var postData = {
               importAPI: '{{apikey}}',
@@ -537,10 +545,21 @@
                 }
               }
             }, 'json').done(function() {
-              showSearchDialog(searchType);
+              showSearchDialog(searchType, crm_id, city);
             });
           }
-        } else showSearchDialog(searchType);
+        } else showSearchDialog(searchType, crm_id, city);
+      }
+    });
+
+    var search_text_prev = '';
+    $('#searchDialog-0 form').submit(function(event) {
+      event.preventDefault();
+      var search_text = $(this).find('#searchInput').val();
+      var city_id = localStorage.getItem('city_id');
+      if (search_text != search_text_prev && search_text != '') {
+        search_text_prev = search_text;
+        renderPage(1, search_text);
       }
     });
 
@@ -716,9 +735,7 @@
       var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
       $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
       $('.dl-horizontal').hide();
-      $.$.post('/path/to/file', {param1: 'value1'}, function(data, textStatus, xhr) {
-        /*optional stuff to do after success */
-      });
+      renderPage(1, search_text);
     }
   }
 
@@ -732,6 +749,63 @@
     }
     $('#searchDialog-'+sdn+' tbody tr').find('td:first :checkbox').each(function() {
       $(this).prop('checked', checkedStatus);
+    });
+  }
+
+  function renderPage(pageNum, search_text, callback) {
+    totalChecked = 0;
+    var formData = {
+      searchAPI: '{{apikey}}',
+      searchDomain: 'www.lead4crm.ru',
+      searchCity: localStorage.getItem('city_id');
+      searchPage: pageNum
+    };
+
+    var requestURL = '',
+        type = localStorage.getItem('search_id');
+        companyList = [];
+
+    $('#searchDialog-'+type+' #page'+pageNum).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
+    $('#searchDialog-'+type+' tbody').find('tr').remove().append('<tr><td colspan="5" class="text-center"><i class="fa fa-fw fa-spinner fa-pulse"></i> Построение списка компаний&hellip;</td></tr>');
+
+    if (type == 1) {
+      formData.searchRubric = search_text;
+      requestURL = '/getDataSearchRubric/';
+    } else {
+      formData.searchText = search_text;
+      requestURL = '/getDataSearch/';
+    }
+    $.post(requestURL, formData, function (data) {
+      totalFind =  data.total;
+      $('#qty').number(data.qty, 0, '.', ' ');
+      $('#searchDialog-'+type+' nav ul.pagination').find('li').removeClass('disabled');
+      $('#searchDialog-'+type+' tbody').find('tr').remove();
+      if (pageNum == 1) {
+        $('#searchDialog-'+type+' nav ul.pagination').append('<li class="active" id="page1"><span>1 <span class="sr-only">(текущая)</span></span></li>');
+        if (totalFind > 50) {
+          var page = 2;
+          for (var i = 50; i < totalFind; i = i + 50) {
+            $('#searchDialog-'+type+' nav ul.pagination').append('<li id="page'+page+'"><a href="#." onclick="renderPage('+page+',\''+search_text+'\')">'+page+'</a></li>');
+            page++;
+          }
+        }
+      } else {
+        if (totalFind > 50) {
+          var page = 1;
+          for (var i = 50; i < totalFind; i = i + 50) {
+            if (page == pageNum) {
+              $('#searchDialog-'+type+' nav ul.pagination').append('<li class="active" id="page'+page+'"><span>'+page+' <span class="sr-only">(текущая)</span></span></li>');
+            } else {
+              $('#searchDialog-'+type+' nav ul.pagination').append('<li id="page'+page+'"><a href="#." onclick="renderPage('+page+',\''+search_text+'\')">'+page+'</a></li>');
+            }
+            page++;
+          }
+        }
+      }
+    }, 'json').done(function() {
+      if (callback && typeof(callback) === 'function') {
+        callback();
+      }
     });
   }
 
