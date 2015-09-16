@@ -687,8 +687,11 @@
 
   function searchByID(rubric_id) {
     console.log(rubric_id);
+    if (rubric_id == 0) {
+      $('#searchDialog-1 #helper').empty().html('Кликните по любому виду деятельности. <em>Это не страшно. &#128521;</em>');
+    }
     var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
-    $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger">&times;</button>');
+    $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
     $('.dl-horizontal').hide();
   }
 
