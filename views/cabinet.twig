@@ -526,10 +526,10 @@
                 $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#.">'+entry.name+'</a></dt>');
                 level2 = entry.id;
               } else if (level2 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#.">'+entry.name+'</a></dd>');
+                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary">'+entry.name+'</a></dd>');
                 level3 = entry.id;
               } else if (level3 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <small>'+entry.name+'</small>');
+                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default">'+entry.name+'</a>');
               }
             });
           } else {
