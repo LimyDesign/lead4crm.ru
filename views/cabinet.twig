@@ -729,13 +729,14 @@
     console.log(rubric_id);
     if (rubric_id == 0) {
       $('#searchDialog-1 #helper').empty().html('Кликните по любому виду деятельности. <em>Это не страшно.</em> &#128521;');
-      $('.dl-horizontal').show();
-      $('#searchDialog-1').find('#resultTable').hide();
+      $('#searchDialog-1').find('#searchResult').hide(400, function() {
+        $('.dl-horizontal').show();
+      });
     } else {
       var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
       $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
       $('.dl-horizontal').hide(400, function() {
-        $('#searchDialog-1 #searchResult').show();
+        $('#searchDialog-1').find('#searchResult').show();
       });
       renderPage(1, search_text);
     }
