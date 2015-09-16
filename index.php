@@ -739,9 +739,10 @@ function getSupportCities() {
 function getUserCache() {
 	global $conf;
 	header("Content-Type: text/json");
+	$cache = array();
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select t1.cp_id, t2.cp_hash from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = ".$_SESSION['userid'];
+		$query = "select t1.cp_id, t1.cp_hash from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = ".$_SESSION['userid'];
 		$result = pg_query($query);
 		$i = 0;
 		while ($row = pg_fetch_assoc($result)) {
@@ -751,8 +752,8 @@ function getUserCache() {
 		}
 		pg_free_result($result);
 		pg_close($db);
-		echo json_encode($cache);
 	}
+	echo json_encode($cache);
 	exit();
 }
 
