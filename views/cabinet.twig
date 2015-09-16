@@ -525,13 +525,13 @@
             rubrics.forEach(function (entry) {
               if (!entry.parent)
               {
-                $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#." title="'+entry.name+'">'+entry.name+'</a></dt>');
+                $('#searchDialog-'+searchType).find('dl').append('<dt><a href="#." title="'+entry.name+'" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dt>');
                 level2 = entry.id;
               } else if (level2 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary">'+entry.name+'</a></dd>');
+                $('#searchDialog-'+searchType).find('dl').append('<dd id="'+entry.id+'"><a href="#." class="btn btn-xs btn-primary" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a></dd>');
                 level3 = entry.id;
               } else if (level3 == entry.parent) {
-                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default">'+entry.name+'</a>');
+                $('#searchDialog-'+searchType).find('dl dd#'+level3).append(' <a href="#." class="btn btn-xs btn-default" id="r-'+entry.id+'" onclick="searchByID('+entry.id+')">'+entry.name+'</a>');
               }
             });
           } else {
@@ -681,6 +681,12 @@
     $('#wizard-form #step-'+curr_step).fadeOut('fast', function() {
       $('#wizard-form #step-'+step).fadeIn('fast');
     });
+  }
+
+  function searchByID(rubric_id) {
+    console.log(rubric_id);
+    var search_text = $('#searchDialog-1').find('#r-'+rubric_id).text();
+    $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <kbd>'+search_text+'</kbd>');
   }
 
   /* Функция выбора полного текста указанного элемента.
