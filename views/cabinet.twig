@@ -781,6 +781,7 @@
     $.post(requestURL, formData, function (data) {
       totalFind =  data.total;
       $('#qty').number(data.qty, 0, '.', ' ');
+      $('#searchDialog-'+type).find('.btn-invert').text(search_text+' ('+data.total+')');
       $('#searchDialog-'+type).find('.pagination').empty();
       $('#searchDialog-'+type+' tbody').find('tr').remove();
       if (pageNum == 1) {
