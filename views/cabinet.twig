@@ -14,6 +14,7 @@
     .overlay {position:absolute;display:none;background-color:rgba(227,223,237,.8);width:100%;}
     .overlay .container {display:table;table-layout:fixed;height:100%;font-size:1.5em;}
     .overlay .row {display:table-cell;vertical-align:middle;height:100%;}
+    #searchResult .table {width: 100%;}
     #searchResult thead, #searchResult tbody { display: block; }
     #searchResult tbody { height: 30vh; overflow: auto; }
     .dl-horizontal { height: 40vh; overflow: auto; }
@@ -867,7 +868,7 @@
           $(el).width(colWidth[index]);
         });
       }).resize();
-      
+
       if (callback && typeof(callback) === 'function') {
         callback();
       }
