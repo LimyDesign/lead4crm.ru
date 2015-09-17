@@ -838,7 +838,7 @@
         }
       });
     }, 'json').done(function() {
-      var type = localStorage.getItem('search_id');
+      var type = localStorage.getItem('search_id'),
           $table = $('#searchDialog-'+type+' table'),
           $bodyCells = $table.find('tbody tr:first').children(),
           colWidth;
@@ -849,10 +849,10 @@
         }).get();
 
         $table.find('thead tr').children().each(function(index, el) {
-          $(el).width(colWidth[i]);
+          $(el).width(colWidth[index]);
         });
       }).resize();
-      
+
       if (callback && typeof(callback) === 'function') {
         callback();
       }
