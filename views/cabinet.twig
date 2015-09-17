@@ -771,7 +771,9 @@
       companyList = data;
     });
 
-    $('#searchDialog-'+type+' #modal-content').scrollTop(0);
+    $('body').on('shown.bs.modal', '.modal', function (event) {
+      $(event.target).scrollTop(0,0);
+    });
 
     $('#searchDialog-'+type+' #page'+pageNum).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
     $('#searchDialog-'+type+' tbody').find('tr').remove().append('<tr><td colspan="5" class="text-center"><i class="fa fa-fw fa-spinner fa-pulse"></i> Построение списка компаний&hellip;</td></tr>');
