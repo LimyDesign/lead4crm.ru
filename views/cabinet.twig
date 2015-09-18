@@ -521,8 +521,8 @@
           $.post('/getUserCache/', function (data) {
             var year, month;
             for (var i in data) {
-              year = data[i].addtime.substring(0,3);
-              month = data[i].addtime.substring(4,5);
+              year = data[i].addtime.substring(0,4);
+              month = data[i].addtime.substring(5,7);
               console.log(year, month);
             }
           });
