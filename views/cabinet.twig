@@ -707,7 +707,9 @@
   }
 
   function showSearchDialog(number) {
-    $('#searchDialog-'+number).modal('show');
+    $('#searchDialog-'+number).modal({
+      backdrop: false
+    });
   }
 
   function rubricListConstructor(rubrics) {
