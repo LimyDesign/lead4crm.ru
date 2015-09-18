@@ -521,7 +521,7 @@
           $.post('/getUserCache/', function (data) {
             var addtime;
             for (var i in data) {
-              addtime = data[i].addtime;
+              addtime = Date.parse(data[i].addtime);
               console.log(addtime);
             }
           });
