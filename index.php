@@ -817,7 +817,7 @@ function getSelection($date, $crm_id) {
 					$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
 					$result2 = pg_query($query2);
 					$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-					if (type == 'csv' && $crm_id = 2) {
+					if ($type == 'csv' && $crm_id = 2) {
 						$phone = $fax = $email = $website = $facebook = $twitter = array();
 						$other_site = $skype = $icq = array();
 						$csv .= '"'.str_replace('"', '""', $cp['name']).'";';
