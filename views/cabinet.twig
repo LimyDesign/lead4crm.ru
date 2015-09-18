@@ -519,11 +519,12 @@
         if (searchType != null) {
           localStorage.setItem('search_id', searchType);
           $.post('/getUserCache/', function (data) {
-            var year, month;
+            var usDate, 
+                date = new Date(),
+                curDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2);
             for (var i in data) {
-              year = data[i].addtime.substring(0,4);
-              month = data[i].addtime.substring(5,7);
-              console.log(year, month);
+              usDate = data[i].addtime.substring(0,7);
+              console.log(usDate, curDate);
             }
           });
           $('.overlay').fadeOut();
