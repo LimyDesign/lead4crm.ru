@@ -14,10 +14,10 @@
     .overlay {position:absolute;display:none;background-color:rgba(227,223,237,.8);width:100%;}
     .overlay .container {display:table;table-layout:fixed;height:100%;font-size:1.5em;}
     .overlay .row {display:table-cell;vertical-align:middle;height:100%;}
-    #searchResult .table {width: 100%;}
+    /*#searchResult .table {width: 100%;}
     #searchResult thead, #searchResult tbody { display: block; }
     #searchResult tbody { height: 30vh; overflow: auto; }
-    .dl-horizontal { height: 40vh; overflow: auto; }
+    .dl-horizontal { height: 40vh; overflow: auto; }*/
     .dl-horizontal dt a {margin: 6px 0; line-height: 2.5; border-bottom: 1px dashed #8d81ac;}
     .dl-horizontal dd .btn {margin: 5px 3px;}
     .btn-invert { background-color: #333; color: #fff; }
@@ -412,13 +412,13 @@
   </div>
   {% include 'layout/search_dialog.twig' %}
   {% include 'layout/tariff.twig' %}
-  {% include 'layout/login.twig' %}
-  {% include 'layout/webcall.twig' %}
+  {# {% include 'layout/login.twig' %} #}
+  {# {% include 'layout/webcall.twig' %} #}
   {% include 'layout/scripts.twig' %}
   <script src="/public/js/jquery.number.min.js"></script>
-  <script src="/public/js/classie.min.js"></script>
-  <script src="/public/js/modalEffects.min.js"></script>
-  <script src="/public/js/webcall.js"></script>
+  {# // <script src="/public/js/classie.min.js"></script> #}
+  {# // <script src="/public/js/modalEffects.min.js"></script> #}
+  {# // <script src="/public/js/webcall.js"></script> #}
   {% jshrink %}
   <script type="text/javascript">
   $(document).ready(function() 
@@ -742,20 +742,20 @@
       renderPage(1, search_text, function() {
         $('.dl-horizontal').hide(400, function() {
           $('#searchDialog-1').find('#searchResult').show(400, function () {
-            var type = localStorage.getItem('search_id'),
-                $table = $('#searchDialog-'+type+' table'),
-                $bodyCells = $table.find('tbody tr:first').children(),
-                colWidth;
+            // var type = localStorage.getItem('search_id'),
+            //     $table = $('#searchDialog-'+type+' table'),
+            //     $bodyCells = $table.find('tbody tr:first').children(),
+            //     colWidth;
 
-            $(window).resize(function() {
-              colWidth = $bodyCells.map(function() {
-                return $(this).width();
-              }).get();
+            // $(window).resize(function() {
+            //   colWidth = $bodyCells.map(function() {
+            //     return $(this).width();
+            //   }).get();
 
-              $table.find('thead tr').children().each(function(index, el) {
-                $(el).width(colWidth[index]);
-              });
-            }).resize();
+            //   $table.find('thead tr').children().each(function(index, el) {
+            //     $(el).width(colWidth[index]);
+            //   });
+            // }).resize();
           });
         });
       });
@@ -854,20 +854,20 @@
         }
       });
     }, 'json').done(function() {
-      var type = localStorage.getItem('search_id'),
-          $table = $('#searchDialog-'+type+' table'),
-          $bodyCells = $table.find('tbody tr:first').children(),
-          colWidth;
+      // var type = localStorage.getItem('search_id'),
+      //     $table = $('#searchDialog-'+type+' table'),
+      //     $bodyCells = $table.find('tbody tr:first').children(),
+      //     colWidth;
 
-      $(window).resize(function() {
-        colWidth = $bodyCells.map(function() {
-          return $(this).width();
-        }).get();
+      // $(window).resize(function() {
+      //   colWidth = $bodyCells.map(function() {
+      //     return $(this).width();
+      //   }).get();
 
-        $table.find('thead tr').children().each(function(index, el) {
-          $(el).width(colWidth[index]);
-        });
-      }).resize();
+      //   $table.find('thead tr').children().each(function(index, el) {
+      //     $(el).width(colWidth[index]);
+      //   });
+      // }).resize();
 
       if (callback && typeof(callback) === 'function') {
         callback();
