@@ -707,10 +707,7 @@
   }
 
   function showSearchDialog(number) {
-    $('#searchDialog-'+number).modal({
-      backdrop: 'static',
-      keyboard: false
-    });
+    $('#searchDialog-'+number).modal('show');
   }
 
   function rubricListConstructor(rubrics) {
@@ -790,10 +787,6 @@
 
     $.post('/getUserCache/', function (data) {
       companyList = data;
-    });
-
-    $('body').on('shown.bs.modal', '.modal', function (event) {
-      $(event.target).scrollTop(0,0);
     });
 
     $('#searchDialog-'+type+' #page'+pageNum).html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
