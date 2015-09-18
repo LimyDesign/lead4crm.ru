@@ -518,7 +518,13 @@
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
           localStorage.setItem('search_id', searchType);
-          $.post('/')
+          $.post('/getUserCache/', function (data) {
+            var addtime;
+            for (var i in data) {
+              addtime = data[i].addtime;
+              console.log(addtime);
+            }
+          });
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 4;
@@ -740,22 +746,7 @@
       $('#searchDialog-1 #helper').empty().html('Искомый вид деятельности: <div class="btn-group btn-group-xs" role="group" aria-label="..."><button type="button" class="btn btn-invert">'+search_text+'</button><button type="button" class="btn btn-danger" onclick="searchByID(0)">&times;</button>');
       renderPage(1, search_text, function() {
         $('.dl-horizontal').hide(400, function() {
-          $('#searchDialog-1').find('#searchResult').show(400, function () {
-            // var type = localStorage.getItem('search_id'),
-            //     $table = $('#searchDialog-'+type+' table'),
-            //     $bodyCells = $table.find('tbody tr:first').children(),
-            //     colWidth;
-
-            // $(window).resize(function() {
-            //   colWidth = $bodyCells.map(function() {
-            //     return $(this).width();
-            //   }).get();
-
-            //   $table.find('thead tr').children().each(function(index, el) {
-            //     $(el).width(colWidth[index]);
-            //   });
-            // }).resize();
-          });
+          $('#searchDialog-1').find('#searchResult').show();
         });
       });
     }
@@ -849,21 +840,6 @@
         }
       });
     }, 'json').done(function() {
-      // var type = localStorage.getItem('search_id'),
-      //     $table = $('#searchDialog-'+type+' table'),
-      //     $bodyCells = $table.find('tbody tr:first').children(),
-      //     colWidth;
-
-      // $(window).resize(function() {
-      //   colWidth = $bodyCells.map(function() {
-      //     return $(this).width();
-      //   }).get();
-
-      //   $table.find('thead tr').children().each(function(index, el) {
-      //     $(el).width(colWidth[index]);
-      //   });
-      // }).resize();
-
       if (callback && typeof(callback) === 'function') {
         callback();
       }
