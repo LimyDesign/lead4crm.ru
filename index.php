@@ -893,6 +893,45 @@ function getSelection($date, $crm_id) {
 	exit();
 }
 
+function getMainIndustry($rubrics) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		if (count($rubrics)) {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+			$parents = array();
+			foreach ($rubrics as $rubric) {
+				$rubric = pg_escape_string($rubric);
+				$query = "select parent from rubrics where name = '{$rubric}'";
+				$result = pg_query($query);
+				$parent_id1 = pg_fetch_result($result, 0, 0);
+				$query = "select parent from rubrics where id = {$parent_id1}";
+				$result = pg_query($query);
+				$parent_id2 = pg_fetch_result($result, 0, 0);
+				if ($parent_id2) 
+					$parents[] = $parent_id2;
+				else
+					$parents[] = $parent_id1;
+			}
+			$main_parent = $main_parent2 = array_count_values($parents);
+			arsort($main_parent2);
+			foreach ($main_parent2 as $parent_id => $count) {
+				if ($count > 1)
+					$query = "select name from rubrics where id = {$parent_id}";
+				else {
+					$parent_id = key($main_parent);
+					$query = "select name from rubrics where id = {$parent_id}";
+				}
+				break;
+			}
+			$result = pg_query($query);
+			$name = pg_fetch_result($result, 0, 'name');
+		} else {
+			$name = "Другое";
+		}
+	}
+	return $name;
+}
+
 function getUserData($return = 'json') {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
