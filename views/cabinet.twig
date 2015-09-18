@@ -519,12 +519,16 @@
         if (searchType != null) {
           localStorage.setItem('search_id', searchType);
           $.post('/getUserCache/', function (data) {
-            var usDate, 
+            var usDate, uspDate,
                 date = new Date(),
-                curDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2);
+                curDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
+                $list = $('#wizard-form #step-4').find('.list-group');
             for (var i in data) {
               usDate = data[i].addtime.substring(0,7);
-              console.log(usDate, curDate);
+              if (usDate != uspDate) {
+                $list.empty().append('<a href="#." class="list-group-item">Выборка за '+usDate+'</a>');
+                usDate = uspDate;
+              }
             }
           });
           $('.overlay').fadeOut();
