@@ -742,7 +742,7 @@ function getUserCache() {
 	$cache = array();
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select t1.cp_id, t1.cp_hash, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = ".$_SESSION['userid'];
+		$query = "select t1.cp_id, t1.cp_hash, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = ".$_SESSION['userid']." order by t2.modtime desc";
 		$result = pg_query($query);
 		$i = 0;
 		while ($row = pg_fetch_assoc($result)) {
