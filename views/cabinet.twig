@@ -723,9 +723,9 @@
 
   function downloadSelection(sDate, crm_id) {
     var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
-    downloadWindow.onload = function() {
+    window.setTimeout(function() {
       downloadWindow.close();
-    }
+    }, 1000);
   }
 
   function showSearchDialog(number) {
