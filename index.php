@@ -824,7 +824,7 @@ function getSelection($date, $crm_id) {
 						for ($i = 0; $i < count($cp['contacts']); $i++) {
 							foreach ($cp['contacts'][$i]['contacts'] as $contact) {
 								if ($contact['type'] == 'phone') {
-									$phone[] = $contract['value'];
+									$phone[] = $contact['value'];
 								} elseif ($contact['type'] == 'fax') {
 									$fax[] = $contact['value'];
 								} elseif ($contact['type'] == 'email') {
