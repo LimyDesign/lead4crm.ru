@@ -886,7 +886,7 @@ function getSelection($date, $crm_id) {
 					header('Content-Type: text/csv');
 					// header('Content-Disposition: attachment;filename=2GIS_Base_'.$date.'.csv');
 					echo iconv("UTF-8", "Windows-1251", $csv);
-					echo $query;
+					// echo $query;
 				}
 			}
 		}
