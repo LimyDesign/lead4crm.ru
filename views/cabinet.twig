@@ -724,7 +724,7 @@
   function downloadSelection(sDate, crm_id) {
     var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
     downloadWindow.onload = function() {
-      downloadWindow.close();
+      // downloadWindow.close();
     }
   }
 
