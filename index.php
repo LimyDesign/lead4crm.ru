@@ -782,7 +782,6 @@ function getSelection($date, $crm_id) {
 						 . '"'.$template['city']['title'].'";'
 						 . '"'.$template['type']['title'].'";'
 						 . '"'.$template['address']['title'].'";'
-						 . '"'.$template['street']['title'].'";'
 						 . '"'.$template['office']['title'].'";'
 						 . '"'.$template['district']['title'].'";'
 						 . '"'.$template['index']['title'].'";'
@@ -868,7 +867,6 @@ function getSelection($date, $crm_id) {
 						$csv .= '"'.str_replace('"', '""', $cp['city_name']).'";';
 						$csv .= '"'.$template['type']['default'].'";';
 						$csv .= '"'.str_replace('"', '""', $cp['address']).'";';
-						$csv .= '"'.str_replace('"', '""', $gd['result'][0]['attributes']['street']).'";';
 						$csv .= '"'.str_replace('"', '""', $cp['additional_info']['office']).'";';
 						$csv .= '"'.str_replace('"', '""', $gd['result'][0]['attributes']['district']).'";';
 						$csv .= '"'.str_replace('"', '""', $gd['result'][0]['attributes']['index']).'";';
