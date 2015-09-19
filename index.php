@@ -884,7 +884,7 @@ function getSelection($date, $crm_id) {
 				}
 				if ($type == 'csv') {
 					header('Content-Type: text/csv');
-					header('Content-Disposition: attachment;filename=2GIS_Base_'.$date.'.csv');
+					// header('Content-Disposition: attachment;filename=2GIS_Base_'.$date.'.csv');
 					echo iconv("UTF-8", "Windows-1251", $csv);
 				}
 			}
