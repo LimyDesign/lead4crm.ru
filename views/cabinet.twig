@@ -838,17 +838,20 @@
       }
       var user_cache = null,
           statusExist = 0,
-          oldExist = 0;
+          oldExist = 0,
+          addTime;
       data.result.forEach(function (entry, index) {
         var cId = index + 1;
         for (var i in companyList) {
           if (companyList[i].id == entry.id && companyList[i].hash == entry.hash) {
             statusExist = 1;
             oldExist = 0;
+            addTime = companyList[i].addTime.substring(0,10);
             break;
           } else if (companyList[i].id == entry.id && companyList[i].hash != entry.hash) {
             statusExist = 0;
             oldExist = 1;
+            addTime = companyList[i].addTime.substring(0,10);
             break;
           } else {
             statusExist = 0;
@@ -856,9 +859,9 @@
           }
         }
         if (statusExist) {
-          $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Импортровано: 01/01/1971</td></tr>');
+          $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Импортровано: '+addTime+'</td></tr>');
         } else if (oldExist) {
-          $('#searchDialog-'+type).find('tbody').append('<tr class="warning"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-waring" data-toggle="tooltip" data-placement="auto" title="Испортировано: 2015-08-01">Импортировать</a></td></tr>');
+          $('#searchDialog-'+type).find('tbody').append('<tr class="warning"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-waring" data-toggle="tooltip" data-placement="auto" title="Испортировано: '+addTime+'">Импортировать</a></td></tr>');
         } else {
           totalChecked++;
           $('#searchDialog-'+type).find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-default">Импортировать</a></td></tr>');
