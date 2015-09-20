@@ -839,16 +839,18 @@
       var user_cache = null,
           statusExist = 0,
           oldExist = 0,
-          addTime;
+          addTime,
+          d = new Date(),
+          d = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
       data.result.forEach(function (entry, index) {
         var cId = index + 1;
         for (var i in companyList) {
-          if (companyList[i].id == entry.id && companyList[i].hash == entry.hash) {
+          if (companyList[i].id == entry.id && companyList[i].addtime.substring(0,7) == d) {
             statusExist = 1;
             oldExist = 0;
             addTime = companyList[i].addtime.substring(0,10);
             break;
-          } else if (companyList[i].id == entry.id && companyList[i].hash != entry.hash) {
+          } else if (companyList[i].id == entry.id && companyList[i].addtime.substring(0,7) == d) {
             statusExist = 0;
             oldExist = 1;
             addTime = companyList[i].addtime.substring(0,10);
