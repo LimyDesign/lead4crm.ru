@@ -521,15 +521,17 @@
           $.post('/getUserCache/', function (data) {
             var usDate, uspDate,
                 date = new Date(),
-                curDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
+                date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
                 $list = $('#wizard-form #step-4').find('.list-group');
             for (var i in data) {
               usDate = data[i].addtime.substring(0,7);
               if (usDate != uspDate) {
-                if (usDate == curDate)
+                console.log(usDate, date);
+                if (usDate == date) {
                   $list.empty().append('<a href="#." class="list-group-item active" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
-                else
+                } else {
                   $list.empty().append('<a href="#." class="list-group-item" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
+                }
                 usDate = uspDate;
               }
             }
