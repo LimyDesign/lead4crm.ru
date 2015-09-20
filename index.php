@@ -241,7 +241,7 @@ function getCRM() {
 	$crm_list = array();
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select id, name from crm_systems order by name asc";
+		$query = "select id, name from crm_systems where enabled = true order by name asc";
 		$result = pg_query($query);
 		while ($row = pg_fetch_assoc($result)) {
 			$crm_list[$row['id']]['id'] = $row['id'];
