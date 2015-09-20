@@ -117,7 +117,7 @@
             </div>
             <div id="step-9999" style="display:none;">
               <h3>Мастер выборок &mdash; Финиш</h3>
-              <p>Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле.</p>
+              <p>Для выбранной вами системы есть специальный модуль, которым можно воспользоваться для составления базы потенциальных клиентов. Однако, вы всегда можете в случае необходимости загрузить архивную выборку, т.е. карточки компаний, которые вы ранее импортировали в свою систему в специальном модуле, но архив будет составляться только с 29 августа 2015 г.</p>
             </div>
           </div>
           <div class="col-md-6">
@@ -185,6 +185,12 @@
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-cloud-download"></i> Импорт компаний</button>
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
+                <div class="form-group">
+                  <label>Архив выборок:</label>
+                </div>
+                <div class="list-group">
+                  <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
+                </div>
                 <a href="" target="_blank" class="btn btn-block btn-primary btn-lg" id="module-link">Установить модуль в «<span id="module-name"></span>»</a>
                 <button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>
               </fieldset>
@@ -483,6 +489,7 @@
             $('#wizard-form').find('fieldset').removeAttr('disabled');
             if (data.error == '0') {
               if (data.module) {
+                renderSelections(9999);
                 current_step = 9999;
                 $('#wizard-form').attr('action', '/step-1/');
                 $('#wizard-helper #step-1').fadeOut('fast', function() {
@@ -529,7 +536,7 @@
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
           localStorage.setItem('search_id', searchType);
-          renderSelections();
+          renderSelections(4);
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 4;
@@ -589,7 +596,7 @@
     /* После закрытия диалогового окна поиска разблокируем форму мастера выборок.
     ========================================================================================= */
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
-      renderSelections();
+      renderSelections(4);
       $('.overlay').fadeOut();
       $('#wizard-form').find('fieldset').removeAttr('disabled');
     });
@@ -720,13 +727,13 @@
 
   /* Функция составления архивы выборок.
   ========================================================================================= */
-  function renderSelections() {
+  function renderSelections(step) {
     var crm_id = localStorage.getItem('crm_id');
     $.post('/getUserCache/', function (data) {
       var usDate, uspDate,
           date = new Date(),
           date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
-          $list = $('#wizard-form #step-4').find('.list-group');
+          $list = $('#wizard-form #step-'+step).find('.list-group');
       $list.empty();
       for (var i in data) {
         usDate = data[i].addtime.substring(0,7);
