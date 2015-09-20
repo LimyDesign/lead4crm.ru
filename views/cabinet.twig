@@ -426,9 +426,7 @@
     /* Объявляем глобальные переменные
     ========================================================================================= */
     var totalChecked = 0,
-        totalFind = 0,
-        statusExist = 0,
-        oldExist = 0;
+        totalFind = 0;
 
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
        и показываем данные пользователя о текущем балансе и тарифе.
@@ -838,7 +836,9 @@
           }
         }
       }
-      var user_cache = null;
+      var user_cache = null,
+          statusExist = 0,
+          oldExist = 0;
       data.result.forEach(function (entry, index) {
         var cId = index + 1;
         for (var i in companyList) {
