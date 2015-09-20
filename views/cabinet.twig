@@ -846,12 +846,12 @@
           if (companyList[i].id == entry.id && companyList[i].hash == entry.hash) {
             statusExist = 1;
             oldExist = 0;
-            addTime = companyList[i].addTime.substring(0,10);
+            addTime = companyList[i].addtime.substring(0,10);
             break;
           } else if (companyList[i].id == entry.id && companyList[i].hash != entry.hash) {
             statusExist = 0;
             oldExist = 1;
-            addTime = companyList[i].addTime.substring(0,10);
+            addTime = companyList[i].addtime.substring(0,10);
             break;
           } else {
             statusExist = 0;
