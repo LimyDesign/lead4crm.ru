@@ -850,7 +850,7 @@
             oldExist = 0;
             addTime = companyList[i].addtime.substring(0,10);
             break;
-          } else if (companyList[i].id == entry.id && companyList[i].addtime.substring(0,7) == d) {
+          } else if (companyList[i].id == entry.id && companyList[i].addtime.substring(0,7) != d) {
             statusExist = 0;
             oldExist = 1;
             addTime = companyList[i].addtime.substring(0,10);
