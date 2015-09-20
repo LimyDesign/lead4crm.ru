@@ -882,7 +882,9 @@
       importCompanyHash: hash
     };
     var d = new Date(),
-        d = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+        d = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),
+        type = localStorage.getItem('search_id');
+    $('#searchDialog-'+type).find('input[name="'+id+'"]').parent().parent().find('td:eq(4) a').html('<i class="fa fa-fw fa-spinner fa-pulse"> Загрузка&hellip;');
     $.post('/importCompany/', importData).done(function() {
       $('#searchDialog-'+type).find('input[name="'+id+'""]').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').text('Импортировано: '+d);
     });
