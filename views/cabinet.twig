@@ -529,25 +529,7 @@
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
           localStorage.setItem('search_id', searchType);
-          $.post('/getUserCache/', function (data) {
-            var usDate, uspDate,
-                date = new Date(),
-                date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
-                $list = $('#wizard-form #step-4').find('.list-group');
-            $list.empty();
-            for (var i in data) {
-              usDate = data[i].addtime.substring(0,7);
-              if (usDate != uspDate) {
-                console.log(usDate, date);
-                if (usDate == date) {
-                  $list.append('<a href="#." class="list-group-item active" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
-                } else {
-                  $list.append('<a href="#." class="list-group-item" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
-                }
-                uspDate = usDate;
-              }
-            }
-          });
+          renderSelections();
           $('.overlay').fadeOut();
           $('#wizard-form').find('fieldset').removeAttr('disabled');
           current_step = 4;
@@ -607,6 +589,7 @@
     /* После закрытия диалогового окна поиска разблокируем форму мастера выборок.
     ========================================================================================= */
     $('[id^=searchDialog-]').on('hidden.bs.modal', function (e) {
+      renderSelections();
       $('.overlay').fadeOut();
       $('#wizard-form').find('fieldset').removeAttr('disabled');
     });
@@ -732,6 +715,30 @@
     });
     $('#wizard-form #step-'+curr_step).fadeOut('fast', function() {
       $('#wizard-form #step-'+step).fadeIn('fast');
+    });
+  }
+
+  /* Функция составления архивы выборок.
+  ========================================================================================= */
+  function renderSelections() {
+    $.post('/getUserCache/', function (data) {
+      var usDate, uspDate,
+          date = new Date(),
+          date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
+          $list = $('#wizard-form #step-4').find('.list-group');
+      $list.empty();
+      for (var i in data) {
+        usDate = data[i].addtime.substring(0,7);
+        if (usDate != uspDate) {
+          console.log(usDate, date);
+          if (usDate == date) {
+            $list.append('<a href="#." class="list-group-item active" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
+          } else {
+            $list.append('<a href="#." class="list-group-item" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
+          }
+          uspDate = usDate;
+        }
+      }
     });
   }
 
