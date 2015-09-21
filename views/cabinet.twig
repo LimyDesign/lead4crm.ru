@@ -439,6 +439,9 @@
   {# // <script src="/public/js/webcall.js"></script> #}
   {% jshrink %}
   <script type="text/javascript">
+  var totalChecked = 0,
+      totalFind = 0;
+      
   $(document).ready(function() 
   {
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
@@ -896,9 +899,10 @@
       });
     }, 'json').done(function() {
       var batchImport = $('#searchDialog-'+type).find('#ok');
-      
       if (totalChecked > 0) {
         batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
+      } else {
+        batchImport.attr('disabled', 'disabled').html('Импортировать отмеченные');
       }
 
       if (callback && typeof(callback) === 'function') {
@@ -923,6 +927,20 @@
     $.post('/importCompany/', importData).done(function() {
       $('#searchDialog-'+type).find('input[name="'+id+'"]').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
     });
+  }
+
+  function changeMark(id) {
+    var status = $('input[name="'+id+'"]:checked').length;
+    if (status)
+      totalChecked++;
+    else
+      totalChecked--;
+    var batchImport = $('#searchDialog-'+type).find('#ok');
+    if (totalChecked > 0) {
+      batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
+    } else {
+      batchImport.attr('disabled', 'disabled').html('Импортировать отмеченные');
+    }
   }
 
   /* Функция выбора полного текста указанного элемента.
