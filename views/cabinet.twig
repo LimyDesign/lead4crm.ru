@@ -900,8 +900,7 @@
         }
       });
     }, 'json').done(function() {
-      var type = localStorage.getItem('search_id');
-      $('#searchDialog-'+type).find('ok').removeAttr('disabled');
+      $('#searchDialog-'+type).find('#ok').removeAttr('disabled');
       if (callback && typeof(callback) === 'function') {
         callback();
       }
