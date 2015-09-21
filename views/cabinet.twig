@@ -444,7 +444,9 @@
     /* Объявляем глобальные переменные
     ========================================================================================= */
     var totalChecked = 0,
-        totalFind = 0;
+        totalFind = 0,
+        batchImport = $('#searchDialog-'+type).find('#ok'),
+        batchImport_html = batchImport.html();
 
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
        и показываем данные пользователя о текущем балансе и тарифе.
@@ -900,8 +902,6 @@
         }
       });
     }, 'json').done(function() {
-      var batchImport = $('#searchDialog-'+type).find('#ok'),
-          batchImport_html = batchImport.html();
       batchImport.removeAttr('disabled').html(batchImport_html+' ('+totalChecked+')');
       if (callback && typeof(callback) === 'function') {
         callback();
