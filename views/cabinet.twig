@@ -782,6 +782,7 @@
 
   function searchByID(rubric_id) {
     if (rubric_id == 0) {
+      $('#searchDialog-1 #ok').attr('disabled', 'disabled');
       $('#searchDialog-1 #helper').empty().html('Кликните по любому виду деятельности. <em>Это не страшно.</em> &#128521;');
       $('#searchDialog-1').find('#searchResult').hide(400, function() {
         $('.dl-horizontal').show();
@@ -899,6 +900,8 @@
         }
       });
     }, 'json').done(function() {
+      var type = localStorage.getItem('search_id');
+      $('#searchDialog-'+type).find('ok').removeAttr('disabled');
       if (callback && typeof(callback) === 'function') {
         callback();
       }
