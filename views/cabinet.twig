@@ -900,7 +900,9 @@
         }
       });
     }, 'json').done(function() {
-      $('#searchDialog-'+type).find('#ok').removeAttr('disabled');
+      var batchImport = $('#searchDialog-'+type).find('#ok'),
+          batchImport_html = batchImport.html();
+      batchImport.removeAttr('disabled').html(batchImport_html+' ('+totalChecked+')');
       if (callback && typeof(callback) === 'function') {
         callback();
       }
