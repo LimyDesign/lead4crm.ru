@@ -112,7 +112,9 @@ if ($cmd[0]) {
 				$_REQUEST['importDomain'],
 				$_REQUEST['importCompanyID'],
 				$_REQUEST['importCompanyHash'],
-				$_REQUEST['assignedUserId']);
+				$_REQUEST['assignedUserId'],
+				getRealIpAddr(),
+				$_REQUEST['getFrom2GIS']);
 			break;
 
 		case 'newAPIKey':
@@ -291,22 +293,7 @@ function wizard($crm_id, $step) {
 }
 
 function getUserCityByIP() {
-	$ipaddress = '';
-	if ($_SERVER['HTTP_CLIENT_IP'])
-		$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
-	else if ($_SERVER['HTTP_X_FORWARDED_FOR'])
-		$ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	else if ($_SERVER['HTTP_X_FORWARDED'])
-		$ipaddress = $_SERVER['HTTP_X_FORWARDED'];
-	else if ($_SERVER['HTTP_FORWARDED_FOR'])
-		$ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
-	else if ($_SERVER['HTTP_FORWARDED'])
-		$ipaddress = $_SERVER['HTTP_FORWARDED'];
-	else if ($_SERVER['REMOTE_ADDR'])
-		$ipaddress = $_SERVER['REMOTE_ADDR'];
-	else
-		$ipaddress = '77.88.8.8';
-
+	$ipaddress = getRealIpAddr();
 	$geoDataJSON = file_get_contents('http://api.sypexgeo.net/json/'.$ipaddress);
 	$geoData = json_decode($geoDataJSON);
 	return $geoData->city->name_ru;
@@ -704,14 +691,16 @@ function importRubrics($apikey, $domain, $full = false) {
 	return file_get_contents($url.$uri);
 }
 
-function importCompany($apikey, $domain, $id, $hash, $auid) {
+function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
 	$url = "http://api.cnamrf.ru/getCompanyProfile/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
 		'domain' => $domain,
 		'id' => $id,
 		'hash' => $hash,
-		'auid' => $auid));
+		'auid' => $auid,
+		'uip' => $ip,
+		'2gis' => $getFrom2GIS));
 	return file_get_contents($url.$uri);
 }
 
@@ -1236,6 +1225,24 @@ function setTariff($getTariff) {
 		header("location: /cabinet/");
 	else
 		getUserData();
+}
+
+function getRealIpAddr() {
+	if ($_SERVER['HTTP_CLIENT_IP'])
+		$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+	else if ($_SERVER['HTTP_X_FORWARDED_FOR'])
+		$ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	else if ($_SERVER['HTTP_X_FORWARDED'])
+		$ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+	else if ($_SERVER['HTTP_FORWARDED_FOR'])
+		$ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+	else if ($_SERVER['HTTP_FORWARDED'])
+		$ipaddress = $_SERVER['HTTP_FORWARDED'];
+	else if ($_SERVER['REMOTE_ADDR'])
+		$ipaddress = $_SERVER['REMOTE_ADDR'];
+	else
+		$ipaddress = '77.88.8.8';
+	return $ipaddress;
 }
 
 function russian_date() {

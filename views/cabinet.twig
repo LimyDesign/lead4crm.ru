@@ -893,7 +893,7 @@
         if (statusExist) {
           $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Импортровано: <nobr>'+addTime+'</nobr></td></tr>');
         } else if (oldExist) {
-          $('#searchDialog-'+type).find('tbody').append('<tr class="warning"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="auto" title="Испортировано: '+addTime+'" onclick=importCompany("'+entry.id+'","'+entry.hash+'")>Импортировать</a></td></tr>');
+          $('#searchDialog-'+type).find('tbody').append('<tr class="warning"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-warning" data-toggle="tooltip" data-placement="auto" title="Испортировано: '+addTime+'" onclick=importCompany("'+entry.id+'","'+entry.hash+'",true)>Импортировать</a></td></tr>');
         } else {
           totalChecked++;
           $('#searchDialog-'+type).find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-default" onclick=importCompany("'+entry.id+'","'+entry.hash+'")>Импортировать</a></td></tr>');
@@ -906,12 +906,14 @@
     });
   }
 
-  function importCompany(id, hash) {
+  function importCompany(id, hash, 2gis) {
+    2gis = typeof 2gis !== 'underfined' ? 2gis : false;
     var importData = {
       importAPI: '{{apikey}}',
       importDomain: 'www.lead4crm.ru',
       importCompanyID: id,
-      importCompanyHash: hash
+      importCompanyHash: hash,
+      getFrom2GIS: 2gis
     };
     var d = new Date(),
         d = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),
