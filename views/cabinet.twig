@@ -441,11 +441,6 @@
   <script type="text/javascript">
   $(document).ready(function() 
   {
-    /* Объявляем глобальные переменные
-    ========================================================================================= */
-    var totalChecked = 0,
-        totalFind = 0;
-
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
        и показываем данные пользователя о текущем балансе и тарифе.
     ========================================================================================= */
@@ -901,7 +896,11 @@
       });
     }, 'json').done(function() {
       var batchImport = $('#searchDialog-'+type).find('#ok');
-      batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
+      
+      if (totalChecked > 0) {
+        batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
+      }
+
       if (callback && typeof(callback) === 'function') {
         callback();
       }
