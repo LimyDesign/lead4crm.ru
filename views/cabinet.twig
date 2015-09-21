@@ -441,7 +441,7 @@
   <script type="text/javascript">
   var totalChecked = 0,
       totalFind = 0;
-      
+
   $(document).ready(function() 
   {
     /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
@@ -931,11 +931,14 @@
 
   function changeMark(id) {
     var status = $('input[name="'+id+'"]:checked').length;
-    if (status)
-      totalChecked++;
-    else
-      totalChecked--;
     var batchImport = $('#searchDialog-'+type).find('#ok');
+
+    if (status) {
+      totalChecked++;
+    } else {
+      totalChecked--;
+    }
+
     if (totalChecked > 0) {
       batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
     } else {
