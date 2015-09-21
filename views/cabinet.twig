@@ -739,7 +739,6 @@
       for (var i in data) {
         usDate = data[i].addtime.substring(0,7);
         if (usDate != uspDate) {
-          console.log(usDate, date);
           if (usDate == date) {
             $list.append('<a href="#." class="list-group-item active" onclick=downloadSelection("'+usDate+'",'+crm_id+')>Скачать выборку за '+usDate+'</a>');
           } else {
@@ -919,9 +918,7 @@
         d = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2),
         type = localStorage.getItem('search_id');
     $('#searchDialog-'+type).find('input[name="'+id+'"]').parent().parent().find('td:eq(4) a').html('<i class="fa fa-fw fa-spinner fa-pulse"></i> Загрузка&hellip;');
-    $.post('/importCompany/', importData, function (data) {
-      console.log(data.getFrom2GIS);
-    }, 'json').done(function() {
+    $.post('/importCompany/', importData).done(function() {
       $('#searchDialog-'+type).find('input[name="'+id+'"]').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
     });
   }
