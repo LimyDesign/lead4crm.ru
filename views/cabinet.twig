@@ -804,8 +804,7 @@
   }
 
   function chMarkAll(sdn) {
-    var saCheck = $('#searchDialog-'+sdn).find('#selectAll'),
-        checkedStatus = saCheck.checked;
+    var checkedStatus = $('#searchDialog-'+sdn).find('#selectAllID:checked').length,
     console.log(checkedStatus);
     if (!checkedStatus) {
       totalChecked = 0;
