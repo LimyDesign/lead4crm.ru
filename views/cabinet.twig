@@ -594,6 +594,52 @@
       if (qty < totalChecked) {
         alert("Вы указали слишком большое кол-во компаний для импорта.\n\nВы можете импортировать всего: "+qty);
         return;
+      } else {
+        if (totalChecked > 0) {
+          var totalProgress = 0;
+          var index = 1;
+          var companyID = 0, companyHash = '';
+          var progressIcrement = Math.floor(100/totalChecked);
+          var $import_button = $(this);
+          var $modal_content = $(this).parent().parent();
+          var $progressElement = $modal_content.find('.progress');
+          var $companyIndex = 0;
+          $(this).attr('disabled', 'disabled');
+          $progressElement.fadeIn('fast', function() {
+            $progressElement
+              .find('.progress-bar')
+              .addClass('progress-bar-striped')
+              .css('width', '0%').text('0%');
+            for (index = 1; index <= (totalFind > 50 ? 50 : totalFind); index++) {
+              $companyIndex = $modal_content.find('#company'+index);
+              if ($companyIndex.prop('checked')) {
+                companyID = $companyIndex.attr('name');
+                companyHash = $companyIndex.attr('value');
+                importCompany(companyID, companyHash, true, function() {
+                  totalChecked--;
+                  $progressElement.find('.progress-bar').css('width', function (index, value) {
+                    var fWidth = $progressElement.width();
+                    totalProgress += progressIcrement;
+                    return fWidth / (totalChecked + 1);
+                  }).text(totalProgress+'%');
+                  if (totalChecked > 0)
+                    $import_button.text('Импортировать отмеченные ('+totalChecked+')');
+                  else {
+                    $progressElement
+                      .find('progress-bar')
+                      .removeClass('progress-bar-striped')
+                      .css('width', '100%')
+                      .text('100%');
+                    $import_button.text('Импортировать отмеченные');
+                  }
+                });
+              }
+            }
+            setTimeout(function() {
+              $progressElement.fadeOut('slow');
+            }, 2000);
+          });
+        }
       }
     });
 
@@ -907,7 +953,7 @@
           }
         }
         if (statusExist) {
-          $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Импортровано: <nobr>'+addTime+'</nobr></td></tr>');
+          $('#searchDialog-'+type).find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" disabled></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td>Импортровано: <nobr>'+addTime+'</nobr></td></tr>');
         } else if (oldExist) {
           $('#searchDialog-'+type).find('tbody').append('<tr class="warning"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+'</td><td>'+entry.firm_group+'</td><td><a href="#." class="btn btn-xs btn-warning" data-toggle="tooltip" title="Испортировано: '+addTime+'" onclick=importCompany("'+entry.id+'","'+entry.hash+'",true)>Импортировать</a></td></tr>');
         } else {
@@ -929,7 +975,7 @@
     });
   }
 
-  function importCompany(id, hash, from2gis) {
+  function importCompany(id, hash, from2gis, callback) {
     from2gis = typeof from2gis !== 'underfined' ? from2gis : false;
     var importData = {
       importAPI: '{{apikey}}',
@@ -944,6 +990,9 @@
     $('#searchDialog-'+type).find('input[name="'+id+'"]').parent().parent().find('td:eq(4) a').html('<i class="fa fa-fw fa-spinner fa-pulse"></i> Загрузка&hellip;');
     $.post('/importCompany/', importData).done(function() {
       $('#searchDialog-'+type).find('input[name="'+id+'"]').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
+      if (callback && typeof(callback) === 'function') {
+        callback();
+      }
     });
   }
 
