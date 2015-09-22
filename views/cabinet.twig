@@ -803,7 +803,10 @@
     if (!checkedStatus) {
       totalChecked = 0;
     } else {
-      totalChecked = 50;
+      if (totalFind > 50)
+        totalChecked = 50;
+      else
+        totalChecked = totalFind;
     }
     $('#searchDialog-'+sdn+' tbody tr').find('td:first :checkbox').each(function() {
       $(this).prop('checked', checkedStatus);
