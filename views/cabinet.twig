@@ -585,6 +585,13 @@
       }
     });
 
+    $('[id^=searchDialog-] #selectAllID').click(function() {
+      var checkedStatus = this.checked;
+      if (!checkedStatus) {
+
+      }
+    });
+
     /* Меняем класс активности на кнопках в зависимости от выбранного радио.
     ========================================================================================= */
     $('input[name="searchType"]').click(function() {
@@ -797,9 +804,9 @@
   }
 
   function chMarkAll(sdn) {
-    console.log(sdn);
     var saCheck = $('#searchDialog-'+sdn).find('#selectAll'),
         checkedStatus = saCheck.checked;
+    console.log(checkedStatus);
     if (!checkedStatus) {
       totalChecked = 0;
     } else {
