@@ -805,14 +805,17 @@
 
   function chMarkAll(sdn) {
     var checkedStatus = $('#searchDialog-'+sdn).find('#selectAllID:checked').length;
+    var batchImport = $('#searchDialog-'+sdn).find('#ok');
     console.log(checkedStatus);
     if (!checkedStatus) {
       totalChecked = 0;
+      batchImport.attr('disabled', 'disabled').html('Импортировать отмеченные');
     } else {
       if (totalFind > 50)
         totalChecked = 50;
       else
         totalChecked = totalFind;
+      batchImport.removeAttr('disabled').html('Импортировать отмеченные ('+totalChecked+')');
     }
     $('#searchDialog-'+sdn+' tbody tr').find('td:first :checkbox').each(function() {
       $(this).prop('checked', checkedStatus);
