@@ -796,8 +796,8 @@
     }
   }
 
-  function selectAll(sdn) {
-    var saCheck = $('#searchDialog-'+sdn).find('input[name="selectAll"]'),
+  function chMarkAll(sdn) {
+    var saCheck = $('#searchDialog-'+sdn).find('#selectAll'),
         checkedStatus = saCheck.checked;
     if (!checkedStatus) {
       totalChecked = 0;
