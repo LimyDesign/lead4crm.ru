@@ -931,6 +931,7 @@
 
   function changeMark(id) {
     var status = $('input[name="'+id+'"]:checked').length;
+    var type = localStorage.getItem('search_id');
     var batchImport = $('#searchDialog-'+type).find('#ok');
 
     if (status) {
