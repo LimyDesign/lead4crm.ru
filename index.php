@@ -764,12 +764,12 @@ function testSuka($crm_id) {
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		echo($template);
-		// $arrCSV = array();
-		// foreach ($template as $key => $value) {
-		// 	$arrCSV[] = $template[$key]['title'];
-		// }
-		// print_r($arrCSV);
+		// echo($template);
+		$arrCSV = array();
+		foreach ($template as $key => $value) {
+			$arrCSV[] = $template[$key]['title'];
+		}
+		print_r($arrCSV);
 	}
 }
 
