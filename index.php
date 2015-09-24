@@ -44,6 +44,10 @@ if ($cmd[0]) {
 			logout();
 			break;
 
+		case 'testSuka':
+			testSuka();
+			break;
+
 		case 'webcall':
 			echo getWebCall($_POST['phone'], $_POST['delay']);
 			break;
@@ -752,6 +756,22 @@ function getUserCache() {
 	exit();
 }
 
+function testSuka() {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select t1.type, t1.template from crm_templates as t1 left join crm_versions as t2 on t1.id = t2.templateid where t2.id = ".$crm_id;
+		$result = pg_query($query);
+		$type = pg_fetch_result($result, 0, 'type');
+		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
+		$arrCSV = array();
+		foreach ($template as $key => $value) {
+			$arrCSV[] = $template[$key]['title'];
+		}
+		print_r($arrCSV);
+	}
+}
+
 function getSelection($date, $crm_id) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
@@ -762,7 +782,7 @@ function getSelection($date, $crm_id) {
 			$type = pg_fetch_result($result, 0, 'type');
 			$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
 			if ($type && $template) {
-				if ($type == 'csv' && $crm_id = 2) {
+				if ($type == 'csv' && $crm_id == 2) {
 					$csv = '"'.$template['name']['title'].'";'
 						 . '"'.$template['phone']['title'].'";'
 						 . '"'.$template['fax']['title'].'";'
@@ -781,7 +801,7 @@ function getSelection($date, $crm_id) {
 						 . '"'.$template['skype']['title'].'";'
 						 . '"'.$template['icq']['title'].'";'
 						 . '"'.$template['comment']['title'].'";'."\n";
-				}
+				} elseif ($type == 'xls' && $crm_id == )
 				$start_date = $date.'-01';
 				$em = str_split($date);
 				if ($em[5] == 1 && $em[6] == 2) {
