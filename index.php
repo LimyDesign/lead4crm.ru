@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 		header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 }
 
-require_once 'MIME/Type.php';
 require_once __DIR__.'/src/vendor/autoload.php';
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
@@ -844,14 +843,21 @@ function fileForceDownload($date, $type) {
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
-	echo MIME_Type::autoDetect($filename);
-	// $finfo =  finfo_open(FILEINFO_MIME_TYPE, '/usr/share/misc/magic');
-	// $mime = finfo_file($finfo, $filename);
-	// echo $filename."<br>";
-	// var_dump($mime);
-	die();
+	switch ($type) {
+		case 'csv':
+			$ct = 'text/csv';
+			break;
+
+		case 'xls':
+			$ct = 'application/vnd.ms-excel';
+			break;
+
+		case 'xlsx':
+			$ct = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+			break;
+	}
 	header('Content-Description: File Transfer');
-	header('Content-Type: text/csv');
+	header('Content-Type: '.$ct);
 	header('Content-Disposition: attachment; filename='.basename($filename));
 	header('Content-Transfer-Encoding: binary');
 	header('Expires: 0');
