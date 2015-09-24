@@ -819,7 +819,7 @@ function getSelection($date, $crm_id) {
 						}
 					} else if ($template[$key]['gd']) {
 						if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-							$csv_line[] = $gd[$gd_match[1]];
+							$csv_line[] = $gd['result'][0]['attributes'][$gd_match[1]];
 						}
 					} else {
 						$csv_line[] = $template[$key]['default'];
