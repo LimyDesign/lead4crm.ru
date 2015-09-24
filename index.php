@@ -45,7 +45,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'testSuka':
-			testSuka();
+			testSuka($cmd[1]);
 			break;
 
 		case 'webcall':
@@ -756,7 +756,7 @@ function getUserCache() {
 	exit();
 }
 
-function testSuka() {
+function testSuka($crm_id) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
