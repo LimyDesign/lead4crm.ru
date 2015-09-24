@@ -828,7 +828,7 @@ function testSuka($crm_id, $date) {
 
 function get2GISContact($type, $json, $asString = true) {
 	$_return = array();
-	for ($i = 0; $i < count($json['contacts']; $i++)) {
+	for ($i = 0; $i < count($json['contacts']); $i++) {
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
 				$_return[] = $contact['value'];
