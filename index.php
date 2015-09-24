@@ -954,7 +954,7 @@ function getFullAddress($json) {
 		'г.'.$json['city_name'],
 		$json['address'],
 		$json['additional_info']['office']);
-	return implode(',', $fullAddr);
+	return implode(', ', $fullAddr);
 }
 
 function get2GISContact($type, $json, $asString = true) {
