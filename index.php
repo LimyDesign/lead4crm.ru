@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 		header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 }
 
+require_once 'MIME/Type.php';
 require_once __DIR__.'/src/vendor/autoload.php';
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
@@ -840,7 +841,6 @@ function getSelection($date, $crm_id) {
 }
 
 function fileForceDownload($date, $type) {
-	require_once 'MIME/Type.php';
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
