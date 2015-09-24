@@ -847,8 +847,9 @@ function getSelection($date, $crm_id) {
 				$col = 0; $rows = 1;
 				foreach ($template as $key => $value) {
 					$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $template[$key]['title']);
-					$col++; $rows++;
+					$col++;
 				}
+				$rows++;
 				$start_date = $date.'-01';
 				$em = str_split($date);
 				if ($em[5] == 1 && $em[6] == 2) {
