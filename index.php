@@ -837,7 +837,6 @@ function getSelection($date, $crm_id) {
 				}
 				fclose($fp);
 			} elseif ($type == 'xls') {
-				PHPExcel_Shared_Font::setAutoSizeMethod(PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
 				$xls = new PHPExcel();
 				$xls->getProperties()->setCreator("www.lead4crm.ru");
 				$xls->getProperties()->setLastModifiedBy('www.lead4crm.ru');
@@ -905,6 +904,9 @@ function getSelection($date, $crm_id) {
 						$col++;
 					}
 					$rows++;
+				}
+				foreach (range('A', $xls->getActiveSheet()->getHighestDataColumn()) as $col) {
+					$xls->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
 				}
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
 
