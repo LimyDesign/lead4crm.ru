@@ -907,6 +907,7 @@ function getSelection($date, $crm_id) {
 				}
 				foreach (range('A', $xls->getActiveSheet()->getHighestDataColumn()) as $col) {
 					$xls->getActiveSheet()->getColumnDimension($col)->setAutoSize(true);
+					$xls->getActiveSheet()->getStyle($col.'1')->getFont()->setBold(true);
 				}
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
 
