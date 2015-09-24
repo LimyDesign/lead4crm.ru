@@ -845,6 +845,7 @@ function fileForceDownload($date, $type) {
 		ob_end_clean();
 	$finfo = finfo_open(FILEINFO_MIME_TYPE);
 	$mime = finfo_file($finfo, $filename);
+	echo $filename."<br>";
 	die($mime);
 	header('Content-Description: File Transfer');
 	header('Content-Type: text/csv');
