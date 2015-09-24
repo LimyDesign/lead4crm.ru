@@ -770,6 +770,9 @@ function testSuka($crm_id) {
 			$arrCSV[] = $template[$key]['title'];
 		}
 		print_r($arrCSV);
+		$fp = fopen('testSuka.csv', 'w');
+		fputcsv($fp, $arrCSV);
+		fclose($fp);
 	}
 }
 
