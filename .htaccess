@@ -1,3 +1,5 @@
+php_value mbstring.func_overload 0
+
 Header set Access-Control-Allow-Origin "*"
 
 Options +FollowSymLinks
