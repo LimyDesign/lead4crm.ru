@@ -801,7 +801,8 @@ function getSelection($date, $crm_id) {
 						 . '"'.$template['skype']['title'].'";'
 						 . '"'.$template['icq']['title'].'";'
 						 . '"'.$template['comment']['title'].'";'."\n";
-				} elseif ($type == 'xls' && $crm_id == )
+				} 
+				// elseif ($type == 'xls' && $crm_id == )
 				$start_date = $date.'-01';
 				$em = str_split($date);
 				if ($em[5] == 1 && $em[6] == 2) {
