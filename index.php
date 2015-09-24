@@ -769,6 +769,7 @@ function testSuka($crm_id) {
 		foreach ($template as $key => $value) {
 			$arrCSV[] = $template[$key]['title'];
 		}
+		$arrCSV[] = "\n";
 		print_r($arrCSV);
 		$fp = fopen('testSuka.csv', 'w');
 		fputcsv($fp, $arrCSV, ';', '"', '"');
