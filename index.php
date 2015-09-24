@@ -844,9 +844,9 @@ function getSelection($date, $crm_id) {
 				$xls->getProperties()->setSubject('2GIS Base');
 				$xls->setActiveSheetIndex(0);
 
-				$col = 0; $rows = 1;
+				$col = 0; $rows = 1; $cellType = PHPExcel_Cell_DataType::TYPE_STRING;
 				foreach ($template as $key => $value) {
-					$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $template[$key]['title']);
+					$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($template[$key]['title'], $cellType);
 					$col++;
 				}
 				$rows++;
@@ -879,27 +879,27 @@ function getSelection($date, $crm_id) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
 								$_vals = explode('$', $cp_match[1]);
 								if (count($_vals) == 2) {
-									$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $cp[$_vals[0]][$_vals[1]]);
+									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($cp[$_vals[0]][$_vals[1]], $cellType);
 								} else {
-									$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $cp[$cp_match[1]]);
+									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($cp[$cp_match[1]], $cellType);
 								}
 							} else {
 								if ($template[$key]['argv']) {
 									if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-										$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
+										$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp), $cellType);
 									} else {
-										$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp));
+										$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp), $cellType);
 									}	
 								} else {
-									$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, call_user_func($template[$key]['cp'], $cp));
+									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp), $cellType);
 								}
 							}
 						} else if ($template[$key]['gd']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-								$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $gd['result'][0]['attributes'][$gd_match[1]]);
+								$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($gd['result'][0]['attributes'][$gd_match[1]], $cellType);
 							}
 						} else {
-							$xls->getActiveSheet()->setCellValueByColumnAndRow($col, $rows, $template[$key]['default']);
+							$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($template[$key]['default'], $cellType);
 						}
 						$col++;
 					}
