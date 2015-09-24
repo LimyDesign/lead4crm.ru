@@ -843,7 +843,12 @@ function getSelection($date, $crm_id) {
 				$xls->getProperties()->setTitle('2GIS Base at '.$date);
 				$xls->getProperties()->setSubject('2GIS Base');
 				$xls->setActiveSheetIndex(0);
-				$xls->getActiveSheet()->SetCellValue('A1','Тест');
+
+				$col = 0;
+				foreach ($template as $key => $value) {
+					$xls->getActiveSheet()->setCellValueByColumnAndRow($col, 1, $template[$key]['title']);
+					$col++;
+				}
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
 
 				$xlsw = new PHPExcel_Writer_Excel5($xls);
