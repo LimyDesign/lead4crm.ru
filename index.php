@@ -843,9 +843,9 @@ function fileForceDownload($date, $type) {
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
-	echo '<pre>';
+	echo '<pre><code>';
 	echo file_get_contents('/usr/share/misc/magic');
-	echo '</pre>';
+	echo '</code></pre>';
 	// $finfo =  finfo_open(FILEINFO_MIME, '/usr/share/misc/magic');
 	// $mime = finfo_file($finfo, $filename);
 	// echo $filename."<br>";
