@@ -826,7 +826,7 @@ function testSuka($crm_id, $date) {
 				$csv[] = $csv_line;
 			}
 			if (!file_exists(dirname($filename)))
-				mkdir(dirname($filename));
+				mkdir(dirname($filename), 0777, true);
 			$fp = fopen($filename, 'w');
 			foreach ($csv as $line) {
 				fputcsv($fp, $line, ';', '"', '"');
