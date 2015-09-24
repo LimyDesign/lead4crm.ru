@@ -764,7 +764,8 @@ function testSuka($crm_id, $date) {
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		if (file_exists(__DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type)) {
+		$filename = __DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type;
+		if (file_exists($filename)) {
 			fileForceDonwload($date, $type);
 		} else {
 			$csv_title = array();
@@ -824,7 +825,7 @@ function testSuka($crm_id, $date) {
 				}
 				$csv[] = $csv_line;
 			}
-			$fp = fopen('testSuka.csv', 'w');
+			$fp = fopen($filename, 'w');
 			foreach ($csv as $line) {
 				fputcsv($fp, $line, ';', '"', '"');
 			}
