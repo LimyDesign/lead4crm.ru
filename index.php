@@ -840,13 +840,12 @@ function getSelection($date, $crm_id) {
 }
 
 function fileForceDownload($date, $type) {
+	require_once 'MIME/Type.php';
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
-	echo '<pre><code>';
-	echo file_get_contents('/usr/share/misc/magic');
-	echo '</code></pre>';
-	// $finfo =  finfo_open(FILEINFO_MIME, '/usr/share/misc/magic');
+	echo MIME_Type::autoDetect($filename);
+	// $finfo =  finfo_open(FILEINFO_MIME_TYPE, '/usr/share/misc/magic');
 	// $mime = finfo_file($finfo, $filename);
 	// echo $filename."<br>";
 	// var_dump($mime);
