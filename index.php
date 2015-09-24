@@ -764,7 +764,7 @@ function testSuka($crm_id, $date) {
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		$filename = __DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type;
+		$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 		if (file_exists($filename)) {
 			fileForceDownload($date, $type);
 		} else {
@@ -825,6 +825,8 @@ function testSuka($crm_id, $date) {
 				}
 				$csv[] = $csv_line;
 			}
+			if (!file_exists(dirname($filename)))
+				mkdir(dirname($filename));
 			$fp = fopen($filename, 'w');
 			foreach ($csv as $line) {
 				fputcsv($fp, $line, ';', '"', '"');
@@ -836,7 +838,7 @@ function testSuka($crm_id, $date) {
 }
 
 function fileForceDownload($date, $type) {
-	$filename = __DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type;
+	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
 	header('Content-Description: File Transfer');
