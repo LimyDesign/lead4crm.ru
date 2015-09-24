@@ -771,7 +771,9 @@ function testSuka($crm_id) {
 		$csv = array($csv_title);
 		print_r($csv);
 		$fp = fopen('testSuka.csv', 'w');
-		fputcsv($fp, $csv, ';', '"', '"');
+		foreach ($csv as $line) {
+			fputcsv($fp, $line, ';', '"', '"');
+		}
 		fclose($fp);
 	}
 }
