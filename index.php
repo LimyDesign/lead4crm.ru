@@ -837,6 +837,7 @@ function getSelection($date, $crm_id) {
 				}
 				fclose($fp);
 			} elseif ($type == 'xls') {
+				PHPExcel_Shared_Font::setAutoSizeMethod(PHPExcel_Shared_Font::AUTOSIZE_METHOD_EXACT);
 				$xls = new PHPExcel();
 				$xls->getProperties()->setCreator("www.lead4crm.ru");
 				$xls->getProperties()->setLastModifiedBy('www.lead4crm.ru');
