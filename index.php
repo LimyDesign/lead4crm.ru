@@ -803,10 +803,14 @@ function testSuka($crm_id, $date) {
 							$csv_line[] = $cp[$cp_match[1]];
 						}
 					} else {
-						if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-							$csv_line[] = call_user_func($template[$key]['cp'], $cp[$$argv_match[1]], $cp);
+						if ($template[$key]['argv']) {
+							if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
+								$csv_line[] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+							} else {
+								$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
+							}	
 						} else {
-							$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
+							$csv_line[] = call_user_func($template[$key]['cp'], $cp);
 						}
 					}
 				} else if ($template[$key]['gd']) {
@@ -831,11 +835,32 @@ function get2GISContact($type, $json, $asString = true) {
 	for ($i = 0; $i < count($json['contacts']); $i++) {
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
-				$_return[] = $contact['value'];
+				$_return[] = ($type != 'website' ? $contact['value'] : 'http://'.$contact['alias']);
 			}
 		}
 	}
 	return ($asString ? implode(',', $_return) : $_return);
+}
+
+function bx24Comment($cp) {
+	$comment = '';
+	if (count($cp['rubrics'])) {
+		$comment .= '<p><b>Виды деятельности:</b></p><ul>';
+		foreach ($cp['rubrics'] as $rubric)
+			$comment .= '<li>'.$rubric.'</li>';
+		$comment .= '</ul>';
+	}
+	$url_name = rawurlencode($cp['name']);
+	$comment .= "<p><b>Дополнительная информация:</b></p><ul>"
+		. "<li><a href='http://2gis.ru/city/{$cp['project_id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17/routeTab/to/{$cp['lon']}%2C{$cp['lat']}%E2%95%8E{$url_name}?utm_source=profile&utm_medium=route_to&utm_campaign=partnerapi' target='_blank'>Проложить маршрут до {$cp['name']}</a></li>"
+	    . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17/routeTab/from/{$cp['lon']}%2C{$cp['lat']}%E2%95%8E{$url_name}?utm_source=profile&utm_medium=route_from&utm_campaign=partnerapi' target='_blank'>Проложить маршрут от {$cp['name']}</a></li>"
+	    . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/entrance/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=entrance&utm_campaign=partnerapi' target='_blank'>Показать вход</a></li>"
+	    . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/photos/{$cp['id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=photo&utm_campaign=partnerapi' target='_blank'>Фотографии {$cp['name']}</a></li>"
+	    . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/flamp/{$cp['id']}/callout/firms-{$cp['id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=review&utm_campaign=partnerapi' target='_blank'>Отзывы о {$cp['name']}</a></li>";
+	$additional_info = "<li><a href='{$cp['bookle_url']}?utm_source=profile&utm_medium=booklet&utm_campaign=partnerapi' target='_blank'>Услуги и цены {$cp['name']}</a></li>";
+	if ($cp['bookle_url'])
+		$comment .= $additional_info;
+	return $comment;
 }
 
 function getSelection($date, $crm_id) {
