@@ -843,8 +843,8 @@ function fileForceDownload($date, $type) {
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
-	$finfo =  new finfo(FILEINFO_MIME_TYPE, '/usr/share/misc/magic');
-	$mime = $finfo->file($filename);
+	$finfo =  finfo_open(FILEINFO_MIME_TYPE, '/usr/share/misc/magic');
+	$mime = finfo_file($finfo, $filename);
 	echo $filename."<br>";
 	die($mime);
 	header('Content-Description: File Transfer');
