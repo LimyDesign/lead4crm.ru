@@ -764,7 +764,7 @@ function testSuka() {
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		print_r($template);
+		echo($template);
 		// $arrCSV = array();
 		// foreach ($template as $key => $value) {
 		// 	$arrCSV[] = $template[$key]['title'];
