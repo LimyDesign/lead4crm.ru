@@ -842,7 +842,7 @@ function getSelection($date, $crm_id) {
 				$xls->getProperties()->setLastModifiedBy('www.lead4crm.ru');
 				$xls->getProperties()->setTitle('2GIS Base at '.$date);
 				$xls->getProperties()->setSubject('2GIS Base');
-				$xls->getProperties()->setDescription('Выборка из базы справочника 2ГИС');
+				$xls->getProperties()->setDescription(iconv('UTF-8','Windows-1251','Выборка из базы справочника 2ГИС'));
 				$xls->setActiveSheetIndex(0);
 				$xls->getActiveSheet()->SetCellValue('A1','Тест');
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
