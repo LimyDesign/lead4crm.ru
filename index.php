@@ -846,6 +846,7 @@ function fileForceDownload($date, $type) {
 	$finfo =  finfo_open(FILEINFO_MIME_TYPE, '/usr/share/misc/magic');
 	$mime = finfo_file($finfo, $filename);
 	echo $filename."<br>";
+	echo mime_content_type($filename).'<br>';
 	die($mime);
 	header('Content-Description: File Transfer');
 	header('Content-Type: text/csv');
