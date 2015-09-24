@@ -901,7 +901,7 @@ function getSelection($date, $crm_id) {
 						}
 						$col++;
 					}
-					$row++;
+					$rows++;
 				}
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
 
