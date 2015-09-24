@@ -769,72 +769,87 @@ function getSelection($date, $crm_id) {
 		if (file_exists($filename)) {
 			fileForceDownload($date, $type, $affix);
 		} else {
-			$csv_title = array();
-			foreach ($template as $key => $value) {
-				$csv_title[] = iconv('UTF-8', 'Windows-1251', $template[$key]['title']);
-			}
-			$csv = array($csv_title);
-			$start_date = $date.'-01';
-			$em = str_split($date);
-			if ($em[5] == 1 && $em[6] == 2) {
-				$_year = $em[0].$em[1].$em[2].$em[3];
-				$_year += 1;
-				$end_date = $_year.'-01-01';
-			} else if ($em[5] == 0 && $em[6] == 9) {
-				$_year = $em[0].$em[1].$em[2].$em[3];
-				$end_date = $_year.'-10-01';
-			} else {
-				$_year = $em[0].$em[1].$em[2].$em[3];
-				$_month = $em[6]+1;
-				$end_date = $_year.'-0'.$_month.'-01';
-			}
-			$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
-			$result = pg_query($query);
-			while ($row = pg_fetch_array($result)) {
-				$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
-				$result2 = pg_query($query2);
-				$cp = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-				$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
-				$result2 = pg_query($query2);
-				$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-				$csv_line = array();
+			if ($type == 'csv') {
+				$csv_title = array();
 				foreach ($template as $key => $value) {
-					if ($template[$key]['cp']) {
-						if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
-							$_vals = explode('$', $cp_match[1]);
-							if (count($_vals) == 2) {
-								$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$_vals[0]][$_vals[1]]);
+					$csv_title[] = iconv('UTF-8', 'Windows-1251', $template[$key]['title']);
+				}
+				$csv = array($csv_title);
+				$start_date = $date.'-01';
+				$em = str_split($date);
+				if ($em[5] == 1 && $em[6] == 2) {
+					$_year = $em[0].$em[1].$em[2].$em[3];
+					$_year += 1;
+					$end_date = $_year.'-01-01';
+				} else if ($em[5] == 0 && $em[6] == 9) {
+					$_year = $em[0].$em[1].$em[2].$em[3];
+					$end_date = $_year.'-10-01';
+				} else {
+					$_year = $em[0].$em[1].$em[2].$em[3];
+					$_month = $em[6]+1;
+					$end_date = $_year.'-0'.$_month.'-01';
+				}
+				$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
+				$result = pg_query($query);
+				while ($row = pg_fetch_array($result)) {
+					$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
+					$result2 = pg_query($query2);
+					$cp = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+					$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
+					$result2 = pg_query($query2);
+					$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+					$csv_line = array();
+					foreach ($template as $key => $value) {
+						if ($template[$key]['cp']) {
+							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
+								$_vals = explode('$', $cp_match[1]);
+								if (count($_vals) == 2) {
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$_vals[0]][$_vals[1]]);
+								} else {
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
+								}
 							} else {
-								$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
+								if ($template[$key]['argv']) {
+									if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
+										$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
+									} else {
+										$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp));
+									}	
+								} else {
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp));
+								}
+							}
+						} else if ($template[$key]['gd']) {
+							if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
+								$csv_line[] = iconv('UTF-8', 'Windows-1251', $gd['result'][0]['attributes'][$gd_match[1]]);
 							}
 						} else {
-							if ($template[$key]['argv']) {
-								if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
-								} else {
-									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp));
-								}	
-							} else {
-								$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp));
-							}
+							$csv_line[] = iconv('UTF-8', 'Windows-1251', $template[$key]['default']);
 						}
-					} else if ($template[$key]['gd']) {
-						if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-							$csv_line[] = iconv('UTF-8', 'Windows-1251', $gd['result'][0]['attributes'][$gd_match[1]]);
-						}
-					} else {
-						$csv_line[] = iconv('UTF-8', 'Windows-1251', $template[$key]['default']);
 					}
+					$csv[] = $csv_line;
 				}
-				$csv[] = $csv_line;
+				if (!file_exists(dirname($filename)))
+					mkdir(dirname($filename), 0777, true);
+				$fp = fopen($filename, 'w');
+				foreach ($csv as $line) {
+					fputcsv($fp, $line, ';', '"', '"');
+				}
+				fclose($fp);
+			} elseif ($type == 'xls') {
+				$xls = new PHPExcel();
+				$xls->getProperties()->setCreator("www.lead4crm.ru");
+				$xls->getProperties()->setLastModifiedBy('www.lead4crm.ru');
+				$xls->getProperties()->setTitle('2GIS Base at '.$date);
+				$xls->getProperties()->setSubject('2GIS Base');
+				$xls->getProperties()->setDescription('Выборка из базы справочника 2ГИС');
+				$xls->setActiveSheetIndex(0);
+				$xls->getActiveSheet()->SetCellValue('A1','Тест');
+				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
+
+				$xlsw = new PHPExcel_Writer_Excel5($xls);
+				$xlsw->save($filename);
 			}
-			if (!file_exists(dirname($filename)))
-				mkdir(dirname($filename), 0777, true);
-			$fp = fopen($filename, 'w');
-			foreach ($csv as $line) {
-				fputcsv($fp, $line, ';', '"', '"');
-			}
-			fclose($fp);
 			fileForceDownload($date, $type, $affix);
 		}
 	}
