@@ -821,6 +821,8 @@ function getSelection($date, $crm_id) {
 						if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
 							$csv_line[] = $gd[$gd_match[1]];
 						}
+					} else {
+						$csv_line[] = $template[$key]['default'];
 					}
 				}
 				$csv[] = $csv_line;
