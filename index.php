@@ -801,8 +801,9 @@ function testSuka($crm_id, $date) {
 			foreach ($template as $key => $value) {
 				if ($template[$key]['cp']) {
 					if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
-
+						echo "1";
 					} else {
+						echo "2";
 						if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
 							echo "Yo!";
 							var_dump($argv_match);
