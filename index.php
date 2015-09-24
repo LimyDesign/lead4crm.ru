@@ -765,11 +765,11 @@ function testSuka() {
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
 		print_r($template);
-		$arrCSV = array();
-		foreach ($template as $key => $value) {
-			$arrCSV[] = $template[$key]['title'];
-		}
-		print_r($arrCSV);
+		// $arrCSV = array();
+		// foreach ($template as $key => $value) {
+		// 	$arrCSV[] = $template[$key]['title'];
+		// }
+		// print_r($arrCSV);
 	}
 }
 
