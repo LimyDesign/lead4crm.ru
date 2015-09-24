@@ -804,6 +804,7 @@ function testSuka($crm_id, $date) {
 
 					} else {
 						if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
+							echo "Yo!";
 							var_dump($argv_match);
 							var_dump($cp[$$argv_match]);
 							// call_user_func($template[$key]['cp'],$cp[$$argv_match]);
