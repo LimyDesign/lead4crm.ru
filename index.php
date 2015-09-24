@@ -843,6 +843,9 @@ function fileForceDownload($date, $type) {
 	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
+	$finfo = finfo_open(FILEINFO_MIME_TYPE);
+	$mime = finfo_file($finfo, $filename);
+	die($mime);
 	header('Content-Description: File Transfer');
 	header('Content-Type: text/csv');
 	header('Content-Disposition: attachment; filename='.basename($filename));
