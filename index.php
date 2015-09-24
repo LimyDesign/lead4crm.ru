@@ -771,7 +771,7 @@ function getSelection($date, $crm_id) {
 		} else {
 			$csv_title = array();
 			foreach ($template as $key => $value) {
-				$csv_title[] = $template[$key]['title'];
+				$csv_title[] = iconv('UTF-8', 'Windows-1251', $template[$key]['title']);
 			}
 			$csv = array($csv_title);
 			$start_date = $date.'-01';
@@ -803,27 +803,27 @@ function getSelection($date, $crm_id) {
 						if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
 							$_vals = explode('$', $cp_match[1]);
 							if (count($_vals) == 2) {
-								$csv_line[] = $cp[$_vals[0]][$_vals[1]];
+								$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$_vals[0]][$_vals[1]]);
 							} else {
-								$csv_line[] = $cp[$cp_match[1]];
+								$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
 							}
 						} else {
 							if ($template[$key]['argv']) {
 								if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-									$csv_line[] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
 								} else {
-									$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp));
 								}	
 							} else {
-								$csv_line[] = call_user_func($template[$key]['cp'], $cp);
+								$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp));
 							}
 						}
 					} else if ($template[$key]['gd']) {
 						if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-							$csv_line[] = $gd['result'][0]['attributes'][$gd_match[1]];
+							$csv_line[] = iconv('UTF-8', 'Windows-1251', $gd['result'][0]['attributes'][$gd_match[1]]);
 						}
 					} else {
-						$csv_line[] = $template[$key]['default'];
+						$csv_line[] = iconv('UTF-8', 'Windows-1251', $template[$key]['default']);
 					}
 				}
 				$csv[] = $csv_line;
