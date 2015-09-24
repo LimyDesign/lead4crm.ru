@@ -45,7 +45,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'testSuka':
-			testSuka($cmd[1]);
+			testSuka($cmd[1], $cmd[2]);
 			break;
 
 		case 'webcall':
@@ -756,7 +756,7 @@ function getUserCache() {
 	exit();
 }
 
-function testSuka($crm_id) {
+function testSuka($crm_id, $date) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
@@ -769,12 +769,51 @@ function testSuka($crm_id) {
 			$csv_title[] = $template[$key]['title'];
 		}
 		$csv = array($csv_title);
-		print_r($csv);
 		$fp = fopen('testSuka.csv', 'w');
 		foreach ($csv as $line) {
 			fputcsv($fp, $line, ';', '"', '"');
 		}
 		fclose($fp);
+		$start_date = $date.'-01';
+		$em = str_split($date);
+		if ($em[5] == 1 && $em[6] == 2) {
+			$_year = $em[0].$em[1].$em[2].$em[3];
+			$_year += 1;
+			$end_date = $_year.'-01-01';
+		} else if ($em[5] == 0 && $em[6] == 9) {
+			$_year = $em[0].$em[1].$em[2].$em[3];
+			$end_date = $_year.'-10-01';
+		} else {
+			$_year = $em[0].$em[1].$em[2].$em[3];
+			$_month = $em[6]+1;
+			$end_date = $_year.'-0'.$_month.'-01';
+		}
+		$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
+		$result = pg_query($query);
+		$csv_line = array();
+		while ($row = pg_fetch_array($result)) {
+			$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
+			$result2 = pg_query($query2);
+			$cp = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+			$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
+			$result2 = pg_query($query2);
+			$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+			foreach ($template as $key => $value) {
+				if ($template[$key]['cp']) {
+					if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
+
+					} else {
+						if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
+							var_dump($cp[$$argv_match]);
+							// call_user_func($template[$key]['cp'],$cp[$$argv_match]);
+						} else {
+							// call_user_func($template[$key]['cp'],$template[$key]['argv']);
+						}
+					}
+				}
+				// $csv_line[] = $template[$key]
+			}
+		}
 	}
 }
 
