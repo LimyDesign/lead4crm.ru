@@ -873,6 +873,7 @@ function getSelection($date, $crm_id) {
 					$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
 					$result2 = pg_query($query2);
 					$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+					$col = 0;
 					foreach ($template as $key => $value) {
 						if ($template[$key]['cp']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
