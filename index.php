@@ -769,11 +769,6 @@ function testSuka($crm_id, $date) {
 			$csv_title[] = $template[$key]['title'];
 		}
 		$csv = array($csv_title);
-		$fp = fopen('testSuka.csv', 'w');
-		foreach ($csv as $line) {
-			fputcsv($fp, $line, ';', '"', '"');
-		}
-		fclose($fp);
 		$start_date = $date.'-01';
 		$em = str_split($date);
 		if ($em[5] == 1 && $em[6] == 2) {
@@ -790,7 +785,6 @@ function testSuka($crm_id, $date) {
 		}
 		$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
 		$result = pg_query($query);
-		$csv_line = array();
 		while ($row = pg_fetch_array($result)) {
 			$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
 			$result2 = pg_query($query2);
@@ -798,23 +792,50 @@ function testSuka($crm_id, $date) {
 			$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
 			$result2 = pg_query($query2);
 			$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+			$csv_line = array();
 			foreach ($template as $key => $value) {
 				if ($template[$key]['cp']) {
 					if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
+						$_vals = explode('$', $cp_match[1]);
+						if (count($_vals) == 2) {
+							$csv_line[] = $cp[$_vals[0]][$_vals[1]];
+						} else {
+							$csv_line[] = $cp[$cp_match[1]];
+						}
 					} else {
 						if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-							// var_dump($argv_match);
-							var_dump($cp[$argv_match[1]]);
-							// call_user_func($template[$key]['cp'],$cp[$$argv_match]);
+							$csv_line[] = call_user_func($template[$key]['cp'], $cp[$$argv_match[1]], $cp);
 						} else {
-							// call_user_func($template[$key]['cp'],$template[$key]['argv']);
+							$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
 						}
 					}
+				} else if ($template[$key]['gd']) {
+					if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
+						$csv_line[] = $gd[$gd_match[1]];
+					}
 				}
-				// $csv_line[] = $template[$key]
+			}
+			$csv[] = $csv_line;
+		}
+		$fp = fopen('testSuka.csv', 'w');
+		foreach ($csv as $line) {
+			fputcsv($fp, $line, ';', '"', '"');
+		}
+		fclose($fp);
+		print_r($csv);
+	}
+}
+
+function get2GISContact($type, $json, $asString = true) {
+	$_return = array();
+	for ($i = 0; $i < count($json['contacts']; $i++)) {
+		foreach ($json['contacts'][$i]['contacts'] as $contact) {
+			if ($contact['type'] == $type) {
+				$_return[] = $contact['value'];
 			}
 		}
 	}
+	return ($asString ? implode(',', $_return) : $_return);
 }
 
 function getSelection($date, $crm_id) {
