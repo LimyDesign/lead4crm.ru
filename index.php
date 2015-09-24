@@ -760,13 +760,14 @@ function getSelection($date, $crm_id) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "select t1.type, t1.template from crm_templates as t1 left join crm_versions as t2 on t1.id = t2.templateid where t2.id = ".$crm_id;
+		$query = "select t1.type, t1.name, t1.template from crm_templates as t1 left join crm_versions as t2 on t1.id = t2.templateid where t2.id = ".$crm_id;
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
+		$affix = pg_fetch_result($result, 0, 'name');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
+		$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$affix.'_'.$date.'.'.$type;
 		if (file_exists($filename)) {
-			fileForceDownload($date, $type);
+			fileForceDownload($date, $type, $affix);
 		} else {
 			$csv_title = array();
 			foreach ($template as $key => $value) {
@@ -834,13 +835,13 @@ function getSelection($date, $crm_id) {
 				fputcsv($fp, $line, ';', '"', '"');
 			}
 			fclose($fp);
-			fileForceDownload($date, $type);
+			fileForceDownload($date, $type, $affix);
 		}
 	}
 }
 
-function fileForceDownload($date, $type) {
-	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$date.'.'.$type;
+function fileForceDownload($date, $type, $affix) {
+	$filename = __DIR__.'/ucf/'.$_SESSION['userid'].'/2GIS_Base_'.$affix.'_'.$date.'.'.$type;
 	if (ob_get_level())
 		ob_end_clean();
 	switch ($type) {
