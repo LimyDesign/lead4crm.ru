@@ -764,70 +764,95 @@ function testSuka($crm_id, $date) {
 		$result = pg_query($query);
 		$type = pg_fetch_result($result, 0, 'type');
 		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
-		$csv_title = array();
-		foreach ($template as $key => $value) {
-			$csv_title[] = $template[$key]['title'];
-		}
-		$csv = array($csv_title);
-		$start_date = $date.'-01';
-		$em = str_split($date);
-		if ($em[5] == 1 && $em[6] == 2) {
-			$_year = $em[0].$em[1].$em[2].$em[3];
-			$_year += 1;
-			$end_date = $_year.'-01-01';
-		} else if ($em[5] == 0 && $em[6] == 9) {
-			$_year = $em[0].$em[1].$em[2].$em[3];
-			$end_date = $_year.'-10-01';
+		if (file_exists(__DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type)) {
+			fileForceDonwload($date, $type);
 		} else {
-			$_year = $em[0].$em[1].$em[2].$em[3];
-			$_month = $em[6]+1;
-			$end_date = $_year.'-0'.$_month.'-01';
-		}
-		$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
-		$result = pg_query($query);
-		while ($row = pg_fetch_array($result)) {
-			$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
-			$result2 = pg_query($query2);
-			$cp = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-			$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
-			$result2 = pg_query($query2);
-			$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-			$csv_line = array();
+			$csv_title = array();
 			foreach ($template as $key => $value) {
-				if ($template[$key]['cp']) {
-					if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
-						$_vals = explode('$', $cp_match[1]);
-						if (count($_vals) == 2) {
-							$csv_line[] = $cp[$_vals[0]][$_vals[1]];
-						} else {
-							$csv_line[] = $cp[$cp_match[1]];
-						}
-					} else {
-						if ($template[$key]['argv']) {
-							if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-								$csv_line[] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+				$csv_title[] = $template[$key]['title'];
+			}
+			$csv = array($csv_title);
+			$start_date = $date.'-01';
+			$em = str_split($date);
+			if ($em[5] == 1 && $em[6] == 2) {
+				$_year = $em[0].$em[1].$em[2].$em[3];
+				$_year += 1;
+				$end_date = $_year.'-01-01';
+			} else if ($em[5] == 0 && $em[6] == 9) {
+				$_year = $em[0].$em[1].$em[2].$em[3];
+				$end_date = $_year.'-10-01';
+			} else {
+				$_year = $em[0].$em[1].$em[2].$em[3];
+				$_month = $em[6]+1;
+				$end_date = $_year.'-0'.$_month.'-01';
+			}
+			$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
+			$result = pg_query($query);
+			while ($row = pg_fetch_array($result)) {
+				$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
+				$result2 = pg_query($query2);
+				$cp = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+				$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
+				$result2 = pg_query($query2);
+				$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
+				$csv_line = array();
+				foreach ($template as $key => $value) {
+					if ($template[$key]['cp']) {
+						if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
+							$_vals = explode('$', $cp_match[1]);
+							if (count($_vals) == 2) {
+								$csv_line[] = $cp[$_vals[0]][$_vals[1]];
 							} else {
-								$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
-							}	
+								$csv_line[] = $cp[$cp_match[1]];
+							}
 						} else {
-							$csv_line[] = call_user_func($template[$key]['cp'], $cp);
+							if ($template[$key]['argv']) {
+								if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
+									$csv_line[] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+								} else {
+									$csv_line[] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp);
+								}	
+							} else {
+								$csv_line[] = call_user_func($template[$key]['cp'], $cp);
+							}
 						}
-					}
-				} else if ($template[$key]['gd']) {
-					if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-						$csv_line[] = $gd[$gd_match[1]];
+					} else if ($template[$key]['gd']) {
+						if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
+							$csv_line[] = $gd[$gd_match[1]];
+						}
 					}
 				}
+				$csv[] = $csv_line;
 			}
-			$csv[] = $csv_line;
+			$fp = fopen('testSuka.csv', 'w');
+			foreach ($csv as $line) {
+				fputcsv($fp, $line, ';', '"', '"');
+			}
+			fclose($fp);
+			fileForceDonwload($date, $type);
 		}
-		$fp = fopen('testSuka.csv', 'w');
-		foreach ($csv as $line) {
-			fputcsv($fp, $line, ';', '"', '"');
-		}
-		fclose($fp);
-		print_r($csv);
 	}
+}
+
+function fileForceDownload($date, $type) {
+	$filename = __DIR__.'/ucf/2GIS_Base_'.$date.'.'.$type;
+	if (ob_get_level())
+		ob_end_clean();
+	header('Content-Description: File Transfer');
+	header('Content-Type: text/csv');
+	header('Content-Disposition: attachment; filename='.basename($filename));
+	header('Content-Transfer-Encoding: binary');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate');
+	header('Pragma: public');
+	header('Content-Length: ' . filesize($filename));
+	if ($fd = fopen($filename, 'rb')) {
+		while (!feof($fd)) {
+			print fread($fd, 1024);
+		}
+		fclose($fd);
+	}
+	exit();
 }
 
 function get2GISContact($type, $json, $asString = true) {
