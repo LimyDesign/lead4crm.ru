@@ -889,6 +889,14 @@ function fileForceDownload($date, $type, $affix) {
 	exit();
 }
 
+function getFullAddress($json) {
+	$fullAddr = array(
+		'г.'.$json['city_name'],
+		$json['address'],
+		$json['additional_info']['office']);
+	return implode(',', $fullAddr);
+}
+
 function get2GISContact($type, $json, $asString = true) {
 	$_return = array();
 	for ($i = 0; $i < count($json['contacts']); $i++) {
