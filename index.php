@@ -980,7 +980,7 @@ function get2GISContact($type, $json, $asString = true) {
 			}
 		}
 	}
-	return ($asString ? implode(',', $_return) : $_return);
+	return ($asString ? implode(', ', $_return) : $_return);
 }
 
 function bx24Comment($cp) {
