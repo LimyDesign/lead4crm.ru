@@ -307,7 +307,7 @@
 		$('[id*="anchor"]').click(function() {
 			var anchor = $(this).attr('href');
 			$('html,body').animate({
-				scrollTop: $(anchor).offset({ top: $('#header').height(), left: 0 }).top
+				scrollTop: $(anchor).offset().top - $('#header').height()
 			}, 2000);
 		});
 	});
