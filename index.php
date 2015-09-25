@@ -803,8 +803,14 @@ function getSelection($date, $crm_id) {
 						if ($template[$key]['cp']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
 								$_vals = explode('$', $cp_match[1]);
-								if (count($_vals) == 2) {
-									$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$_vals[0]][$_vals[1]]);
+								// if (count($_vals) == 2) {
+								// 	$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$_vals[0]][$_vals[1]]);
+								if (count($_vals) > 1) {
+									$tmp_arr = array();
+									foreach($_vals as $key) {
+										$tmp_arr = is_empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
+									}
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', $tmp_arr);
 								} else {
 									$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
 								}
