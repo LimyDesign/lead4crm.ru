@@ -802,18 +802,16 @@ function getSelection($date, $crm_id) {
 					foreach ($template as $key => $value) {
 						if ($template[$key]['cp']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
-								$_vals = array_flip(explode('$', $cp_match[1]));
-								$csv_line[] = iconv('UTF-8', 'Windows-1251', array_intersect_key($cp, $_vals));
-								// $_vals = explode('$', $cp_match[1]);
-								// if (count($_vals) > 1) {
-								// 	$tmp_arr = array();
-								// 	foreach($_vals as $key) {
-								// 		$tmp_arr = empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
-								// 	}
-								// 	$csv_line[] = iconv('UTF-8', 'Windows-1251', $tmp_arr);
-								// } else {
-								// 	$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
-								// }
+								$_vals = explode('$', $cp_match[1]);
+								if (count($_vals) > 1) {
+									$tmp_arr = array();
+									foreach($_vals as $key) {
+										$tmp_arr = empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
+									}
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', $tmp_arr);
+								} else {
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', $cp[$cp_match[1]]);
+								}
 							} else {
 								if ($template[$key]['argv']) {
 									if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
