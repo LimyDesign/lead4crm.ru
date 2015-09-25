@@ -884,8 +884,12 @@ function getSelection($date, $crm_id) {
 						if ($template[$key]['cp']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
 								$_vals = explode('$', $cp_match[1]);
-								if (count($_vals) == 2) {
-									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($cp[$_vals[0]][$_vals[1]], $cellType);
+								if (count($_vals) > 1) {
+									$tmp_arr = array();
+									foreach($_vals as $key) {
+										$tmp_arr = empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
+									}
+									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($tmp_arr, $cellType);
 								} else {
 									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($cp[$cp_match[1]], $cellType);
 								}
