@@ -808,7 +808,7 @@ function getSelection($date, $crm_id) {
 								if (count($_vals) > 1) {
 									$tmp_arr = array();
 									foreach($_vals as $key) {
-										$tmp_arr = is_empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
+										$tmp_arr = empty($tmp_arr) ? $cp[$key] : $tmp_arr[$key];
 									}
 									$csv_line[] = iconv('UTF-8', 'Windows-1251', $tmp_arr);
 								} else {
