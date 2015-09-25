@@ -921,6 +921,8 @@ function getSelection($date, $crm_id) {
 				}
 				$xls->getActiveSheet()->setTitle('Выборка из 2ГИС');
 
+				if (!file_exists(dirname($filename)))
+					mkdir(dirname($filename), 0777, true);
 				$xlsw = new PHPExcel_Writer_Excel5($xls);
 				$xlsw->save($filename);
 			}
