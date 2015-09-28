@@ -41,10 +41,10 @@
           <div class="nav-drop">
             <ul>
               <li>
-                Доступно <span id="kk_help" title="Карточек Компаний">КК</span>: <span id="qty">0</span>
+                Доступно <span id="kk_help" title="Карточек Компаний">КК</span>: <notr><span id="qty">0</span></notr>
               </li>
               <li>
-                Баланс: <span id="balans">0</span>&nbsp;<i class="fa fa-rub"></i>
+                Баланс: <notr><span id="balans">0</span>&nbsp;<i class="fa fa-rub"></i></notr>
               </li>
               <li>
                 Тарифный план: <span id="tariff">Демо</span>
@@ -246,22 +246,22 @@
             {% endif %}
             <h4>Привязанные аккаунты</h4>
             {% if provider.fb %}
-              <a href="/unlink/fb/" class="btn btn-block active btn-fb-color">Facebook &nbsp; <span class="label label-default">{{provider.fb}}</span></a>
+              <a href="/unlink/fb/" class="btn btn-block active btn-fb-color">Facebook<notr> &nbsp; <span class="label label-default">{{provider.fb}}</span></notr></a>
             {% endif %}
             {% if provider.vk %}
-              <a href="/unlink/vk/" class="btn btn-block active btn-vk-color">Вконтакте &nbsp; <span class="label label-default">{{provider.vk}}</span></a>
+              <a href="/unlink/vk/" class="btn btn-block active btn-vk-color">Вконтакте<notr> &nbsp; <span class="label label-default">{{provider.vk}}</span></notr></a>
             {% endif %}
             {% if provider.gp %}
-              <a href="/unlink/gp/" class="btn btn-block active btn-google-plus-color">Google+ &nbsp; <span class="label label-default">{{provider.gp}}</span></a>
+              <a href="/unlink/gp/" class="btn btn-block active btn-google-plus-color">Google+<notr> &nbsp; <span class="label label-default">{{provider.gp}}</span></notr></a>
             {% endif %}
             {% if provider.ok %}
-              <a href="/unlink/ok/" class="btn btn-block active btn-ok-color">Одноклассники &nbsp; <span class="label label-default">{{provider.ok}}</span></a>
+              <a href="/unlink/ok/" class="btn btn-block active btn-ok-color">Одноклассники<notr> &nbsp; <span class="label label-default">{{provider.ok}}</span></notr></a>
             {% endif %}
             {% if provider.mr %}
-              <a href="/unlink/mr/" class="btn btn-block active btn-mailru-color">Mail.Ru &nbsp; <span class="label label-default">{{provider.mr}}</span></a>
+              <a href="/unlink/mr/" class="btn btn-block active btn-mailru-color">Mail.Ru<notr> &nbsp; <span class="label label-default">{{provider.mr}}</span></notr></a>
             {% endif %}
             {% if provider.ya %}
-              <a href="/unlink/ya/" class="btn btn-block active btn-ya-color">Яндекс &nbsp; <span class="label label-default">{{provider.ya}}</span></a>
+              <a href="/unlink/ya/" class="btn btn-block active btn-ya-color">Яндекс<notr> &nbsp; <span class="label label-default">{{provider.ya}}</span></notr></a>
             {% endif %}
           </div>
         </div>
@@ -274,11 +274,11 @@
           <div class="col-md-6">
             <h3>&nbsp;</h3>
             <div class="well text-center">
-              <strong id="apikey">{{apikey}}</strong>
+              <notr><strong id="apikey">{{apikey}}</strong></notr>
             </div>
             <div class="text-center">
               <button class="btn btn-primary" id="newapikey">
-                <i class="fa fa-key"></i> &nbsp;
+                <notr><i class="fa fa-key"></i> &nbsp;</notr>
                 Сделать новый ключ
               </button>
             </div>
@@ -306,9 +306,11 @@
                 <div class="input-group-btn select" id="select1">
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <span class="selected" id="AC">
-                      <img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
-                      <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
-                      <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+                      <notr>
+                        <img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+                        <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+                        <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+                      </notr>
                       Оплата с произвольной банковской карты
                     </span>
                     <span class="caret"></span>
@@ -316,23 +318,29 @@
                   <ul class="dropdown-menu option" role="menu">
                     <li id="PC">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги">
+                        </notr>
                         Оплата из кошелька в Яндекс.Деньгах
                       </a>
                     </li>
                     <li id="AC">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
-                        <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
-                        <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa">
+                          <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard">
+                          <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro">
+                        </notr>
                         Оплата с произвольной банковской карты
                       </a>
                     </li>
                     {# <li id="MC">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/beeline.png" alt="Билайн" data-toggle="tooltip" title="Билайн">
-                        <img src="https://kassa.yandex.ru/style/gfx/megafon.png" alt="Мегафон" data-toggle="tooltip" title="Мегафон">
-                        <img src="https://kassa.yandex.ru/style/gfx/mts.png" alt="МТС" data-toggle="tooltip" title="МТС">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/beeline.png" alt="Билайн" data-toggle="tooltip" title="Билайн">
+                          <img src="https://kassa.yandex.ru/style/gfx/megafon.png" alt="Мегафон" data-toggle="tooltip" title="Мегафон">
+                          <img src="https://kassa.yandex.ru/style/gfx/mts.png" alt="МТС" data-toggle="tooltip" title="МТС">
+                        </notr>
                         Платеж со счета мобильного телефона
                       </a>
                     </li> #}
@@ -344,7 +352,9 @@
                     </li>
                     <li id="WM">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney">
+                        </notr>
                         Оплата из кошелька в системе WebMoney
                       </a>
                     </li>
@@ -356,19 +366,25 @@
                     </li> #}
                     <li id="AB">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик">
+                        </notr>
                         Оплата через Альфа-Клик
                       </a>
                     </li>
                     {# <li id="МА">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/masterpass.png" alt="MasterPass" data-toggle="tooltip" title="MasterPass">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/masterpass.png" alt="MasterPass" data-toggle="tooltip" title="MasterPass">
+                        </notr>
                         Оплата через MasterPass
                       </a>
                     </li> #}
                     {# <li id="PB">
                       <a href="#.">
-                        <img src="https://kassa.yandex.ru/style/gfx/psb.png" alt="Промсвязьбанк" data-toggle="tooltip" title="Промсвязьбанк">
+                        <notr>
+                          <img src="https://kassa.yandex.ru/style/gfx/psb.png" alt="Промсвязьбанк" data-toggle="tooltip" title="Промсвязьбанк">
+                        </notr>
                         Оплата через Промсвязьбанк
                       </a>
                     </li> #}

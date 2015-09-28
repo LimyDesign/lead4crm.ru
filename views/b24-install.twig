@@ -23,7 +23,7 @@
               <div class="form-group">
                 <label for="inputAPIKey">Ключ доступа</label>
                 <input name="apikey" type="text" class="form-control input-lg" id="inputAPIKey" placeholder="Введите персональный ключ доступа" value="{{apikey}}" aria-describedby="helpAPIKey">
-                <span id="helpAPIKey" class="help-block">Ключ доступа можно найти в личном кабинете на сайте модуля <a href="http://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>. Если вы уже авторизованы на сайте <a href="http://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>, то скорее всего данное поле заполнено автоматически и вам не нужно никуда более переходить, достаточно просто выбрать правильный город и сохранить настройки.</span>
+                <span id="helpAPIKey" class="help-block">Ключ доступа можно найти в личном кабинете на сайте модуля <a href="https://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>. Если вы уже авторизованы на сайте <a href="https://www.lead4crm.ru" target="_blank">www.lead4crm.ru</a>, то скорее всего данное поле заполнено автоматически и вам не нужно никуда более переходить, достаточно просто выбрать правильный город и сохранить настройки.</span>
               </div>
               <div class="form-group">
                 <label for="selectCityName">Выберите ваш город</label>
@@ -82,16 +82,16 @@ BX24.init(function() {
     h = d.getHours();
     g = $('#greeting');
     if (h >= 5 && h < 12) {
-      g.text('Доброе утро, ' + res.data().NAME + '!');
+      g.html('Доброе утро, <notr>' + res.data().NAME + '</notr>!');
     } else {
       if (h >= 12 && h < 18) {
-        g.text('Добрый день, ' + res.data().NAME + '!');
+        g.html('Добрый день, <notr>' + res.data().NAME + '</notr>!');
       } else {
         if (h >= 18 && h < 24) {
-          g.text('Добрый вечер, ' + res.data().NAME + '!');
+          g.html('Добрый вечер, <notr>' + res.data().NAME + '</notr>!');
         } else {
           if (h >= 0 && h < 5) {
-            g.text('Доброй ночи, ' + res.data().NAME + '!');
+            g.html('Доброй ночи, <notr>' + res.data().NAME + '</notr>!');
           }
         }
       }
