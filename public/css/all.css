@@ -30,7 +30,6 @@ body {
 .ticket::before {
   content: "";
   position: absolute !important;
-  /*z-index: 100;*/
   top: 0;
   right: 0;
   border-left: #fff 7px solid;
@@ -45,7 +44,6 @@ body {
 .ticket::after {
   content: "";
   position: absolute !important;
-  /*z-index: 100;*/
   top: 0;
   left: 0;
   border-right: #fff 7px solid;
@@ -67,7 +65,6 @@ body {
 
 .ticket .circle {
   position: absolute !important;
-  /*z-index: 100;*/
   border: 5px #fff solid;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -87,7 +84,6 @@ body {
 .ticket a::before {
   content: "";
   position: absolute !important;
-  /*z-index: 1000;*/
   bottom: 0;
   right: 0;
   border-left: #fff 7px solid;
@@ -102,7 +98,6 @@ body {
 .ticket a::after {
   content: "";
   position: absolute !important;
-  /*z-index: 100;*/
   bottom: 0;
   left: 0;
   border-right: #fff 7px solid;
@@ -122,6 +117,10 @@ body {
   text-decoration: none;
   color: #e3dfed;
   white-space: nowrap; 
+}
+
+.ticket a:hover {
+  color: #fff;
 }
 
 .table-price > tbody > tr > td,
