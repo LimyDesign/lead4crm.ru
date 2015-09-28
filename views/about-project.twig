@@ -42,8 +42,7 @@
 					<div class="text-box col-md-offset-1 col-md-10">
 						<h2>Для каких городов?</h2>
 						<p>Понятное дело, мы привязаны к базам 2ГИС и следовательно предоставляем данные из следующих <notr><span id="total_cities"></span></notr> городов:</p>
-						<ul class="list-inline" id="cities">
-						</ul>
+						<div class="tags" id="cities"></div>
 						<p>Не плохой список городов, да? Вот и мы также считаем. Если вы не нашли свой город в этом списке, то с вероятностью 99,9% мы не сможем предоставлять услуги для вашего города, но тем не менее спасибо за проявленный интерес.</p>
 					</div>
 				</div>
@@ -57,16 +56,18 @@
 	<script src="/public/js/classie.min.js"></script>
 	<script src="/public/js/modalEffects.min.js"></script>
 	<script src="/public/js/webcall.js"></script>
+	{% jshrink %}
 	<script>
 		$(document).ready(function() {
 			$.post('/getSupportCities/', function(data) {
-				$('#total_cities').text(data.city.length)
+				$('#total_cities').text(data.city.length);
 				data.city.forEach(function(entry) {
-					$('#cities').append('<li>'+entry.name+'</li>')
-				})
-			})
-		})
+					$('#cities').append('<div class="ticket"><span class="circle"></span><a href="#.">'+entry.name+'</a></div>');
+				});
+			});
+		});
 	</script>
+	{% endjshrink %}
 </body>
 </html>
 {% endspaceless %}

@@ -13,6 +13,116 @@ body {
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
+
+.tags::after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  width: 0;
+}
+
+.tags {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.ticket::before {
+  content: "";
+  position: absolute !important;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  border-left: #fff 7px solid;
+  border-bottom: #fff 7px solid;
+  -webkit-border-radius: 0 0 0 20px;
+  -moz-border-radius: 0 0 0 20px;
+  -ms-border-radius: 0 0 0 20px;
+  -o-border-radius: 0 0 0 20px;
+  border-radius: 0 0 0 20px;
+}
+
+.ticket::after {
+  content: "";
+  position: absolute !important;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  border-right: #fff 7px solid;
+  border-bottom: #fff 7px solid;
+  -webkit-border-radius: 0 0 20px 0;
+  -moz-border-radius: 0 0 20px 0;
+  -ms-border-radius: 0 0 20px 0;
+  -o-border-radius: 0 0 20px 0;
+  border-radius: 0 0 20px 0;
+}
+
+.ticket {
+  position: relative !important;
+  background: #8d81ac;
+  float: left;
+  padding: 7px 3px;
+  margin: 0 5px 5px 0;
+}
+
+.ticket .circle {
+  position: absolute !important;
+  z-index: 100;
+  border: 5px #fff solid;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  margin-top: -5px
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 8px;
+  -webkit-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.ticket a::before {
+  content: "";
+  position: absolute !important;
+  z-index: 1000;
+  bottom: 0;
+  right: 0;
+  border-left: #fff 7px solid;
+  border-top: #fff 7px solid;
+  -webkit-border-radius: 20px 0 0 0;
+  -moz-border-radius: 20px 0 0 0;
+  -ms-border-radius: 20px 0 0 0;
+  -o-border-radius: 20px 0 0 0;
+  border-radius: 20px 0 0 0;
+}
+
+.ticket a::after {
+  content: "";
+  position: absolute !important;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  border-right: #fff 7px solid;
+  border-top: #fff 7px solid; 
+  -webkit-border-radius: 0 20px 0 0;
+  -moz-border-radius: 0 20px 0 0;
+  -ms-border-radius: 0 20px 0 0;
+  -o-border-radius: 0 20px 0 0;
+  border-radius: 0 20px 0 0;
+}
+
+.ticket a {
+  outline: 1px rgba(255, 255, 255, 0.4) dashed;
+  border: 1px rgba(0, 0, 0, 0.3) dashed;
+  padding: 4px 10px 4px 20px;
+  text-decoration: none;
+  color: #e3dfed;
+  white-space: nowrap; 
+}
+
 .table-price > tbody > tr > td,
 .table-price > thead > tr > th {
   font-size: 2.1rem;
