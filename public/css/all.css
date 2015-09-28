@@ -30,7 +30,7 @@ body {
 .ticket::before {
   content: "";
   position: absolute !important;
-  z-index: 100;
+  /*z-index: 100;*/
   top: 0;
   right: 0;
   border-left: #fff 7px solid;
@@ -45,7 +45,7 @@ body {
 .ticket::after {
   content: "";
   position: absolute !important;
-  z-index: 100;
+  /*z-index: 100;*/
   top: 0;
   left: 0;
   border-right: #fff 7px solid;
@@ -60,14 +60,14 @@ body {
 .ticket {
   position: relative !important;
   background: #8d81ac;
-  /*float: left;*/
+  float: left;
   padding: 7px 3px;
   margin: 0 5px 5px 0;
 }
 
 .ticket .circle {
   position: absolute !important;
-  z-index: 100;
+  /*z-index: 100;*/
   border: 5px #fff solid;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -87,7 +87,7 @@ body {
 .ticket a::before {
   content: "";
   position: absolute !important;
-  z-index: 1000;
+  /*z-index: 1000;*/
   bottom: 0;
   right: 0;
   border-left: #fff 7px solid;
@@ -102,7 +102,7 @@ body {
 .ticket a::after {
   content: "";
   position: absolute !important;
-  z-index: 100;
+  /*z-index: 100;*/
   bottom: 0;
   left: 0;
   border-right: #fff 7px solid;
