@@ -221,7 +221,7 @@ if ($cmd[0]) {
 	}
 } else {
 	$options = array(
-		'title' => 'Генератор лидов для Битрикс 24',
+		'title' => 'Генератор лидов для CRM: Битрикс24, Мегаплан',
 		'userid' => $_SESSION['userid'],
 		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
