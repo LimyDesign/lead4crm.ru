@@ -990,7 +990,8 @@
         type = localStorage.getItem('search_id');
     $('#searchDialog-'+type).find('input[name="'+id+'"]').parent().parent().find('td:eq(4) a').html('<i class="fa fa-fw fa-spinner fa-pulse"></i> Загрузка&hellip;');
     $.post('/importCompany/', importData, function (data) {
-      console.log(data.sql);
+      if (data.error > 0)
+        alert(data.message);
     }, 'json').done(function() {
       $('#searchDialog-'+type).find('input[name="'+id+'"]').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
       if (callback && typeof(callback) === 'function') {
