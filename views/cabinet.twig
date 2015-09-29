@@ -993,7 +993,7 @@
       if (data.error > 0)
         alert(data.message);
     }, 'json').done(function() {
-      $('#searchDialog-'+type).find('input[name="'+id+'"]').attr('disabled', 'disabled');.prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
+      $('#searchDialog-'+type).find('input[name="'+id+'"]').attr('disabled', 'disabled').prop('checked', 0).parent().parent().removeClass().addClass('success').find('td:eq(4)').html('Импортировано: <nobr>'+d+'</nobr>');
       if (callback && typeof(callback) === 'function') {
         callback();
       }
