@@ -294,16 +294,16 @@ BX24.init(function() {
     g = $('#greeting');
     bx24userid = res.data().ID;
     if (h >= 5 && h < 12) {
-      g.text('Доброе утро, ' + res.data().NAME + '!');
+      g.text('Доброе утро, <notr>' + res.data().NAME + '</notr>!');
     } else {
       if (h >= 12 && h < 18) {
-        g.text('Добрый день, ' + res.data().NAME + '!');
+        g.text('Добрый день, <notr>' + res.data().NAME + '</notr>!');
       } else {
         if (h >= 18 && h < 24) {
-          g.text('Добрый вечер, ' + res.data().NAME + '!');
+          g.text('Добрый вечер, <notr>' + res.data().NAME + '</notr>!');
         } else {
           if (h >= 0 && h < 5) {
-            g.text('Доброй ночи, ' + res.data().NAME + '!');
+            g.text('Доброй ночи, <notr>' + res.data().NAME + '</notr>!');
           }
         }
       }
