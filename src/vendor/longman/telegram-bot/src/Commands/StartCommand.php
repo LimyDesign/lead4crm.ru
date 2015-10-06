@@ -24,7 +24,7 @@ class StartCommand extends Command
 		$text = $message->getText(true);
 
 		if (empty($text)) {
-			$reply = 'Для того, чтобы связать ваш аккаунт в Telegram с аккаунтом в Lead4CRM, отправьте:'."\n".$usage;
+			$reply = 'Для того, чтобы связать ваш аккаунт в Telegram с аккаунтом в Lead4CRM, отправьте:'."\n".$this->usage;
 		} else {
 			$reply = $text;
 		}
