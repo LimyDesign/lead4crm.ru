@@ -204,7 +204,7 @@ if ($cmd[0]) {
 			$options = array(
 				'title' => $title,
 				'userid' => $_SESSION['userid'],
-				'currentUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/');
+				'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/');
 			$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 			
 			if (count($cOptions) > 0)
