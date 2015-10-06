@@ -727,7 +727,8 @@
     ========================================================================================= */
     selectText('apikey');
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      console.log(e.target);
+      var target = e.target.attr('href');
+      console.log(target);
     });
     $('body').on('mouseup', '.well', function() {
       selectText('apikey');
