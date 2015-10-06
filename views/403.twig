@@ -1,0 +1,40 @@
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% include 'layout/transifex.twig' %}
+	{% include 'layout/header.twig' %}
+</head>
+<body>
+	<div id="wraper">
+		{% include 'layout/menu.twig' %}
+		<section class="visual-other">
+			<div class="container">
+				<div class="text-block">
+					<div class="heading-holder">
+						<h1>403</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="main">
+			<div class="container">
+				<div class="row">
+					<div class="text-box col-md-offset-1 col-md-10">
+						<h2>Доступ запрещен</h2>
+						<p>Запрашиваемая вами страница требует авторизации пользователя, либо специальных прав. Возможно чтобы попасть на данную страницу вам достаточно нажать на кнопку «Войти» в верхнем меню.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		{% include 'layout/footer.twig' %}
+	</div>
+	{% include 'layout/login.twig' %}
+	{% include 'layout/webcall.twig' %}
+	{% include 'layout/scripts.twig' %}
+	<script src="/public/js/classie.min.js"></script>
+	<script src="/public/js/modalEffects.min.js"></script>
+	<script src="/public/js/webcall.js"></script>
+</body>
+</html>
+{% endspaceless %}

@@ -44,10 +44,6 @@ if ($cmd[0]) {
 			logout();
 			break;
 
-		case 'testSuka':
-			testSuka($cmd[1], $cmd[2]);
-			break;
-
 		case 'webcall':
 			echo getWebCall($_POST['phone'], $_POST['delay']);
 			break;
@@ -61,17 +57,17 @@ if ($cmd[0]) {
 			break;
 
 		case 'getUserData':
-			isAuth();
+			isAuth($cmd);
 			getUserData();
 			break;
 
 		case 'getUserCache':
-			isAuth();
+			isAuth($cmd);
 			getUserCache();
 			break;
 
 		case 'getSelection':
-			isAuth();
+			isAuth($cmd);
 			getSelection($cmd[1], $_REQUEST['crm_id']);
 			break;
 
@@ -122,12 +118,12 @@ if ($cmd[0]) {
 			break;
 
 		case 'newAPIKey':
-			isAuth();
+			isAuth($cmd);
 			newAPIKey();
 			break;
 
 		case 'getInvoice':
-			isAuth();
+			isAuth($cmd);
 			generateInvoice($_POST['invoicesum'], $_POST['companyname']);
 			break;
 
@@ -136,12 +132,12 @@ if ($cmd[0]) {
 			break;
 
 		case 'setTariff':
-			isAuth();
+			isAuth($cmd);
 			setTariff($cmd[1]);
 			break;
 
 		case 'cabinet':
-			isAuth();
+			isAuth($cmd);
 			$top_rubrics = importRubrics($_SESSION['apikey'], 'www.lead4crm.ru');
 			$top_rubrics = json_decode($top_rubrics, true);
 			$cOptions = array(
@@ -1451,9 +1447,17 @@ function mb_ucfirst($str, $encoding='UTF-8') {
 }
 
 function isAuth() {
-	if (!$_SESSION['userid'])
-		header("location:javascript://history.go(-1)");
-		// header("Location: {$_SERVER['HTTP_REFERER']}/");
+	if (!$_SESSION['userid']) {
+		$options = array(
+			'title' => '403 Доступ запрещен',
+			'currentUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[1]);
+		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+		header('HTTP/1.0 403 Forbidden');
+		echo $twig->render('403.twig', $options);
+	}
+
+	// header("location:javascript://history.go(-1)");
+	// header("Location: {$_SERVER['HTTP_REFERER']}/");
 }
 
 function logout() {
