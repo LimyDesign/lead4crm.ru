@@ -726,6 +726,9 @@
        самостоятельно.
     ========================================================================================= */
     selectText('apikey');
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      console.log(e.target);
+    });
     $('body').on('mouseup', '.well', function() {
       selectText('apikey');
     });
