@@ -799,7 +799,7 @@
       var usDate, uspDate,
           date = new Date(),
           date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2),
-          $list = $('#wizard-form #step-'+step).find('.list-group');
+          $list = $('#wizard-form #step-'+step).find('div.list-group');
       $list.empty();
       for (var i in data) {
         usDate = data[i].addtime.substring(0,7);
