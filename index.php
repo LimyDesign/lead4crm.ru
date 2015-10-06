@@ -784,7 +784,7 @@ function getSelection($date, $crm_id) {
 			} elseif ($em[5] == 0 && $em[6] == 9) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$end_date = $_year.'-10-01';
-			} elseif ($em[5] == 1 && $em[6] == 0) {
+			} elseif ($em[5] == 1 && ($em[6] == 0 || $em[6] == 1)) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_month = $em[6]+1;
 				$end_date = $_year.'-1'.$_month.'-01';
@@ -867,7 +867,7 @@ function getSelection($date, $crm_id) {
 			} elseif ($em[5] == 0 && $em[6] == 9) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$end_date = $_year.'-10-01';
-			} elseif ($em[5] == 1 && $em[6] == 0) {
+			} elseif ($em[5] == 1 && ($em[6] == 0 || $em[6] == 1)) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_month = $em[6]+1;
 				$end_date = $_year.'-1'.$_month.'-01';
