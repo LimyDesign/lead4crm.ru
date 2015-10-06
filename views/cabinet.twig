@@ -176,20 +176,34 @@
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-arrow-right"></i> Далее</button>
               </fieldset>
               <fieldset id="step-4" style="display:none;">
-                <div class="form-group">
-                  <label>Архив выборок:</label>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-default">
+                    <div class="panel-heading" id="headingSelected" role="tab">
+                      <h4 class="panel-title">
+                        <a href="#collapseSelected" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseSelected">Архив выборок:</a>
+                      </h4>
+                    </div>
+                    <div id="collapseSelected" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSelected">
+                      <div class="list-group">
+                        <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel panel-default">
+                    <div class="panel-heading" id="headingRubrics" role="tab">
+                      <h4 class="panel-title">
+                        <a href="#collapseRubrics" class="collapsed" role="button" data-toggle="collapse" data-parent="#according" aria-expanded="false" aria-controls="collapseRubrics">Ключевые сферы деятельности:</a>
+                      </h4>
+                    </div>
+                    <div id="collapseRubrics" class="panel-collapse collapse" tole="tabpanel" aria-labelledby="#headingRubrics">
+                      <ul class="list-group">
+                        {% for rubric in top_rubrics.rubrics %}
+                          <li class="list-group-item">{{rubric.name}}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div class="list-group">
-                  <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
-                </div>
-                <div class="form-group">
-                  <label>Ключевые сферы деятельности:</label>
-                </div>
-                <ul class="list-group">
-                  {% for rubric in top_rubrics.rubrics %}
-                    <li class="list-group-item">{{rubric.name}}</li>
-                  {% endfor %}
-                </ul>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(3)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-cloud-download"></i> Импорт компаний</button>
               </fieldset>
