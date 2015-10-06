@@ -180,7 +180,7 @@
                   <div class="panel panel-default">
                     <div class="panel-heading" id="headingSelected" role="tab">
                       <h4 class="panel-title">
-                        <a href="#collapseSelected" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseSelected">Архив выборок:</a>
+                        <a href="#collapseSelected" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="collapseSelected">Архив выборок</a>
                       </h4>
                     </div>
                     <div id="collapseSelected" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSelected">
@@ -192,13 +192,13 @@
                   <div class="panel panel-default">
                     <div class="panel-heading" id="headingRubrics" role="tab">
                       <h4 class="panel-title">
-                        <a href="#collapseRubrics" class="collapsed" role="button" data-toggle="collapse" data-parent="#according" aria-expanded="false" aria-controls="collapseRubrics">Ключевые сферы деятельности:</a>
+                        <a href="#collapseRubrics" class="collapsed" role="button" data-toggle="collapse" data-parent="#according" aria-expanded="false" aria-controls="collapseRubrics">Ключевые сферы деятельности</a>
                       </h4>
                     </div>
                     <div id="collapseRubrics" class="panel-collapse collapse" tole="tabpanel" aria-labelledby="#headingRubrics">
                       <ul class="list-group">
                         {% for rubric in top_rubrics.rubrics %}
-                          <li class="list-group-item">{{rubric.name}}</li>
+                          <li class="list-group-item" id="{{rubric.code}}" onclick="selectText('{{rubric.code}}')">{{rubric.name}}</li>
                         {% endfor %}
                       </ul>
                     </div>

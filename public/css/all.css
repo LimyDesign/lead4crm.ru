@@ -10,6 +10,10 @@ body {
   height: 100%;
   font: 1.3rem/1.61538 "Roboto", sans-serif; }
 
+h4.panel-title {
+  margin: 0;
+}
+
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
