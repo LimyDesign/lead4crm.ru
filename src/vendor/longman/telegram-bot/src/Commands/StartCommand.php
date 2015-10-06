@@ -21,7 +21,7 @@ class StartCommand extends Command
 		$message = $this->getMessage();
 
 		$chat_id = $message->getChat()->getId();
-		$text = $message->getText(false);
+		$text = $message->getText(true);
 
 		$data = array();
 		$data['chat_id'] = $chat_id;
