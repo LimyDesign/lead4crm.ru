@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Salva\\JshrinkBundle\\' => array($vendorDir . '/salva/jshrink-bundle'),
+    'Longman\\TelegramBot\\' => array($vendorDir . '/longman/telegram-bot/src'),
 );

@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a288aad2b7350db440bfba38fbee328a",
+    "hash": "1b12f6d7fc843e46926a2eb793023dcc",
     "packages": [
+        {
+            "name": "longman/telegram-bot",
+            "version": "0.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/akalongman/php-telegram-bot.git",
+                "reference": "2be7b3c3ea50961620d1aca46474d9f8bc4f5e15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/akalongman/php-telegram-bot/zipball/2be7b3c3ea50961620d1aca46474d9f8bc4f5e15",
+                "reference": "2be7b3c3ea50961620d1aca46474d9f8bc4f5e15",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-pdo": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1",
+                "phpunit/phpunit": "4.1.*",
+                "squizlabs/php_codesniffer": "2.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Longman\\TelegramBot\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Avtandil Kikabidze aka LONGMAN",
+                    "email": "akalongman@gmail.com",
+                    "homepage": "http://longman.ge",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP telegram bot",
+            "homepage": "https://github.com/akalongman/php-telegram-bot",
+            "keywords": [
+                "api",
+                "bot",
+                "telegram"
+            ],
+            "time": "2015-10-02 22:00:38"
+        },
         {
             "name": "phpoffice/phpexcel",
             "version": "1.8.1",

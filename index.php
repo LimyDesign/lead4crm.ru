@@ -52,6 +52,20 @@ if ($cmd[0]) {
 			wizard($_POST['crm_id'], 2);
 			break;
 
+		case 'initTelegram':
+			isAdmin();
+			try {
+				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
+				$link = 'https://'.$_SERVER['SERVER_NAME'].'/telegram/';
+				$result = $telegram->setWebHook($link);
+				if ($result->isOk()) {
+			        echo $result->getDescription();
+			    }
+			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+				echo $e;
+			}
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -1444,6 +1458,20 @@ function mb_ucfirst($str, $encoding='UTF-8') {
    $str = mb_strtoupper(mb_substr($str, 0, 1, $encoding), $encoding).
           mb_substr($str, 1, mb_strlen($str), $encoding);
    return $str;
+}
+
+function isAdmin($cmd) {
+	if (!$_SESSION['is_admin']) {
+		global $twig;
+		$cmd = implode('/', $cmd);
+		$options = array(
+			'title' => '403 Доступ запрещен',
+			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/');
+		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
+		header('HTTP/1.0 403 Forbidden');
+		echo $twig->render('403.twig', $options);
+		exit(3);
+	}
 }
 
 function isAuth($cmd) {
