@@ -10,7 +10,7 @@ class StartCommand extends Command
 {
 	protected $name = 'start';
 	protected $description = 'Подключиться к системе моментального уведомления Lead4CRM.';
-	protected $usage = '/start';
+	protected $usage = '/start <ключ доступа>';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
@@ -23,9 +23,15 @@ class StartCommand extends Command
 		$chat_id = $message->getChat()->getId();
 		$text = $message->getText(true);
 
+		if (empty($text)) {
+			$reply = 'Для того, чтобы связать ваш аккаунт в Telegram с аккаунтом в Lead4CRM, отправьте:'."\n".$usage;
+		} else {
+			$reply = $text;
+		}
+
 		$data = array();
 		$data['chat_id'] = $chat_id;
-		$data['text'] = $text;
+		$data['text'] = $reply;
 
 		$result = Request::sendMessage($data);
 		return $result;
