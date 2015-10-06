@@ -182,6 +182,14 @@
                 <div class="list-group">
                   <a href="#." class="list-group-item disabled">Выборки отсутствуют</a>
                 </div>
+                <div class="form-group">
+                  <label>Ключевые сферы деятельности:</label>
+                </div>
+                <ul class="list-group">
+                  {% for rubric in top_rubrics.rubrics %}
+                    <li class="list-group-item">{{rubric}}</li>
+                  {% endfor %}
+                </ul>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(3)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-cloud-download"></i> Импорт компаний</button>
               </fieldset>

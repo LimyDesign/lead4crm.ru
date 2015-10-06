@@ -142,6 +142,8 @@ if ($cmd[0]) {
 
 		case 'cabinet':
 			isAuth();
+			$top_rubrics = importRubrics($_SESSION['apikey'], 'www.lead4crm.ru');
+			$top_rubrics = json_decode($top_rubrics, true);
 			$cOptions = array(
 				'apikey' => $_SESSION['apikey'],
 				'company' => $_SESSION['company'],
@@ -149,6 +151,7 @@ if ($cmd[0]) {
 				'userid' => $_SESSION['userid'],
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
+				'top_rubrics' => $top_rubrics,
 				'links' => arrayOAuthLoginURL(),
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
