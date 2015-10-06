@@ -17,6 +17,9 @@ h4.panel-title {
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
+.tab-pane {
+  padding: 20px 0;
+}
 
 .tags::after {
   content: "";
