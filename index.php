@@ -210,7 +210,7 @@ if ($cmd[0]) {
 			if (count($cOptions) > 0)
 				$options = array_merge($options, $cOptions);
 
-			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig')) {
+			if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig') || $cmd[0] != '403') {
 				echo $twig->render($cmd[0].'.twig', $options);
 			} else {
 				header("HTTP/1.0 404 Not Found");
