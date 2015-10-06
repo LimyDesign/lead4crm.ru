@@ -35,8 +35,8 @@ class HelpCommand extends Command
         $commands = $this->telegram->getCommandsList();
 
         if (empty($text)) {
-            $msg = 'GeoBot v. ' . $this->telegram->getVersion() . "\n\n";
-            $msg .= 'Commands List:' . "\n";
+            $msg = 'Lead4CRM bot v. ' . $this->telegram->getVersion() . "\n\n";
+            $msg .= 'Список команд:' . "\n";
             foreach ($commands as $command) {
                 if (is_object($command)) {
                     if (!$command->isEnabled()) {
@@ -50,20 +50,20 @@ class HelpCommand extends Command
                 }
             }
 
-            $msg .= "\n" . 'For exact command help type: /help <command>';
+            $msg .= "\n" . 'Для справки по конкретной команде введите: /help <command>';
         } else {
             $text = str_replace('/', '', $text);
             if (isset($commands[$text])) {
                 $command = $commands[$text];
                 if (!$command->isEnabled() || !$command->isPublic()) {
-                    $msg = 'Command ' . $text . ' not found';
+                    $msg = 'Команда ' . $text . ' не найдена';
                 } else {
-                    $msg = 'Command: ' . $command->getName() . ' v' . $command->getVersion() . "\n";
-                    $msg .= 'Description: ' . $command->getDescription() . "\n";
-                    $msg .= 'Usage: ' . $command->getUsage();
+                    $msg = 'Команда: ' . $command->getName() . ' v' . $command->getVersion() . "\n";
+                    $msg .= 'Описание: ' . $command->getDescription() . "\n";
+                    $msg .= 'Использование: ' . $command->getUsage();
                 }
             } else {
-                $msg = 'Command ' . $text . ' not found';
+                $msg = 'Команда ' . $text . ' не найдена';
             }
         }
 

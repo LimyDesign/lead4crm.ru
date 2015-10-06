@@ -26,7 +26,7 @@ class StartCommand extends Command
 		if (empty($text)) {
 			$reply = 'Для того, чтобы связать ваш аккаунт в Telegram с аккаунтом в Lead4CRM, отправьте:'."\n\n".$this->usage."\n\n".'Ключ доступа можно найти в личном кабинете на сайте www.lead4crm.ru';
 		} else {
-			$reply = $text;
+			$reply = 'Указан не верный ключ доступа.';
 		}
 
 		$data = array();
