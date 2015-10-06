@@ -201,6 +201,7 @@
                         {% for rubric in top_rubrics.rubrics %}
                           <li class="list-group-item" id="{{rubric.code}}" onclick="selectText('{{rubric.code}}')">{{rubric.name}}</li>
                         {% endfor %}
+                        <li class="list-group-item" id="OTHER" onclick="selectText('OTHER')">Другое</li>
                       </ul>
                     </div>
                   </div>
