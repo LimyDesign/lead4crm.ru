@@ -1456,7 +1456,7 @@ function isAuth($cmd) {
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		header('HTTP/1.0 403 Forbidden');
 		echo $twig->render('403.twig', $options);
-		exit(403);
+		exit(3);
 	}
 }
 
