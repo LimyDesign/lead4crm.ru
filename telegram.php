@@ -1,6 +1,6 @@
 <?php
 
-define('BOT_TOKEN', '12345678:replace-me-with-real-token');
+define('BOT_TOKEN', '135547537:AAGP82si-YkwJ_0mObiNWvTD1oeojhUM_5Q');
 define('API_URL', 'https://api.telegram.org/bot'.BOT_TOKEN.'/');
 
 function apiRequestWebhook($method, $parameters) {
@@ -139,7 +139,7 @@ function processMessage($message) {
 }
 
 
-define('WEBHOOK_URL', 'https://my-site.example.com/secret-path-for-webhooks/');
+define('WEBHOOK_URL', 'https://www.lead4crm.ru/telegram.php');
 
 if (php_sapi_name() == 'cli') {
   // if run from console, set or delete webhook
