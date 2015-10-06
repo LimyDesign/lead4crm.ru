@@ -70,6 +70,8 @@ if ($cmd[0]) {
 			isAuth();
 			try {
 				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
+				$telegram->setLogRequests(true);
+				$telegram->setLogPath($conf->telegram->name.'.log');
 				$telegram->handle();
 			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
 				echo $e;
