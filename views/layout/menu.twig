@@ -16,19 +16,19 @@
 			</div>
 			<div class="nav-drop">
 				<ul>
-					<li class="{% if currentUrl == mainpage_url %}active{% endif %}">
+					<li {% if currentUrl == mainpage_url %}class="active"{% endif %}>
 						<a href="{{mainpage_url}}" title="Главная">Главная</a>
 					</li>
-					<li class="{% if currentUrl == aboutproject_url %}active{% endif %}">
+					<li {% if currentUrl == aboutproject_url %}class="active"{% endif %}>
 						<a href="{{aboutproject_url}}" title="О проекте">О проекте</a>
 					</li>
-					<li class="{% if currentUrl == aboutours_url %}active{% endif %}">
+					<li {% if currentUrl == aboutours_url %}class="active"{% endif %}>
 						<a href="{{aboutours_url}}" title="О нас">О нас</a>
 					</li>
-					<li class="{% if currentUrl == prices_url %}active{% endif %}">
+					<li {% if currentUrl == prices_url %}class="active"{% endif %}>
 						<a href="{{prices_url}}" title="Цены">Цены</a>
 					</li>
-					<li class="{% if currentUrl == support_url %}active{% endif %}">
+					<li {% if currentUrl == support_url %}class="active"{% endif %}>
 						<a href="{{support_url}}" title="Поддержка">Поддержка</a>
 					</li>
 					<li>
