@@ -728,7 +728,8 @@
     selectText('apikey');
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var target = $(e.target).attr('href').substring(1);
-      console.log(target);
+      if (target == 'tabAPIKey')
+        selectText('apikey');
     });
     $('body').on('mouseup', '.well', function() {
       selectText('apikey');
