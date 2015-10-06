@@ -222,7 +222,7 @@ if ($cmd[0]) {
 	$options = array(
 		'title' => 'Генератор лидов для CRM: Битрикс24, Мегаплан',
 		'userid' => $_SESSION['userid'],
-		'currentUrl' => 'http://' . $_SERVER['SERVER_NAME']);
+		'currentUrl' => 'https://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 	echo $twig->render('index.twig', $options);
 }
