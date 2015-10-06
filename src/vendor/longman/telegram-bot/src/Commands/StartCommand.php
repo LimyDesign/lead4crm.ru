@@ -10,7 +10,7 @@ class StartCommand extends Command
 {
 	protected $name = 'start';
 	protected $description = 'Подключиться к системе моментального уведомления Lead4CRM.';
-	protected $usage = '/start <ключ доступа>';
+	protected $usage = '/start `<ключ доступа>`';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
