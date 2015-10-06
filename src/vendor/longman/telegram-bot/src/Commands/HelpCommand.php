@@ -17,8 +17,8 @@ use Longman\TelegramBot\Entities\Update;
 class HelpCommand extends Command
 {
     protected $name = 'help';
-    protected $description = 'Show bot commands help';
-    protected $usage = '/help or /help <command>';
+    protected $description = 'Показывает справочную информацию';
+    protected $usage = '/help или /help <команда>';
     protected $version = '1.0.0';
     protected $enabled = true;
     protected $public = true;
