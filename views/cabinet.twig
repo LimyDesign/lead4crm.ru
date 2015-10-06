@@ -256,126 +256,124 @@
           </div>
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="tabBalans">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                    <h3>Пополнение баланса</h3>
-                    <p>Для работы с системой вам понадобятся средства на личном счету.</p>
-                    <p>Юридические лица могут выписать самостоятельно счет на любую сумму и как только средства поступят на наш расчетный счет, мы сразу же зачислим эти деньги вам на лицевой счет. При первом пополнении придется дождаться реального зачисления денежных средств на наш расчетный счет, при дальнейших платежах, для ускорения процесса зачисления, достаточно будет выслать платежное поручение.</p>
-                    <p>Физическим лицам все намного проще. Для вас предусмотрено несколько вариантов пополнения лицевого счета. Практически все они дают возможность моментального пополнения баланса. Воспользуйтесь любым удобным вам способом и сразу же начинайте пользоваться системой.</p>
-                    <p>У нас нет никакой привязки в типа платильщика, поэтому вы можете пополнять свой баланс так как захотите, например ранее вы пополняли баланс как юридическое лицо, но вам не хватило запросов и потребовалось пополнить баланс всего на пару сотен, то проще сделать это как физическое лицо.</p>
-                  </div>
-                  <div class="col-md-6">
-                    <h3>Физическим лицам</h3>
-                    <form action="https://money.yandex.ru/eshop.xml" method="post" target="_blank" id="yaform">
-                      <input type="hidden" name="shopId" value="{{ yaShopId }}">
-                      <input type="hidden" name="scid" value="{{ yaSCId }}">
-                      <input type="hidden" name="customerNumber" value="{{ userid }}">
-                      <input type="hidden" name="paymentType" value="AC">
-                      <div class="form-group">
-                        <label>Выберите форму оплаты:</label>
-                        <div class="input-group-btn select" id="select1">
-                          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <span class="selected" id="AC">
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Пополнение баланса</h3>
+                  <p>Для работы с системой вам понадобятся средства на личном счету.</p>
+                  <p>Юридические лица могут выписать самостоятельно счет на любую сумму и как только средства поступят на наш расчетный счет, мы сразу же зачислим эти деньги вам на лицевой счет. При первом пополнении придется дождаться реального зачисления денежных средств на наш расчетный счет, при дальнейших платежах, для ускорения процесса зачисления, достаточно будет выслать платежное поручение.</p>
+                  <p>Физическим лицам все намного проще. Для вас предусмотрено несколько вариантов пополнения лицевого счета. Практически все они дают возможность моментального пополнения баланса. Воспользуйтесь любым удобным вам способом и сразу же начинайте пользоваться системой.</p>
+                  <p>У нас нет никакой привязки в типа платильщика, поэтому вы можете пополнять свой баланс так как захотите, например ранее вы пополняли баланс как юридическое лицо, но вам не хватило запросов и потребовалось пополнить баланс всего на пару сотен, то проще сделать это как физическое лицо.</p>
+                </div>
+                <div class="col-md-6">
+                  <h3>Физическим лицам</h3>
+                  <form action="https://money.yandex.ru/eshop.xml" method="post" target="_blank" id="yaform">
+                    <input type="hidden" name="shopId" value="{{ yaShopId }}">
+                    <input type="hidden" name="scid" value="{{ yaSCId }}">
+                    <input type="hidden" name="customerNumber" value="{{ userid }}">
+                    <input type="hidden" name="paymentType" value="AC">
+                    <div class="form-group">
+                      <label>Выберите форму оплаты:</label>
+                      <div class="input-group-btn select" id="select1">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                          <span class="selected" id="AC">
+                            <notr><img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa"> <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard"> <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro"></notr>
+                            Оплата с произвольной банковской карты
+                          </span>
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu option" role="menu">
+                          <li id="PC">
+                            <a href="#.">
+                              <notr><img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги"></notr>
+                              Оплата из кошелька в Яндекс.Деньгах
+                            </a>
+                          </li>
+                          <li id="AC">
+                            <a href="#.">
                               <notr><img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa"> <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard"> <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro"></notr>
                               Оплата с произвольной банковской карты
-                            </span>
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu option" role="menu">
-                            <li id="PC">
-                              <a href="#.">
-                                <notr><img src="https://kassa.yandex.ru/style/gfx/ya.png" alt="Яндекс.Деньги" data-toggle="tooltip" title="Яндекс.Деньги"></notr>
-                                Оплата из кошелька в Яндекс.Деньгах
-                              </a>
-                            </li>
-                            <li id="AC">
-                              <a href="#.">
-                                <notr><img src="https://kassa.yandex.ru/style/gfx/visa.png" alt="Visa" data-toggle="tooltip" title="Visa"> <img src="https://kassa.yandex.ru/style/gfx/mastercard.png" alt="MasterCard" data-toggle="tooltip" title="MasterCard"> <img src="https://kassa.yandex.ru/style/gfx/maestro.png" alt="Maestro" data-toggle="tooltip" title="Maestro"></notr>
-                                Оплата с произвольной банковской карты
-                              </a>
-                            </li>
-                            {# <li id="MC">
-                              <a href="#.">
-                                <notr>
-                                  <img src="https://kassa.yandex.ru/style/gfx/beeline.png" alt="Билайн" data-toggle="tooltip" title="Билайн">
-                                  <img src="https://kassa.yandex.ru/style/gfx/megafon.png" alt="Мегафон" data-toggle="tooltip" title="Мегафон">
-                                  <img src="https://kassa.yandex.ru/style/gfx/mts.png" alt="МТС" data-toggle="tooltip" title="МТС">
-                                </notr>
-                                Платеж со счета мобильного телефона
-                              </a>
-                            </li> #}
-                            <li id="GP">
-                              <a href="#.">
-                                <i class="fa fa-money" style="color:green"></i>
-                                Оплата наличными через кассы и терминалы
-                              </a>
-                            </li>
-                            <li id="WM">
-                              <a href="#.">
-                                <notr><img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney"></notr>
-                                Оплата из кошелька в системе WebMoney
-                              </a>
-                            </li>
-                            {# <li id="SB">
-                              <a href="#.">
-                                <img src="https://kassa.yandex.ru/style/gfx/sberbank.png" alt="Сбербанк" data-toggle="tooltip" title="Сбербанк">
-                                Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн
-                              </a>
-                            </li> #}
-                            <li id="AB">
-                              <a href="#.">
-                                <notr><img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик"></notr>
-                                Оплата через Альфа-Клик
-                              </a>
-                            </li>
-                            {# <li id="МА">
-                              <a href="#.">
-                                <notr>
-                                  <img src="https://kassa.yandex.ru/style/gfx/masterpass.png" alt="MasterPass" data-toggle="tooltip" title="MasterPass">
-                                </notr>
-                                Оплата через MasterPass
-                              </a>
-                            </li> #}
-                            <li id="PB">
-                              <a href="#.">
-                                <notr><img src="https://kassa.yandex.ru/style/gfx/psb.png" alt="Промсвязьбанк" data-toggle="tooltip" title="Промсвязьбанк"></notr>
-                                Оплата через Промсвязьбанк
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <span class="help-block">Выберите удобный для вас способ пополнения счета. Внимание, если вы хотите оплатить привязанной банковской картой к Яндекс.Деньгам, то для этого надо выбрать «Оплата из кошелька в Яндекс.Деньгах». <mark>Напишите или позвоните нам, если требуется оплата через Промсвязьбанк, Сбербанк Онлайн, MasterPass или со счета мобильного телефона.</mark></span>
+                            </a>
+                          </li>
+                          {# <li id="MC">
+                            <a href="#.">
+                              <notr>
+                                <img src="https://kassa.yandex.ru/style/gfx/beeline.png" alt="Билайн" data-toggle="tooltip" title="Билайн">
+                                <img src="https://kassa.yandex.ru/style/gfx/megafon.png" alt="Мегафон" data-toggle="tooltip" title="Мегафон">
+                                <img src="https://kassa.yandex.ru/style/gfx/mts.png" alt="МТС" data-toggle="tooltip" title="МТС">
+                              </notr>
+                              Платеж со счета мобильного телефона
+                            </a>
+                          </li> #}
+                          <li id="GP">
+                            <a href="#.">
+                              <i class="fa fa-money" style="color:green"></i>
+                              Оплата наличными через кассы и терминалы
+                            </a>
+                          </li>
+                          <li id="WM">
+                            <a href="#.">
+                              <notr><img src="https://kassa.yandex.ru/style/gfx/webmoney.png" alt="WebMoney" data-toggle="tooltip" title="WebMoney"></notr>
+                              Оплата из кошелька в системе WebMoney
+                            </a>
+                          </li>
+                          {# <li id="SB">
+                            <a href="#.">
+                              <img src="https://kassa.yandex.ru/style/gfx/sberbank.png" alt="Сбербанк" data-toggle="tooltip" title="Сбербанк">
+                              Оплата через Сбербанк: оплата по SMS или Сбербанк Онлайн
+                            </a>
+                          </li> #}
+                          <li id="AB">
+                            <a href="#.">
+                              <notr><img src="https://kassa.yandex.ru/style/gfx/alfa.png" alt="Альфа-Клик" data-toggle="tooltip" title="Альфа-Клик"></notr>
+                              Оплата через Альфа-Клик
+                            </a>
+                          </li>
+                          {# <li id="МА">
+                            <a href="#.">
+                              <notr>
+                                <img src="https://kassa.yandex.ru/style/gfx/masterpass.png" alt="MasterPass" data-toggle="tooltip" title="MasterPass">
+                              </notr>
+                              Оплата через MasterPass
+                            </a>
+                          </li> #}
+                          <li id="PB">
+                            <a href="#.">
+                              <notr><img src="https://kassa.yandex.ru/style/gfx/psb.png" alt="Промсвязьбанк" data-toggle="tooltip" title="Промсвязьбанк"></notr>
+                              Оплата через Промсвязьбанк
+                            </a>
+                          </li>
+                        </ul>
                       </div>
-                      <div class="form-group">
-                        <label for="inputSum">Сумма пополнения</label>
-                        <div class="input-group input-group-lg">
-                          <input type="text" name="sum" placeholder='2 000.00' class="form-control" id="inputSum">
-                          <span class="input-group-addon" id="inputSum"><i class="fa fa-rub"></i></span>
-                        </div>
-                        <span id="helpBlock2" class="help-block">Введите сумму пополнения, при этом сумма не может быть меньше 100 рублей и не может превышать 250 000 рублей, а для некоторых видов оплаты сумма не может превышать 10 000 рублей. </span>
+                      <span class="help-block">Выберите удобный для вас способ пополнения счета. Внимание, если вы хотите оплатить привязанной банковской картой к Яндекс.Деньгам, то для этого надо выбрать «Оплата из кошелька в Яндекс.Деньгах». <mark>Напишите или позвоните нам, если требуется оплата через Промсвязьбанк, Сбербанк Онлайн, MasterPass или со счета мобильного телефона.</mark></span>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputSum">Сумма пополнения</label>
+                      <div class="input-group input-group-lg">
+                        <input type="text" name="sum" placeholder='2 000.00' class="form-control" id="inputSum">
+                        <span class="input-group-addon" id="inputSum"><i class="fa fa-rub"></i></span>
                       </div>
-                      <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-external-link"></i> Перейти к оплате</button>
-                    </form>
-                    <hr>
-                    <h3>Юридическим лицам</h3>
-                    <form action="/getInvoice/" method="post">
-                      <div class="form-group">
-                        <label for="inputCompany">Наименование юридического лица</label>
-                        <input type="text" name="companyname" value='{{company}}' placeholder='ООО "Царь-Компания"' class="form-control input-lg" id="inputCompany" aria-describedby="helpBlock">
-                        <span id="helpBlock" class="help-block">Введите полное или сокращенное наименование компании, обязательно с указанием правовой формы, например: ООО "Царь-Компания".</span>
+                      <span id="helpBlock2" class="help-block">Введите сумму пополнения, при этом сумма не может быть меньше 100 рублей и не может превышать 250 000 рублей, а для некоторых видов оплаты сумма не может превышать 10 000 рублей. </span>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-external-link"></i> Перейти к оплате</button>
+                  </form>
+                  <hr>
+                  <h3>Юридическим лицам</h3>
+                  <form action="/getInvoice/" method="post">
+                    <div class="form-group">
+                      <label for="inputCompany">Наименование юридического лица</label>
+                      <input type="text" name="companyname" value='{{company}}' placeholder='ООО "Царь-Компания"' class="form-control input-lg" id="inputCompany" aria-describedby="helpBlock">
+                      <span id="helpBlock" class="help-block">Введите полное или сокращенное наименование компании, обязательно с указанием правовой формы, например: ООО "Царь-Компания".</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputInvoiceSum">Сумма счета</label>
+                      <div class="input-group input-group-lg">
+                        <input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum" aria-describedby="helpBlock2">
+                        <span class="input-group-addon" id="inputInvoiceSum"><i class="fa fa-rub"></i></span>
                       </div>
-                      <div class="form-group">
-                        <label for="inputInvoiceSum">Сумма счета</label>
-                        <div class="input-group input-group-lg">
-                          <input type="text" name="invoicesum" placeholder='15 000.00' class="form-control" id="inputInvoiceSum" aria-describedby="helpBlock2">
-                          <span class="input-group-addon" id="inputInvoiceSum"><i class="fa fa-rub"></i></span>
-                        </div>
-                        <span id="helpBlock2" class="help-block">Введите сумму счета, которую планируете оплатить, при этом сумма не должна быть меньше 100 рублей.</span>
-                      </div>
-                      <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-file-pdf-o"></i>Выписать счет</button>
-                    </form>
-                  </div>
+                      <span id="helpBlock2" class="help-block">Введите сумму счета, которую планируете оплатить, при этом сумма не должна быть меньше 100 рублей.</span>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-file-pdf-o"></i>Выписать счет</button>
+                  </form>
                 </div>
               </div>
             </div>
