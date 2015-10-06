@@ -66,6 +66,16 @@ if ($cmd[0]) {
 			}
 			break;
 
+		case 'telegram':
+			isAuth();
+			try {
+				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
+				$telegram->handle();
+			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+				echo $e;
+			}
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
