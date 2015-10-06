@@ -781,17 +781,19 @@ function getSelection($date, $crm_id) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_year += 1;
 				$end_date = $_year.'-01-01';
-			} else if ($em[5] == 0 && $em[6] == 9) {
+			} elseif ($em[5] == 0 && $em[6] == 9) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$end_date = $_year.'-10-01';
+			} elseif ($em[5] == 1 && $em[6] == 0) {
+				$_year = $em[0].$em[1].$em[2].$em[3];
+				$_month = $em[6]+1;
+				$end_date = $_year.'-1'.$_month.'-01';
 			} else {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_month = $em[6]+1;
-				$end_date = $_year.'-'.$_month.'-01';
+				$end_date = $_year.'-0'.$_month.'-01';
 			}
 			$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
-			print_r($em);
-			die();
 			$result = pg_query($query);
 			while ($row = pg_fetch_array($result)) {
 				$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
@@ -862,9 +864,13 @@ function getSelection($date, $crm_id) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_year += 1;
 				$end_date = $_year.'-01-01';
-			} else if ($em[5] == 0 && $em[6] == 9) {
+			} elseif ($em[5] == 0 && $em[6] == 9) {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$end_date = $_year.'-10-01';
+			} elseif ($em[5] == 1 && $em[6] == 0) {
+				$_year = $em[0].$em[1].$em[2].$em[3];
+				$_month = $em[6]+1;
+				$end_date = $_year.'-1'.$_month.'-01';
 			} else {
 				$_year = $em[0].$em[1].$em[2].$em[3];
 				$_month = $em[6]+1;
