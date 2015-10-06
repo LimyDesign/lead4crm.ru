@@ -67,7 +67,6 @@ if ($cmd[0]) {
 			break;
 
 		case 'telegram':
-			isAuth();
 			try {
 				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 				$telegram->setLogRequests(true);
