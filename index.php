@@ -790,7 +790,8 @@ function getSelection($date, $crm_id) {
 				$end_date = $_year.'-'.$_month.'-01';
 			}
 			$query = "select t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime from cnam_cache as t1 left join log as t2 on t1.logid = t2.id where t2.uid = {$_SESSION['userid']} and t2.modtime >= DATE '{$start_date}' and t2.modtime < DATE '{$end_date}' order by t2.modtime desc";
-			die($query);
+			print_r($em);
+			die();
 			$result = pg_query($query);
 			while ($row = pg_fetch_array($result)) {
 				$query2 = "select json from cnam_cp where id = ".$row['cp_id']." and hash = '".$row['cp_hash']."'";
