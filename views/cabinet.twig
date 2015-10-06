@@ -187,7 +187,7 @@
                 </div>
                 <ul class="list-group">
                   {% for rubric in top_rubrics.rubrics %}
-                    <li class="list-group-item">{{rubric}}</li>
+                    <li class="list-group-item">{{rubric.name}}</li>
                   {% endfor %}
                 </ul>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(3)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
