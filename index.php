@@ -1446,18 +1446,18 @@ function mb_ucfirst($str, $encoding='UTF-8') {
    return $str;
 }
 
-function isAuth() {
+function isAuth($cmd) {
 	if (!$_SESSION['userid']) {
+		global $twig;
+		$cmd = implode('/', $cmd);
 		$options = array(
 			'title' => '403 Доступ запрещен',
-			'currentUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[1]);
+			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/');
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		header('HTTP/1.0 403 Forbidden');
 		echo $twig->render('403.twig', $options);
+		exit(403);
 	}
-
-	// header("location:javascript://history.go(-1)");
-	// header("Location: {$_SERVER['HTTP_REFERER']}/");
 }
 
 function logout() {
