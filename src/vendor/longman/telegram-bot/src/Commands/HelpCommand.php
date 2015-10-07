@@ -50,7 +50,7 @@ class HelpCommand extends Command
                 }
             }
 
-            $msg .= "\n" . 'Справка по команде: /help <командаы>';
+            $msg .= "\n" . 'Показать справку по команде: /help <командаы>';
         } else {
             $text = str_replace('/', '', $text);
             if (isset($commands[$text])) {
