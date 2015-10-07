@@ -17,6 +17,7 @@ class NotifyCommand extends Command
 	protected $usage = '/notify';
 	protected $version = '1.0.0';
 	protected $enabled = true;
+	protected $public = true;
 
 	public function execute()
 	{
