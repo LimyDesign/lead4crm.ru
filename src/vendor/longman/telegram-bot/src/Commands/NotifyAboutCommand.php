@@ -6,6 +6,10 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
+use Longman\TelegramBot\Entities\ReplyKeyboardMarkup;
+use Longman\TelegramBot\Entities\ReplyKeyboardHide;
+use Longman\TelegramBot\Entities\ForceReply;
+
 class NotifyAboutCommand extends Command
 {
 	protected $name = 'notifyabout';
@@ -13,7 +17,6 @@ class NotifyAboutCommand extends Command
 	protected $usage = '/notifyabout';
 	protected $version = '1.0.0';
 	protected $enabled = true;
-	protected $public = true;
 
 	public function execute()
 	{
