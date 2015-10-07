@@ -44,7 +44,7 @@ class NotifyCommand extends Command
 
         $reply_keyboard_markup = new ReplyKeyboardMarkup(
         	[
-        		'keyboard' => $keyboards[0];
+        		'keyboard' => $keyboards[0],
         		'resize_keyboard' => true,
         		'one_time_keyboard' => false,
         		'selective' => false
