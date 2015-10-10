@@ -82,14 +82,6 @@ if ($cmd[0]) {
 			}
 			break;
 
-		case 'sendTelegram':
-			try {
-				$telegram->sendNotification('test', 134647483);
-			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-				echo $e;
-			}
-			break;
-
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -183,6 +175,7 @@ if ($cmd[0]) {
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
+				'telegramid' => $_SESSION['telegramid'],
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
@@ -1207,7 +1200,7 @@ function setUserCompany($company) {
 }
 
 function yandexPayments($cmd) {
-	global $conf;
+	global $conf, $telegram;
 	
 	$performedDatetime = date(DATE_W3C);
 
@@ -1286,6 +1279,7 @@ function yandexPayments($cmd) {
 				pg_free_result($result);
 				$query = "insert into log (uid, debet, client, invoice) values ({$yaInvoiceId}, {$yaOrderSumAmount}, '{$client}', {$iid})";
 				pg_query($query);
+				pg_free_result($result);
 				pg_close($db);
 			}
 		}
@@ -1324,10 +1318,18 @@ function yandexPayments($cmd) {
 					$code = '0';
 					$query = "insert into log (uid, debet, client, invoice) values ({$uid}, {$sum}, '{$client}', {$iid})";
 					pg_query($query);
+					$query = "select telegram_chat_id, telegram_balans from users where id = {$uid}";
+					$result = pg_query($query);
+					$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
+					$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+					if ($telegram_balans) {
+						$telegram->sendNotification('Лицевой счет пополнен на сумму: '.$sum.' руб.', $telegram_chat_id);
+					}
 				}
 			} else {
 				$code = '200';
 			}
+			pg_free_result($result);
 			pg_close($db);
 		}
 		$response .= "<paymentAvisoResponse performedDatetime=\"{$performedDatetime}\" code=\"{$code}\" invoiceId=\"{$yaInvoiceId}\" shopId=\"{$yaShopId}\"/>";
@@ -1381,7 +1383,18 @@ function setTariff($getTariff) {
 			if ($uid == $_SESSION['userid']) {
 				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), 'Активания тарифа ' || (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'))";
 				pg_query($query);
+				$query = "select telegram_chat_id, telegram_balans,  (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_price, (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_name from users where id = {$_SESSION['userid']}";
+				$result = pg_query($query);
+				$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
+				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+				$tariff_price = pg_fetch_result($result, 0, 'tariff_price');
+				$tariff_name = pg_fetch_result($result, 0, 'tariff_name');
+				if ($telegram_balans) {
+					$telegram->sendNotification('С лицевого счета списана сумма: '.$tariff_price.' руб. в счет тарифного плана «'.$tariff_name.'»', $telegram_chat_id);
+				}
+
 			}
+			pg_free_result($result);
 			pg_close($db);
 		}
 	}
