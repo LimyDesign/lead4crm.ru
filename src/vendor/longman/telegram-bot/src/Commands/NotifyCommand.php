@@ -41,6 +41,7 @@ class NotifyCommand extends Command
                     case 'on':
                     case 'off':
                         $return = DB::setNotificationByChatId($type, $mode, $chat_id);
+                        $return = $return == $chat_id ? true : false;
                         break;
                     case 'status':
                     default:
@@ -66,7 +67,6 @@ class NotifyCommand extends Command
         $data['chat_id'] = $chat_id;
         $data['reply_to_message_id'] = $message_id;
         $data['text'] = $reply;
-
 
         $result = Request::sendMessage($data);
         return $result;
