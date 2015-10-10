@@ -68,8 +68,6 @@ if ($cmd[0]) {
 
 		case 'telegram':
 			try {
-				$telegram->setLogRequests(true);
-				$telegram->setLogPath($conf->telegram->name.'.log');
 				$telegram->handle();
 			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
 				echo $e;
