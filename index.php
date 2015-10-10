@@ -654,6 +654,10 @@ function dbLogin($userId, $userEmail, $provider) {
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
 				$apikey = pg_fetch_result($result, 0, 'apikey');
+				$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
+				$telegram_company = pg_fetch_result($result, 0, 'telegram_company');
+				$telegram_renewal = pg_fetch_result($result, 0, 'telegram_renewal');
+				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
 				$vk = pg_fetch_result($result, 0, 'vk');
 				$ok = pg_fetch_result($result, 0, 'ok');
 				$fb = pg_fetch_result($result, 0, 'fb');
@@ -666,6 +670,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['company'] = $company;
 			$_SESSION['is_admin'] = $is_admin;
 			$_SESSION['apikey'] = $apikey;
+			$_SESSION['telegram'] = array('chat_id' => $telegram_chat_id, 'company' => $telegram_company, 'renewal' => $telegram_renewal, 'balans' => $telegram_balans);
 			$_SESSION['provider'] = array('vk' => $vk, 'ok' => $ok, 'fb' => $fb, 'gp' => $gp, 'mr' => $mr, 'ya' => $ya);
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
@@ -726,6 +731,7 @@ function importRubrics($apikey, $domain, $full = false) {
 }
 
 function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
+	global $telegram;
 	$url = "http://api.cnamrf.ru/getCompanyProfile/?";
 	$uri = http_build_query(array(
 		'apikey' => $apikey,
@@ -735,7 +741,23 @@ function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
 		'auid' => $auid,
 		'uip' => $ip,
 		'2gis' => $getFrom2GIS));
-	return file_get_contents($url.$uri);
+	$return = file_get_contents($url.$uri);
+	$cp = json_decode($return);
+	if (!$cp->error) {
+		if ($_SESSION['telegram']['company'] && !$_SESSION['telegram']['balans']) {
+			$telegram->sendNotification('Импортирована компания: '.$cp->name, $_SESSION['telegram']['chat_id']);
+		}
+		elseif ($_SESSION['telegram']['balans'] && !$_SESSION['telegram']['company'] && $cp->summ) {
+			$telegram->sendNotification('За импорт компании списана сумма: '.$cp->summ.' руб.', $_SESSION['telegram']['chat_id']);
+		}
+		elseif ($_SESSION['telegram']['balans'] && $_SESSION['telegram']['company']) {
+			if ($cp->summ)
+				$telegram->sendNotification('За импорт компании '.$cp->name.' списана сумма: '.$cp->summ.' руб.', $_SESSION['telegram']['chat_id']);
+			else
+				$telegram->sendNotification('Импортирована компания: '.$cp->name, $_SESSION['telegram']['chat_id']);
+		}
+	}
+	return $return;
 }
 
 function getSupportCities() {
