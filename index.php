@@ -74,7 +74,7 @@ if ($cmd[0]) {
 					'password' => $conf->db->password,
 					'database' => $conf->db->database
 				);
-				$telegram->enableLead4CRM($credentials);
+				$telegram->enablePDO($credentials);
 				$telegram->handle();
 			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
 				echo $e;
