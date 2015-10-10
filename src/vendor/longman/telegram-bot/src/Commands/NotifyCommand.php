@@ -3,12 +3,10 @@
 namespace Longman\TelegramBot\Commands;
 
 use Longman\TelegramBot\Request;
+use Longman\TelegramBot\DB;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
-
-use Longman\TelegramBot\Entities\ReplyKeyboardMarkup;
-use Longman\TelegramBot\Entities\ReplyKeyboardHide;
-use Longman\TelegramBot\Entities\ForceReply;
+use Longman\TelegramBot\Exception\TelegramException;
 
 class NotifyCommand extends Command
 {
@@ -30,14 +28,37 @@ class NotifyCommand extends Command
 
         if (empty($text))
         {
-                $reply = "Для того чтобы включить, отключить или проверить статус уведомления, для каждого действия введите следующие команды:\n\n/notify company [on|off|status] — Уведомление об импорте компании\n/notify renewal [on|off|status] — Уведомление о продлении тарифного плана\n/notify balans [on|off|status] - Уведомление об изменении баланса";
+            $reply = "Для того чтобы включить, отключить или проверить статус уведомления, для каждого действия введите следующие команды:\n\n/notify company [on|off|status] — Уведомление об импорте компаний\n/notify renewal [on|off|status] — Уведомление о продлении тарифного плана\n/notify balans [on|off|status] - Уведомление об изменении баланса";
         }
         else
         {
-                list($type, $mode) = explode(' ', $text);
-                if (empty($mode)) {
-                        $reply = "Команда введена не полностью.";
+            list($type, $mode) = explode(' ', $text);
+            if (empty($mode)) {
+                $reply = "Команда введена не полностью.";
+            }
+            else {
+                switch ($mode) {
+                    case 'on':
+                    case 'off':
+                        $return = DB::setNotificationByChatId($type, $mode, $chat_id);
+                        break;
+                    case 'status':
+                    default:
+                        $return = DB::getNotificationByChatId($type, $chat_id);
                 }
+                switch ($type) {
+                    case 'company':
+                        $type_rus = 'об импорте компаний';
+                        break;
+                    case 'renewal':
+                        $type_rus = 'о продлении тарифного плана';
+                        break;
+                    case 'balans':
+                        $type_rus = 'об изменении баланса';
+                        break;
+                }
+                $reply = 'Уведомление ' . $type_rus . $return ? ' включено.' : ' выключено.';
+            }
         }
 
         $data = array();
