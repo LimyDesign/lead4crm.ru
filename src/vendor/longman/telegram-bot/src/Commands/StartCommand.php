@@ -21,6 +21,7 @@ class StartCommand extends Command
 		$message = $this->getMessage();
 
 		$chat_id = $message->getChat()->getId();
+		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
 		if (empty($text)) {
@@ -31,6 +32,7 @@ class StartCommand extends Command
 
 		$data = array();
 		$data['chat_id'] = $chat_id;
+		$data['reply_to_message_id'] = $message_id;
 		$data['text'] = $reply;
 
 		$result = Request::sendMessage($data);
