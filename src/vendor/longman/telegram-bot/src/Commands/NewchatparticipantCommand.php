@@ -34,12 +34,12 @@ class NewchatparticipantCommand extends Command
         $data['chat_id'] = $chat_id;
 
         if ($participant->getUsername() == $this->getTelegram()->getBotName()) {
-            $text = 'Hi there';
+            $text = 'Всем привет! Я могу сообщать вам об изменениях.';
         } else {
             if ($participant->getUsername()) {
-                $text = 'Hi @'.$participant->getUsername();
+                $text = 'Привет, @'.$participant->getUsername();
             } else {
-                $text = 'Hi '.$participant->getFirstName();
+                $text = 'Привет, '.$participant->getFirstName();
             }
         }
 
