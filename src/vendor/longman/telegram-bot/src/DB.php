@@ -154,10 +154,11 @@ class DB
 
         try {
             $type = preg_replace('/[^a-z]/', '', $type);
+            $mode = $mode == 'on' ? true : false;
             $query = 'UPDATE "public"."'.TB_USERS.'" SET "telegram_'.$type.'" = :mode WHERE "telegram_chat_id" = :chat_id RETURNING "telegram_chat_id"';
             $sth = self::$pdo->prepare($query);
             $sth->bindParam(':chat_id', $chat_id, \PDO::PARAM_INT);
-            $sth->bindParam(':mode', $mode == 'on' ? true : false, \PDO::PARAM_BOOL);
+            $sth->bindParam(':mode', $mode, \PDO::PARAM_BOOL);
             $sth->execute();
             $result = $sth->fetch(\PDO::FETCH_ASSOC);
             $result = $result['telegram_chat_id'];
