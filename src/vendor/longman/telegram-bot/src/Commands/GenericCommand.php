@@ -35,7 +35,7 @@ class GenericCommand extends Command
 
         $data = array();
         $data['chat_id'] = $chat_id;
-        $data['text'] = 'Command: '.$command.' not found.. :(';
+        $data['text'] = 'Комманда: '.$command.' не найдена.. :(';
         $result = Request::sendMessage($data);
         return $result;
     }
