@@ -68,12 +68,12 @@ if ($cmd[0]) {
 
 		case 'telegram':
 			try {
-				// $credentials = array(
-				// 	'host' => $conf->db->host,
-				// 	'user' => $conf->db->username,
-				// 	'password' => $conf->db->password,
-				// 	'database' => $conf->db->database
-				// );
+				$credentials = array(
+					'host' => $conf->db->host,
+					'user' => $conf->db->username,
+					'password' => $conf->db->password,
+					'database' => $conf->db->database
+				);
 				$telegram->enableLead4CRM($credentials);
 				$telegram->handle();
 			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
