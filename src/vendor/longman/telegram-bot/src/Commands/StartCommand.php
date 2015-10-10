@@ -3,7 +3,7 @@
 namespace Longman\TelegramBot\Commands;
 
 use Longman\TelegramBot\Request;
-use Longman\TelegramBot\Lead4CRM;
+use Longman\TelegramBot\DB;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 use Longman\TelegramBot\Exception\TelegramException;
