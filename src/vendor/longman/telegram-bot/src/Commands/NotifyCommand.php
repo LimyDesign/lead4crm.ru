@@ -57,7 +57,8 @@ class NotifyCommand extends Command
                         $type_rus = 'об изменении баланса';
                         break;
                 }
-                $reply = 'Уведомление ' . $type_rus . $return ? ' включено.' : ' выключено.';
+                $status = $return ? ' включено.' : ' выключено.';
+                $reply = 'Уведомление ' . $type_rus . $status;
             }
         }
 
