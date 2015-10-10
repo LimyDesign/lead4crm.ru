@@ -144,7 +144,7 @@ class DB
      * @param string  $mode    set notiication status [on|off]
      * @param integer $chat_id telegram chat id
      *
-     * @return bool / integer [if query success returning chat id];
+     * @return bool / integer  if query success returning chat id
      */
     public static function setNotificationByChatId($type, $mode, $chat_id)
     {
@@ -161,6 +161,33 @@ class DB
             $sth->execute();
             $result = $sth->fetch(\PDO::FETCH_ASSOC);
             $result = $result['telegram_chat_id'];
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+        return $result;
+    }
+
+    /**
+     * get notification status for this chat id
+     * 
+     * @param  string  $type    notification type name
+     * @param  integer $chat_id telegram chat id
+     * @return bool             notification status
+     */
+    public static function getNotificationByChatId($type, $chat_id)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $type = preg_replace('/[^a-z]/', '', $type);
+            $query = 'SELECT "telegram_'.$type.'" as "status" FROM "public"."'.TB_USERS.'" WHERE "telegram_chat_id" = :chat_id';
+            $sth = self::$pdo->prepare($query);
+            $sth->bindParam(':chat_id', $chat_id, \PDO::PARAM_INT);
+            $sth->execute();
+            $result = $sth->fetch(\PDO::FETCH_ASSOC);
+            $result = $result['status'];
         } catch (PDOException $e) {
             throw new TelegramException($e->getMessage());
         }
