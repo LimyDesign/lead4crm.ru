@@ -20,8 +20,8 @@ class EchoCommand extends Command
     protected $description = 'Show text';
     protected $usage = '/echo <text>';
     protected $version = '1.0.0';
-    protected $enabled = true;
-    protected $public = true;
+    protected $enabled = false;
+    protected $public = false;
 
     public function execute()
     {

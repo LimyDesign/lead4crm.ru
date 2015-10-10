@@ -21,8 +21,8 @@ class DateCommand extends Command
     protected $description = 'Show date/time by location';
     protected $usage = '/date <location>';
     protected $version = '1.2.0';
-    protected $enabled = true;
-    protected $public = true;
+    protected $enabled = false;
+    protected $public = false;
 
     private $base_url = 'https://maps.googleapis.com/maps/api';
     private $date_format = 'd-m-Y H:i:s';

@@ -23,8 +23,8 @@ class WhoamiCommand extends Command
     protected $description = 'Show your id, name and username';
     protected $usage = '/whoami';
     protected $version = '1.0.0';
-    protected $enabled = true;
-    protected $public = true;
+    protected $enabled = false;
+    protected $public = false;
 
     public function execute()
     {

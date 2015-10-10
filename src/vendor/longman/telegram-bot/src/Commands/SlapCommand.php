@@ -20,7 +20,7 @@ class SlapCommand extends Command
     protected $description = 'Slap someone with their username';
     protected $usage = '/slap <@user>';
     protected $version = '1.0.0';
-    protected $enabled = true;
+    protected $enabled = false;
     public function execute()
     {
         $update = $this->getUpdate();

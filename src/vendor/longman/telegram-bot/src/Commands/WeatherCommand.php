@@ -20,8 +20,8 @@ class WeatherCommand extends Command
     protected $description = 'Show weather by location';
     protected $usage = '/weather <location>';
     protected $version = '1.0.0';
-    protected $enabled = true;
-    protected $public = true;
+    protected $enabled = false;
+    protected $public = false;
 
     private function getWeather($location)
     {
