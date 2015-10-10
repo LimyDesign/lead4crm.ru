@@ -88,6 +88,12 @@ class Telegram
      */
     protected $mysql_enabled = false;
     /**
+     * PostgreSQL Integration
+     *
+     * @var boolean
+     */
+    protected $pgsql_enabled = false;
+    /**
      * PDO object
      *
      * @var \PDO
@@ -156,6 +162,12 @@ class Telegram
     {
         $this->pdo = DB::initialize($credential, $table_prefix);
         $this->mysql_enabled = true;
+    }
+
+    public function enableLead4CRM(array $credential, $table_prefix = null)
+    {
+        $this->pdo = DB::initialize($credential, $table_prefix);
+        $this->pgsql_enabled = true;
     }
 
     /**

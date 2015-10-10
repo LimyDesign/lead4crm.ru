@@ -24,6 +24,7 @@ abstract class Command
     protected $usage = 'Command usage';
     protected $version = '1.0.0';
     protected $need_mysql = false;
+    protected $need_pgsql = false;
     protected $enabled = true;
     protected $name = '';
 
