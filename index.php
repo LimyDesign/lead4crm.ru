@@ -245,7 +245,7 @@ if ($cmd[0]) {
 	}
 } else {
 	$options = array(
-		'title' => 'Генератор лидов для CRM: Битрикс24, Мегаплан',
+		'title' => 'Базы 2ГИС для CRM: Битрикс24, Мегаплан',
 		'userid' => $_SESSION['userid'],
 		'currentUrl' => 'https://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
