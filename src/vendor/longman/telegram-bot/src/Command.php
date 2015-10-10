@@ -50,6 +50,10 @@ abstract class Command
             $this->need_mysql & $this->telegram->isDbEnabled() & DB::isDbConnected()
         ) {
             return $this->execute();
+        } elseif (!$this->need_pgsql |
+            $this->need_pgsql & $this->telegram->isDbEnabled() & Lead4CRM::isDbConnected()
+        ) {
+            return $this->execute();
         }
         return $this->executeNoDB();
     }

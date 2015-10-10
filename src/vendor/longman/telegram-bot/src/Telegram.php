@@ -521,6 +521,8 @@ class Telegram
     {
         if ($this->mysql_enabled) {
             return true;
+        } elseif ($this->pgsql_enabled) {
+            return true;
         } else {
             return false;
         }
