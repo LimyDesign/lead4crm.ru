@@ -29,6 +29,14 @@ $twig = new Twig_Environment($loader, array(
 $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
+$credentials = array(
+	'schema' => 'pgsql',
+	'host' => $conf->db->host,
+	'user' => $conf->db->username,
+	'password' => $conf->db->password,
+	'database' => $conf->db->database
+);
+$telegram->enablePDO($credentials);
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -68,15 +76,15 @@ if ($cmd[0]) {
 
 		case 'telegram':
 			try {
-				$credentials = array(
-					'schema' => 'pgsql',
-					'host' => $conf->db->host,
-					'user' => $conf->db->username,
-					'password' => $conf->db->password,
-					'database' => $conf->db->database
-				);
-				$telegram->enablePDO($credentials);
 				$telegram->handle();
+			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+				echo $e;
+			}
+			break;
+
+		case 'sendTelegram':
+			try {
+				$telegram->sendNotification('test', 134647483);
 			} catch (Longman\TelegramBot\Exception\TelegramException $e) {
 				echo $e;
 			}

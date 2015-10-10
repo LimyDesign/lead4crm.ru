@@ -603,6 +603,25 @@ class Telegram
         return $result;
     }
 
+    public function sendNotification($text, $chat_id)
+    {
+        if (empty($text) || empty($chat_id)) {
+            throw new TelegramException('Needed parameters is empty!');
+        }
+        $data = array();
+        $data['chat_id'] = $chat_id;
+        $data['text'] = $text;
+        $result = Request::sendMessage($data);
+
+        if (!$result->isOk()) {
+            throw new TelegramException(
+                'Message not send! Error: '.$result->getErrorCode().' '.$result->getDescription()
+            );
+        }
+
+        return $result;
+    }
+
     /**
      * Get available message types
      *
