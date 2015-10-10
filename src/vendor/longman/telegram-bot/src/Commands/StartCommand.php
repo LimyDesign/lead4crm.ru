@@ -41,7 +41,7 @@ class StartCommand extends Command
 			$reply = 'Для того, чтобы связать ваш аккаунт в Telegram с аккаунтом в Lead4CRM, отправьте:'."\n\n".$this->usage."\n\n".'Ключ доступа можно найти в личном кабинете на сайте www.lead4crm.ru'."\n\n".'Для дополнительной информации отправьте /help';
 		} else {
 			$result = DB::subscribeUserByAPIKey($text, $chat_id);
-			if ($result) {
+			if ($result == $text) {
 				$reply = "Ваш аккаунт в Lead4CRM.ru привязан к Telegram.\n\nТеперь можно перейти к настройке уведомлений. Введите /notify для получения справки. По умолчанию все уведомления выключены, включите те, которые вам необходимы.";
 			} else {
 				$reply = 'Указан не верный ключ доступа.';
