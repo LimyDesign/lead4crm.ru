@@ -23,8 +23,7 @@ abstract class Command
     protected $description = 'Command help';
     protected $usage = 'Command usage';
     protected $version = '1.0.0';
-    protected $need_mysql = false;
-    protected $need_pgsql = false;
+    protected $need_pdo = false;
     protected $enabled = true;
     protected $name = '';
 
@@ -46,13 +45,8 @@ abstract class Command
 
     public function preExecute()
     {
-        // if (!$this->need_mysql |
-        //     $this->need_mysql & $this->telegram->isDbEnabled() & DB::isDbConnected()
-        // ) {
-        //     return $this->execute();
-        // } else
-        if (!$this->need_pgsql |
-            $this->need_pgsql & $this->telegram->isDbEnabled() & Lead4CRM::isDbConnected()
+        if (!$this->need_pdo |
+            $this->need_pdo & $this->telegram->isDbEnabled() & DB::isDbConnected()
         ) {
             return $this->execute();
         }
@@ -61,7 +55,7 @@ abstract class Command
 
     abstract public function execute();
 
-    //this methods is executed if $need_mysql is true but DB connection for some reason is not avaiable
+    //this methods is executed if $need_pdo is true but DB connection for some reason is not avaiable
     public function executeNoDB()
     {
 

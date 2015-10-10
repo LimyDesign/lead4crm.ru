@@ -82,17 +82,11 @@ class Telegram
     protected $log_path;
 
     /**
-     * MySQL Integration
+     * PDO Integration
      *
      * @var boolean
      */
-    protected $mysql_enabled = false;
-    /**
-     * PostgreSQL Integration
-     *
-     * @var boolean
-     */
-    protected $pgsql_enabled = false;
+    protected $pdo_enabled = false;
     /**
      * PDO object
      *
@@ -158,16 +152,10 @@ class Telegram
      *
      * @param array credential, string table_prefix
      */
-    public function enableMySQL(array $credential, $table_prefix = null)
+    public function enablePDO(array $credential, $table_prefix = null)
     {
         $this->pdo = DB::initialize($credential, $table_prefix);
-        $this->mysql_enabled = true;
-    }
-
-    public function enableLead4CRM(array $credential, $table_prefix = null)
-    {
-        $this->pdo = DB::initialize($credential, $table_prefix);
-        $this->pgsql_enabled = true;
+        $this->pdo_enabled = true;
     }
 
     /**
@@ -519,9 +507,7 @@ class Telegram
 
     public function isDbEnabled()
     {
-        if ($this->mysql_enabled) {
-            return true;
-        } elseif ($this->pgsql_enabled) {
+        if ($this->pdo_enabled) {
             return true;
         } else {
             return false;

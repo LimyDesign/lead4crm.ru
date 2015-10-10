@@ -16,7 +16,7 @@ class StartCommand extends Command
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
-	protected $need_pgsql = true;
+	protected $need_pdo = true;
 
 	public function executeNoDB()
 	{

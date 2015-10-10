@@ -27,11 +27,11 @@ use Longman\TelegramBot\Exception\TelegramException;
 class DB
 {
     /**
-     * MySQL credentials
+     * PDO credentials
      *
      * @var array
      */
-    static protected $mysql_credentials = array();
+    static protected $pdo_credentials = array();
 
     /**
      * PDO object
@@ -55,13 +55,19 @@ class DB
     public static function initialize(array $credentials, $table_prefix = null)
     {
         if (empty($credentials)) {
-            throw new TelegramException('MySQL credentials not provided!');
+            throw new TelegramException('PDO credentials not provided!');
         }
-        self::$mysql_credentials = $credentials;
+        self::$pdo_credentials = $credentials;
         self::$table_prefix = $table_prefix;
 
-        $dsn = 'mysql:host=' . $credentials['host'] . ';dbname=' . $credentials['database'];
-        $options = array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',);
+        $dsn = $credentials['schema'] . ':host=' . $credentials['host'] . ';dbname=' . $credentials['database'];
+        if ($credentials['schema'] == 'mysql') {
+            $options = array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',);
+        }
+        else {
+            $options = array();
+        }
+
         try {
             $pdo = new \PDO($dsn, $credentials['user'], $credentials['password'], $options);
             $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_WARNING);
