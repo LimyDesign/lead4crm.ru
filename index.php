@@ -28,6 +28,7 @@ $twig = new Twig_Environment($loader, array(
 ));
 $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
+$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -55,7 +56,6 @@ if ($cmd[0]) {
 		case 'initTelegram':
 			isAdmin();
 			try {
-				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 				$link = 'https://'.$_SERVER['SERVER_NAME'].'/telegram/';
 				$result = $telegram->setWebHook($link);
 				if ($result->isOk()) {
@@ -68,7 +68,6 @@ if ($cmd[0]) {
 
 		case 'telegram':
 			try {
-				$telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 				$telegram->setLogRequests(true);
 				$telegram->setLogPath($conf->telegram->name.'.log');
 				$telegram->handle();
