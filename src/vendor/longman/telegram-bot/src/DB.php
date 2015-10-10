@@ -110,6 +110,34 @@ class DB
     }
 
     /**
+     * subscribe Telegram user to Lead4CRM notification
+     *
+     * @param $apikey API Key from Lead4CRM account
+     * @param $chat_id Telegram Chat ID
+     *
+     * @return bool / string with data
+     */
+    public static function subscribeUserByAPIKey($apikey, $chat_id)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $query = 'UPDATE "public"."'.TB_USERS.'" SET "telegram_chat_id" = :chat_id WHERE "apikey" = :apikey RETURNING "apikey"';
+            $sth = self::$pdo->prepare($query);
+            $sth->bindParam(':chat_id', $chat_id, \PDO::PARAM_INT);
+            $sth->bindParam(':apikey', $apikey, \PDO::PARAM_STR, 255);
+            $sth->execute();
+            $result = $sth->fetch(\PDO::FETCH_ASSOC);
+            $result = $result['apikey'];
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+        return $result;
+    }
+
+    /**
      * fetch message from DB
      *
      * @param fetch Message from the DB
