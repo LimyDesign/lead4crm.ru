@@ -46,7 +46,7 @@ class NotifyCommand extends Command
         	[
         		'keyboard' => $keyboards[0],
         		'resize_keyboard' => true,
-        		'one_time_keyboard' => false,
+        		'one_time_keyboard' => true,
         		'selective' => false
         	]
         );
