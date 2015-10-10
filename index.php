@@ -743,6 +743,8 @@ function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
 		'2gis' => $getFrom2GIS));
 	$return = file_get_contents($url.$uri);
 	$cp = json_decode($return);
+	print_r($cp);
+	die();
 	if (!$cp->error) {
 		if ($_SESSION['telegram']['company'] && !$_SESSION['telegram']['balans']) {
 			$telegram->sendNotification('Импортирована компания: '.$cp->name, $_SESSION['telegram']['chat_id']);
