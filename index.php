@@ -69,6 +69,7 @@ if ($cmd[0]) {
 		case 'telegram':
 			try {
 				$credentials = array(
+					'schema' => 'pgsql',
 					'host' => $conf->db->host,
 					'user' => $conf->db->username,
 					'password' => $conf->db->password,
