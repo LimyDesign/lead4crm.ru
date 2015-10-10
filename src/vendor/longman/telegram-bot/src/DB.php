@@ -182,7 +182,7 @@ class DB
 
         try {
             $type = preg_replace('/[^a-z]/', '', $type);
-            $query = 'SELECT "telegram_'.$type.'" as "status" FROM "public"."'.TB_USERS.'" WHERE "telegram_chat_id" = :chat_id';
+            $query = 'SELECT "telegram_'.$type.'" AS "status" FROM "public"."'.TB_USERS.'" WHERE "telegram_chat_id" = :chat_id';
             $sth = self::$pdo->prepare($query);
             $sth->bindParam(':chat_id', $chat_id, \PDO::PARAM_INT);
             $sth->execute();
