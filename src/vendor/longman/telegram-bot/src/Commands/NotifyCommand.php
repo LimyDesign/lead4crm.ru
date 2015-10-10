@@ -32,9 +32,17 @@ class NotifyCommand extends Command
         {
                 $reply = "Для того чтобы включить, отключить или проверить статус уведомления, для каждого действия введите следующие команды:\n\n/notify company [on|off|status] — Уведомление об импорте компании\n/notify renewal [on|off|status] — Уведомление о продлении тарифного плана\n/notify balans [on|off|status] - Уведомление об изменении баланса";
         }
+        else
+        {
+                list($type, $mode) = explode(' ', $text);
+                if (empty($mode)) {
+                        $reply = "Команда введена не полностью.";
+                }
+        }
 
         $data = array();
         $data['chat_id'] = $chat_id;
+        $data['reply_to_message_id'] = $message_id;
         $data['text'] = $reply;
 
 
