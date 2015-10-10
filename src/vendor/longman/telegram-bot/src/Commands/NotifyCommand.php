@@ -41,7 +41,10 @@ class NotifyCommand extends Command
                     case 'on':
                     case 'off':
                         $return = DB::setNotificationByChatId($type, $mode, $chat_id);
-                        $return = $return == $chat_id ? true : false;
+                        if ($return == $chat_id && $mode == 'on')
+                            $return = true;
+                        else
+                            $return = false;
                         break;
                     case 'status':
                     default:
