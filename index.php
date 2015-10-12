@@ -30,7 +30,6 @@ $twig = new Twig_Environment($loader, array(
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
-$icq->connect($conf->icq->uin, $conf->icq->password) or die($icq->error);
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -85,6 +84,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'icq':
+			$icq->connect($conf->icq->uin, $conf->icq->password) or die($icq->error);
 			if ($icq->sendMessage('881129', 'Hello, Arsen!')) {
 				echo 'Сообщение отправлено!';
 			}
