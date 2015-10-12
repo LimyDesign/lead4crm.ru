@@ -87,7 +87,19 @@ if ($cmd[0]) {
 
 		case 'icq':
 			if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
-				$icq->sendMessage('881129', 'Hello, Arsen!');
+				$id = $icq->getShortInfo('881129');
+				if ($id !== false) {
+					while ($icq->isConnected()) {
+						$msg = $icq->readMessage();
+
+						if (isset($msg['id'])) {
+							var_dump($msg);
+						}
+					}
+				}
+				else {
+					echo $icq->error;
+				}
 			}
 			break;
 
