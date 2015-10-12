@@ -1,0 +1,37 @@
+{
+    "name": "arsen-bespalov/webicqpro",
+    "description": "Set of PHP tools for simple and clear work with ICQ (OSCAR) protocol",
+    "version": "1.4.9",
+    "type": "library",
+    "keywords": ["icq", "icq bot", "icq api"],
+    "homepage": "http://wip.asminog.com",
+    "time": "2009-06-05",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Sergey Akudovich",
+            "email": "test@intrigue.ru",
+            "homepage": "http://wip.asminog.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Arsen Bespalov",
+            "email": "bespalov@arsen.pw",
+            "homepage": "http://arsen.pw",
+            "role": "Translator"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/asminog/WebIcqPro/issues",
+        "forum": "http://wip.asminog.com/forum/",
+        "wiki": "https://github.com/ArsenBespalov/WebIcqPro/wiki"
+    },
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "autoload": {
+        "classmap": [
+            "WebIcqPro.class.php"
+        ]
+    }
+}
