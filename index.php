@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 }
 
 require_once __DIR__.'/src/vendor/autoload.php';
-require_once __DIR__.'/src/vendor/arsen-bespalov/webicqpro/WebIcqPro.class.php';
 
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
