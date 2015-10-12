@@ -26,7 +26,7 @@ $twig = new Twig_Environment($loader, array(
 	'auto_reload' => true,
 	'optimizations' => -1
 ));
-$twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
+// $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
