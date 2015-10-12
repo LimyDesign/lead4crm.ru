@@ -1,9 +1,9 @@
 <?php
 error_reporting (E_ALL);
 
-define('UIN', '3180142'); // UIN for bot
-define('PASSWORD', '****'); // password
-define('ADMINUIN', '150727255'); // Admin UIN
+define('UIN', '658127246'); // UIN for bot
+define('PASSWORD', '12qwASZX@@12'); // password
+define('ADMINUIN', '881129'); // Admin UIN
 define('STARTXSTATUS', 'smoking');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
 
