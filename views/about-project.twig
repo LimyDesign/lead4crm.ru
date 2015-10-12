@@ -57,7 +57,7 @@
 	<script src="/public/js/classie.min.js"></script>
 	<script src="/public/js/modalEffects.min.js"></script>
 	<script src="/public/js/webcall.js"></script>
-	{% jshrink %}
+	{# {% jshrink %} #}
 	<script>
 		$(document).ready(function() {
 			$.post('/getSupportCities/', function(data) {
@@ -68,7 +68,7 @@
 			});
 		});
 	</script>
-	{% endjshrink %}
+	{# {% endjshrink %} #}
 </body>
 </html>
 {% endspaceless %}
