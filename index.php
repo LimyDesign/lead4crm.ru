@@ -91,6 +91,7 @@ if ($cmd[0]) {
 			else {
 				echo $icq->error;
 			}
+			break;
 
 		case 'getSupportCities':
 			getSupportCities();
