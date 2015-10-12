@@ -85,7 +85,7 @@ if ($cmd[0]) {
 
 		case 'icq':
 			$icq->connect($conf->icq->uin, $conf->icq->password) or die($icq->error);
-			if ($icq->sendMessage($conf->icq->uin, 'Hello, Arsen!')) {
+			if ($icq->sendMessage('881129', 'Hello, Arsen!')) {
 				echo 'Сообщение отправлено!';
 			}
 			else {
