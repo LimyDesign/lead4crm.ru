@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1b12f6d7fc843e46926a2eb793023dcc",
+    "hash": "6061fd465fb7c79ccc731b382030ddc8",
     "packages": [
+        {
+            "name": "arsen-bespalov/webicqpro",
+            "version": "1.4.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ArsenBespalov/WebIcqPro.git",
+                "reference": "d60fb8157185e0318070c4bb39f57d6487ef140c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ArsenBespalov/WebIcqPro/zipball/d60fb8157185e0318070c4bb39f57d6487ef140c",
+                "reference": "d60fb8157185e0318070c4bb39f57d6487ef140c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "WebIcqPro.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Sergey Akudovich",
+                    "email": "test@intrigue.ru",
+                    "homepage": "http://wip.asminog.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Arsen Bespalov",
+                    "email": "bespalov@arsen.pw",
+                    "homepage": "http://arsen.pw",
+                    "role": "Translator"
+                }
+            ],
+            "description": "Set of PHP tools for simple and clear work with ICQ (OSCAR) protocol",
+            "homepage": "http://wip.asminog.com",
+            "keywords": [
+                "icq",
+                "icq api",
+                "icq bot"
+            ],
+            "time": "2009-06-05 00:00:00"
+        },
         {
             "name": "longman/telegram-bot",
             "version": "0.18.0",
@@ -116,16 +166,16 @@
         },
         {
             "name": "salva/jshrink-bundle",
-            "version": "v1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nibsirahsieu/SalvaJshrinkBundle.git",
-                "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4"
+                "reference": "426956a7c6763503b7edabdeb0fc2f2fc3435724"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nibsirahsieu/SalvaJshrinkBundle/zipball/eead0b0e19ba77f49188282f5167bd537d1a30f4",
-                "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4",
+                "url": "https://api.github.com/repos/nibsirahsieu/SalvaJshrinkBundle/zipball/426956a7c6763503b7edabdeb0fc2f2fc3435724",
+                "reference": "426956a7c6763503b7edabdeb0fc2f2fc3435724",
                 "shasum": ""
             },
             "require": {
@@ -142,7 +192,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -177,20 +227,20 @@
                 "minify",
                 "twig"
             ],
-            "time": "2015-03-01 00:19:51"
+            "time": "2015-10-11 14:15:19"
         },
         {
             "name": "tecnick.com/tcpdf",
-            "version": "6.2.8",
+            "version": "6.2.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2"
+                "reference": "354433a33946ae7497c3eab291eaaf814bccbfab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2",
-                "reference": "3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/354433a33946ae7497c3eab291eaaf814bccbfab",
+                "reference": "354433a33946ae7497c3eab291eaaf814bccbfab",
                 "shasum": ""
             },
             "require": {
@@ -240,20 +290,21 @@
                 "pdf417",
                 "qrcode"
             ],
-            "time": "2015-04-29 16:13:58"
+            "abandoned": "tecnickcom/tcpdf",
+            "time": "2015-08-02 12:30:27"
         },
         {
             "name": "tedivm/jshrink",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/JShrink.git",
-                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
+                "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
-                "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/688527a2e854d7935f24f24c7d5eb1b604742bf9",
+                "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9",
                 "shasum": ""
             },
             "require": {
@@ -286,24 +337,24 @@
                 "javascript",
                 "minifier"
             ],
-            "time": "2014-11-11 03:54:14"
+            "time": "2015-07-04 07:35:09"
         },
         {
             "name": "twig/extensions",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd"
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
-                "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
+                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.12"
+                "twig/twig": "~1.20|~2.0"
             },
             "require-dev": {
                 "symfony/translation": "~2.3"
@@ -314,7 +365,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3-dev"
                 }
             },
             "autoload": {
@@ -338,29 +389,33 @@
                 "i18n",
                 "text"
             ],
-            "time": "2014-10-30 14:30:03"
+            "time": "2015-08-22 16:38:35"
         },
         {
             "name": "twig/twig",
-            "version": "v1.18.1",
+            "version": "v1.22.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "9f70492f44398e276d1b81c1b43adfe6751c7b7f"
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9f70492f44398e276d1b81c1b43adfe6751c7b7f",
-                "reference": "9f70492f44398e276d1b81c1b43adfe6751c7b7f",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
+                "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.7"
             },
+            "require-dev": {
+                "symfony/debug": "~2.7",
+                "symfony/phpunit-bridge": "~2.7"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.18-dev"
+                    "dev-master": "1.22-dev"
                 }
             },
             "autoload": {
@@ -395,7 +450,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-04-19 08:30:27"
+            "time": "2015-09-22 13:59:32"
         }
     ],
     "packages-dev": [],

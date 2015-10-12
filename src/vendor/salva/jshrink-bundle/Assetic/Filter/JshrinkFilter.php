@@ -24,14 +24,14 @@ class JshrinkFilter implements FilterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filterLoad(AssetInterface $asset)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function filterDump(AssetInterface $asset)
     {

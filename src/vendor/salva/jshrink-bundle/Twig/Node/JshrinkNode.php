@@ -7,7 +7,7 @@ use Twig_Node;
 use Twig_NodeInterface;
 
 /**
- * Jshrink Twig Extension
+ * Jshrink Twig Extension.
  */
 class JshrinkNode extends Twig_Node
 {
@@ -19,7 +19,7 @@ class JshrinkNode extends Twig_Node
     private $config;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(Twig_NodeInterface $body, $lineNumber, $tag = 'jshrink')
     {
@@ -37,7 +37,7 @@ class JshrinkNode extends Twig_Node
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function compile(Twig_Compiler $compiler)
     {
@@ -45,6 +45,8 @@ class JshrinkNode extends Twig_Node
             ->addDebugInfo($this)
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
-            ->write("echo \\JShrink\\Minifier::minify(trim(ob_get_clean()),".var_export($this->config, true).");\n");
+            ->write("echo \$context['_jshrink_cached_minifier']->minify(")
+            ->raw('trim(ob_get_clean()), '.var_export($this->config, true).'')
+            ->raw(");\n");
     }
 }

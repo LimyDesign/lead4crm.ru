@@ -7,7 +7,7 @@ use Twig_Token;
 use Twig_TokenParser;
 
 /**
- * Jshrink
+ * Jshrink.
  */
 class JshrinkTokenParser extends Twig_TokenParser
 {
@@ -36,7 +36,7 @@ class JshrinkTokenParser extends Twig_TokenParser
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function parse(Twig_Token $token)
     {
@@ -59,7 +59,7 @@ class JshrinkTokenParser extends Twig_TokenParser
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTag()
     {

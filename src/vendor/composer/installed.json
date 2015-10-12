@@ -1,298 +1,5 @@
 [
     {
-        "name": "tecnick.com/tcpdf",
-        "version": "6.2.8",
-        "version_normalized": "6.2.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tecnickcom/TCPDF.git",
-            "reference": "3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2",
-            "reference": "3dee9e7f3a414875fd1d9f4f1dfc2433493a86d2",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2015-04-29 16:13:58",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "fonts",
-                "config",
-                "include",
-                "tcpdf.php",
-                "tcpdf_parser.php",
-                "tcpdf_import.php",
-                "tcpdf_barcodes_1d.php",
-                "tcpdf_barcodes_2d.php",
-                "include/tcpdf_colors.php",
-                "include/tcpdf_filters.php",
-                "include/tcpdf_font_data.php",
-                "include/tcpdf_fonts.php",
-                "include/tcpdf_images.php",
-                "include/tcpdf_static.php",
-                "include/barcodes/datamatrix.php",
-                "include/barcodes/pdf417.php",
-                "include/barcodes/qrcode.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "LGPLv3"
-        ],
-        "authors": [
-            {
-                "name": "Nicola Asuni",
-                "email": "info@tecnick.com",
-                "homepage": "http://nicolaasuni.tecnick.com"
-            }
-        ],
-        "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
-        "homepage": "http://www.tcpdf.org/",
-        "keywords": [
-            "PDFD32000-2008",
-            "TCPDF",
-            "barcodes",
-            "datamatrix",
-            "pdf",
-            "pdf417",
-            "qrcode"
-        ]
-    },
-    {
-        "name": "twig/twig",
-        "version": "v1.18.1",
-        "version_normalized": "1.18.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twigphp/Twig.git",
-            "reference": "9f70492f44398e276d1b81c1b43adfe6751c7b7f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig/zipball/9f70492f44398e276d1b81c1b43adfe6751c7b7f",
-            "reference": "9f70492f44398e276d1b81c1b43adfe6751c7b7f",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.7"
-        },
-        "time": "2015-04-19 08:30:27",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.18-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Twig_": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com",
-                "homepage": "http://fabien.potencier.org",
-                "role": "Lead Developer"
-            },
-            {
-                "name": "Armin Ronacher",
-                "email": "armin.ronacher@active-4.com",
-                "role": "Project Founder"
-            },
-            {
-                "name": "Twig Team",
-                "homepage": "http://twig.sensiolabs.org/contributors",
-                "role": "Contributors"
-            }
-        ],
-        "description": "Twig, the flexible, fast, and secure template language for PHP",
-        "homepage": "http://twig.sensiolabs.org",
-        "keywords": [
-            "templating"
-        ]
-    },
-    {
-        "name": "twig/extensions",
-        "version": "v1.2.0",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/twigphp/Twig-extensions.git",
-            "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
-            "reference": "8cf4b9fe04077bd54fc73f4fde83347040c3b8cd",
-            "shasum": ""
-        },
-        "require": {
-            "twig/twig": "~1.12"
-        },
-        "require-dev": {
-            "symfony/translation": "~2.3"
-        },
-        "suggest": {
-            "symfony/translation": "Allow the time_diff output to be translated"
-        },
-        "time": "2014-10-30 14:30:03",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Twig_Extensions_": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Common additional features for Twig that do not directly belong in core",
-        "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
-        "keywords": [
-            "i18n",
-            "text"
-        ]
-    },
-    {
-        "name": "tedivm/jshrink",
-        "version": "v1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/tedious/JShrink.git",
-            "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/tedious/JShrink/zipball/7575d9d96f113bc7c1c28ec8231ee086751a9078",
-            "reference": "7575d9d96f113bc7c1c28ec8231ee086751a9078",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "require-dev": {
-            "fabpot/php-cs-fixer": "0.4.0",
-            "phpunit/phpunit": "4.0.*",
-            "satooshi/php-coveralls": "dev-master"
-        },
-        "time": "2014-11-11 03:54:14",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "JShrink": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Robert Hafner",
-                "email": "tedivm@tedivm.com"
-            }
-        ],
-        "description": "Javascript Minifier built in PHP",
-        "homepage": "http://github.com/tedious/JShrink",
-        "keywords": [
-            "javascript",
-            "minifier"
-        ]
-    },
-    {
-        "name": "salva/jshrink-bundle",
-        "version": "v1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/nibsirahsieu/SalvaJshrinkBundle.git",
-            "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/nibsirahsieu/SalvaJshrinkBundle/zipball/eead0b0e19ba77f49188282f5167bd537d1a30f4",
-            "reference": "eead0b0e19ba77f49188282f5167bd537d1a30f4",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.2",
-            "tedivm/jshrink": "~1.0",
-            "twig/extensions": "~1.2"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.5",
-            "symfony/assetic-bundle": ">=2.6",
-            "symfony/framework-bundle": ">=2.3",
-            "symfony/twig-bundle": ">=2.3"
-        },
-        "time": "2015-03-01 00:19:51",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Salva\\JshrinkBundle\\": "."
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nibsirahsieu",
-                "email": "nibsirahsieu@gmail.com",
-                "role": "Lead Developer"
-            },
-            {
-                "name": "Emanuele Minotto",
-                "email": "minottoemanuele@gmail.com",
-                "homepage": "http://www.emanueleminotto.it",
-                "role": "Collaborator"
-            }
-        ],
-        "description": "This bundle integrate jshrink library as Assetic filter and twig extension",
-        "homepage": "https://github.com/nibsirahsieu/SalvaJshrinkBundle",
-        "keywords": [
-            "Symfony Bundle",
-            "assetic",
-            "javascript",
-            "jshrink",
-            "minify",
-            "twig"
-        ]
-    },
-    {
         "name": "phpoffice/phpexcel",
         "version": "1.8.1",
         "version_normalized": "1.8.1.0",
@@ -402,6 +109,356 @@
             "api",
             "bot",
             "telegram"
+        ]
+    },
+    {
+        "name": "tecnick.com/tcpdf",
+        "version": "6.2.11",
+        "version_normalized": "6.2.11.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tecnickcom/TCPDF.git",
+            "reference": "354433a33946ae7497c3eab291eaaf814bccbfab"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/354433a33946ae7497c3eab291eaaf814bccbfab",
+            "reference": "354433a33946ae7497c3eab291eaaf814bccbfab",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-08-02 12:30:27",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "fonts",
+                "config",
+                "include",
+                "tcpdf.php",
+                "tcpdf_parser.php",
+                "tcpdf_import.php",
+                "tcpdf_barcodes_1d.php",
+                "tcpdf_barcodes_2d.php",
+                "include/tcpdf_colors.php",
+                "include/tcpdf_filters.php",
+                "include/tcpdf_font_data.php",
+                "include/tcpdf_fonts.php",
+                "include/tcpdf_images.php",
+                "include/tcpdf_static.php",
+                "include/barcodes/datamatrix.php",
+                "include/barcodes/pdf417.php",
+                "include/barcodes/qrcode.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPLv3"
+        ],
+        "authors": [
+            {
+                "name": "Nicola Asuni",
+                "email": "info@tecnick.com",
+                "homepage": "http://nicolaasuni.tecnick.com"
+            }
+        ],
+        "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+        "homepage": "http://www.tcpdf.org/",
+        "keywords": [
+            "PDFD32000-2008",
+            "TCPDF",
+            "barcodes",
+            "datamatrix",
+            "pdf",
+            "pdf417",
+            "qrcode"
+        ],
+        "abandoned": "tecnickcom/tcpdf"
+    },
+    {
+        "name": "twig/twig",
+        "version": "v1.22.2",
+        "version_normalized": "1.22.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twigphp/Twig.git",
+            "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twigphp/Twig/zipball/79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
+            "reference": "79249fc8c9ff62e41e217e0c630e2e00bcadda6a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.7"
+        },
+        "require-dev": {
+            "symfony/debug": "~2.7",
+            "symfony/phpunit-bridge": "~2.7"
+        },
+        "time": "2015-09-22 13:59:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.22-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com",
+                "homepage": "http://fabien.potencier.org",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Armin Ronacher",
+                "email": "armin.ronacher@active-4.com",
+                "role": "Project Founder"
+            },
+            {
+                "name": "Twig Team",
+                "homepage": "http://twig.sensiolabs.org/contributors",
+                "role": "Contributors"
+            }
+        ],
+        "description": "Twig, the flexible, fast, and secure template language for PHP",
+        "homepage": "http://twig.sensiolabs.org",
+        "keywords": [
+            "templating"
+        ]
+    },
+    {
+        "name": "twig/extensions",
+        "version": "v1.3.0",
+        "version_normalized": "1.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/twigphp/Twig-extensions.git",
+            "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
+            "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
+            "shasum": ""
+        },
+        "require": {
+            "twig/twig": "~1.20|~2.0"
+        },
+        "require-dev": {
+            "symfony/translation": "~2.3"
+        },
+        "suggest": {
+            "symfony/translation": "Allow the time_diff output to be translated"
+        },
+        "time": "2015-08-22 16:38:35",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Twig_Extensions_": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Common additional features for Twig that do not directly belong in core",
+        "homepage": "http://twig.sensiolabs.org/doc/extensions/index.html",
+        "keywords": [
+            "i18n",
+            "text"
+        ]
+    },
+    {
+        "name": "tedivm/jshrink",
+        "version": "v1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tedious/JShrink.git",
+            "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/tedious/JShrink/zipball/688527a2e854d7935f24f24c7d5eb1b604742bf9",
+            "reference": "688527a2e854d7935f24f24c7d5eb1b604742bf9",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "fabpot/php-cs-fixer": "0.4.0",
+            "phpunit/phpunit": "4.0.*",
+            "satooshi/php-coveralls": "dev-master"
+        },
+        "time": "2015-07-04 07:35:09",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "JShrink": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Robert Hafner",
+                "email": "tedivm@tedivm.com"
+            }
+        ],
+        "description": "Javascript Minifier built in PHP",
+        "homepage": "http://github.com/tedious/JShrink",
+        "keywords": [
+            "javascript",
+            "minifier"
+        ]
+    },
+    {
+        "name": "salva/jshrink-bundle",
+        "version": "1.1.2",
+        "version_normalized": "1.1.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nibsirahsieu/SalvaJshrinkBundle.git",
+            "reference": "426956a7c6763503b7edabdeb0fc2f2fc3435724"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nibsirahsieu/SalvaJshrinkBundle/zipball/426956a7c6763503b7edabdeb0fc2f2fc3435724",
+            "reference": "426956a7c6763503b7edabdeb0fc2f2fc3435724",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.2",
+            "tedivm/jshrink": "~1.0",
+            "twig/extensions": "~1.2"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.5",
+            "symfony/assetic-bundle": ">=2.6",
+            "symfony/framework-bundle": ">=2.3",
+            "symfony/twig-bundle": ">=2.3"
+        },
+        "time": "2015-10-11 14:15:19",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Salva\\JshrinkBundle\\": "."
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nibsirahsieu",
+                "email": "nibsirahsieu@gmail.com",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Emanuele Minotto",
+                "email": "minottoemanuele@gmail.com",
+                "homepage": "http://www.emanueleminotto.it",
+                "role": "Collaborator"
+            }
+        ],
+        "description": "This bundle integrate jshrink library as Assetic filter and twig extension",
+        "homepage": "https://github.com/nibsirahsieu/SalvaJshrinkBundle",
+        "keywords": [
+            "Symfony Bundle",
+            "assetic",
+            "javascript",
+            "jshrink",
+            "minify",
+            "twig"
+        ]
+    },
+    {
+        "name": "arsen-bespalov/webicqpro",
+        "version": "1.4.9",
+        "version_normalized": "1.4.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ArsenBespalov/WebIcqPro.git",
+            "reference": "d60fb8157185e0318070c4bb39f57d6487ef140c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ArsenBespalov/WebIcqPro/zipball/d60fb8157185e0318070c4bb39f57d6487ef140c",
+            "reference": "d60fb8157185e0318070c4bb39f57d6487ef140c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "time": "2009-06-05 00:00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "WebIcqPro.class.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Sergey Akudovich",
+                "email": "test@intrigue.ru",
+                "homepage": "http://wip.asminog.com",
+                "role": "Developer"
+            },
+            {
+                "name": "Arsen Bespalov",
+                "email": "bespalov@arsen.pw",
+                "homepage": "http://arsen.pw",
+                "role": "Translator"
+            }
+        ],
+        "description": "Set of PHP tools for simple and clear work with ICQ (OSCAR) protocol",
+        "homepage": "http://wip.asminog.com",
+        "keywords": [
+            "icq",
+            "icq api",
+            "icq bot"
         ]
     }
 ]

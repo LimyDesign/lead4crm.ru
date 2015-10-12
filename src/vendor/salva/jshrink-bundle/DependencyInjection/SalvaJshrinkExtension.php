@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class SalvaJshrinkExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -32,12 +32,12 @@ class SalvaJshrinkExtension extends Extension
 
         $container
             ->getDefinition('salva_twig_extension.jshrink')
-            ->replaceArgument(0, $jshrinkConfiguration)
-            ->replaceArgument(1, $config['enabled']);
+            ->replaceArgument(1, $jshrinkConfiguration)
+            ->replaceArgument(2, $config['enabled']);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getAlias()
     {

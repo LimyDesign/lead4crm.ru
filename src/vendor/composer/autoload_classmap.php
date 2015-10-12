@@ -20,4 +20,10 @@ return array(
     'TCPDF_IMPORT' => $vendorDir . '/tecnick.com/tcpdf/tcpdf_import.php',
     'TCPDF_PARSER' => $vendorDir . '/tecnick.com/tcpdf/tcpdf_parser.php',
     'TCPDF_STATIC' => $vendorDir . '/tecnick.com/tcpdf/include/tcpdf_static.php',
+    'WebIcqPro' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
+    'WebIcqPro_FLAP' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
+    'WebIcqPro_LV' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
+    'WebIcqPro_SNAC' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
+    'WebIcqPro_Socet' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
+    'WebIcqPro_TLV' => $vendorDir . '/arsen-bespalov/webicqpro/WebIcqPro.class.php',
 );
