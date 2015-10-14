@@ -502,9 +502,9 @@
                     {% if (admin) %}
                       <h3>ICQ</h3>
                       <pre id="icq_result"></pre>
-                      <a href="#." onclick="icq_bot_start()" class="btn btn-lg btn-primary">Запустить ICQ бот</a>&nbsp;
-                      <a href="#." onclick="icq_bot_status()" class="btn btn-lg btn-primary">Проверить статус бота</a>&nbsp;
-                      <a href="#." onclick="icq_bot_exit()" class="btn btn-lg btn-primary">Остановить бота</a>
+                      <a href="#." onclick="icq_bot('start')" class="btn btn-lg btn-primary">Запустить ICQ бот</a>&nbsp;
+                      <a href="#." onclick="icq_bot('status')" class="btn btn-lg btn-primary">Проверить статус бота</a>&nbsp;
+                      <a href="#." onclick="icq_bot('exit')" class="btn btn-lg btn-primary">Остановить бота</a>
                     {% endif %}
                   </div>
                 </div>
@@ -1129,32 +1129,30 @@
       }
   }
 
-  function icq_bot_start() {
+  function icq_bot(cmd) {
     var $icq_result = $('#icq_result');
-    $.get('/startIcqBot/', function (data) {
-      if (data == 0)
-        $icq_result.text('Сервис успешно запущен...');
-      else
+    if (cmd == 'start') {
+      $.get('/startIcqBot/', function (data) {
+        if (data == 0)
+          $icq_result.text('Сервис успешно запущен...');
+        else
+          $icq_result.text(data);
+      });
+    }
+    else if (cmd == 'status') {
+      $.get('/statusIcqBot/', function (data) {
+        console.log(data.substring(0,2));
+        if (data.substring(0,2) == 'php')
+          $icq_result.text('Сервис запущен.');
+        else
+          $icq_result.text('Сервис остановлен.');
+      });
+    }
+    else if (cmd == 'stop') {
+      $.get('/stopIcqBot/', function (data) {
         $icq_result.text(data);
-    });
-  }
-
-  function icq_bot_status() {
-    var $icq_result = $('#icq_result');
-    $.get('/statusIcqBot/', function (data) {
-      console.log(data);
-      if (data == 'php')
-        $icq_result.text('Сервис запущен.');
-      else
-        $icq_result.text('Сервис остановлен.');
-    });
-  }
-
-  function icq_bot_stop() {
-    var $icq_result = $('#icq_result');
-    $.get('/stopIcqBot/', function (data) {
-      $icq_result.text(data);
-    });
+      });
+    }
   }
   </script>
   {# {% endjshrink %} #}
