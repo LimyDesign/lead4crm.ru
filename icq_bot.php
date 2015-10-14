@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ERROR);
 
 define('ADMINUIN', '881129');
 define('STARTXSTATUS', 'studying');
