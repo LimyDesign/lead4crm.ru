@@ -102,8 +102,7 @@ if ($cmd[0]) {
 			isAdmin();
 			header('Content-Type: text/plain');
 			$icq_bot_pid = file_get_contents('icq_bot.pid');
-			$result = posix_kill($icq_bot_pid, SIGTERM);
-			if ($result)
+			if (posix_kill($icq_bot_pid, SIGTERM))
 				echo 'true';
 			else
 				echo 'false';
