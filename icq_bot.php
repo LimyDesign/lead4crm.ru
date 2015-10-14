@@ -15,7 +15,7 @@ $icq->debug = true;
 pcntl_signal(SIGTERM, 'sig_handler');
 register_shutdown_function('shutdown');
 
-$help = "Комманды информатора:\r
+$help = "Команды информатора:\r
 \t'!about' - об информаторе\r
 \t'!help' - справка по всем командам информатора\r
 \t'!help [!command]' - справка по конкретной комманде\r
@@ -26,7 +26,9 @@ $help = "Комманды информатора:\r
 
 $admcmd = "\nАдминские команды:\r
 \t'!exit' - выключить бота\r
+\t'!info [uin]' - показать информацию о пользователе\r
 \t'!to [uin] [message]' - отправить сообщение кому-либо от имени бота\r
+\t'!uptime' - показать время работы бота\r
 ";
 
 $about = "Lead4CRM Bot v1.0.0\r
