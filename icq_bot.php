@@ -259,7 +259,7 @@ function sig_handler($signo) {
 	switch ($signo) {
 		case SIGKILL:
 		case SIGTERM:
-			exit;
+			shutdown();
 			break;
 	}
 }
