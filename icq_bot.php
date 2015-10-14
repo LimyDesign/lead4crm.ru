@@ -23,7 +23,7 @@ $help = "Комманды информатора:\r
 \t'!diconnect' - отключение от информатора\r
 ";
 
-$about = "Lead4CRM Bot v1.0.0\n
+$about = "Lead4CRM Bot v1.0.0\r
 \tЯ маленький, но очень шустрый информатор сайта www.lead4crm.ru.\r
 \tЯ смогу сообщить вам о том что произошло с вашим балансом,\r
 \tо том какая компания была только что импортирована, а также\r
@@ -196,7 +196,7 @@ while (1) {
 
 function shutdown() {
 	global $icq;
-	$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
+	$icq->sendMessage('881129', 'Service Lead4CRM Bot stoped...');
 	$icq->disconnect();
 	exit;
 }
