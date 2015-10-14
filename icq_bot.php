@@ -361,6 +361,7 @@ function shutdown() {
 	global $icq;
 	while ($icq->isConnected()) {
 		$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
+		$icq->setStatus('STATUS_OFFLINE', '', '');
 		sleep(1);
 		$icq->disconnect();
 	}
