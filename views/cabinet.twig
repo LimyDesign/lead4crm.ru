@@ -503,6 +503,7 @@
                       <h3>ICQ</h3>
                       <pre id="icq_result"></pre>
                       <a href="#." onclick="start_icq_bot()" class="btn btn-lg btn-primary">Запустить ICQ бот</a>
+                      <a href="#." onclick="icq_bot_status()" class="btn btn-lg btn-primary">Проверить статус бота</a>
                     {% endif %}
                   </div>
                 </div>
@@ -1134,7 +1135,14 @@
         $icq_result.text('Сервис успешно запущен...');
       else
         $icq_result.text(data);
-    })
+    });
+  }
+
+  function icq_bot_status() {
+    var $icq_result = $('#icq_result');
+    $.get('/statusIcqBot/', function (data) {
+      $icq_result.text(data);
+    });
   }
   </script>
   {# {% endjshrink %} #}

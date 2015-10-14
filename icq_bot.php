@@ -5,6 +5,8 @@ define('ADMINUIN', '881129');
 define('STARTXSTATUS', 'studying');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
 
+file_put_contents('icq_bot.pid', posix_getpid());
+
 require_once __DIR__.'/src/vendor/autoload.php';
 
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
@@ -255,6 +257,7 @@ function shutdown() {
 
 function sig_handler($signo) {
 	switch ($signo) {
+		case SIGKILL:
 		case SIGTERM:
 			exit;
 			break;

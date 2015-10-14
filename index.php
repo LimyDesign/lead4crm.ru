@@ -91,6 +91,13 @@ if ($cmd[0]) {
 			echo $retval;
 			break;
 
+		case 'statusIcqBot':
+			isAdmin();
+			header('Content-Type: text/plain');
+			$icq_bot_pid = file_get_contents('icq_bot.pid');
+			system('ps -p '.$icq_bot_pid.' -o comm=');
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
