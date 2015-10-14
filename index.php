@@ -87,7 +87,8 @@ if ($cmd[0]) {
 		case 'startIcqBot':
 			isAdmin();
 			header('Content-Type: text/plain');
-			system('nohup php icq_bot.php > icq_bot.log &');
+			system('nohup php icq_bot.php > icq_bot.log &', $retval);
+			echo $retval;
 			break;
 
 		case 'getSupportCities':

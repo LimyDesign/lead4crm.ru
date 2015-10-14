@@ -110,7 +110,8 @@ while (1) {
 							$seconds = time() - $uptime;
 							$time = '';
 							$days = (int)floor($seconds/86400);
-							$time .= $days.morph($days, ' день ', ' дня ', ' дней ');
+							if ($days)
+								$time .= $days.morph($days, ' день ', ' дня ', ' дней ');
 							$hours = (int)floor(($seconds-$days*86400)/3600);
 							if ($hours)
 								$time .= $hours.morph($hours, ' час ', ' часа ', ' часов ');
