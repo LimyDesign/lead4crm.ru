@@ -31,6 +31,7 @@ $help = "Команды информатора:\r
 
 $admcmd = "\nАдминские команды:\r
 \t'!exit' - выключить бота\r
+\t'!contact' - показать список контактов бота (выведет только тех кто подключился)\r
 \t'!info [uin]' - показать информацию о пользователе\r
 \t'!to [uin] [message]' - отправить сообщение кому-либо от имени бота\r
 \t'!uptime' - показать время работы бота\r
@@ -145,6 +146,15 @@ while (1) {
 							$icq->sendMessage($msg['from'], $message);
 						}
 						break;
+					case '!contact':
+						if ($msg['from'] == ADMINUIN) {
+							$c = getContactList($icq->getContactList());
+							foreach ($c as $m) {
+								$m = str_replace("\x00", '', $m);
+								$icq->sendMessage($msg['from'], mb_convert_encoding($m, 'cp1251'));
+							}
+						}
+						break;
 					case '!disconnect':
 						$query = 'UPDATE "public"."users" SET "icq_uin" = null, "icq_company" = false, "icq_renewal" = false, "icq_balans" = false WHERE "icq_uin" = :uuin';
 						$sth = $pdo->prepare($query);
@@ -169,18 +179,22 @@ while (1) {
 						if (count($command) > 1) {
 							switch($command[0]) {
 								case '!connect':
-									$query = 'UPDATE "public"."users" SET "icq_uin" = :uuin WHERE "apikey" = :apikey RETURNING "icq_uin"';
+									$query = 'UPDATE "public"."users" SET "icq_uin" = :uuin WHERE "apikey" = :apikey';
 									$sth = $pdo->prepare($query);
 									$sth->bindParam(':uuin', $msg['from'], PDO::PARAM_INT);
 									$sth->bindParam(':apikey', $command[1], PDO::PARAM_STR, 255);
 									$sth->execute();
-									$result = $sth->fetch(PDO::FETCH_ASSOC);
-									if ($result['icq_uin'] == $msg['from']) {
-										$message = mb_convert_encoding("Ваш UIN (".$msg['from'].") записан! Теперь можно перейти к настройке информатора!", 'cp1251');
+									$list = $icq->getContactList();
+									if (!isset($list[$msg['from']])) {
+										$group = 'auto';
+										if (!in_array($group, $icq->getContactListGroups())) {
+											$icq->addContactGroup($group);
+										}
+										$icq->addContact($group, array('uin' => $msg['from']));
+										$message = mb_convert_encoding('Я хочу увидеть твой статус!', 'cp1251');
+										$icq->getAuthorization($msg['from'], $message);
 									}
-									else {
-										$message = mb_convert_encoding("Что-то пошло не так, видимо придется попробовать еще раз.", 'cp1251');
-									}
+									$message = mb_convert_encoding("Ваш UIN (".$msg['from'].") записан! Теперь можно перейти к настройке информатора!", 'cp1251');
 									sleep(1);
 									$icq->sendMessage($msg['from'], $message);
 									break;
@@ -318,6 +332,20 @@ while (1) {
 	}
 	echo 'Will restart in 30 seconds...'.PHP_EOL;
 	sleep(30);
+}
+
+function getContactList($list) {
+	$n = 0;
+	$message[$n] = "Список контактов:\r\n";
+	$i = 0;
+	foreach ($list as $uin => $data) {
+		$i++;
+		if ($i > 60) { $i = 0; $n++; $message[$n] = ''; }
+		$message[$n] .= (isset($data['name']) ? trim($data['name'])." ($uin)" : $uin)
+					 .' : '.(isset($data['status']) ? $data['status'] : 'STATUS_OFFLINE')
+					 .' : '.(isset($data['xstatus']) ? $data['xstatus'] : '')."\r\n";
+	}
+	return $message;
 }
 
 function morph($n, $f1, $f2, $f5) {
