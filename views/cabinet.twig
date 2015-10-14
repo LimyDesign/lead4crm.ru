@@ -1135,14 +1135,16 @@
       $icq_result.removeClass('hide');
     $icq_result.show();
     if (cmd == 'start') {
+      $icq_result.text('Запуск сервиса...');
       $.get('/startIcqBot/', function (data) {
         if (data == 0)
-          $icq_result.text('Сервис успешно запущен...');
+          $icq_result.text('Сервис успешно запущен.');
         else
           $icq_result.text(data);
       });
     }
     else if (cmd == 'status') {
+      $icq_result.text('Проверка статуса...');
       $.get('/statusIcqBot/', function (data) {
         if (data.substring(0,3) == 'php')
           $icq_result.text('Сервис запущен.');
