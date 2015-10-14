@@ -18,14 +18,15 @@ register_shutdown_function('shutdown');
 $help = "Комманды информатора:\r
 \t'!about' - об информаторе\r
 \t'!help' - справка по всем командам информатора\r
-\t'!connect' - подключение к информатору\r
-\t'!notify' - настройка уведомлений информатора\r
+\t'!help [!command]' - справка по конкретной комманде\r
+\t'!connect [apikey]' - подключение к информатору\r
+\t'!notify [balans|renewal|company] [on|off]' - настройка уведомлений информатора\r
 \t'!diconnect' - отключение от информатора\r
 ";
 
 $admcmd = "\nАдминские команды:\r
-\t'!exit' - выключить бот\r
-\t'!to' - отправить сообщение кому-либо от имени бота\r
+\t'!exit' - выключить бота\r
+\t'!to [uin] [message]' - отправить сообщение кому-либо от имени бота\r
 ";
 
 $about = "Lead4CRM Bot v1.0.0\r
@@ -115,13 +116,15 @@ while (1) {
 							switch($command[0]) {
 								default:
 									var_dump($msg);
-									$icq->sendMessage($msg['from'], "Введите '!help' для получния справки по командам.");
+									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+									$icq->sendMessage($msg['from'], $message);
 									break;
 							}
 						}
 						else {
 							var_dump($msg);
-							$icq->sendMessage($msg['from'], "Введите '!help' для получния справки по командам.");
+							$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+							$icq->sendMessage($msg['from'], $message);
 						}
 						break;
 				}
