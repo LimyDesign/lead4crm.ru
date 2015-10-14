@@ -2,7 +2,7 @@
 error_reporting(E_ERROR);
 
 define('ADMINUIN', '881129');
-define('STARTXSTATUS', 'studying');
+define('STARTXSTATUS', 'business');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
 
 file_put_contents('icq_bot.pid', posix_getpid());
@@ -13,7 +13,7 @@ $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
 $icq = new WebIcqPro();
 $icq->debug = true;
-$icq->setOption('UserAgent', 'miranda');
+$icq->setOption('UserAgent', 'japp');
 
 pcntl_signal(SIGTERM, 'sig_handler');
 pcntl_signal(SIGKILL, 'sig_handler');
