@@ -92,6 +92,7 @@ while (1) {
 				$icq->sendMessage(ADMINUIN, $msg['from'].'>'.trim($msg['message']));
 				switch (strtolower(trim($msg['message']))) {
 					case '!about':
+						sleep(1);
 						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
 						break;
 					case '!help':
@@ -101,14 +102,33 @@ while (1) {
 						else {
 							$message = mb_convert_encoding($help, 'cp1251');
 						}
+						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
+					case '!uptime':
+						if ($msg['from'] == ADMINUIN) {
+							$seconds = time() - $uptime;
+							$time = '';
+							$days = (int)floor($seconds/86400);
+							$time .= $days.morph($days, ' день ', ' дня ', ' дней ');
+							$hours = (int)floor(($seconds-$days*86400)/3600);
+							$time .= ($hours > 0 ? $hours.morph($hours, ' час ', ' часа ', ' часов '));
+							$minutes = (int)floor(($seconds-$days*86400-$hours*3600)/60);
+							$time .= ($minutes > 0 ? $minutes.morph($minutes, ' минута ', ' минуты ', ' минут '));
+							$seconds = (int)fmod($seconds, 60);
+							$time .= ($seconds > 0 ? $seconds.morph($seconds, ' секунда ', ' секунды ', ' секунд '));
+							$message = mb_convert_encoding($time.' онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
+							sleep(1);
+							$icq->sendMessage($msg['from'], $message);
+							break;
+						}
 					case '!stop':
 					case '!exit':
 						if ($msg['from'] == ADMINUIN) {
 							exit;
 						}
 						else {
+							sleep(1);
 							$icq->sendMessage($msg['from'], 'The system is going down for reboot NOW!');
 						}
 						break;
@@ -208,6 +228,15 @@ while (1) {
 	}
 	echo 'Will restart in 30 seconds...'.PHP_EOL;
 	sleep(30);
+}
+
+function morph($n, $f1, $f2, $f5) {
+    $n = abs(intval($n)) % 100;
+    if ($n>10 && $n<20) return $f5;
+    $n = $n % 10;
+    if ($n>1 && $n<5) return $f2;
+    if ($n==1) return $f1;
+    return $f5;
 }
 
 function shutdown() {
