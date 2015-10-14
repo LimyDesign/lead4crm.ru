@@ -1141,8 +1141,7 @@
     }
     else if (cmd == 'status') {
       $.get('/statusIcqBot/', function (data) {
-        console.log(data.substring(0,2));
-        if (data.substring(0,2) == 'php')
+        if (data.substring(0,3) == 'php')
           $icq_result.text('Сервис запущен.');
         else
           $icq_result.text('Сервис остановлен.');
