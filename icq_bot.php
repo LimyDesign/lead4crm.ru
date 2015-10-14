@@ -188,6 +188,29 @@ while (1) {
 										}
 									}
 									break;
+								case '!to':
+									if ($msg['from'] == ADMINUIN) {
+										$to = $command[1];
+										if ($to != $conf->icq->uin) {
+											unset($command[0]);
+											unset($command[1]);
+											$command = implode(' ', $command);
+											$id = $icq->sendMessage($to, $command);
+											if ($id !== false) {
+												$message_response[$id] = array('from' => $msg['from'], 'to' => $to);
+												$message = mb_convert_encoding("Принято на доставку. Идентификатор сообщения: ".$id, 'cp1251');
+												$icq->sendMessage($msg['from'], $message);
+											}
+											else {
+												$icq->sendMessage($msg['from'], $icq->error);
+											}
+										}
+										else {
+											$message = mb_convert_encoding("Нельзя отправлять сообшения данному UIN", 'cp1251');
+											$icq->sendMessage($msg['from'], $message);
+										}
+									}
+									break;
 								default:
 									var_dump($msg);
 									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
