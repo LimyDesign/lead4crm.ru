@@ -121,7 +121,7 @@ while (1) {
 							$seconds = (int)fmod($seconds, 60);
 							if ($seconds)
 								$time .= $seconds.morph($seconds, ' секунда ', ' секунды ', ' секунд ');
-							$message = mb_convert_encoding($time.' онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
+							$message = mb_convert_encoding($time.'онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
 							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
 							break;
