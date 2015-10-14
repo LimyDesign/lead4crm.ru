@@ -87,7 +87,7 @@ while (1) {
 						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
 						break;
 					case '!help':
-						$icq->sendMessage($msg['from'], $help);
+						$icq->sendMessage($msg['from'], mb_convert_encoding($help, 'cp1251'));
 						break;
 					case '!stop':
 					case '!exit':
