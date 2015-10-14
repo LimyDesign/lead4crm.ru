@@ -499,8 +499,16 @@
                       <li>Готово!</li>
                     </ol>
                     <div class="alert alert-warning"><strong>Внимание!</strong> Если вы хотите чтобы уведомления поступали в групповой чат, необходимо после добавления бота в групповой чат снова выполнить команду: <code id="tlgrm_start" onclick="selectText('tlgrm_start')">/start {{apikey}}</code>. Больше никаких команд выполнять не нужно, если ранее вы все настроили.</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <p class="text-center"><img src="/public/images/icons-bundle-icq.png" alt="" class="img-responsive"></p>
+                  </div>
+                  <div class="col-md-9">
+                    <h3>ICQ</h3>
+                    <p>Да, да! Мы также решили включить поддержку старой, доброй аськи. Очень скоро появиться информация о том, как настроить уведомления в любимой асечке. Работы уже ведутся...</p>
                     {% if (admin) %}
-                      <h3>ICQ</h3>
                       <pre id="icq_result" class="hide"></pre>
                       <a href="#." onclick="icq_bot('start')" class="btn btn-lg btn-primary">Запустить ICQ бот</a>&nbsp;
                       <a href="#." onclick="icq_bot('status')" class="btn btn-lg btn-primary">Проверить статус бота</a>&nbsp;
