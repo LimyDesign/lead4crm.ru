@@ -85,6 +85,8 @@ if ($cmd[0]) {
 			break;
 
 		case 'test':
+			phpinfo();
+			die();
 			header("Content-Type: text/plain");
 			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 			header("Cache-Control: post-check=0, pre-check=0", false);
