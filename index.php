@@ -102,7 +102,11 @@ if ($cmd[0]) {
 			isAdmin();
 			header('Content-Type: text/plain');
 			$icq_bot_pid = file_get_contents('icq_bot.pid');
-			echo posix_kill($icq_bot_pid, 'SIGTERM');
+			$result = posix_kill($icq_bot_pid, 'SIGTERM');
+			if ($result)
+				echo 'true';
+			else
+				echo 'false';
 			break;
 
 		case 'getSupportCities':
