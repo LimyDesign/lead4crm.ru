@@ -81,7 +81,7 @@ while (1) {
 				!empty($msg['message']) && 
 				!in_array($msg['from'], $ignore_list)
 			) {
-				// $icq->sendMessage(ADMINUIN, $msg['from'].'>'.trim($msg['message']));
+				$icq->sendMessage(ADMINUIN, $msg['from'].'>'.trim($msg['message']));
 				switch (strtolower(trim($msg['message']))) {
 					case '!about':
 						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
