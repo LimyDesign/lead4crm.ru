@@ -113,8 +113,8 @@ while (1) {
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
-					case '!start':
-						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!start [apikey]\rгде [apikey] — ваш персональный ключ доступа, который можно найти на сайте www.lead4crm.ru", 'cp1251');
+					case '!connect':
+						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!connect [apikey]\rгде [apikey] — ваш персональный ключ доступа, который можно найти на сайте www.lead4crm.ru", 'cp1251');
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
@@ -158,7 +158,7 @@ while (1) {
 						$command = explode(' ', $msg['message']);
 						if (count($command) > 1) {
 							switch($command[0]) {
-								case '!start':
+								case '!connect':
 									$query = 'UPDATE "public"."users" SET "icq_uin" = :uuin WHERE "apikey" = :apikey RETURNING "icq_uin"';
 									$sth = $pdo->prepare($query);
 									$sth->bindParam(':uuin', $msg['from'], PDO::PARAM_INT);
