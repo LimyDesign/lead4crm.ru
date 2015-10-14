@@ -1,17 +1,16 @@
 <?php
 error_reporting (E_ALL);
 
-define('UIN', '658127246'); // UIN for bot
-define('PASSWORD', '12qwASZX@@12'); // password
-define('ADMINUIN', '881129'); // Admin UIN
-define('STARTXSTATUS', 'smoking');
+define('BOTUIN', '658127246');
+define('PASSWORD', '12qwASZX@@12');
+define('ADMINUIN', '881129');
+define('STARTXSTATUS', 'studying');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
 
 $help = "Bot commands:\r
 \t'!about' - print message about this bot.\r
 \t'!addme your_custom_name' - Add your uin to bot contact list.\r
 \t'!contact' - Shows bot contact list.\r
-\t'!donate' - Please donate this project.\r
 \t'!help'  - print help message.\r
 \t'!info 3180142'  - show user info.\r
 \t'!removeme' - Delete your uin ftom bot contact list.\r
@@ -24,13 +23,13 @@ $help = "Bot commands:\r
 
 require_once('WebIcqPro.class.php');
 
-$about = "PHP BOT v3.9
+$about = "PHP BOT v3.10
 Based on WebIcqPro " . WebIcqPro::VERSION . "
 (c) Sergey Akudovich
 Contact author:
-http://intrigue.ru/forum/";
-
-$donate = "Donate project:
+http://wip.asminog.com/forum/
+" .
+"Donate project:
 http://webmoney.ru
 R840601686033,
 Z110610335096,
@@ -47,17 +46,39 @@ $message_response = array();
 
 while(1) {
 	$icq = new WebIcqPro();
-//	$icq->debug = true;
+	$icq->debug = true;
 //	$icq->setOption('UserAgent', 'miranda');
 //	$icq->setOption('MaxMessageSize', 0x0FFF);
 
 
-	if($icq->connect(UIN, PASSWORD))
+//	if($icq->connect(UIN1, PASSWORD1))
+//	{
+//		$icq->sendMessage(ADMINUIN, "Service PHP BOT started...");
+//		$uptime = $status_time = $xstatus_time = time();
+//		$icq->setStatus(STARTSTATUS, 'STATUS_WEBAWARE', 'Talk to me... I\'m WebIcqBot :)');
+//		$icq->setXStatus(STARTXSTATUS);
+//		$xstatus = STARTXSTATUS;
+//		$status = STARTSTATUS;
+//	}else{
+//		echo "connect filed! Next try in 20 minutes!1\n";
+//		if ($icq->error != '')
+//		{
+//			echo $icq->error."\r\n";
+//			$icq->error = '';
+//		}
+//		sleep(1200);
+//	}
+//
+//	$icq->disconnect();
+//
+//	sleep(10);
+
+	if($icq->connect(BOTUIN, PASSWORD))
 	{
 		$icq->sendMessage(ADMINUIN, "Service PHP BOT started...");
 		$uptime = $status_time = $xstatus_time = time();
-		$icq->setStatus(STARTSTATUS, 'STATUS_WEBAWARE', 'Talk to me... I\'m WebIcqBot :)');
-		$icq->setXStatus(STARTXSTATUS);
+		$icq->setStatus(STARTSTATUS, 'STATUS_DCAUTH', 'Talk to me... I\'m WebIcqBot :)');
+		$icq->setXStatus(STARTXSTATUS, 'Talk to me... I\'m WebIcqBot :)');
 		$xstatus = STARTXSTATUS;
 		$status = STARTSTATUS;
 	}else{
@@ -68,6 +89,7 @@ while(1) {
 			$icq->error = '';
 		}
 		sleep(1200);
+		continue;
 	}
 
 	$msg_old = array();
@@ -99,14 +121,11 @@ while(1) {
 			$msg_old = $msg;
 			if (isset($msg['type']) && $msg['type'] == 'message' && isset($msg['from']) && isset($msg['message']) && $msg['message'] != '' && !in_array($msg['from'], $ignore_list))// && preg_match('~^[a-z0-9\-!�-� \t]+$~im', $msg['from']))
 			{
-				$icq->sendMessage(ADMINUIN, $msg['from'].'>'.$msg['message']);
+				$icq->sendMessage(ADMINUIN, $msg['from'].'>'.trim($msg['message']));
 				switch (strtolower(trim($msg['message'])))
 				{
 					case '!about':
 						$icq->sendMessage($msg['from'], $about);
-						break;
-					case '!donate':
-						$icq->sendMessage($msg['from'], $donate);
 						break;
 					case '!help':
 						$icq->sendMessage($msg['from'], $help);
@@ -131,7 +150,7 @@ while(1) {
 						$list = $icq->getContactList();
 						if($msg['from'] == ADMINUIN)
 						{
-							call_user_method_array('deleteContact', $icq, array_keys($list));
+							$icq->deleteContact(array_keys($list));
 							$icq->sendMessage(ADMINUIN, "Contact list cleared...");
 						}
 						else
@@ -147,7 +166,7 @@ while(1) {
 						}
 						break;
 					case '!groups':
-						$icq->sendMessage($msg['from'], print_r($icq->getContactListGroups(), true));
+						var_dump($icq->getContactListGroups());
 						break;
 					case '!removeme':
 						$list = $icq->getContactList();
@@ -197,9 +216,13 @@ while(1) {
 									break;
 								case '!status':
 									$status = 'STATUS_'.trim(strtoupper($command[1]));
+									$status2 = 'STATUS_DCCONT';
+									if (count($command) > 2) {
+										$status2 = 'STATUS_'.trim(strtoupper($command[2]));
+									}
 									unset($command[0]);
 									unset($command[1]);
-									if (!$icq->setStatus($status, 'STATUS_DCCONT', trim(implode(' ', $command))))
+									if (!$icq->setStatus($status, $status2, trim(implode(' ', $command))))
 									{
 										$status = STARTSTATUS;
 										$icq->sendMessage($msg['from'], $icq->error);
@@ -210,9 +233,11 @@ while(1) {
 									}
 									break;
 								case '!xstatus':
+									$xstatus = $command[1];
 									unset($command[0]);
-									$xstatus = $command;
-									if (!$icq->setXStatus(trim(implode(' ', $command))))
+									unset($command[1]);
+									$statusMessage = count($command) > 0 ? trim(implode($command)) : '';
+									if (!$icq->setXStatus(trim($xstatus), $statusMessage))
 									{
 										$icq->sendMessage($msg['from'], $icq->error);
 									}
@@ -223,7 +248,7 @@ while(1) {
 									break;
 								case '!to':
 									$to = $command[1];
-									if ($to != UIN)
+									if ($to != BOTUIN)
 									{
 										unset($command[0]);
 										unset($command[1]);
@@ -231,7 +256,7 @@ while(1) {
 										$id = $icq->sendMessage($to, ($msg['from']==ADMINUIN?'':"Message from: ".$msg['from']."\r\n").$command);
 										if ($id !== false)
 										{
-											$message_response[(String)$id] = array('from' => $msg['from'], 'to' => $to);
+											$message_response[$id] = array('from' => $msg['from'], 'to' => $to);
 											$icq->sendMessage($msg['from'], "Accepted for delivery. Message id: ".$id);
 										}
 										else
@@ -271,6 +296,14 @@ while(1) {
 										$icq->getAuthorization($msg['from'], 'I want to see your status!');
 									}
 									$icq->sendMessage($msg['from'], $msg['from'].' added to bot contact list');
+									break;
+								case '!addgroup':
+									$name = $command[1];
+									$parent = '';
+									if (count($command) > 2) {
+										$parent = $command[2];
+									}
+									$icq->addContactGroup($name, $parent);
 									break;
 								case '!ignore':
 									if($msg['from'] == ADMINUIN || $msg['from'] == trim($command[1])) {
@@ -312,7 +345,7 @@ while(1) {
 						break;
 				}
 			}
-			elseif (isset($msg['id']) && isset($message_response[(String)$msg['id']]))
+			elseif (isset($msg['id']) && isset($message_response[$msg['id']]))
 			{
 				if(isset($msg['type']))
 				{
@@ -328,7 +361,7 @@ while(1) {
 							$icq->sendMessage($message_response[$msg['id']], $message);
 							break;
 						case 'accepted':
-							$contact = $message_response[(String)$msg['id']];
+							$contact = $message_response[$msg['id']];
 							$message = 'Message to '.$contact['to'].' accepted. Id: '.$msg['id'];
 							$icq->sendMessage($contact['from'], $message);
 							break;
@@ -337,22 +370,24 @@ while(1) {
 							break;
 					}
 				}
-				unset($message_response[(String)$msg['id']]);
+				unset($message_response[$msg['id']]);
 			}
 			elseif (isset($msg['type']))
 			{
 				switch ($msg['type']) {
 					case 'contactlist':
+						$icq->sendMessage(ADMINUIN, 'contact');
 //						$icq->sendMessage(ADMINUIN, getContactList($icq->getContactList()));
 						break;
 					case 'error':
 						$icq->sendMessage(ADMINUIN, 'Error: '.$msg['code']." ".(isset($msg['error'])?$msg['error']:''));
 						break;
 					case 'authrequest':
-						$icq->setAuthorization($msg['from'], 'Just for fun!');
+						$icq->setAuthorization($msg['from'], true, 'Just for fun!');
 						break;
 					case 'authresponse':
-						$icq->sendMessage(ADMINUIN, 'Authorization response: '.$msg['from'].' - '.$msg['granted'].' - '.$msg['reason']);
+						var_dump($msg);
+						$icq->sendMessage(ADMINUIN, 'Authorization response: '.$msg['from'].' - '.$msg['granted'].' - '.trim($msg['message']));
 						break;
 					case 'accepted':
 							if (!$msg['uin'] == ADMINUIN)
@@ -421,7 +456,10 @@ function getContactList($list)
 	foreach ($list as $uin => $data) {
 		$i++;
 		if ($i > 60) { $i = 0; $n++; $message[$n] = '';}
-		$message[$n] .= (isset($data['name']) ? mb_convert_encoding(trim($data['name']), 'cp1251', 'UTF-8')." ($uin)" : $uin).' : '.(isset($data['status']) ? $data['status'] : 'STATUS_OFFLINE')."\r\n";
+		$message[$n] .= (isset($data['name']) ? mb_convert_encoding(trim($data['name']), 'cp1251', 'UTF-8')
+		." ($uin)" : $uin)
+		.' : '.(isset($data['status']) ? $data['status'] : 'STATUS_OFFLINE')
+		.' : '.(isset($data['xstatus']) ? $data['xstatus'] : '')."\r\n";
 	}
 	return $message;
 }
