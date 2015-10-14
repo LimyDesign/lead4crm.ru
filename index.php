@@ -84,7 +84,34 @@ if ($cmd[0]) {
 			}
 			break;
 
+		case 'test':
+			header("Content-Type: text/plain");
+			for ($i = 0; $i < 10; $i++) {
+				echo $i."\n";
+				flush();
+				sleep(1);
+			}
+			break;
+
 		case 'icq':
+			while(1) {
+				$icq->debug = true;
+				$icq->setOption('UserAgent', 'miranda');
+
+				if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
+					$icq->sendMessage($cmd[1], "Hello!");
+				}
+				else {
+					echo "Connect faild! Next try in ".date('d-m-Y h:i:s', strtotime("+20 minutes"))."! \n";
+					if ($icq->error != '') {
+						echo $icq->error." \r\n";
+						$icq->error = '';
+					}
+					sleep(1200);
+				}
+				$icq->disconnect();
+				break;
+			}
 			if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 				$id = $icq->getShortInfo('881129');
 				if ($id !== false) {
