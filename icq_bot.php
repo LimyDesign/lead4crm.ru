@@ -43,8 +43,11 @@ $about = "Lead4CRM Bot v1.0.0\r
 ";
 
 $ignore_list = array();
-
 $message_response = array();
+
+$dsn = 'pgsql:host='.$conf->db->host.';dbname='.$conf->db->database;
+$pdo = new PDO($dsn, $conf->db->username, $conf->db->password);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
 while (1) {
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
@@ -72,6 +75,7 @@ while (1) {
 			echo $icq->error.PHP_EOL;
 			$icq->error = '';
 		}
+
 		$msg = $icq->readMessage();
 		if (is_array($msg) && $msg !== $msg_old) {
 			if (isset($msg['encoding']) && is_array($msg['encoding'])) {
@@ -109,6 +113,10 @@ while (1) {
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
+					case '!start':
+						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!start [apikey]", 'cp1251');
+						sleep(1);
+						$icq->sendMessage($msg['from'], $message);
 					case '!uptime':
 						if ($msg['from'] == ADMINUIN) {
 							$seconds = time() - $uptime;
@@ -144,9 +152,26 @@ while (1) {
 						$command = explode(' ', $msg['message']);
 						if (count($command) > 1) {
 							switch($command[0]) {
+								case '!start':
+									$query = 'UPDATE "public"."users" SET "icq_uin" = :uuin WHERE "apikey" = :apikey RETURNING "icq_uin"';
+									$sth = $pdo->prepare($query);
+									$sth->bindParam(':uuin', $msg['from'], PDO::PARAM_INT);
+									$sth->bindParam(':apikey', $command[1], PDO::PARAM_STR, 255);
+									$sth->execute();
+									$result = $sth->fetch(PDO::FETCH_ASSOC);
+									if ($result['icq_uin'] == $msg['from']) {
+										$message = mb_convert_encoding("Ваш UIN (".$msg['from'].") записан! Теперь можно перейти к настройке информатора!", 'cp1251');
+									}
+									else {
+										$message = mb_convert_encoding("Что-то пошло не так, видимо придется попробовать еще раз.", 'cp1251');
+									}
+									sleep(1);
+									$icq->sendMessage($msg['from'], $message);
+									break;
 								default:
 									var_dump($msg);
 									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+									sleep(1);
 									$icq->sendMessage($msg['from'], $message);
 									break;
 							}
@@ -154,6 +179,7 @@ while (1) {
 						else {
 							var_dump($msg);
 							$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
 						}
 						break;
@@ -221,6 +247,10 @@ while (1) {
 		else {
 			if (is_array($msg)) 
 				var_dump($msg);
+		}
+
+		if (($last_db_query+60) < time()) {
+
 		}
 		flush();
 
