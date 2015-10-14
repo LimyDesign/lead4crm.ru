@@ -103,7 +103,6 @@ while (1) {
 					case '!stop':
 					case '!exit':
 						if ($msg['from'] == ADMINUIN) {
-							$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
 							exit;
 						}
 						else {
@@ -210,6 +209,7 @@ function shutdown() {
 	global $icq;
 	while ($icq->isConnected()) {
 		$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
+		sleep(1);
 		$icq->disconnect();
 	}
 	exit;
