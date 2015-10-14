@@ -1,9 +1,9 @@
 <?php
 error_reporting (E_ALL);
 
-define('BOTUIN', '658127246');
-define('PASSWORD', '12qwASZX@@12');
-define('ADMINUIN', '881129');
+define('BOTUIN', '123123123');
+define('PASSWORD', '******');
+define('ADMINUIN', '321321321');
 define('STARTXSTATUS', 'studying');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
 
