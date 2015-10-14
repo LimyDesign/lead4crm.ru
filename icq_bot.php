@@ -117,6 +117,7 @@ while (1) {
 						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!start [apikey]", 'cp1251');
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
+						break;
 					case '!uptime':
 						if ($msg['from'] == ADMINUIN) {
 							$seconds = time() - $uptime;
