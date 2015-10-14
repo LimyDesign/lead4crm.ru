@@ -1131,6 +1131,8 @@
 
   function icq_bot(cmd) {
     var $icq_result = $('#icq_result');
+    if ($icq_result.hasClass('hide'))
+      $icq_result.removeClass('hide');
     $icq_result.show();
     if (cmd == 'start') {
       $.get('/startIcqBot/', function (data) {
@@ -1153,7 +1155,7 @@
         $icq_result.text(data);
       });
     }
-    
+
     setTimeout(function() {
       $icq_result.hide();
     }, 5000);
