@@ -21,7 +21,7 @@ $help = "Bot commands:\r
 \t'!xstatus' - get bot xstatuses.\r
 ";
 
-require_once('WebIcqPro.class.php');
+require_once('../WebIcqPro.class.php');
 
 $about = "PHP BOT v3.10
 Based on WebIcqPro " . WebIcqPro::VERSION . "
