@@ -85,10 +85,10 @@ if ($cmd[0]) {
 			break;
 
 		case 'test':
+			ob_implicit_flush();
 			header("Content-Type: text/plain");
 			for ($i = 0; $i < 10; $i++) {
 				echo $i."\n";
-				ob_flush();
 				sleep(1);
 			}
 			break;
