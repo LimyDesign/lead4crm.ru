@@ -112,11 +112,14 @@ while (1) {
 							$days = (int)floor($seconds/86400);
 							$time .= $days.morph($days, ' день ', ' дня ', ' дней ');
 							$hours = (int)floor(($seconds-$days*86400)/3600);
-							$time .= ($hours > 0) ? $hours.morph($hours, ' час ', ' часа ', ' часов ');
+							if ($hours)
+								$time .= $hours.morph($hours, ' час ', ' часа ', ' часов ');
 							$minutes = (int)floor(($seconds-$days*86400-$hours*3600)/60);
-							$time .= ($minutes > 0) ? $minutes.morph($minutes, ' минута ', ' минуты ', ' минут ');
+							if ($minutes)
+								$time .= $minutes.morph($minutes, ' минута ', ' минуты ', ' минут ');
 							$seconds = (int)fmod($seconds, 60);
-							$time .= ($seconds > 0) ? $seconds.morph($seconds, ' секунда ', ' секунды ', ' секунд ');
+							if ($seconds)
+								$time .= $seconds.morph($seconds, ' секунда ', ' секунды ', ' секунд ');
 							$message = mb_convert_encoding($time.' онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
 							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
