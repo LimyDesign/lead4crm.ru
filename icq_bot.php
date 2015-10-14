@@ -174,6 +174,19 @@ while (1) {
 									sleep(1);
 									$icq->sendMessage($msg['from'], $message);
 									break;
+								case '!info':
+									if ($msg['from'] == ADMINUIN) {
+										$id = $icq->getShortInfo($command[1]);
+										if ($id) {
+											$message_response[$id] = $msg['from'];
+										}
+										else {
+											$message = mb_convert_encoding("Ошибка получения информации для UIN: ".$command[1], 'cp1251');
+											sleep(1);
+											$icq->sendMessage($msg['from'], $message);
+										}
+									}
+									break;
 								default:
 									var_dump($msg);
 									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
