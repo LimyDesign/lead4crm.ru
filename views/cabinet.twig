@@ -1142,7 +1142,9 @@
         else
           $icq_result.text(data);
       }).done(function() {
-        $icq_result.delay(5000).hide();
+        setTimeout(function () {
+          $icq_result.hide();
+        }, 5000);
       });
     }
     else if (cmd == 'status') {
@@ -1153,7 +1155,9 @@
         else
           $icq_result.text('Сервис остановлен.');
       }).done(function() {
-        $icq_result.delay(5000).hide();
+        setTimeout(function () {
+          $icq_result.hide();
+        }, 5000);
       });
     }
     else if (cmd == 'stop') {
@@ -1164,7 +1168,9 @@
         else
           $icq_result.text('Сервис остановить не удалось.');
       }).done(function() {
-        $icq_result.delay(5000).hide();
+        setTimeout(function () {
+          $icq_result.hide();
+        }, 5000);
       });
     }
   }
