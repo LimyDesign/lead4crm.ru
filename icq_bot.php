@@ -55,8 +55,8 @@ while (1) {
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot started...');
 		$uptime = $status_time = $xstatus_time = time();
-		$icq->setStatus(STARTSTATUS, 'STATUS_DCAUTH', 'Ask me... I\'m Lead4CRM notification bot');
-		$icq->setXStatus(STARTXSTATUS, 'Ask me... I\'m Lead4CRM notification bot');
+		$icq->setStatus(STARTSTATUS, 'STATUS_DCAUTH', 'Hello!');
+		$icq->setXStatus(STARTXSTATUS, 'Hello!');
 		$xstatus = STARTXSTATUS;
 		$status = STARTSTATUS;
 	}
