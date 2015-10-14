@@ -501,7 +501,7 @@
                     <div class="alert alert-warning"><strong>Внимание!</strong> Если вы хотите чтобы уведомления поступали в групповой чат, необходимо после добавления бота в групповой чат снова выполнить команду: <code id="tlgrm_start" onclick="selectText('tlgrm_start')">/start {{apikey}}</code>. Больше никаких команд выполнять не нужно, если ранее вы все настроили.</div>
                     {% if (admin) %}
                       <h3>ICQ</h3>
-                      <pre id="icq_result"></pre>
+                      <pre id="icq_result" class="hide"></pre>
                       <a href="#." onclick="icq_bot('start')" class="btn btn-lg btn-primary">Запустить ICQ бот</a>&nbsp;
                       <a href="#." onclick="icq_bot('status')" class="btn btn-lg btn-primary">Проверить статус бота</a>&nbsp;
                       <a href="#." onclick="icq_bot('exit')" class="btn btn-lg btn-primary">Остановить бота</a>
@@ -1131,6 +1131,7 @@
 
   function icq_bot(cmd) {
     var $icq_result = $('#icq_result');
+    $icq_result.show();
     if (cmd == 'start') {
       $.get('/startIcqBot/', function (data) {
         if (data == 0)
@@ -1152,6 +1153,10 @@
         $icq_result.text(data);
       });
     }
+    
+    setTimeout(function() {
+      $icq_result.hide();
+    }, 5000);
   }
   </script>
   {# {% endjshrink %} #}
