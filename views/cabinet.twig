@@ -1133,6 +1133,9 @@
       type: 'GET',
       url: '/test/',
       async: false,
+      cache: false,
+      dataType: "text",
+      timeout: 20,
       success: function (data) {
         $icq_result.append(data);
       }
