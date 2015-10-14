@@ -860,6 +860,9 @@ class WebIcqPro_SNAC extends WebIcqPro_TLV {
 
 	protected function ClientBart($args = array())
 	{
+		if (empty($args)) {
+			return;	
+		}
 		extract($args);
 		$snac = $this->__header(0x01, 0x21);
 		$message = $this->packLV($this->xstatus_message).pack('n', 0x00);
