@@ -88,7 +88,7 @@ if ($cmd[0]) {
 			header("Content-Type: text/plain");
 			for ($i = 0; $i < 10; $i++) {
 				echo $i."\n";
-				flush();
+				ob_flush();
 				sleep(1);
 			}
 			break;
