@@ -1130,7 +1130,8 @@
   }
 
   function icq_bot(cmd) {
-    var $icq_result = $('#icq_result');
+    var $icq_result = $('#icq_result'),
+        tout = 0;
     if ($icq_result.hasClass('hide'))
       $icq_result.removeClass('hide');
     $icq_result.show();
@@ -1141,6 +1142,8 @@
           $icq_result.text('Сервис успешно запущен.');
         else
           $icq_result.text(data);
+      }).done(function() {
+        tout = 5000;
       });
     }
     else if (cmd == 'status') {
@@ -1150,6 +1153,8 @@
           $icq_result.text('Сервис запущен.');
         else
           $icq_result.text('Сервис остановлен.');
+      }).done(function() {
+        tout = 5000;
       });
     }
     else if (cmd == 'stop') {
@@ -1159,12 +1164,14 @@
           $icq_result.text('Сервис остановлен.');
         else
           $icq_result.text('Сервис остановить не удалось.');
+      }).done(function() {
+        tout = 5000;
       });
     }
 
     setTimeout(function() {
       $icq_result.hide();
-    }, 5000);
+    }, tout);
   }
   </script>
   {# {% endjshrink %} #}
