@@ -82,7 +82,7 @@ while (1) {
 				$icq->sendMessage(ADMINUIN, $msg['from'].'>'.trim($msg['message']));
 				switch (strtolower(trim($msg['message']))) {
 					case '!about':
-						$icq->sendMessage($msg['from'], $about);
+						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
 						break;
 					case '!help':
 						$icq->sendMessage($msg['from'], $help);
