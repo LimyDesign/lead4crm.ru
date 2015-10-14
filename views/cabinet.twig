@@ -1142,6 +1142,7 @@
   function icq_bot_status() {
     var $icq_result = $('#icq_result');
     $.get('/statusIcqBot/', function (data) {
+      console.log(data);
       if (data == 'php')
         $icq_result.text('Сервис запущен.');
       else
