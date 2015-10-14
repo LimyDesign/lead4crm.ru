@@ -118,6 +118,11 @@ while (1) {
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
+					case '!notify':
+						$message = mb_convert_encoding("Для включения, отключения или проверки статуса требуется ввести соответствующие команды:\r\t!notify [company|renewal|balans] [on|off|status]\rгде [company|renewal|balans] — тип уведомления (импорт компаний, продление тарифа, изменение баланса), а [on|off|status] — включение, выключение или проверка статуса.", 'cp1251');
+						sleep(1);
+						$icq->sendMessage($msg['from'], $message);
+						break;
 					case '!uptime':
 						if ($msg['from'] == ADMINUIN) {
 							$seconds = time() - $uptime;
