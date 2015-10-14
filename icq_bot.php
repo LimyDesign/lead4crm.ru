@@ -23,6 +23,11 @@ $help = "Комманды информатора:\r
 \t'!diconnect' - отключение от информатора\r
 ";
 
+$admcmd = "\nАдминские команды:\r
+\t'!exit' - выключить бот\r
+\t'!to' - отправить сообщение кому-либо от имени бота\r
+";
+
 $about = "Lead4CRM Bot v1.0.0\r
 \tЯ маленький, но очень шустрый информатор сайта www.lead4crm.ru.\r
 \tЯ смогу сообщить вам о том что произошло с вашим балансом,\r
@@ -87,7 +92,13 @@ while (1) {
 						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
 						break;
 					case '!help':
-						$icq->sendMessage($msg['from'], mb_convert_encoding($help, 'cp1251'));
+						if ($msg['from'] == ADMINUIN) {
+							$message = mb_convert_encoding($help.$admcmd, 'cp1251');
+						}
+						else {
+							$message = mb_convert_encoding($help, 'cp1251');
+						}
+						$icq->sendMessage($msg['from'], $message);
 						break;
 					case '!stop':
 					case '!exit':
@@ -196,8 +207,10 @@ while (1) {
 
 function shutdown() {
 	global $icq;
-	$icq->sendMessage('881129', 'Service Lead4CRM Bot stoped...');
-	$icq->disconnect();
+	while ($icq->isConnected()) {
+		$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
+		$icq->disconnect();
+	}
 	exit;
 }
 
