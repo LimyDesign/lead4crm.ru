@@ -85,15 +85,14 @@ if ($cmd[0]) {
 			break;
 
 		case 'test':
-			phpinfo();
-			die();
-			header("Content-Type: text/plain");
+			isAdmin();
+			header("Content-Type: text/event-stream");
 			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 			header("Cache-Control: post-check=0, pre-check=0", false);
 			header("Pragma: no-cache");
 			ob_implicit_flush();
 			for ($i = 0; $i < 10; $i++) {
-				echo $i."\n";
+				echo $i.PHP_EOL;
 				sleep(1);
 			}
 			break;
@@ -227,6 +226,7 @@ if ($cmd[0]) {
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
+				'admin' => $_SESSION['is_admin'],
 				'telegramid' => $_SESSION['telegramid'],
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),

@@ -499,6 +499,11 @@
                       <li>Готово!</li>
                     </ol>
                     <div class="alert alert-warning"><strong>Внимание!</strong> Если вы хотите чтобы уведомления поступали в групповой чат, необходимо после добавления бота в групповой чат снова выполнить команду: <code id="tlgrm_start" onclick="selectText('tlgrm_start')">/start {{apikey}}</code>. Больше никаких команд выполнять не нужно, если ранее вы все настроили.</div>
+                    {% if (admin) %}
+                      <h3>ICQ</h3>
+                      <pre id="icq_result"></pre>
+                      <a href="#." onclick="test_icq()" class="btn btn-lg btn-primary">Test ICQ</a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -1120,6 +1125,18 @@
           selection.removeAllRanges();
           selection.addRange(range);
       }
+  }
+
+  function test_icq() {
+    var $icq_result = $('#icq_result');
+    $.ajax({
+      type: 'GET',
+      url: '/test/',
+      async: false,
+      success: function (data) {
+        $icq_result.append(data);
+      }
+    });
   }
   </script>
   {# {% endjshrink %} #}
