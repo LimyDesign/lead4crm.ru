@@ -166,7 +166,7 @@ while (1) {
 						$error['error'] = '';
 					$answer .= 'Error: '.$error['code'].' '.$error['error'].PHP_EOL;
 				}
-				$icq->sendMessage(ADMINUIN, $answer)
+				$icq->sendMessage(ADMINUIN, $answer);
 			}
 			else {
 				var_dump($msg);
