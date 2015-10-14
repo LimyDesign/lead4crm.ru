@@ -1138,6 +1138,9 @@
       timeout: 20,
       success: function (data) {
         $icq_result.append(data);
+      },
+      error: function (error) {
+        $icq_result.html(error);
       }
     });
   }
