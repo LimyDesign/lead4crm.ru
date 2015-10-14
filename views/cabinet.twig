@@ -1155,7 +1155,10 @@
     else if (cmd == 'stop') {
       $icq_result.text('Остановка сервиса...');
       $.get('/stopIcqBot/', function (data) {
-        $icq_result.text(data);
+        if (data)
+          $icq_result.text('Сервис остановлен.');
+        else
+          $icq_result.text('Сервис остановить не удалось.');
       });
     }
 
