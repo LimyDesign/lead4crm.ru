@@ -502,7 +502,7 @@
                     {% if (admin) %}
                       <h3>ICQ</h3>
                       <pre id="icq_result"></pre>
-                      <a href="#." onclick="test_icq()" class="btn btn-lg btn-primary">Test ICQ</a>
+                      <a href="#." onclick="start_icq_bot()" class="btn btn-lg btn-primary">Запустить ICQ бот</a>
                     {% endif %}
                   </div>
                 </div>
@@ -1127,22 +1127,14 @@
       }
   }
 
-  function test_icq() {
+  function start_icq_bot() {
     var $icq_result = $('#icq_result');
-    $.ajax({
-      type: 'GET',
-      url: '/test/',
-      async: false,
-      cache: false,
-      dataType: "text",
-      timeout: 20,
-      success: function (data) {
-        $icq_result.append(data);
-      },
-      error: function (error) {
-        $icq_result.html(error);
-      }
-    });
+    $.get('/startIcqBot/', function (data) {
+      if (data == 0)
+        $icq_result.text('Сервис успешно запущен...');
+      else
+        $icq_result.text(data);
+    })
   }
   </script>
   {# {% endjshrink %} #}
