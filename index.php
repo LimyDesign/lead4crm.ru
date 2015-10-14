@@ -101,8 +101,19 @@ if ($cmd[0]) {
 		case 'stopIcqBot':
 			isAdmin();
 			header('Content-Type: text/plain');
+			file_put_contents('icq_bot.tmp', 'stop')
 			$icq_bot_pid = file_get_contents('icq_bot.pid');
-			echo posix_kill($icq_bot_pid, SIGTERM);
+			posix_kill($icq_bot_pid, SIGUSR1);
+			$i = 0;
+			$result = false;
+			while($i < 10) {
+				if (!file_exists('icq_bot.tmp')) {
+					$result = true;
+					break;
+				}
+				else $i++;
+			}
+			echo $result;
 			break;
 
 		case 'getSupportCities':

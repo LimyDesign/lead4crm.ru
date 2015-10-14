@@ -261,5 +261,16 @@ function sig_handler($signo) {
 		case SIGTERM:
 			shutdown();
 			break;
+		case SIGUSR1:
+			if (file_exists('icq_bot.tmp')) {
+				$cmd = file_get_contents('icq_bot.tmp');
+				switch ($cmd) {
+					case 'stop':
+						unlink('icq_bot.tmp');
+						exit;
+						break;
+				}
+			}
+			break;
 	}
 }
