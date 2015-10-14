@@ -101,7 +101,7 @@ if ($cmd[0]) {
 		case 'stopIcqBot':
 			isAdmin();
 			header('Content-Type: text/plain');
-			file_put_contents('icq_bot.tmp', 'stop')
+			file_put_contents('icq_bot.tmp', 'stop');
 			$icq_bot_pid = file_get_contents('icq_bot.pid');
 			posix_kill($icq_bot_pid, SIGUSR1);
 			$i = 0;
