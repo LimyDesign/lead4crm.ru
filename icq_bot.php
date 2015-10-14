@@ -143,8 +143,17 @@ while (1) {
 							$message = mb_convert_encoding($time.'онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
 							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
-							break;
 						}
+						break;
+					case '!disconnect':
+						$query = 'UPDATE "public"."users" SET "icq_uin" = null, "icq_company" = false, "icq_renewal" = false, "icq_balans" = false WHERE "icq_uin" = :uuin';
+						$sth = $pdo->prepare($query);
+						$sth->bindParam(':uuin', $msg['from'], PDO::PARAM_STR, 255);
+						$sth->execute();
+						$message = mb_convert_encoding("Ваш UIN ({$msg['from']}) был откреплен от ICQ информатора.\rСпасибо за использование нашего сервиса.", 'cp1251');
+						sleep(1);
+						$icq->sendMessage($msg['from'], $message);
+						break;
 					case '!stop':
 					case '!exit':
 						if ($msg['from'] == ADMINUIN) {
