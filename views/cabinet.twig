@@ -1129,7 +1129,7 @@
       }
   }
 
-  function start_icq_bot() {
+  function icq_bot_start() {
     var $icq_result = $('#icq_result');
     $.get('/startIcqBot/', function (data) {
       if (data == 0)
@@ -1142,6 +1142,16 @@
   function icq_bot_status() {
     var $icq_result = $('#icq_result');
     $.get('/statusIcqBot/', function (data) {
+      if (data == 'php')
+        $icq_result.text('Сервис запущен.');
+      else
+        $icq_result.text('Сервис остановлен.');
+    });
+  }
+
+  function icq_bot_stop() {
+    var $icq_result = $('#icq_result');
+    $.get('/stopIcqBot/', function (data) {
       $icq_result.text(data);
     });
   }

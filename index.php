@@ -98,6 +98,13 @@ if ($cmd[0]) {
 			system('ps -p '.$icq_bot_pid.' -o comm=');
 			break;
 
+		case 'stopIcqBot':
+			isAdmin();
+			header('Content-Type: text/plain');
+			$icq_bot_pid = file_get_contents('icq_bot.pid');
+			system('kill -9 '.$icq_bot_pid);
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
