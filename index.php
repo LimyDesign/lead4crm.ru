@@ -111,7 +111,10 @@ if ($cmd[0]) {
 					$result = true;
 					break;
 				}
-				else $i++;
+				else {
+					$i++;
+					sleep(1);
+				}
 			}
 			echo $result;
 			break;
