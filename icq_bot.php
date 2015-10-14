@@ -103,6 +103,7 @@ while (1) {
 					case '!stop':
 					case '!exit':
 						if ($msg['from'] == ADMINUIN) {
+							$icq->sendMessage(ADMINUIN, 'Service Lead4CRM Bot stoped...');
 							exit;
 						}
 						else {
