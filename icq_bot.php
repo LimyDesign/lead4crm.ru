@@ -15,6 +15,8 @@ $icq = new WebIcqPro();
 $icq->debug = true;
 
 pcntl_signal(SIGTERM, 'sig_handler');
+pcntl_signal(SIGKILL, 'sig_handler');
+pcntl_signal(SIGUSR1, 'sig_handler');
 register_shutdown_function('shutdown');
 
 $help = "Команды информатора:\r
