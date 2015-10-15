@@ -4,6 +4,7 @@ error_reporting(E_ERROR);
 define('ADMINUIN', '881129');
 define('STARTXSTATUS', 'business');
 define('STARTSTATUS', 'STATUS_FREE4CHAT');
+define('CP', 'cp1251');
 
 file_put_contents('icq_bot.pid', posix_getpid());
 
@@ -26,7 +27,7 @@ $help = "Команды информатора:\r
 \t'!help [!command]' - справка по конкретной комманде\r
 \t'!connect [apikey]' - подключение к информатору\r
 \t'!notify [balans|renewal|company] [on|off]' - настройка уведомлений информатора\r
-\t'!codepage [cp1251|utf16]' — установить кодировку сообщений\r
+\t'!cp [codepage]' — установить кодировку сообщений\r
 \t'!diconnect' - отключение от информатора\r
 ";
 
@@ -104,25 +105,25 @@ while (1) {
 				switch (strtolower(trim($msg['message']))) {
 					case '!about':
 						sleep(1);
-						$icq->sendMessage($msg['from'], mb_convert_encoding($about, 'cp1251'));
+						$icq->sendMessage($msg['from'], mb_convert_encoding($about, CP));
 						break;
 					case '!help':
 						if ($msg['from'] == ADMINUIN) {
-							$message = mb_convert_encoding($help.$admcmd, 'cp1251');
+							$message = mb_convert_encoding($help.$admcmd, CP);
 						}
 						else {
-							$message = mb_convert_encoding($help, 'cp1251');
+							$message = mb_convert_encoding($help, CP);
 						}
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
 					case '!connect':
-						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!connect [apikey]\rгде [apikey] — ваш персональный ключ доступа, который можно найти на сайте www.lead4crm.ru", 'cp1251');
+						$message = mb_convert_encoding("Для того, чтобы привязать ваш UIN к сайту www.lead4crm.ru, необходимо ввести полную команду:\r\t!connect [apikey]\rгде [apikey] — ваш персональный ключ доступа, который можно найти на сайте www.lead4crm.ru", CP);
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
 					case '!notify':
-						$message = mb_convert_encoding("Для включения, отключения или проверки статуса требуется ввести соответствующие команды:\r\t!notify [company|renewal|balans] [on|off|status]\rгде [company|renewal|balans] — тип уведомления (импорт компаний, продление тарифа, изменение баланса), а [on|off|status] — включение, выключение или проверка статуса.", 'cp1251');
+						$message = mb_convert_encoding("Для включения, отключения или проверки статуса требуется ввести соответствующие команды:\r\t!notify [company|renewal|balans] [on|off|status]\rгде [company|renewal|balans] — тип уведомления (импорт компаний, продление тарифа, изменение баланса), а [on|off|status] — включение, выключение или проверка статуса.", CP);
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
@@ -142,7 +143,7 @@ while (1) {
 							$seconds = (int)fmod($seconds, 60);
 							if ($seconds)
 								$time .= $seconds.morph($seconds, ' секунда ', ' секунды ', ' секунд ');
-							$message = mb_convert_encoding($time.'онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), 'cp1251');
+							$message = mb_convert_encoding($time.'онлайн. Последний вход: '.date('d.m.Y H:i:s', $uptime), CP);
 							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
 						}
@@ -152,7 +153,7 @@ while (1) {
 							$c = getContactList($icq->getContactList());
 							foreach ($c as $m) {
 								$m = str_replace("\x00", '', $m);
-								$icq->sendMessage($msg['from'], mb_convert_encoding($m, 'cp1251'));
+								$icq->sendMessage($msg['from'], mb_convert_encoding($m, CP));
 							}
 						}
 						break;
@@ -161,7 +162,7 @@ while (1) {
 						$sth = $pdo->prepare($query);
 						$sth->bindParam(':uuin', $msg['from'], PDO::PARAM_STR, 255);
 						$sth->execute();
-						$message = mb_convert_encoding("Ваш UIN ({$msg['from']}) был откреплен от ICQ информатора.\rСпасибо за использование нашего сервиса.", 'cp1251');
+						$message = mb_convert_encoding("Ваш UIN ({$msg['from']}) был откреплен от ICQ информатора.\rСпасибо за использование нашего сервиса.", CP);
 						sleep(1);
 						$icq->sendMessage($msg['from'], $message);
 						break;
@@ -192,10 +193,10 @@ while (1) {
 											$icq->addContactGroup($group);
 										}
 										$icq->addContact($group, array('uin' => $msg['from']));
-										$message = mb_convert_encoding('Я хочу увидеть твой статус!', 'cp1251');
+										$message = mb_convert_encoding('Я хочу увидеть твой статус!', CP);
 										$icq->getAuthorization($msg['from'], $message);
 									}
-									$message = mb_convert_encoding("Ваш UIN (".$msg['from'].") записан! Теперь можно перейти к настройке информатора!", 'cp1251');
+									$message = mb_convert_encoding("Ваш UIN ({$msg['from']}) записан! Теперь можно перейти к настройке информатора!", CP);
 									sleep(1);
 									$icq->sendMessage($msg['from'], $message);
 									break;
@@ -206,11 +207,16 @@ while (1) {
 											$message_response[$id] = $msg['from'];
 										}
 										else {
-											$message = mb_convert_encoding("Ошибка получения информации для UIN: ".$command[1], 'cp1251');
+											$message = mb_convert_encoding("Ошибка получения информации для UIN: ".$command[1], CP);
 											sleep(1);
 											$icq->sendMessage($msg['from'], $message);
 										}
 									}
+									break;
+								case '!cp':
+									define('CP', $command[1]);
+									$message = mb_convert_encoding('Кодировка изменена', CP);
+									$icq->sendMessage($msg['from'], $message);
 									break;
 								case '!to':
 									if ($msg['from'] == ADMINUIN) {
@@ -222,7 +228,7 @@ while (1) {
 											$id = $icq->sendMessage($to, $command);
 											if ($id !== false) {
 												$message_response[$id] = array('from' => $msg['from'], 'to' => $to);
-												$message = mb_convert_encoding("Принято на доставку. Идентификатор сообщения: ".$id, 'cp1251');
+												$message = mb_convert_encoding("Принято на доставку. ID сообщения: ".$id, CP);
 												$icq->sendMessage($msg['from'], $message);
 											}
 											else {
@@ -230,14 +236,14 @@ while (1) {
 											}
 										}
 										else {
-											$message = mb_convert_encoding("Нельзя отправлять сообшения данному UIN", 'cp1251');
+											$message = mb_convert_encoding("Нельзя отправлять сообшения данному UIN", CP);
 											$icq->sendMessage($msg['from'], $message);
 										}
 									}
 									break;
 								default:
 									var_dump($msg);
-									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+									$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", CP);
 									sleep(1);
 									$icq->sendMessage($msg['from'], $message);
 									break;
@@ -245,7 +251,7 @@ while (1) {
 						}
 						else {
 							var_dump($msg);
-							$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", 'cp1251');
+							$message = mb_convert_encoding("Введите '!help' для получния справки по командам.", CP);
 							sleep(1);
 							$icq->sendMessage($msg['from'], $message);
 						}
