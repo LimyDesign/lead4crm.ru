@@ -902,6 +902,7 @@
       var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
         sendCode(uuin);
+        $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
         if ($('#groupICQUIN').hasClass('has-error')) {
           $('#groupICQUIN').removeClass('has-error');
         }
