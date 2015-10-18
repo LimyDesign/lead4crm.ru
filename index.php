@@ -1531,16 +1531,19 @@ function sendICQ($cmd, $uin, $text = '') {
 							case 'company':
 								$msg .= "\t- Уведомления об импорте компаний\r";
 								$noties['company'] = 'true';
+								$_SESSION['icq']['company'] = true;
 								break;
 
 							case 'balans':
 								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
 								$noties['balans'] = 'true';
+								$_SESSION['icq']['balans'] = true;
 								break;
 
 							case 'renewal':
 								$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r";
 								$noties['renewal'] = 'true';
+								$_SESSION['icq']['renewal'] = true;
 								break;
 						}
 					}
