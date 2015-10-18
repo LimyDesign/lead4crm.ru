@@ -897,12 +897,12 @@
 
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
-      var uuin = $(this).find('#inputICQUIN').val();
+      var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
 
       } else {
-        $(this).find('#groupICQUIN').addClass('has-error');
-        $('html, body').animate({ scrollTop: $('#groupICQUIN').offset().top + $('#header').height() }, 1000);
+        $('#groupICQUIN').addClass('has-error');
+        scrollTo('#groupICQUIN');
       }
     });
   });
@@ -927,6 +927,12 @@
           g.html('Доброй ночи&hellip;');
       }
     }
+  }
+
+  /* Функция прокрутки страницы к конкретному элементу.
+  ========================================================================================= */
+  function scrollTo(element) {
+    $('html, body').animate({ scrollTop: $(element).offset().top - $('#header').height() }, 1000);
   }
 
   /* Функция перехода к предыдущему шагу в мастере выборок.
