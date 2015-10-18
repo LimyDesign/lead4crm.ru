@@ -911,7 +911,7 @@
 
     $('input[name^="notify"]').change(function(event) {
       var str = '';
-      $(this+':checked').each(function() {
+      $('input[name^="notify"]:checked').each(function() {
         str += $(this).val() + '|';
       });
       console.log(str);
