@@ -90,48 +90,6 @@ if ($cmd[0]) {
 			sendIcq($cmd[1], $_REQUEST['uin']);
 			break;
 
-
-		case 'sendICQ':
-			isAdmin();
-			header('Content-Type: text/plain');
-			sendICQ($cmd[1], $cmd[2]);
-			break;
-
-		case 'startIcqBot':
-			isAdmin();
-			header('Content-Type: text/plain');
-			system('nohup php icq_bot.php > icq_bot.log &', $retval);
-			echo $retval;
-			break;
-
-		case 'statusIcqBot':
-			isAdmin();
-			header('Content-Type: text/plain');
-			$icq_bot_pid = file_get_contents('icq_bot.pid');
-			system('ps -p '.$icq_bot_pid.' -o comm=');
-			break;
-
-		case 'stopIcqBot':
-			isAdmin();
-			header('Content-Type: text/plain');
-			file_put_contents('icq_bot.tmp', 'stop');
-			$icq_bot_pid = file_get_contents('icq_bot.pid');
-			posix_kill($icq_bot_pid, SIGUSR1);
-			$i = 0;
-			$result = false;
-			while($i < 10) {
-				if (!file_exists('icq_bot.tmp')) {
-					$result = true;
-					break;
-				}
-				else {
-					$i++;
-					sleep(1);
-				}
-			}
-			echo $result;
-			break;
-
 		case 'getSupportCities':
 			getSupportCities();
 			break;
