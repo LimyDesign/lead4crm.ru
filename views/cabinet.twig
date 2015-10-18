@@ -899,7 +899,9 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
-
+        $('#groupICQCode').removeClass('hide');
+        scrollTo('#inputICQCode');
+        $('#inputICQCode').focus();
       } else {
         $('#groupICQUIN').addClass('has-error');
         scrollTo('#groupICQUIN');
