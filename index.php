@@ -1524,23 +1524,28 @@ function sendICQ($cmd, $uin, $text = '') {
 					$query_notify = '';
 					$noties = array('company' => false, 'balans' => false, 'renewal' => false);
 					$msg = "Теперь на ваш UIN ({$_REQUEST['uin']}) будут поступать следующие уведомления: \r";
+					$msg_len = strlen($msg);
 					foreach ($_REQUEST['notify'] as $notify) {
 						switch ($notify) {
 							case 'company':
 								$msg .= "\t- Уведомления об импорте компаний\r";
 								$noties['company'] = true;
 								break;
+								
 							case 'balans':
 								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
 								$noties['balans'] = true;
 								break;
+
 							case 'renewal':
 								$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r";
 								$noties['renewal'] = true;
 								break;
-							default:
-								$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r";
 						}
+					}
+
+					if ($msg_len == strlen($msg)) {
+						$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r";
 					}
 
 					foreach ($noties as $notify_key => $notify_status) {
