@@ -917,6 +917,9 @@
           $('#inputICQCode').focus();
         } else {
           $.post('/icq/save/', $(this).serialize(), function (data) {
+            if ($('#groupICQUIN').hasClass('has-success')) {
+              $('#groupICQUIN').removeClass('has-success');
+            }
             if (data == '11') {
               $('#groupICQCode').addClass('hide');
               $('#statusICQSetting').removeClass('hide');
