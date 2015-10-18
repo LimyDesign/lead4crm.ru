@@ -956,6 +956,8 @@
                 $fieldset.removeAttr('disabled');
                 $('#inputICQCode').focus();
               } else {
+                icq_uin_start = icq_uin_change;
+                icq_notify_start = icq_notify_change;
                 $fieldset.removeAttr('disabled');
                 if ($('#groupICQUIN').hasClass('has-success')) {
                   $('#groupICQUIN').removeClass('has-success');
