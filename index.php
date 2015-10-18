@@ -1499,6 +1499,8 @@ function sendICQ($cmd, $uin, $text = '') {
 		switch ($cmd) {
 			case 'sendMsg':
 				$msg = $text;
+				echo $msg;
+				die();
 				break;
 
 			case 'sendCode':
