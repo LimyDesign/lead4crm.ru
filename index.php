@@ -209,10 +209,6 @@ if ($cmd[0]) {
 			setTariff($cmd[1]);
 			break;
 
-		case 'setNot':
-			$_SESSION['dsfsdf'] = '';
-			break;
-
 		case 'cabinet':
 			isAuth($cmd);
 			$top_rubrics = importRubrics($_SESSION['apikey'], 'www.lead4crm.ru');
@@ -225,7 +221,7 @@ if ($cmd[0]) {
 				'admin' => $_SESSION['is_admin'],
 				'telegramid' => $_SESSION['telegramid'],
 				'icq' => $_SESSION['icq'],
-				'notify_center' => (!isset($_SESSION['dsfsdf'])) ? true : false,
+				'notify_danger' => (!isset($_SESSION['telegram'] && !isset($_SESSION['icq']))) ? true : false,
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
