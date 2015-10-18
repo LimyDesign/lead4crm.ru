@@ -909,13 +909,14 @@
         icq_uin_changed = 1;
     });
 
-    $('input[name^="notify"]').change(function(event) {
+    var icq_notify_changed = $('input[name^="notify"]').change(function(event) {
       var str = '';
       $('input[name^="notify"]:checked').each(function() {
         str += $(this).val() + '|';
       });
       console.log(str);
-    });
+    }).change();
+    console.log(icq_notify_changed);
 
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
