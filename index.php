@@ -665,6 +665,7 @@ function dbLogin($userId, $userEmail, $provider) {
 				$contract = pg_fetch_result($result, 0, 'contract');
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
+				$is_admin = ($is_admin == 't') ? true : false;
 				$apikey = pg_fetch_result($result, 0, 'apikey');
 				$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
 				$telegram_company = pg_fetch_result($result, 0, 'telegram_company');
