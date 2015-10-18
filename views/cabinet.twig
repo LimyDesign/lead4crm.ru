@@ -904,7 +904,7 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
           code = $('#inputICQCode').val();
-      if (isInt(uuin)) {
+      if (isInt(uuin) && uuin != '') {
         if (uuin != '{{icq.uin}}' && code == '') {
           sendCode(uuin);
           $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
