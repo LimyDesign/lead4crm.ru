@@ -1583,7 +1583,8 @@ function vcard() {
 	echo "VERSION:3.0\n";
 	echo "FN:Lead4CRM («Генератор лидов»)\n";
 	echo "ORG:Lead4CRM («Генератор лидов»)\n";
-	echo "TEL;TYPE=work:+7 (499) 704-69-17;TYPE=cell:+7 (925) 704-69-17\n";
+	echo "TEL;TYPE=work:+7 (499) 704-69-17\n";
+	echo "TEL;TYPE=cell:+7 (925) 704-69-17\n";
 	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
 	echo "URL:https://www.lead4crm.ru\n";
 	echo "CLASS:PUBLIC\n";
