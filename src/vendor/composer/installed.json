@@ -460,5 +460,55 @@
             "icq api",
             "icq bot"
         ]
+    },
+    {
+        "name": "whatsapp/chat-api",
+        "version": "2.5.3",
+        "version_normalized": "2.5.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/WHAnonymous/Chat-API.git",
+            "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/WHAnonymous/Chat-API/zipball/48ecf4f61636ab075301f39413cc2617d063b4dc",
+            "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-gd": "*",
+            "ext-openssl": "*",
+            "ext-pdo": "*",
+            "ext-sockets": "*",
+            "ext-sqlite3": "*",
+            "php": ">=5.3"
+        },
+        "time": "2015-08-20 23:17:02",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Chat API Contributing Team",
+                "homepage": "https://github.com/WHAnonymous/Chat-API/graphs/contributors",
+                "role": "Contributors"
+            }
+        ],
+        "description": "The PHP WhatsApp library",
+        "keywords": [
+            "Chat-API",
+            "whatsapi",
+            "whatsapp"
+        ]
     }
 ]

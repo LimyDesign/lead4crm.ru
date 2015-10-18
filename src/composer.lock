@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6061fd465fb7c79ccc731b382030ddc8",
+    "hash": "96d6ba7416cfc94302e6989b141ec30c",
     "packages": [
         {
             "name": "arsen-bespalov/webicqpro",
@@ -451,6 +451,54 @@
                 "templating"
             ],
             "time": "2015-10-13 07:07:02"
+        },
+        {
+            "name": "whatsapp/chat-api",
+            "version": "2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WHAnonymous/Chat-API.git",
+                "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WHAnonymous/Chat-API/zipball/48ecf4f61636ab075301f39413cc2617d063b4dc",
+                "reference": "48ecf4f61636ab075301f39413cc2617d063b4dc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-gd": "*",
+                "ext-openssl": "*",
+                "ext-pdo": "*",
+                "ext-sockets": "*",
+                "ext-sqlite3": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chat API Contributing Team",
+                    "homepage": "https://github.com/WHAnonymous/Chat-API/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "The PHP WhatsApp library",
+            "keywords": [
+                "Chat-API",
+                "whatsapi",
+                "whatsapp"
+            ],
+            "time": "2015-08-20 23:17:02"
         }
     ],
     "packages-dev": [],
