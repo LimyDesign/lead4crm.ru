@@ -1513,7 +1513,7 @@ function sendICQ($cmd, $uin, $text = '') {
 				$msg.= 'Если вы не имеете никакого отношения к данному сайту и не делали никаких действий на данном сайте, то просто проигнорируйте это сообщение.'."\r\n";
 				break;
 		}
-		$icq->sendMessage($uin, mb_convert_encoding($msg, $cp));
+		$icq->sendMessage($uin, mb_convert_encoding($msg, $cp, 'UTF-8'));
 		$uptime = $status_time = $xstatus_time = time();
 		$icq->setStatus($startstatus, 'STATUS_DCAUTH', 'Yo!');
 		$icq->setXStatus($startxtstatus, 'Yo!');
