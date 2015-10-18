@@ -1502,7 +1502,7 @@ function sendICQ($cmd, $uin, $text = '') {
 		switch ($cmd) {
 			case 'sendCode':
 				$code = '';
-				for ($x = 0; $x < 3; $x++) {
+				for ($x = 0; $x < 3; ++$x) {
 					for ($y = 0; $y < 3; $y++) {
 						$code .= mt_rand(0,9);
 					}
