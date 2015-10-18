@@ -1519,7 +1519,7 @@ function sendICQ($cmd, $uin, $text = '') {
 			case 'save':
 				$sUin = $_SESSION['icq']['uin'];
 				$uUin = preg_replace('/[^0-9]/', '', $_REQUEST['uin']);
-				$sCode = $_SESSION['icq']['code']
+				$sCode = $_SESSION['icq']['code'];
 				$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
 				if (($sUin != $uUin && $sCode == $uCode) ||	$sUin == $uUin) {
 					$query_notify = '';
