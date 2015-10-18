@@ -1504,7 +1504,7 @@ function sendICQ($cmd, $uin, $text = '') {
 				$code = '';
 				for ($x = 0; $x < 3; $x++) {
 					for ($y = 0; $y < 3; $y++) {
-						$code .= mt_rand(0,9)
+						$code .= mt_rand(0,9);
 					}
 					$code .= '-';
 				}
