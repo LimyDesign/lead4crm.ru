@@ -901,6 +901,7 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
+        sendCode(uuin);
         if ($('#groupICQUIN').hasClass('has-error')) {
           $('#groupICQUIN').removeClass('has-error');
         }

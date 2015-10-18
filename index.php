@@ -84,6 +84,13 @@ if ($cmd[0]) {
 			}
 			break;
 
+		case 'icq':
+			isAuth();
+			header('Content-Type: text/plain');
+			sendIcq($cmd[1], $_REQUEST['uin']);
+			break;
+
+
 		case 'sendICQ':
 			isAdmin();
 			header('Content-Type: text/plain');
@@ -1484,7 +1491,7 @@ function setTariff($getTariff) {
 		getUserData();
 }
 
-function sendICQ($to, $text) {
+function sendICQ($cmd, $uin, $text = '') {
 	global $icq, $conf;
 	$startxtstatus = 'business';
 	$startstatus = 'STATUS_FREE4CHAT';
@@ -1492,7 +1499,21 @@ function sendICQ($to, $text) {
 	$icq->debug = true;
 	$icq->setOption('UserAgent', 'macicq');
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
-		$icq->sendMessage($to, mb_convert_encoding($text, $cp));
+		switch ($cmd) {
+			case 'sendCode':
+				$code = '';
+				for ($x = 0; $x < 3; $x++) {
+					for ($y = 0; $y < 3; $y++) {
+						$code .= mt_rand(0,9)
+					}
+					$code .= '-';
+				}
+				$msg = '-- Ваш код подтверждения: '.$code."\r";
+				$msg.= 'Введите данный код на сайте www.lead4crm.ru.'."\r\n";
+				$msg.= 'Если вы не имеете никакого отношения к данному сайту и не делали никаких действий на данном сайте, то просто проигнорируйте это сообщение.'."\r\n";
+				break;
+		}
+		$icq->sendMessage($uin, mb_convert_encoding($msg, $cp));
 		$uptime = $status_time = $xstatus_time = time();
 		$icq->setStatus($startstatus, 'STATUS_DCAUTH', 'Yo!');
 		$icq->setXStatus($startxtstatus, 'Yo!');
