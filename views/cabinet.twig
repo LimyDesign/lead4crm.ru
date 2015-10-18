@@ -917,7 +917,10 @@
           $('#inputICQCode').focus();
         } else {
           $.post('/icq/save/', $(this).serialize(), function (data) {
-            if (data == '11') {
+            if (data == 'error_code') {
+              $('#groupICQCode').addClass('has-error');
+              scrollTo('#groupICQCode');
+            } else {
               if ($('#groupICQUIN').hasClass('has-success')) {
                 $('#groupICQUIN').removeClass('has-success');
               }
@@ -927,9 +930,6 @@
               setTimeout(function() {
                 $('#statusICQSetting').addClass('hide');
               }, 5000);
-            } else if (data == 'error_code') {
-              $('#groupICQCode').addClass('has-error');
-              scrollTo('#groupICQCode');
             }
           });
         }
