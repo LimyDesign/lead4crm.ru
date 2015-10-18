@@ -1491,15 +1491,13 @@ function setTariff($getTariff) {
 		getUserData();
 }
 
-function sendICQ($cmd, $uin, $text = '') {
+function sendICQ($cmd, $uin, $msg = '') {
 	global $icq, $conf;
 	$icq->debug = true;
 	$icq->setOption('UserAgent', 'macicq');
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		switch ($cmd) {
 			case 'sendMsg':
-				$msg = $text;
-				sleep(1);
 				break;
 
 			case 'sendCode':
