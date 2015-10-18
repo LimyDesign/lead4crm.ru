@@ -1500,7 +1500,7 @@ function sendICQ($cmd, $uin, $text = '') {
 			case 'sendMsg':
 				$msg = $text;
 				echo $msg;
-				die();
+				sleep(1);
 				break;
 
 			case 'sendCode':
