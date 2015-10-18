@@ -943,8 +943,6 @@
           $('#inputICQCode').focus();
         } else {
           if (icq_uin_start != icq_uin_change || icq_notify_start != icq_notify_change) {
-            console.log('Old Form: ' + icq_form);
-            console.log('New Form: ' + icq_form_new);
             $.post('/icq/save/', $(this).serialize(), function (data) {
               console.log(data);
               if (data == 'error_code') {
