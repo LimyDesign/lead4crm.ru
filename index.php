@@ -93,7 +93,7 @@ if ($cmd[0]) {
 		case 'sendIcq':
 			isAdmin();
 			header('Content-Type: text/plain');
-			sendIcq('sendMsg', $_SESSION['uin'], 'Тест');
+			sendICQ('sendMsg', $_SESSION['uin'], 'Тест');
 			break;
 
 		case 'getSupportCities':
@@ -190,7 +190,7 @@ if ($cmd[0]) {
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
 				'admin' => $_SESSION['is_admin'],
-				'telegramid' => $_SESSION['telegramid'],
+				'telegram' => $_SESSION['telegram'],
 				'icq' => $_SESSION['icq'],
 				'notify_danger' => (!isset($_SESSION['telegram']) && !isset($_SESSION['icq'])) ? true : false,
 				'crm_list' => getCRM(),
