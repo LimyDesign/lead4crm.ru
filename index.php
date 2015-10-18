@@ -1521,7 +1521,7 @@ function sendICQ($cmd, $uin, $text = '') {
 				$uUin = preg_replace('/[^0-9]/', '', $_REQUEST['uin']);
 				$sCode = $_SESSION['icq']['code'];
 				$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
-				echo "sUin: $uUin, uUin: $uUin\n";
+				echo "sUin: $sUin, uUin: $uUin\n";
 				exit();
 				if (($sUin != $uUin && $sCode == $uCode) ||	$sUin == $uUin) {
 					$query_notify = '';
