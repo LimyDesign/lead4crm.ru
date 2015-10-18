@@ -908,17 +908,17 @@
 
     icq_uin_start = icq_uin_change = $('#inputICQUIN').val();
 
-    $('#inputICQUIN').change(function(event) {
-      if ($(this).val() != '{{icq.uin}}')
+    $('#inputICQUIN').change(function() {
+      if ($(this).val() != icq_uin_start)
         icq_uin_change = $(this).val();
-    });
+    }).change();
 
     $('input[name^="notify"]:checked').each(function() {
       icq_notify_start += $(this).val();
       icq_notify_change = icq_notify_start;
     });
 
-    $('input[name^="notify"]').change(function(event) {
+    $('input[name^="notify"]').change(function() {
       icq_notify_change = '';
       $('input[name^="notify"]:checked').each(function() {
         icq_notify_change += $(this).val();
