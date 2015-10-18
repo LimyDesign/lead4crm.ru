@@ -523,6 +523,9 @@
                     <h3>ICQ</h3>
                     <p>Да, да! Мы также решили включить поддержку старой, доброй аськи. Очень скоро появиться информация о том, как настроить уведомления в любимой асечке. Работы уже ведутся...</p>
                     {% if (admin) %}
+                      <div class="alert alert-success hide" id="statusICQSetting">
+                        <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+                      </div>
                       <form id="formICQSetting" class="form-horizontal">
                         <div class="form-group input-group-lg" id="groupICQUIN">
                           <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
@@ -534,15 +537,15 @@
                         <div class="form-group input-group-lg" id="groupICQNotify">
                           <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+                              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
                               <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
                             </div>
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+                              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
                               <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
                             </div>
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+                              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
                               <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
                             </div>
                           </div>
@@ -913,7 +916,16 @@
           scrollTo('#inputICQCode');
           $('#inputICQCode').focus();
         } else {
-          console.log($(this).serialize());
+          $.post('/icq/save/', $(this).serialize(), function (data) {
+            if (data == '11') {
+              $('#groupICQCode').addClass('hide');
+              $('#statusICQSetting').removeClass('hide');
+              scrollTo('#statusICQSetting');
+              setTimeout(function() {
+                $('#statusICQSetting').addClass('hide');
+              }, 5000);
+            }
+          });
         }
       } else {
         $('#groupICQUIN').addClass('has-error');

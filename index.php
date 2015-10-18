@@ -1493,13 +1493,14 @@ function setTariff($getTariff) {
 
 function sendICQ($cmd, $uin, $text = '') {
 	global $icq, $conf;
-	$startxtstatus = 'business';
-	$startstatus = 'STATUS_FREE4CHAT';
-	$cp = 'cp1251';
 	$icq->debug = true;
 	$icq->setOption('UserAgent', 'macicq');
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		switch ($cmd) {
+			case 'sendMsg':
+				$msg = $text ? $text : 'Привет!';
+				break;
+
 			case 'sendCode':
 				$code = '';
 				for ($x = 0; $x < 2; $x++) {
@@ -1514,13 +1515,52 @@ function sendICQ($cmd, $uin, $text = '') {
 				$msg.= 'Введите данный код на сайте www.lead4crm.ru.'."\r\n";
 				$msg.= 'Если вы не имеете никакого отношения к данному сайту и не делали никаких действий на данном сайте, то просто проигнорируйте это сообщение.'."\r\n";
 				break;
+
+			case 'save':
+				if (($_SESSION['icq']['uin'] != $_REQUEST['uin'] && 
+					$_SESSION['icq']['code'] == $_REQUEST['code']) ||
+					$_SESSION['icq']['uin'] == $_REQUEST['uin'])
+				) {
+					$query_notify = '';
+					$noties = array('company' => false, 'balans' => false, 'renewal' => false);
+					$msg = "Теперь на ваш UIN ({$_REQUEST['uin']}) будут поступать следующие уведомления: \r";
+					foreach ($_REQUEST['notify'] as $notify) {
+						switch ($notify) {
+							case 'company':
+								$msg .= "\t- Уведомления об импорте компаний\r";
+								$noties['company'] = true;
+								break;
+							case 'balans':
+								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
+								$noties['balans'] = true;
+								break;
+							case 'renewal':
+								$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r";
+								$noties['renewal'] = true;
+								break;
+							default:
+								$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r";
+						}
+					}
+
+					foreach ($noties as $notify_key => $notify_status) {
+						$query_notify .= ', icq_'.$notify_key.' = '.$notify_status;
+					}
+
+					if ($conf->db->type == 'postgres' && is_numeric($_REQUEST['uin']))
+					{
+						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+						$query = "update users set icq_uin = {$_REQUEST['uin']}".$notify." WHERE id = {$_SESSION['userid']}";
+						$_SESSION['icq']['uin'] = $_REQUEST['uin'];
+						pg_query($query);
+						pg_close($db);
+					}
+				}
+				break;
 		}
-		$icq->sendMessage($uin, mb_convert_encoding($msg, $cp, 'UTF-8'));
-		$uptime = $status_time = $xstatus_time = time();
-		$icq->setStatus($startstatus, 'STATUS_DCAUTH', 'Yo!');
-		$icq->setXStatus($startxtstatus, 'Yo!');
-		$xtstus = $startxtstatus;
-		$status = $startstatus;
+		$icq->sendMessage($uin, mb_convert_encoding($msg, 'cp1251', 'UTF-8'));
+		$icq->setStatus('STATUS_FREE4CHAT', 'STATUS_DCAUTH', 'Yo!');
+		$icq->setXStatus('business', 'Yo!');
 		sleep(1);
 		$icq->disconnect();
 	}
