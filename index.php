@@ -1563,6 +1563,7 @@ function sendICQ($cmd, $uin, $text = '') {
 					}
 				} else {
 					echo 'error_code';
+					exit();
 				}
 				break;
 		}
