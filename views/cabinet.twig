@@ -592,7 +592,9 @@
   <script type="text/javascript">
   var totalChecked = 0,
       totalFind = 0,
-      qty = 0;
+      qty = 0,
+      icq_uin_changed = 0,
+      icq_notify_changed = 0;
 
   $(document).ready(function() 
   {
@@ -902,7 +904,19 @@
       }
     });
 
-    var icq_form = $('#formICQSetting').serialize();
+    $('#inputICQUIN').change(function(event) {
+      if ($(this).val() != '{{icq.uin}}')
+        icq_uin_changed = 1;
+    });
+
+    $('input[name^="notify"]').change(function(event) {
+      var str = '';
+      $('input[name^="notify"]:checked').each(function() {
+        str += $(this).val() + ' ';
+      });
+      console.log(str);
+    }).change();
+
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
@@ -922,9 +936,8 @@
           $fieldset.removeAttr('disabled');
           $('#inputICQCode').focus();
         } else {
-          var icq_form_new = $(this).serialize();
           if (icq_form != icq_form_new) {
-            console.log('Old Form:' + icq_form);
+            console.log('Old Form: ' + icq_form);
             console.log('New Form: ' + icq_form_new);
             $.post('/icq/save/', $(this).serialize(), function (data) {
               console.log(data);
