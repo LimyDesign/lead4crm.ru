@@ -946,7 +946,6 @@
         } else {
           if (icq_uin_start != icq_uin_change || icq_notify_start != icq_notify_change) {
             $.post('/icq/save/', serialized, function (data) {
-              console.log(data);
               if (data == 'error_code') {
                 $('#groupICQCode').addClass('has-error');
                 scrollTo('#groupICQCode');
