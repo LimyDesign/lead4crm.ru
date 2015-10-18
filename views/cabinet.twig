@@ -903,7 +903,7 @@
           code = $('#inputICQCode').val(),
           notify = $('input[name=notify]').val();
       if (isInt(uuin)) {
-        if (uuin != {{icq.uin}} && code == '') {
+        if (uuin != '{{icq.uin}}' && code == '') {
           sendCode(uuin);
           $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
           if ($('#groupICQUIN').hasClass('has-error')) {
