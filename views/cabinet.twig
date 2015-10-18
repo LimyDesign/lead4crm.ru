@@ -894,6 +894,17 @@
         });
       }
     });
+
+    $('#formICQSetting').submit(function (e) {
+      e.preventDefault();
+      var uuin = $(this).find('#inputICQUIN').val();
+      if (isInt(uuin)) {
+
+      } else {
+        $(this).find('#groupICQUIN').addClass('has-error');
+        $('html, body').animate({ scrollTop: $('#groupICQUIN').offset().top }, 1000);
+      }
+    });
   });
 
   /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
