@@ -901,6 +901,10 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
+        if ($('#groupICQUIN').hasClass('has-error')) {
+          $('#groupICQUIN').removeClass('has-error');
+        }
+        $('#groupICQUIN').addClass('has-success');
         $('#groupICQCode').removeClass('hide');
         scrollTo('#inputICQCode');
         $('#inputICQCode').focus();
