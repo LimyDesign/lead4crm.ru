@@ -90,6 +90,12 @@ if ($cmd[0]) {
 			sendIcq($cmd[1], $_REQUEST['uin']);
 			break;
 
+		case 'sendIcq':
+			isAdmin();
+			header('Content-Type: text/plain');
+			sendIcq('sendMsg', $_SESSION['uin'], 'Тест');
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -1492,7 +1498,7 @@ function sendICQ($cmd, $uin, $text = '') {
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		switch ($cmd) {
 			case 'sendMsg':
-				$msg = ($text != '') ? $text : 'Привет!';
+				$msg = $text;
 				break;
 
 			case 'sendCode':
