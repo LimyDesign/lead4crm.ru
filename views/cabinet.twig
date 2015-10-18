@@ -514,10 +514,37 @@
                     <h3>ICQ</h3>
                     <p>Да, да! Мы также решили включить поддержку старой, доброй аськи. Очень скоро появиться информация о том, как настроить уведомления в любимой асечке. Работы уже ведутся...</p>
                     {% if (admin) %}
-                      <pre id="icq_result" class="hide"></pre>
-                      <a href="#." onclick="icq_bot('start')" class="btn btn-lg btn-primary">Запустить ICQ бот</a>&nbsp;
-                      <a href="#." onclick="icq_bot('status')" class="btn btn-lg btn-primary">Проверить статус бота</a>&nbsp;
-                      <a href="#." onclick="icq_bot('stop')" class="btn btn-lg btn-primary">Убить бота</a>
+                      <form action="/icq/setting/" id="formICQSetting" class="form-horizontal">
+                        <div class="form-group input-group-lg" id="groupICQUIN">
+                          <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputICQUIN" placeholder="881129" value="{{uicq}}" aria-describedby="helpICQUIN">
+                            <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg hide" id="groupICQCode">
+                          <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
+                            <span class="input-group-btn"><button type="button" onclick="sendICQCode('{{uicq}}')" class="btn btn-default">Отправить повторно</button></span>
+                            <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN нашего ICQ информатора в список контактов.</span>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg" id="groupICQNotify">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                              <label><input type="checkbox" name="notify" value="company"> Уведомлять об импорте компаний.</label>
+                              <label><input type="checkbox" name="notify" value="balans"> Уведомлять об изменении баланса.</label>
+                              <label><input type="checkbox" name="notify" value="renewal"> Уведомлять о предстоящем продлении тарифного плана.</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-primary">Сохранить</button>
+                          </div>
+                        </div>
+                      </form>
                     {% endif %}
                   </div>
                 </div>
@@ -1140,52 +1167,6 @@
           selection.removeAllRanges();
           selection.addRange(range);
       }
-  }
-
-  function icq_bot(cmd) {
-    var $icq_result = $('#icq_result');
-    if ($icq_result.hasClass('hide'))
-      $icq_result.removeClass('hide');
-    $icq_result.show();
-    if (cmd == 'start') {
-      $icq_result.text('Запуск сервиса...');
-      $.get('/startIcqBot/', function (data) {
-        if (data == 0)
-          $icq_result.text('Сервис успешно запущен.');
-        else
-          $icq_result.text(data);
-      }).done(function() {
-        setTimeout(function () {
-          $icq_result.hide();
-        }, 5000);
-      });
-    }
-    else if (cmd == 'status') {
-      $icq_result.text('Проверка статуса...');
-      $.get('/statusIcqBot/', function (data) {
-        if (data.substring(0,3) == 'php')
-          $icq_result.text('Сервис запущен.');
-        else
-          $icq_result.text('Сервис остановлен.');
-      }).done(function() {
-        setTimeout(function () {
-          $icq_result.hide();
-        }, 5000);
-      });
-    }
-    else if (cmd == 'stop') {
-      $icq_result.text('Остановка сервиса...');
-      $.get('/stopIcqBot/', function (data) {
-        if (data)
-          $icq_result.text('Сервис остановлен.');
-        else
-          $icq_result.text('Сервис остановить не удалось.');
-      }).done(function() {
-        setTimeout(function () {
-          $icq_result.hide();
-        }, 5000);
-      });
-    }
   }
   </script>
   {# {% endjshrink %} #}
