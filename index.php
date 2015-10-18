@@ -701,8 +701,11 @@ function dbLogin($userId, $userEmail, $provider) {
 				$apikey = pg_fetch_result($result, 0, 'apikey');
 				$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
 				$telegram_company = pg_fetch_result($result, 0, 'telegram_company');
+				$telegram_company = ($telegram_company == 't') ? true : false;
 				$telegram_renewal = pg_fetch_result($result, 0, 'telegram_renewal');
+				$telegram_renewal = ($telegram_renewal == 't') ? true : false;
 				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+				$telegram_balans = ($telegram_balans == 't') ? true : false;
 				$icq_uin = pg_fetch_result($result, 0, 'icq_uin');
 				$icq_company = pg_fetch_result($result, 0, 'icq_company');
 				$icq_company = ($icq_company == 't') ? true : false;
