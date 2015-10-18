@@ -1583,6 +1583,7 @@ function vcard() {
 	echo "VERSION:3.0\n";
 	echo "FN:Lead4CRM («Генератор лидов»)\n";
 	echo "ORG:Lead4CRM («Генератор лидов»)\n";
+	echo "NOTE:Базы 2ГИС в формате любимой CRM\n";
 	echo "TEL;TYPE=work:+7 (499) 704-69-17\n";
 	echo "TEL;TYPE=cell:+7 (983) 241-22-32\n";
 	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
