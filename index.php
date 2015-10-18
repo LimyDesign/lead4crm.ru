@@ -1531,7 +1531,7 @@ function sendICQ($cmd, $uin, $text = '') {
 								$msg .= "\t- Уведомления об импорте компаний\r";
 								$noties['company'] = true;
 								break;
-								
+
 							case 'balans':
 								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
 								$noties['balans'] = true;
@@ -1556,10 +1556,13 @@ function sendICQ($cmd, $uin, $text = '') {
 					{
 						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 						$query = "update users set icq_uin = {$_REQUEST['uin']}".$notify." WHERE id = {$_SESSION['userid']}";
+						echo $query."\n";
 						$_SESSION['icq']['uin'] = $_REQUEST['uin'];
 						pg_query($query);
 						pg_close($db);
 					}
+				} else {
+					echo 'error_code';
 				}
 				break;
 		}

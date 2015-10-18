@@ -927,6 +927,9 @@
               setTimeout(function() {
                 $('#statusICQSetting').addClass('hide');
               }, 5000);
+            } else if (data == 'error_code') {
+              $('#groupICQCode').addClass('has-error');
+              scrollTo('#groupICQCode');
             }
           });
         }
