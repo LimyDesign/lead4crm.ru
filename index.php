@@ -1492,7 +1492,7 @@ function sendICQ($cmd, $uin, $text = '') {
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		switch ($cmd) {
 			case 'sendMsg':
-				$msg = $text ? $text : 'Привет!';
+				$msg = ($text != '') ? $text : 'Привет!';
 				break;
 
 			case 'sendCode':
