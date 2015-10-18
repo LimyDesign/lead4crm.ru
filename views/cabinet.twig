@@ -900,8 +900,7 @@
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
-          code = $('#inputICQCode').val(),
-          notify = $('input[name=notify]').val();
+          code = $('#inputICQCode').val();
       if (isInt(uuin)) {
         if (uuin != '{{icq.uin}}' && code == '') {
           sendCode(uuin);
@@ -914,7 +913,7 @@
           scrollTo('#inputICQCode');
           $('#inputICQCode').focus();
         } else {
-          console.log(notify);
+          console.log($(this).serialize());
         }
       } else {
         $('#groupICQUIN').addClass('has-error');
