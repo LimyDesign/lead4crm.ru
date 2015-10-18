@@ -525,15 +525,15 @@
                         <div class="form-group input-group-lg" id="groupICQNotify">
                           <div class="col-sm-offset-2 col-sm-10">
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+                              <label><input type="checkbox" name="notify" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company == 't') %}checked{% endif %}> Уведомлять об импорте компаний.</label>
                               <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
                             </div>
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+                              <label><input type="checkbox" name="notify" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans == 't') %}checked{% endif %}> Уведомлять об изменении баланса.</label>
                               <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
                             </div>
                             <div class="checkbox">
-                              <label><input type="checkbox" name="notify" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+                              <label><input type="checkbox" name="notify" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal == 't') %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
                               <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
                             </div>
                           </div>
