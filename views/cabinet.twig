@@ -521,54 +521,57 @@
                   </div>
                   <div class="col-md-9">
                     <h3>ICQ</h3>
-                    <p>Да, да! Мы также решили включить поддержку старой, доброй аськи. Очень скоро появиться информация о том, как настроить уведомления в любимой асечке. Работы уже ведутся...</p>
-                    {% if (admin) %}
-                      <div class="alert alert-success hide" id="statusICQSetting">
-                        <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
-                      </div>
-                      <form id="formICQSetting" class="form-horizontal">
-                        <fieldset>
-                          <div class="form-group input-group-lg" id="groupICQUIN">
-                            <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
-                            <div class="col-sm-10">
-                              <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
-                              <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
+                    <p>Для тех, кто еще в полной мере пользуется ICQ, как основным месенджером, мы реализовали поддержку уведомлений в вашу любимую ICQ. Для того, чтобы настроить нотификации достаточно указать нужный ICQ UIN в форме ниже, а также отметить тип уведомлений, которые хотите получать.</p>
+                    <div class="alert alert-warning"><strong>Внимание!</strong> Если у вас стоит АнтиСПАМ фильтр с вопросом на который необходимо ответить или стоит опция получения сообщений только от авторизованных пользователей, то для правильной работы ICQ нотификатора, необходимо добавить его с вой список контактов.</div>
+                    <p>
+                      <strong>ICQ UIN нотификатора:</strong>
+                    </p>
+                    <div class="well" id="icq_bot_uin" onclick=selectText("icq_bot_uin")>658127246</div>
+                    <div class="alert alert-success hide" id="statusICQSetting">
+                      <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+                    </div>
+                    <form id="formICQSetting" class="form-horizontal">
+                      <fieldset>
+                        <div class="form-group input-group-lg" id="groupICQUIN">
+                          <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
+                            <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg" id="groupICQNotify">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+                              <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+                              <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
+                            </div>
+                            <div class="checkbox">
+                              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+                              <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
                             </div>
                           </div>
-                          <div class="form-group input-group-lg" id="groupICQNotify">
-                            <div class="col-sm-offset-2 col-sm-10">
-                              <div class="checkbox">
-                                <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
-                                <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
-                              </div>
-                              <div class="checkbox">
-                                <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
-                                <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
-                              </div>
-                              <div class="checkbox">
-                                <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
-                                <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
-                              </div>
+                        </div>
+                        <div class="form-group input-group-lg hide" id="groupICQCode">
+                          <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
+                          <div class="col-sm-10">
+                            <div class="input-group">
+                              <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
+                              <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
                             </div>
+                            <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN (<mark>658127246</mark>) нашего ICQ информатора в список контактов.</span>
                           </div>
-                          <div class="form-group input-group-lg hide" id="groupICQCode">
-                            <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
-                            <div class="col-sm-10">
-                              <div class="input-group">
-                                <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
-                                <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
-                              </div>
-                              <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN (<mark>658127246</mark>) нашего ICQ информатора в список контактов.</span>
-                            </div>
+                        </div>
+                        <div class="form-group input-group-lg">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-primary">Сохранить</button>
                           </div>
-                          <div class="form-group input-group-lg">
-                            <div class="col-sm-offset-2 col-sm-10">
-                              <button class="btn btn-primary">Сохранить</button>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </form>
-                    {% endif %}
+                        </div>
+                      </fieldset>
+                    </form>
                   </div>
                 </div>
               </div>
