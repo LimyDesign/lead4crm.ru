@@ -527,7 +527,7 @@
                         <div class="form-group input-group-lg" id="groupICQUIN">
                           <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
+                            <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
                             <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
                           </div>
                         </div>
@@ -551,7 +551,7 @@
                           <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
                           <div class="col-sm-10">
                             <div class="input-group">
-                              <input type="text" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
+                              <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
                               <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
                             </div>
                             <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN нашего ICQ информатора в список контактов.</span>
