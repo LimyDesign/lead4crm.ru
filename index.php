@@ -1557,7 +1557,6 @@ function sendICQ($cmd, $uin, $text = '') {
 					{
 						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 						$query = "update users set icq_uin = {$_REQUEST['uin']}".$query_notify." WHERE id = {$_SESSION['userid']}";
-						echo $query."\n";
 						$_SESSION['icq']['uin'] = $_REQUEST['uin'];
 						pg_query($query);
 						pg_close($db);

@@ -527,44 +527,46 @@
                         <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
                       </div>
                       <form id="formICQSetting" class="form-horizontal">
-                        <div class="form-group input-group-lg" id="groupICQUIN">
-                          <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
-                          <div class="col-sm-10">
-                            <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
-                            <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
-                          </div>
-                        </div>
-                        <div class="form-group input-group-lg" id="groupICQNotify">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
-                              <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
-                            </div>
-                            <div class="checkbox">
-                              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
-                              <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
-                            </div>
-                            <div class="checkbox">
-                              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
-                              <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
+                        <fieldset>
+                          <div class="form-group input-group-lg" id="groupICQUIN">
+                            <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
+                            <div class="col-sm-10">
+                              <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
+                              <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
                             </div>
                           </div>
-                        </div>
-                        <div class="form-group input-group-lg hide" id="groupICQCode">
-                          <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
-                          <div class="col-sm-10">
-                            <div class="input-group">
-                              <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
-                              <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
+                          <div class="form-group input-group-lg" id="groupICQNotify">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <div class="checkbox">
+                                <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+                                <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
+                              </div>
+                              <div class="checkbox">
+                                <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+                                <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
+                              </div>
+                              <div class="checkbox">
+                                <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+                                <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа.</span>
+                              </div>
                             </div>
-                            <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN (<mark>658127246</mark>) нашего ICQ информатора в список контактов.</span>
                           </div>
-                        </div>
-                        <div class="form-group input-group-lg">
-                          <div class="col-sm-offset-2 col-sm-10">
-                            <button class="btn btn-primary">Сохранить</button>
+                          <div class="form-group input-group-lg hide" id="groupICQCode">
+                            <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
+                            <div class="col-sm-10">
+                              <div class="input-group">
+                                <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
+                                <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
+                              </div>
+                              <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN (<mark>658127246</mark>) нашего ICQ информатора в список контактов.</span>
+                            </div>
                           </div>
-                        </div>
+                          <div class="form-group input-group-lg">
+                            <div class="col-sm-offset-2 col-sm-10">
+                              <button class="btn btn-primary">Сохранить</button>
+                            </div>
+                          </div>
+                        </fieldset>
                       </form>
                     {% endif %}
                   </div>
@@ -903,7 +905,9 @@
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
-          code = $('#inputICQCode').val();
+          code = $('#inputICQCode').val(),
+          $fieldset = $(this).find('fieldset');
+      $fieldset.attr('disabled', 'disabled');
       if (isInt(uuin) && uuin != '') {
         if (uuin != '{{icq.uin}}' && code == '') {
           sendCode(uuin);
@@ -914,16 +918,22 @@
           $('#groupICQUIN').addClass('has-success');
           $('#groupICQCode').removeClass('hide');
           scrollTo('#inputICQCode');
+          $fieldset.removeAttr('disabled');
           $('#inputICQCode').focus();
         } else {
           $.post('/icq/save/', $(this).serialize(), function (data) {
             if (data == 'error_code') {
               $('#groupICQCode').addClass('has-error');
               scrollTo('#groupICQCode');
+              $fieldset.removeAttr('disabled');
+              $('#inputICQCode').focus();
             } else {
-              console.log(data);
+              $fieldset.removeAttr('disabled');
               if ($('#groupICQUIN').hasClass('has-success')) {
                 $('#groupICQUIN').removeClass('has-success');
+              }
+              if ($('#groupICQUIN').hasClass('has-error')) {
+                $('#groupICQUIN').removeClass('has-error');
               }
               $('#groupICQCode').addClass('hide');
               $('#statusICQSetting').removeClass('hide');
@@ -936,7 +946,9 @@
         }
       } else {
         $('#groupICQUIN').addClass('has-error');
+        $fieldset.removeAttr('disabled');
         scrollTo('#groupICQUIN');
+        $('#inputICQUIN').focus();
       }
     });
   });
