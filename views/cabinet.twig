@@ -944,10 +944,6 @@
           $('#inputICQCode').focus();
         } else {
           if (icq_uin_start != icq_uin_change || icq_notify_start != icq_notify_change) {
-            console.log('icq_uin_start: '+icq_uin_start);
-            console.log('icq_uin_change: '+icq_uin_change);
-            console.log('icq_notify_start: '+icq_notify_start);
-            console.log('icq_notify_change: '+icq_notify_change);
             $.post('/icq/save/', $(this).serialize(), function (data) {
               console.log(data);
               if (data == 'error_code') {
@@ -972,7 +968,6 @@
               }
             });
           } else {
-            alert('Yo!');
             $fieldset.removeAttr('disabled');
           }
         }
