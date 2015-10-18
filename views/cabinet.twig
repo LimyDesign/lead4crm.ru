@@ -919,6 +919,7 @@
     });
 
     $('input[name^="notify"]').change(function(event) {
+      icq_notify_change = '';
       $('input[name^="notify"]:checked').each(function() {
         icq_notify_change += $(this).val();
       });
