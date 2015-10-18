@@ -1586,6 +1586,7 @@ function vcard() {
 	echo "TEL;TYPE=work:+7 (499) 704-69-17\n";
 	echo "TEL;TYPE=cell:+7 (983) 241-22-32\n";
 	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
+	echo "PHOTO;VALUE=uri:https://www.lead4crm.ru/public/images/vcard-logo-1024x1024.jpg\n";
 	echo "LOGO;VALUE=uri:https://www.lead4crm.ru/public/images/vcard-logo-1024x1024.jpg\n";
 	echo "URL:https://www.lead4crm.ru\n";
 	echo "CLASS:PUBLIC\n";
