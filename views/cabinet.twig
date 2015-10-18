@@ -906,12 +906,18 @@
       }
     });
 
+    /* Прописываем изначальные и конечные значения ICQ UIN.
+       Необходимо для дальнейшей проверки сделанных изменений.
+    ========================================================================================= */
     icq_uin_start = icq_uin_change = $('#inputICQUIN').val();
 
     $('#inputICQUIN').change(function() {
         icq_uin_change = $(this).val();
     });
 
+    /* Прописываем изначальные и конечные значения настроек уведомлений для ICQ.
+       Необходимо для дальнейшей проверки сделанных изменений.
+    ========================================================================================= */
     $('input[name^="notify"]:checked').each(function() {
       icq_notify_start += $(this).val();
       icq_notify_change = icq_notify_start;
@@ -924,6 +930,8 @@
       });
     });
 
+    /* Выполняем настройку клиента для связи с клиентской ICQ.
+    ========================================================================================= */
     $('#formICQSetting').submit(function (e) {
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
@@ -1047,6 +1055,8 @@
     });
   }
 
+  /* Функция загрузки уже имеющихся выборок.
+  ========================================================================================= */
   function downloadSelection(sDate, crm_id) {
     var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
     window.setTimeout(function() {
@@ -1054,12 +1064,16 @@
     }, 10000);
   }
 
+  /* Функция показа диалогов поиска.
+  ========================================================================================= */
   function showSearchDialog(number) {
     $('#searchDialog-'+number).modal({
       backdrop: false
     });
   }
 
+  /* Функция-конструктор показывающая все рубрики, распределенные по вложенности.
+  ========================================================================================= */
   function rubricListConstructor(rubrics) {
     var level2 = null,
         level3 = null;
@@ -1095,6 +1109,8 @@
     }
   }
 
+  /* Функция выбора всех компаний разом.
+  ========================================================================================= */
   function chMarkAll(sdn) {
     var checkedStatus = $('#searchDialog-'+sdn).find('#selectAllID:checked').length;
     var batchImport = $('#searchDialog-'+sdn).find('#ok');
@@ -1114,6 +1130,8 @@
     });
   }
 
+  /* Функция построения страницы списка компаний.
+  ========================================================================================= */
   function renderPage(pageNum, search_text, callback) {
     totalChecked = 0;
     var formData = {
@@ -1216,6 +1234,8 @@
     });
   }
 
+  /* Функция импорта компании.
+  ========================================================================================= */
   function importCompany(id, hash, from2gis, callback) {
     from2gis = typeof from2gis !== 'underfined' ? from2gis : false;
     var importData = {
@@ -1240,6 +1260,8 @@
     });
   }
 
+  /* Функция информацию об общем кол-ве импортируемых компаний.
+  ========================================================================================= */
   function changeMark(id) {
     var status = $('input[name="'+id+'"]:checked').length;
     var type = localStorage.getItem('search_id');
@@ -1277,6 +1299,8 @@
       }
   }
 
+  /* Функция отправляет на указанный 'uin' код верификации.
+  ========================================================================================= */
   function sendCode(uin) {
     if (!$('#resendICQCode').prop('disabled')) {
       $('#resendICQCode').attr('disabled', 'disabled');
