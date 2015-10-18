@@ -909,9 +909,6 @@
         $('#groupICQCode').removeClass('hide');
         scrollTo('#inputICQCode');
         $('#inputICQCode').focus();
-        setTimeout(function() {
-          $('#resendICQCode').removeAttr('disabled');
-        }, 10000);
       } else {
         $('#groupICQUIN').addClass('has-error');
         scrollTo('#groupICQUIN');
@@ -1215,7 +1212,16 @@
   }
 
   function sendCode(uin) {
-    $.post('/icq/sendCode/', { uin: uin });
+    if (!$('#resendICQCode').prop('disabled')) {
+      $('#resendICQCode').attr('disabled', 'disabled');
+    }
+    $.post('/icq/sendCode/', { uin: uin }, function (data) {
+      if (data == '11') {
+        setTimeout(function() {
+          $('#resendICQCode').removeAttr('disabled');
+        }, 10000);
+      }
+    });
   }
 
   /* Функция проверяет является ли переменная 'n' целочисленной.
