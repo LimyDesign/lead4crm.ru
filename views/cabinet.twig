@@ -924,7 +924,8 @@
         } else {
           var icq_form_new = $(this).serialize();
           if (icq_form != icq_form_new) {
-            console.log('Old Form:' + icq_form, 'New Form: ' + icq_form_new);
+            console.log('Old Form:' + icq_form);
+            console.log('New Form: ' + icq_form_new);
             $.post('/icq/save/', $(this).serialize(), function (data) {
               console.log(data);
               if (data == 'error_code') {
