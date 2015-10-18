@@ -1519,7 +1519,7 @@ function sendICQ($cmd, $uin, $text = '') {
 			case 'save':
 				if (($_SESSION['icq']['uin'] != $_REQUEST['uin'] && 
 					$_SESSION['icq']['code'] == $_REQUEST['code']) ||
-					$_SESSION['icq']['uin'] == $_REQUEST['uin'])
+					$_SESSION['icq']['uin'] == $_REQUEST['uin']
 				) {
 					$query_notify = '';
 					$noties = array('company' => false, 'balans' => false, 'renewal' => false);
