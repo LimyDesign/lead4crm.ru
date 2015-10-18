@@ -925,6 +925,7 @@
           var icq_form_new = $(this).serialize();
           if (icq_form != icq_form_new) {
             $.post('/icq/save/', $(this).serialize(), function (data) {
+              console.log(data);
               if (data == 'error_code') {
                 $('#groupICQCode').addClass('has-error');
                 scrollTo('#groupICQCode');
