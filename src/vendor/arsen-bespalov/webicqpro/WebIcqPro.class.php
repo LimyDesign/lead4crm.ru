@@ -2474,9 +2474,9 @@ class WebIcqPro extends WebIcqPro_Socet {
 	{
 		$this->channel = 0x04;
 		$this->socetWrite($this->packFlap(''));
-		print_r($this->readSocket());
-		print_r($this->readSocket());
-		print_r($this->readSocket());
+		// print_r($this->readSocket());
+		// print_r($this->readSocket());
+		// print_r($this->readSocket());
 		$this->socetClose();
 	}
 
