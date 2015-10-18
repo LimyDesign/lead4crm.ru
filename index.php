@@ -90,6 +90,11 @@ if ($cmd[0]) {
 			sendICQ($cmd[1], $_REQUEST['uin']);
 			break;
 
+		case 'vcard':
+			header('Content-Type: text/x-vcard');
+			vcard();
+			break;
+
 		case 'getSupportCities':
 			getSupportCities();
 			break;
@@ -1571,6 +1576,19 @@ function sendICQ($cmd, $uin, $msg = '') {
 		sleep(1);
 		$icq->disconnect();
 	}
+}
+
+function vcard() {
+	echo "BEGIN:VCARD\n";
+	echo "VERSION:3.0\n";
+	echo "FN:Lead4CRM («Генератор лидов»)\n";
+	echo "ORG:Lead4CRM («Генератор лидов»)\n";
+	echo "TEL;TYPE=work:+7 (499) 704-69-17;TYPE=cell:+7 (925) 704-69-17\n";
+	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
+	echo "URL:https://www.lead4crm.ru\n";
+	echo "CLASS:PUBLIC\n";
+	echo "X-ICQ:658127246\n";
+	echo "END:VCARD\n";
 }
 
 function getRealIpAddr() {
