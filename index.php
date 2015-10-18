@@ -702,6 +702,10 @@ function dbLogin($userId, $userEmail, $provider) {
 				$telegram_company = pg_fetch_result($result, 0, 'telegram_company');
 				$telegram_renewal = pg_fetch_result($result, 0, 'telegram_renewal');
 				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+				$icq_uin = pg_fetch_result($result, 0, 'icq_uin');
+				$icq_company = pg_fetch_result($result, 0, 'icq_company');
+				$icq_renewal = pg_fetch_result($result, 0, 'icq_renewal');
+				$icq_balans = pg_fetch_result($result, 0, 'icq_balans');
 				$vk = pg_fetch_result($result, 0, 'vk');
 				$ok = pg_fetch_result($result, 0, 'ok');
 				$fb = pg_fetch_result($result, 0, 'fb');
@@ -715,6 +719,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['is_admin'] = $is_admin;
 			$_SESSION['apikey'] = $apikey;
 			$_SESSION['telegram'] = array('chat_id' => $telegram_chat_id, 'company' => $telegram_company, 'renewal' => $telegram_renewal, 'balans' => $telegram_balans);
+			$_SESSION['icq'] = array('uin' => $icq_uin, 'company' => $icq_company, 'renewal' => $icq_renewal, 'balans' => $icq_balans);
 			$_SESSION['provider'] = array('vk' => $vk, 'ok' => $ok, 'fb' => $fb, 'gp' => $gp, 'mr' => $mr, 'ya' => $ya);
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
