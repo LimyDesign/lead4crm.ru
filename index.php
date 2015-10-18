@@ -778,6 +778,24 @@ function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
 			else
 				$telegram->sendNotification('Импортирована компания: '.$cp->name, $_SESSION['telegram']['chat_id']);
 		}
+
+		$icq_uin = $_SESSION['icq']['uin'];
+		$icq_balans = $_SESSION['icq']['balans'];
+		$icq_company = $_SESSION['icq']['company'];
+		$icq_renewal = $_SESSION['icq']['renewal'];
+
+		if ($icq_company && !$icq_balans) {
+			sendICQ('sendMsg', $icq_uin, "Импортирована компания:\r\t".$cp->name);
+		}
+		elseif ($icq_balans && !$icq_company && $cp->summ) {
+			sendICQ('sendMsg', $icq_uin, "За импорт компании списана сумма:\r\t".$cp->summ." руб.");
+		}
+		elseif ($icq_balans && $icq_company) {
+			if ($cp->summ)
+				sendICQ('sendMsg', $icq_uin, "За импорт компании:\r\t".$cp->name."\rСписана сумма:\r\t".$cp->summ." руб.");
+			else
+				sendICQ('semdMsg', $icq_uin, "Импортирована компания:\r\t".$cp_name);
+		}
 	}
 	return $return;
 }
@@ -1362,12 +1380,21 @@ function yandexPayments($cmd) {
 					$code = '0';
 					$query = "insert into log (uid, debet, client, invoice) values ({$uid}, {$sum}, '{$client}', {$iid})";
 					pg_query($query);
-					$query = "select telegram_chat_id, telegram_balans from users where id = {$uid}";
+					$query = "select telegram_chat_id, telegram_balans, icq_uin, icq_balans from users where id = {$uid}";
 					$result = pg_query($query);
 					$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
 					$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+					$telegram_balans = ($telegram_balans == 't') ? true : false;
+					$icq_uin = pg_fetch_result($result, 0, 'icq_uin');
+					$icq_balans = pg_fetch_result($result, 0, 'icq_balans');
+					$icq_balans = ($icq_balans == 't') ? true : false;
+
 					if ($telegram_balans) {
 						$telegram->sendNotification('Лицевой счет пополнен на сумму: '.$sum.' руб.', $telegram_chat_id);
+					}
+
+					if ($icq_balans) {
+						sendICQ('sendMsg', $icq_uin, "Лицевой счет пополнен на сумму:\r\t".$sum." руб.");
 					}
 				}
 			} else {
@@ -1427,14 +1454,23 @@ function setTariff($getTariff) {
 			if ($uid == $_SESSION['userid']) {
 				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), 'Активания тарифа ' || (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'))";
 				pg_query($query);
-				$query = "select telegram_chat_id, telegram_balans,  (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_price, (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_name from users where id = {$_SESSION['userid']}";
+				$query = "select telegram_chat_id, telegram_balans, icq_uin, icq_balans, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_price, (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_name from users where id = {$_SESSION['userid']}";
 				$result = pg_query($query);
 				$telegram_chat_id = pg_fetch_result($result, 0, 'telegram_chat_id');
 				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
+				$telegram_balans = ($telegram_balans == 't') ? true : false;
+				$icq_uin = pg_fetch_result($result, 0, 'icq_uin');
+				$icq_balans = pg_fetch_result($result, 0, 'icq_balans');
+				$icq_balans = ($icq_balans == 't') ? true : false;
 				$tariff_price = pg_fetch_result($result, 0, 'tariff_price');
 				$tariff_name = pg_fetch_result($result, 0, 'tariff_name');
+
 				if ($telegram_balans) {
 					$telegram->sendNotification('С лицевого счета списана сумма: '.$tariff_price.' руб. в счет тарифного плана «'.$tariff_name.'»', $telegram_chat_id);
+				}
+
+				if ($icq_balans) {
+					sendICQ('sendMsg', $icq_uin, "С лицевого счета списана сумма:\r\t".$tariff_price." рублей\rВ счет тарифного плана «".$tariff_name."»");
 				}
 
 			}
