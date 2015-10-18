@@ -93,7 +93,7 @@ if ($cmd[0]) {
 		case 'sendIcq':
 			isAdmin();
 			header('Content-Type: text/plain');
-			sendICQ('sendMsg', $_SESSION['uin'], 'Тест');
+			sendICQ('sendMsg', $_SESSION['uin'], 'Тестовое сообщение, сука, нахуй!!!!!');
 			break;
 
 		case 'getSupportCities':
