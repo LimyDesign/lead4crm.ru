@@ -87,7 +87,7 @@ if ($cmd[0]) {
 		case 'icq':
 			isAuth();
 			header('Content-Type: text/plain');
-			sendIcq($cmd[1], $_REQUEST['uin']);
+			sendICQ($cmd[1], $_REQUEST['uin']);
 			break;
 
 		case 'getSupportCities':
@@ -785,16 +785,16 @@ function importCompany($apikey, $domain, $id, $hash, $auid, $ip, $getFrom2GIS) {
 		$icq_renewal = $_SESSION['icq']['renewal'];
 
 		if ($icq_company && !$icq_balans) {
-			sendICQ('sendMsg', $icq_uin, "Импортирована компания:\r\t".$cp->name);
+			sendICQ('sendMsg', $icq_uin, "Импортирована компания:\r\t{$cp->name}");
 		}
 		elseif ($icq_balans && !$icq_company && $cp->summ) {
-			sendICQ('sendMsg', $icq_uin, "За импорт компании списана сумма:\r\t".$cp->summ." руб.");
+			sendICQ('sendMsg', $icq_uin, "За импорт компании списана сумма:\r\t{$cp->summ} руб.");
 		}
 		elseif ($icq_balans && $icq_company) {
 			if ($cp->summ)
-				sendICQ('sendMsg', $icq_uin, "За импорт компании:\r\t".$cp->name."\rСписана сумма:\r\t".$cp->summ." руб.");
+				sendICQ('sendMsg', $icq_uin, "За импорт компании:\r\t{$cp->name}\rСписана сумма:\r\t".$cp->summ." руб.");
 			else
-				sendICQ('semdMsg', $icq_uin, "Импортирована компания:\r\t".$cp_name);
+				sendICQ('semdMsg', $icq_uin, "Импортирована компания:\r\t{$cp->name}");
 		}
 	}
 	return $return;
