@@ -220,6 +220,7 @@ if ($cmd[0]) {
 				'userid' => $_SESSION['userid'],
 				'admin' => $_SESSION['is_admin'],
 				'telegramid' => $_SESSION['telegramid'],
+				'icq' = $_SESSION['icq'],
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
