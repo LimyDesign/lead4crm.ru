@@ -14,7 +14,7 @@ $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
 $icq = new WebIcqPro();
 $icq->debug = true;
-$icq->setOption('UserAgent', 'icq2001');
+$icq->setOption('UserAgent', 'macicq');
 
 pcntl_signal(SIGTERM, 'sig_handler');
 pcntl_signal(SIGKILL, 'sig_handler');

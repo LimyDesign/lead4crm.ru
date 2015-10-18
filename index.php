@@ -84,6 +84,12 @@ if ($cmd[0]) {
 			}
 			break;
 
+		case 'sendICQ':
+			isAdmin();
+			header('Content-Type: text/plain');
+			sendICQ($cmd[1], $cmd[2]);
+			break;
+
 		case 'startIcqBot':
 			isAdmin();
 			header('Content-Type: text/plain');
@@ -1463,6 +1469,25 @@ function setTariff($getTariff) {
 		header("location: /cabinet/");
 	else
 		getUserData();
+}
+
+function sendICQ($to, $text) {
+	global $icq, $conf;
+	$startxtstatus = 'business';
+	$startstatus = 'STATUS_FREE4CHAT';
+	$cp = 'cp1251';
+	$icq->debug = true;
+	$icq->setOption('UserAgent', 'macicq');
+	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
+		$icq->sendMessage($to, mb_convert_encoding($text, $cp));
+		$uptime = $status_time = $xstatus_time = time();
+		$icq->setStatus($startstatus, 'STATUS_DCAUTH', 'Yo!');
+		$icq->setXStatus($startxtstatus, 'Yo!');
+		$xtstus = $startxtstatus;
+		$status = $startstatus;
+		sleep(1);
+		$icq->disconnect();
+	}
 }
 
 function getRealIpAddr() {
