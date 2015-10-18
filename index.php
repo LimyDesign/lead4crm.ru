@@ -1517,14 +1517,14 @@ function sendICQ($cmd, $uin, $text = '') {
 				break;
 
 			case 'save':
+				$sUin = $_SESSION['icq']['uin'];
+				$uUin = preg_replace('/[^0-9]/', '', $_REQUEST['uin']);
+				$sCode = $_SESSION['icq']['code']
 				$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
-				if (($_SESSION['icq']['uin'] != $_REQUEST['uin'] && 
-					$_SESSION['icq']['code'] == $uCode) ||
-					$_SESSION['icq']['uin'] == $_REQUEST['uin']
-				) {
+				if (($sUin != $uUin && $sCode == $uCode) ||	$sUin == $uUin) {
 					$query_notify = '';
 					$noties = array('company' => 'false', 'balans' => 'false', 'renewal' => 'false');
-					$msg = "Теперь на ваш UIN ({$_REQUEST['uin']}) будут поступать следующие уведомления: \r";
+					$msg = "Теперь на ваш UIN ({$uUin}) будут поступать следующие уведомления: \r";
 					$msg_len = strlen($msg);
 					foreach ($_REQUEST['notify'] as $notify) {
 						switch ($notify) {
@@ -1556,8 +1556,8 @@ function sendICQ($cmd, $uin, $text = '') {
 					if ($conf->db->type == 'postgres' && is_numeric($_REQUEST['uin']))
 					{
 						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-						$query = "update users set icq_uin = {$_REQUEST['uin']}".$query_notify." WHERE id = {$_SESSION['userid']}";
-						$_SESSION['icq']['uin'] = $_REQUEST['uin'];
+						$query = "update users set icq_uin = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+						$_SESSION['icq']['uin'] = $uUin;
 						pg_query($query);
 						pg_close($db);
 					}
