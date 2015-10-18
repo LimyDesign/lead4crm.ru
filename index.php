@@ -90,12 +90,6 @@ if ($cmd[0]) {
 			sendIcq($cmd[1], $_REQUEST['uin']);
 			break;
 
-		case 'sendIcq':
-			isAdmin();
-			header('Content-Type: text/plain');
-			sendICQ('sendMsg', $_SESSION['icq']['uin'], 'Тестовое сообщение, сука, нахуй!!!!!');
-			break;
-
 		case 'getSupportCities':
 			getSupportCities();
 			break;
