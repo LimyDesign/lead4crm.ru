@@ -480,6 +480,15 @@
                 </div>
               </div>
               <div role="tabpanel" class="tab-pane fade" id="tabNotification">
+                {% if (notify_center) %}
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="alert alert-danger">
+                        Для корректной работы сервиса нотификаций, необходимо перелогиниться. Для этого нажмите на кнопку «Выход» и снова войдите.
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
                 <div class="row">
                   <div class="col-md-3">
                     <p class="text-center"><img class="img-responsive" src="https://telegram.org/img/t_logo.png" alt=""></p>

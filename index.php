@@ -221,6 +221,7 @@ if ($cmd[0]) {
 				'admin' => $_SESSION['is_admin'],
 				'telegramid' => $_SESSION['telegramid'],
 				'icq' => $_SESSION['icq'],
+				'notify_center' => (!isset($_SESSION['dsfsdf'])) ? true : false,
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
