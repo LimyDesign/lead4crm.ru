@@ -209,6 +209,10 @@ if ($cmd[0]) {
 			setTariff($cmd[1]);
 			break;
 
+		case 'setNot':
+			$_SESSION['dsfsdf'] = '';
+			break;
+
 		case 'cabinet':
 			isAuth($cmd);
 			$top_rubrics = importRubrics($_SESSION['apikey'], 'www.lead4crm.ru');
