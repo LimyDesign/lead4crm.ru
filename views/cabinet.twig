@@ -1282,13 +1282,9 @@
       $('#resendICQCode').attr('disabled', 'disabled');
     }
     $.post('/icq/sendCode/', { uin: uin }, function (data) {
-      if (data == '11') {
-        setTimeout(function() {
-          $('#resendICQCode').removeAttr('disabled');
-        }, 60000);
-      } else {
+      setTimeout(function() {
         $('#resendICQCode').removeAttr('disabled');
-      }
+      }, 60000);
     });
   }
 
