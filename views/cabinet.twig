@@ -928,7 +928,8 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val(),
           code = $('#inputICQCode').val(),
-          $fieldset = $(this).find('fieldset');
+          $fieldset = $(this).find('fieldset'),
+          serialized = $(this).serialize();
       $fieldset.attr('disabled', 'disabled');
       if (isInt(uuin) && uuin != '') {
         if (uuin != '{{icq.uin}}' && code == '') {
@@ -944,7 +945,7 @@
           $('#inputICQCode').focus();
         } else {
           if (icq_uin_start != icq_uin_change || icq_notify_start != icq_notify_change) {
-            $.post('/icq/save/', $(this).serialize(), function (data) {
+            $.post('/icq/save/', serialized, function (data) {
               console.log(data);
               if (data == 'error_code') {
                 $('#groupICQCode').addClass('has-error');
