@@ -523,7 +523,7 @@
                     <h3>ICQ</h3>
                     <p>Да, да! Мы также решили включить поддержку старой, доброй аськи. Очень скоро появиться информация о том, как настроить уведомления в любимой асечке. Работы уже ведутся...</p>
                     {% if (admin) %}
-                      <form action="/icq/setting/" id="formICQSetting" class="form-horizontal">
+                      <form id="formICQSetting" class="form-horizontal">
                         <div class="form-group input-group-lg" id="groupICQUIN">
                           <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
                           <div class="col-sm-10">
@@ -552,7 +552,7 @@
                           <div class="col-sm-10">
                             <div class="input-group">
                               <input type="text" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
-                              <span class="input-group-btn"><button type="button" onclick="sendCode({{uicq}})" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
+                              <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
                             </div>
                             <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN нашего ICQ информатора в список контактов.</span>
                           </div>
@@ -901,15 +901,19 @@
       e.preventDefault();
       var uuin = $('#inputICQUIN').val();
       if (isInt(uuin)) {
-        sendCode(uuin);
-        $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
-        if ($('#groupICQUIN').hasClass('has-error')) {
-          $('#groupICQUIN').removeClass('has-error');
+        if ($('#inputICQUIN') != {{icq.uin}} && $('#inputICQCode').val() == '') {
+          sendCode(uuin);
+          $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
+          if ($('#groupICQUIN').hasClass('has-error')) {
+            $('#groupICQUIN').removeClass('has-error');
+          }
+          $('#groupICQUIN').addClass('has-success');
+          $('#groupICQCode').removeClass('hide');
+          scrollTo('#inputICQCode');
+          $('#inputICQCode').focus();
+        } else {
+          console.log($(this).serialize());
         }
-        $('#groupICQUIN').addClass('has-success');
-        $('#groupICQCode').removeClass('hide');
-        scrollTo('#inputICQCode');
-        $('#inputICQCode').focus();
       } else {
         $('#groupICQUIN').addClass('has-error');
         scrollTo('#groupICQUIN');
