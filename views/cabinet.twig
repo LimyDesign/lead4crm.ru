@@ -911,7 +911,7 @@
     $('#inputICQUIN').change(function() {
       if ($(this).val() != icq_uin_start)
         icq_uin_change = $(this).val();
-    }).change();
+    });
 
     $('input[name^="notify"]:checked').each(function() {
       icq_notify_start += $(this).val();
