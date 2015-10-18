@@ -705,8 +705,11 @@ function dbLogin($userId, $userEmail, $provider) {
 				$telegram_balans = pg_fetch_result($result, 0, 'telegram_balans');
 				$icq_uin = pg_fetch_result($result, 0, 'icq_uin');
 				$icq_company = pg_fetch_result($result, 0, 'icq_company');
+				$icq_company = ($icq_company == 't') ? true : false;
 				$icq_renewal = pg_fetch_result($result, 0, 'icq_renewal');
+				$icq_renewal = ($icq_renewal == 't') ? true : false;
 				$icq_balans = pg_fetch_result($result, 0, 'icq_balans');
+				$icq_balans = ($icq_balans == 't') ? true : false;
 				$vk = pg_fetch_result($result, 0, 'vk');
 				$ok = pg_fetch_result($result, 0, 'ok');
 				$fb = pg_fetch_result($result, 0, 'fb');
