@@ -137,7 +137,7 @@
                             <option value="{{crm.id}}">{{crm.version}}</option>
                           {% endfor %}
                         </optgroup>
-                      {% elseif not (crm_systems.dev) %}
+                      {% elseif not crm_systems.dev %}
                         <optgroup label="{{crm_systems.name}}">
                           {% for crm in crm_systems.versions %}
                             <option value="{{crm.id}}">{{crm.version}}</option>
