@@ -32,7 +32,7 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
 $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
-$wa->connect()
+$wa->connect();
 $wa->password($conf->wa->password);
 $wa->sendSetProfilePicture('https://www.lead4crm.ru/public/images/icq_avatar_bot.png');
 
