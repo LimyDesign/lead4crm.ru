@@ -33,8 +33,14 @@ $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegr
 $icq = new WebIcqPro();
 $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
 $wa->connect();
-$wa->password($conf->wa->password);
-$wa->sendSetProfilePicture('https://www.lead4crm.ru/public/images/icq_avatar_bot.png');
+$wa->loginWithPassword($conf->wa->password);
+$wa->sendGetPrivacyBlockedList();
+// $wa->sendGetClientConfig();
+// $wa->sendGetServerProperties();
+// $wa->sendGetGroups();
+// $wa->sendGetBroadcastLists();
+// $wa->sendSync('79041326000');
+// $wa->sendSetProfilePicture('https://www.lead4crm.ru/public/images/icq_avatar_bot.png');
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -94,7 +100,19 @@ if ($cmd[0]) {
 			sendICQ($cmd[1], $_REQUEST['uin']);
 			break;
 
+		case 'wafirst':
+			$wa->sendGetClientConfig();
+			$wa->sendGetServerProperties();
+			$wa->sendGetGroups();
+			$wa->sendGetBroadcastLists();
+			$wa->sendSync('79041326000');
+			$wa->sendPresenceSubscription('79041326000');
+			$wa->sendGetStatuses('79041326000');
+			$wa->sendGetProfilePicture('79041326000');
+			$wa->sendPing();
 		case 'wa':
+			$wa->sendMessageComposing('79041326000');
+			$wa->sendMessagePaused('79041326000');
 			$wa->sendMessage('79041326000', 'Hi! :) this is a test message');
 			break;
 
