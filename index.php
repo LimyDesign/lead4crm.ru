@@ -31,16 +31,10 @@ $twig = new Twig_Environment($loader, array(
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
-$wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
+$wa = new WhatsProt($conf->wa->login, 0, 'Lead4CRM', true);
 $wa->connect();
 $wa->loginWithPassword($conf->wa->password);
 $wa->sendGetPrivacyBlockedList();
-// $wa->sendGetClientConfig();
-// $wa->sendGetServerProperties();
-// $wa->sendGetGroups();
-// $wa->sendGetBroadcastLists();
-// $wa->sendSync('79041326000');
-// $wa->sendSetProfilePicture('https://www.lead4crm.ru/public/images/icq_avatar_bot.png');
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
