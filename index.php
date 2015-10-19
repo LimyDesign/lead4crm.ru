@@ -1585,14 +1585,13 @@ function vcard() {
 	echo "ORG:Lead4CRM («Генератор лидов»)\n";
 	echo "NOTE:Базы 2ГИС в формате любимой CRM\n";
 	echo "TEL;TYPE=work:+7 (499) 704-69-17\n";
-	echo "TEL;TYPE=cell:+7 (983) 241-22-32\n";
+	echo "TEL;TYPE=cell:+7 (914) 926-96-17\n";
 	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
 	echo "EMAIL;TYPE=internet,pref:help@lead4crm.ru\n";
 	echo "EMAIL;TYPE=internet:news@lead4crm.ru\n";
 	echo "PHOTO;VALUE=uri:https://www.lead4crm.ru/public/images/vcard-logo-1024x1024.jpg\n";
 	echo "LOGO;VALUE=uri:https://www.lead4crm.ru/public/images/vcard-logo-1024x1024.jpg\n";
 	echo "URL:https://www.lead4crm.ru\n";
-	echo "CLASS:PUBLIC\n";
 	echo "X-ICQ:658127246\n";
 	echo "END:VCARD\n";
 }
