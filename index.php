@@ -32,9 +32,9 @@ $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8',
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
 $wa = new WhatsProt($conf->wa->login, 0, 'Lead4CRM', true);
-$wa->connect();
-$wa->loginWithPassword($conf->wa->password);
-$wa->sendGetPrivacyBlockedList();
+// $wa->connect();
+// $wa->loginWithPassword($conf->wa->password);
+// $wa->sendGetPrivacyBlockedList();
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
