@@ -31,6 +31,10 @@ $twig = new Twig_Environment($loader, array(
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false, true);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $icq = new WebIcqPro();
+$wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
+$wa->connect()
+$wa->password($conf->wa->password);
+$wa->sendSetProfilePicture('https://www.lead4crm.ru/public/images/icq_avatar_bot.png');
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -88,6 +92,10 @@ if ($cmd[0]) {
 			isAuth();
 			header('Content-Type: text/plain');
 			sendICQ($cmd[1], $_REQUEST['uin']);
+			break;
+
+		case 'wa':
+			$wa->sendMessage('79041326000', 'Hi! :) this is a test message');
 			break;
 
 		case 'vcard':
