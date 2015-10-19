@@ -92,6 +92,7 @@ if ($cmd[0]) {
 
 		case 'vcard':
 			header('Content-Type: text/x-vcard');
+			header('Content-Disposition: attachment; filename=lead4crm.vcard');
 			vcard();
 			break;
 
