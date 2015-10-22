@@ -739,7 +739,7 @@ function getB24UserData($apikey) {
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = (select id from users where apikey = '{$apikey}')) / {$price}) as qty from users where apikey = '{$apikey}'";
+		$query = "select t1.qty2 + trunc((select sum(t2.debet) - sum(t2.credit) from log t2 where t2.uid = t1.id) / {$price}) as qty from users t1 where apikey = '{$apikey}'";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
@@ -1180,7 +1180,7 @@ function getUserData($return = 'json') {
 		$tariff = pg_fetch_result($result, 0, 'name');
 		$price = pg_fetch_result($result, 0, 'price');
 		$tariff = $tariff ? $tariff : 'Демо';
-		$query = "select qty + trunc((select sum(debet) - sum(credit) from log where uid = {$_SESSION['userid']}) / {$price}) as qty from users where id = {$_SESSION['userid']}";
+		$query = "select t1.qty2 + trunc((select sum(t2.debet) - sum(t2.credit) from log t2 where t2.uid = t1.id) / {$price}) as qty from users t1 where t1.id = {$_SESSION['userid']}";
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
@@ -1475,12 +1475,12 @@ function setTariff($getTariff) {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$tariff = $_POST['tariff'] ? $_POST['tariff'] : $getTariff;
 		if ($tariff != 'demo') {
-			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), qty = qty + (select queries from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') returning id";
+			$query = "update users set tariffid2 = (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), qty2 = qty2 + (select queries from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') where id = {$_SESSION['userid']} and (select (sum(debet) - sum(credit)) from log where uid = {$_SESSION['userid']}) >= (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') and (select tariffid2 from users where id = {$_SESSION['userid']}) != (select id from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') returning id";
 			$result = pg_query($query);
 			$uid = pg_fetch_result($result, 0, 'id');
 			pg_free_result($result);
 			if ($uid == $_SESSION['userid']) {
-				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), 'Активания тарифа ' || (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'))";
+				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'), 'Активация тарифа ' || (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru'))";
 				pg_query($query);
 				$query = "select telegram_chat_id, telegram_balans, icq_uin, icq_balans, (select sum from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_price, (select name from tariff where code = '{$tariff}' and domain = 'lead4crm.ru') as tariff_name from users where id = {$_SESSION['userid']}";
 				$result = pg_query($query);
