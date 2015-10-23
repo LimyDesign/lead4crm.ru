@@ -35,6 +35,8 @@ $wa = new WhatsProt($conf->wa->login, 0, 'Lead4CRM', true);
 // $wa->connect();
 // $wa->loginWithPassword($conf->wa->password);
 // $wa->sendGetPrivacyBlockedList();
+$sms = new \Zelenin\SmsRu\Api(new \Zelenin\SmsRu\Auth\ApiIdAuth($conf->sms->api));
+
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
@@ -1514,6 +1516,92 @@ function setTariff($getTariff) {
 }
 
 function sendICQ($cmd, $uin, $msg = '') {
+	global $icq, $conf;
+	$icq->debug = true;
+	$icq->setOption('UserAgent', 'macicq');
+	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
+		switch ($cmd) {
+			case 'sendMsg':
+				break;
+
+			case 'sendCode':
+				$code = '';
+				for ($x = 0; $x < 2; $x++) {
+					for ($y = 0; $y < 3; $y++) {
+						$code .= mt_rand(0,9);
+					}
+					$code .= '-';
+				}
+				$code = substr($code, 0, -1);
+				$_SESSION['icq']['code'] = preg_replace('/[^0-9]/', '', $code);
+				$msg = '-- Ваш код подтверждения: '.$code."\r";
+				$msg.= 'Введите данный код на сайте www.lead4crm.ru.'."\r\n";
+				$msg.= 'Если вы не имеете никакого отношения к данному сайту и не делали никаких действий на данном сайте, то просто проигнорируйте это сообщение.'."\r\n";
+				break;
+
+			case 'save':
+				$sUin = $_SESSION['icq']['uin'];
+				$uUin = preg_replace('/[^0-9]/', '', $_REQUEST['uin']);
+				$sCode = $_SESSION['icq']['code'];
+				$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
+				if (($sUin != $uUin && $sCode == $uCode) ||	$sUin == $uUin) {
+					$query_notify = '';
+					$noties = array('company' => 'false', 'balans' => 'false', 'renewal' => 'false');
+					$msg = "Теперь на ваш UIN ({$uUin}) будут поступать следующие уведомления: \r";
+					$msg_len = strlen($msg);
+					foreach ($_REQUEST['notify'] as $notify) {
+						switch ($notify) {
+							case 'company':
+								$msg .= "\t- Уведомления об импорте компаний\r";
+								$noties['company'] = 'true';
+								$_SESSION['icq']['company'] = true;
+								break;
+
+							case 'balans':
+								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
+								$noties['balans'] = 'true';
+								$_SESSION['icq']['balans'] = true;
+								break;
+
+							case 'renewal':
+								$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r";
+								$noties['renewal'] = 'true';
+								$_SESSION['icq']['renewal'] = true;
+								break;
+						}
+					}
+
+					if ($msg_len == strlen($msg)) {
+						$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r";
+					}
+
+					foreach ($noties as $notify_key => $notify_status) {
+						$query_notify .= ', icq_'.$notify_key.' = '.$notify_status;
+					}
+
+					if ($conf->db->type == 'postgres' && is_numeric($_REQUEST['uin']))
+					{
+						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+						$query = "update users set icq_uin = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+						$_SESSION['icq']['uin'] = $uUin;
+						pg_query($query);
+						pg_close($db);
+					}
+				} else {
+					echo 'error_code';
+					exit();
+				}
+				break;
+		}
+		$icq->sendMessage($uin, mb_convert_encoding($msg, 'cp1251', 'UTF-8'));
+		$icq->setStatus('STATUS_FREE4CHAT', 'STATUS_DCAUTH', 'Yo!');
+		$icq->setXStatus('business', 'Yo!');
+		sleep(1);
+		$icq->disconnect();
+	}
+}
+
+function sendSMS($cmd, $phone, $msg = '') {
 	global $icq, $conf;
 	$icq->debug = true;
 	$icq->setOption('UserAgent', 'macicq');
