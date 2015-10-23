@@ -1580,7 +1580,7 @@
   function getSMSInfo(phone) {
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
       if (data.agregator.limit.limit == data.agregator.limit.current || 
-          data.agregator.balance.balance =< 0
+          data.agregator.balance.balance <= 0
       ) {
         $('#formSMSSetting fieldset').attr('disabled', 'disabled');
         $('#alertSMSService').removeClass('hide');
