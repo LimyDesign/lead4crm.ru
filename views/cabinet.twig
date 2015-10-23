@@ -1567,8 +1567,8 @@
     if (!$('#resendSMSCode').prop('disabled')) {
       $('#resendSMSCode').attr('disabled', 'disabled');
     }
-    alert('Yo!');
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
+      alert('Yo!');
       console.log('Server JSON Response:', data);
       setTimeout(function() {
         $('#resendSMSCode').removeAttr('disabled');
