@@ -1080,7 +1080,6 @@
        Необходимо для дальнейшей проверки сделанных изменений.
     ========================================================================================= */
     icq_uin_start = icq_uin_change = $('#inputICQUIN').val();
-
     $('#inputICQUIN').change(function() {
         icq_uin_change = $(this).val();
     });
@@ -1092,7 +1091,6 @@
       icq_notify_start += $(this).val();
       icq_notify_change = icq_notify_start;
     });
-
     $('#formICQSetting input[name^="notify"]').change(function() {
       icq_notify_change = '';
       $('#formICQSetting input[name^="notify"]:checked').each(function() {
@@ -1163,7 +1161,6 @@
        Необходимо для дальнейшей проверки сделанных изменений.
     ========================================================================================= */
     sms_phone_start = sms_phone_change = $('#inputSMSPhone').val();
-
     $('#inputSMSPhone').change(function() {
         sms_phone_change = $(this).val();
     });
@@ -1175,7 +1172,6 @@
       sms_notify_start += $(this).val();
       sms_notify_change = icq_notify_start;
     });
-
     $('#formSMSSetting input[name^="notify"]').change(function() {
       sms_notify_change = '';
       $('#formSMSSetting input[name^="notify"]:checked').each(function() {
