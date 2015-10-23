@@ -1586,7 +1586,7 @@
         $('#alertSMSService').removeClass('hide');
       } else {
         var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
-        $('#sms_price').number(data.agregator.cost.price, 2, '.', ' ');
+        $('#sms_price').number(cost, 2, '.', ' ');
       }
     }, 'json');
   }
