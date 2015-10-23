@@ -113,7 +113,7 @@ if ($cmd[0]) {
 
 		case 'sms':
 			header('Content-Type: text/json');
-			sendSMS($cmd[1], $_REQUEST['phone']);
+			echo sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
 		case 'vcard':
