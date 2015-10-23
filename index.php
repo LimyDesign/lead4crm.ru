@@ -1623,6 +1623,8 @@ function sendSMS($cmd, $phone, $msg = '') {
 		'limit' => $sms_limit,
 		'sernders' => $sms_senders
 	);
+	$msg['command'] = $cmd;
+	$msg['to'] = $phone;
 	return json_encode($msg);
 
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
