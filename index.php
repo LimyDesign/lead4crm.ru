@@ -91,7 +91,6 @@ if ($cmd[0]) {
 			break;
 
 		case 'icq':
-			isAuth();
 			header('Content-Type: text/plain');
 			sendICQ($cmd[1], $_REQUEST['uin']);
 			break;
@@ -110,6 +109,11 @@ if ($cmd[0]) {
 			$wa->sendMessageComposing('79041326000');
 			$wa->sendMessagePaused('79041326000');
 			$wa->sendMessage('79041326000', 'Hi! :) this is a test message');
+			break;
+
+		case 'sms':
+			header('Content-Type: text/json');
+			sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
 		case 'vcard':
@@ -709,6 +713,13 @@ function dbLogin($userId, $userEmail, $provider) {
 				$icq_renewal = ($icq_renewal == 't') ? true : false;
 				$icq_balans = pg_fetch_result($result, 0, 'icq_balans');
 				$icq_balans = ($icq_balans == 't') ? true : false;
+				$sms_phone = pg_fetch_result($result, 0, 'sms_phone');
+				$sms_company = pg_fetch_result($result, 0, 'sms_company');
+				$sms_company = ($sms_company == 't') ? true : false;
+				$sms_renewal = pg_fetch_result($result, 0, 'sms_renewal');
+				$sms_renewal = ($sms_renewal == 't') ? true : false;
+				$sms_balans = pg_fetch_result($result, 0, 'sms_balans');
+				$sms_balans = ($sms_balans == 't') ? true : false;
 				$vk = pg_fetch_result($result, 0, 'vk');
 				$ok = pg_fetch_result($result, 0, 'ok');
 				$fb = pg_fetch_result($result, 0, 'fb');
@@ -723,6 +734,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['apikey'] = $apikey;
 			$_SESSION['telegram'] = array('chat_id' => $telegram_chat_id, 'company' => $telegram_company, 'renewal' => $telegram_renewal, 'balans' => $telegram_balans);
 			$_SESSION['icq'] = array('uin' => $icq_uin, 'company' => $icq_company, 'renewal' => $icq_renewal, 'balans' => $icq_balans);
+			$_SESSION['sms'] = array('uin' => $sms_phone, 'company' => $sms_company, 'renewal' => $sms_renewal, 'balans' => $sms_balans);
 			$_SESSION['provider'] = array('vk' => $vk, 'ok' => $ok, 'fb' => $fb, 'gp' => $gp, 'mr' => $mr, 'ya' => $ya);
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
@@ -1602,9 +1614,17 @@ function sendICQ($cmd, $uin, $msg = '') {
 }
 
 function sendSMS($cmd, $phone, $msg = '') {
-	global $icq, $conf;
-	$icq->debug = true;
-	$icq->setOption('UserAgent', 'macicq');
+	global $sms, $conf;
+	$sms_balance = $sms->myBalance();
+	$sms_limit = $sms->myLimit();
+	$sms_senders = $sms->mySenders();
+	$msg['agregator'] = array(
+		'balance' => $sms_balance,
+		'limit' => $sms_limit,
+		'sernders' => $sms_senders
+	);
+	return json_encode($msg);
+
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
 		switch ($cmd) {
 			case 'sendMsg':
