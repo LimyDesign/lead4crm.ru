@@ -1572,6 +1572,7 @@
       $('#resendSMSCode').attr('disabled', 'disabled');
     }
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
+      console.log(data);
       setTimeout(function() {
         $('#resendSMSCode').removeAttr('disabled');
       }, 60000);
