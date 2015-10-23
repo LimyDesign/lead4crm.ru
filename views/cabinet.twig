@@ -1166,6 +1166,7 @@
     sms_phone_start = sms_phone_change = $('#inputSMSPhone').val();
     $('#inputSMSPhone').change(function() {
         sms_phone_change = $(this).val();
+        getSMSInfo(sms_phone_change);
     });
 
     /* Прописываем изначальные и конечные значения настроек уведомлений для SMS.
