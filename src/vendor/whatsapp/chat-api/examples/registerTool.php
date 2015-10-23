@@ -9,8 +9,8 @@ echo "# WA Register Tool #\n";
 echo "#                  #\n";
 echo "####################\n";
 
-echo "\n\nUsername (country code + number without + or 00): ";
-$username = trim(fgets(STDIN));
+echo "\n\nUsername (country code + number, do not use + or 00): ";
+$username = str_replace("+", "", trim(fgets(STDIN)));
 if (!preg_match('!^\d+$!', $username))
 {
   echo "Wrong number. Do NOT use '+' or '00' before your number\n";
@@ -29,7 +29,7 @@ if (!$identityExists)
   try {
     $w->codeRequest(trim($option));
   } catch(Exception $e) {
-    echo $e->getMessage();
+    echo $e->getMessage() . "\n";
     exit(0);
   }
 

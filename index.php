@@ -1607,6 +1607,7 @@ function vcard() {
 	echo "NOTE:Базы 2ГИС в формате любимой CRM\n";
 	echo "TEL;TYPE=work:+7 (499) 704-69-17\n";
 	echo "TEL;TYPE=cell:+7 (914) 926-96-17\n";
+	echo "TEL;TYPE=cell:+7 (904) 132-60-00\n";
 	echo "EMAIL;TYPE=internet:support@lead4crm.ru\n";
 	echo "EMAIL;TYPE=internet,pref:help@lead4crm.ru\n";
 	echo "EMAIL;TYPE=internet:news@lead4crm.ru\n";

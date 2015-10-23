@@ -1,0 +1,33 @@
+{
+    "name": "zelenin/smsru",
+    "description": "PHP-класс для работы с api сервиса [sms.ru](http://sms.ru)",
+    "type": "library",
+    "keywords": [
+        "sms",
+        "sms.ru",
+        "api"
+    ],
+    "homepage": "https://github.com/zelenin/sms_ru",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aleksandr Zelenin",
+            "email": "aleksandr@zelenin.me",
+            "homepage": "http://zelenin.me",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/zelenin/sms_ru/issues",
+        "source": "https://github.com/zelenin/sms_ru"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "guzzlehttp/guzzle": "~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zelenin\\SmsRu\\": ""
+        }
+    }
+}
