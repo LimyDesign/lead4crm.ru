@@ -1579,7 +1579,6 @@
 
   function getSMSInfo(phone) {
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
-      console.log(data);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
           data.agregator.balance.balance < 0
       ) {
