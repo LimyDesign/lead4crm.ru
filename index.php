@@ -1635,9 +1635,8 @@ function sendSMS($cmd, $phone, $msg = '') {
 			break;
 
 		case 'getStatus':
-			foreach ($id as $phone) {
-				$msg['response'][] = $sms->smsStatus($id);
-			}
+			$id = $phone[0];
+			$msg['response'] = $sms->smsStatus($id);
 			break;
 
 		case 'getInfo':
