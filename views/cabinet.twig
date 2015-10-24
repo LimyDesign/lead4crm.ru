@@ -1611,7 +1611,6 @@
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
       if (data.response.code == '100') {
         id = data.response.ids[0];
-        console.log(data, id);
         var isSMSDone = setInterval(function() {
           $.post('/sms/getStatus/', { phone: id }, function (status) {
             console.log(status);
