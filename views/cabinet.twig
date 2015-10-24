@@ -1190,7 +1190,17 @@
     $('#refreshSMSUser').click(function(e) {
       e.preventDefault();
       var phone = $('#inputSMSPhone').val();
+      var text = $(this).text(), i = 0;
+      var loading = setInterval(function() {
+        if (i < 3) {
+          $('#refreshSMSUser').append('.');
+          i++;
+        } else {
+          $('#refreshSMSUser').text(text);
+        }
+      });
       getSMSInfo(phone);
+
     });
 
     /* Выполняем привязку мобильного телефона для SMS уведомлений.
@@ -1588,7 +1598,7 @@
     }, 'json');
   }
 
-  function getSMSInfo(phone) {
+  function getSMSInfo(phone, callback) {
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
       var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
@@ -1603,7 +1613,11 @@
       } else {
         $('#sms_price').number(cost, 2, '.', ' ');
       }
-    }, 'json');
+    }, 'json').done(function() {
+      if (callback && typeof(callback) === 'function') {
+        callback();
+      }
+    });
   }
 
   /* Функция проверяет является ли переменная 'n' целочисленной.
