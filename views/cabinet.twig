@@ -1603,16 +1603,16 @@
 
   /* Функция отправляет на указанный 'phone' (телефон) код верификации.
   ========================================================================================= */
-  function sendSMSCode(phone) {
+  function sendSMSCode(phone, callback) {
     if (!$('#resendSMSCode').prop('disabled')) {
       $('#resendSMSCode').attr('disabled', 'disabled');
     }
     var ids, code;
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
       if (data.response.code == '100') {
-        ids = data.response.ids;
+        id = data.response.ids[0];
         var isSMSDone = setInterval(function() {
-          $.post('/sms/getStatus/', { ids: ids }, function (status) {
+          $.post('/sms/getStatus/', { id: id }, function (status) {
             console.log(status);
             if (status.response.code > 102) {
               clearInterval(isSMSDone);

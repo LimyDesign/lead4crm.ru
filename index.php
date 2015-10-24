@@ -1630,7 +1630,8 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$codeTxt = 'Код подтверждения: '.$code;
 			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $codeTxt);
 			$smsMsg->from = 'Lead4CRM';
-			$smsMsg->partner_id = '132872';
+			$smsMsg->partner_id = 132872;
+			$smsMsg->test = 1;
 			$msg['response'] = $sms->smsSend($smsMsg);
 			break;
 
