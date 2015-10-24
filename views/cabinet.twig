@@ -1199,8 +1199,9 @@
           i = 0;
           $('#refreshSMSUser').text(text);
         }
-      });
+      }, 500);
       getSMSInfo(phone, function() {
+        $('#refreshSMSUser').text(text);
         clearInterval(loading);
       });
     });
