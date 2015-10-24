@@ -1199,8 +1199,9 @@
           $('#refreshSMSUser').text(text);
         }
       });
-      getSMSInfo(phone);
-
+      getSMSInfo(phone, function() {
+        clearInterval(loading);
+      });
     });
 
     /* Выполняем привязку мобильного телефона для SMS уведомлений.
@@ -1211,6 +1212,10 @@
           code = $('#inputSMSCode').val(),
           $fieldset = $(this).find('fieldset'),
           serialized = $(this).serialize();
+      getSMSInfo(phone, function(result) {
+        if (!result)
+          return;
+      });
       $fieldset.attr('disabled', 'disabled');
       if (isPhone(phone)) {
         if (phone != '{{sms.phone}}' && code == '') {
@@ -1599,6 +1604,7 @@
   }
 
   function getSMSInfo(phone, callback) {
+    var result = false;
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
       var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
@@ -1612,10 +1618,11 @@
         $('#alertSMSUser').removeClass('hide');
       } else {
         $('#sms_price').number(cost, 2, '.', ' ');
+        result = true;
       }
     }, 'json').done(function() {
       if (callback && typeof(callback) === 'function') {
-        callback();
+        callback(result);
       }
     });
   }
