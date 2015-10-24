@@ -1634,6 +1634,12 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$msg['response'] = $sms->smsSend($smsMsg);
 			break;
 
+		case 'getStatus':
+			foreach ($id as $phone) {
+				$msg['response'][] = $sms->smsStatus($id);
+			}
+			break;
+
 		case 'getInfo':
 		default:
 			$sms_balance = $sms->myBalance();

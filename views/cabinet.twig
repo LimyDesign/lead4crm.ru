@@ -1607,7 +1607,16 @@
     if (!$('#resendSMSCode').prop('disabled')) {
       $('#resendSMSCode').attr('disabled', 'disabled');
     }
+    var ids, code;
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
+      if (data.response.code == '100') {
+        ids = data.response.ids;
+        var isSMSDone = setInterval(function() {
+          $.post('/sms/getStatus/', { ids: ids }, function (status) {
+            
+          });
+        }, 2000);
+      }
       setTimeout(function() {
         $('#resendSMSCode').removeAttr('disabled');
       }, 60000);
