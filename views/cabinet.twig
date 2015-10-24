@@ -1613,7 +1613,7 @@
         ids = data.response.ids;
         var isSMSDone = setInterval(function() {
           $.post('/sms/getStatus/', { ids: ids }, function (status) {
-            
+            console.log(status);
           });
         }, 2000);
       }
