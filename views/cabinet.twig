@@ -1607,7 +1607,7 @@
     if (!$('#resendSMSCode').prop('disabled')) {
       $('#resendSMSCode').attr('disabled', 'disabled');
     }
-    var ids, code;
+    var id, code;
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
       if (data.response.code == '100') {
         id = data.response.ids[0];
