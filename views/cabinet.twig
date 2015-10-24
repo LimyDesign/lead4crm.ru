@@ -1225,7 +1225,7 @@
               var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
               if (isSendSMS) {
                 sendSMSCode(phone);
-                $('#resendSMSCode').attr('onclick', 'sendCode('+phone+')');
+                $('#resendSMSCode').attr('onclick', 'sendSMSCode('+phone+')');
                 if ($('#groupSMSPhone').hasClass('has-error')) {
                   $('#groupSMSPhone').removeClass('has-error');
                 }
