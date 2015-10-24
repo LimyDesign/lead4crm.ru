@@ -673,6 +673,7 @@
                       <form id="formSMSSetting" class="form-horizontal">
                         <fieldset>
                           <div class="alert alert-danger hide" id="alertSMSService">Сервис временно не доступен. При необходимости активации сервиса обращайтесь в службу поддержки.</div>
+                          <div class="alert alert-danger hide" id="alertSMSUser">Сервис для вашего аккаунта не доступен. Пополните баланс и попробуйте снова.</div>
                           <div class="form-group input-group-lg" id="groupSMSPhone">
                             <label for="inputSMSPhone" class="col-sm-2 control-label">Телефон:</label>
                             <div class="col-sm-10">
@@ -1580,13 +1581,17 @@
 
   function getSMSInfo(phone) {
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
+      var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
           data.agregator.balance.balance <= 0
       ) {
         $('#formSMSSetting fieldset').attr('disabled', 'disabled');
         $('#alertSMSService').removeClass('hide');
+      } else if (cost > data.balance) {
+        $('#formSMSSetting fieldset').attr('disabled', 'disabled');
+        $('#sms_price').number(cost, 2, '.', ' ');
+        $('#alertSMSUser').removeClass('hide');
       } else {
-        var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
         $('#sms_price').number(cost, 2, '.', ' ');
       }
     }, 'json');

@@ -1615,18 +1615,27 @@ function sendICQ($cmd, $uin, $msg = '') {
 
 function sendSMS($cmd, $phone, $msg = '') {
 	global $sms, $conf;
-	$sms_balance = $sms->myBalance();
-	$sms_limit = $sms->myLimit();
-	$sms_senders = $sms->mySenders();
-	$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, 'Код подтверждения: 000-000'));
-	$msg['agregator'] = array(
-		'balance' => $sms_balance,
-		'limit' => $sms_limit,
-		'sernders' => $sms_senders,
-		'cost' => $sms_cost
-	);
-	$msg['command'] = $cmd;
-	$msg['to'] = $phone;
+	$uData = getUserData('array');
+	switch ($cmd) {
+		case 'sendCode':
+
+		case 'getInfo':
+		default:
+			$sms_balance = $sms->myBalance();
+			$sms_limit = $sms->myLimit();
+			$sms_senders = $sms->mySenders();
+			$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, 'Код подтверждения: 000-000'));
+			$msg['agregator'] = array(
+				'balance' => $sms_balance,
+				'limit' => $sms_limit,
+				'sernders' => $sms_senders,
+				'cost' => $sms_cost
+			);
+			$msg['balance'] = $uData['balans'];
+			$msg['command'] = $cmd;
+			$msg['to'] = $phone;
+	}
+	
 	return json_encode($msg);
 
 	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
