@@ -1610,7 +1610,7 @@
     var ids, code;
     $.post('/sms/sendCode/', { phone: phone }, function (data) {
       if (data.response.code == '100') {
-        id = data.response.ids[0];
+        id = data.response.ids;
         var isSMSDone = setInterval(function() {
           $.post('/sms/getStatus/', { id: id }, function (status) {
             console.log(status);
