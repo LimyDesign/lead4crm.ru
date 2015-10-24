@@ -674,7 +674,7 @@
                         <div class="alert alert-danger hide" id="alertSMSService">Сервис временно не доступен. При необходимости активации сервиса обращайтесь в службу поддержки.</div>
                         <div class="alert alert-danger hide" id="alertSMSUser">
                           <p>Сервис для вашего аккаунта не доступен. Пополните баланс и попробуйте снова.</p>
-                          <a href="#." class="btn btn-danger">Обновить данные</a>
+                          <a href="#." class="btn btn-danger" id="refreshSMSUser">Обновить данные</a>
                         </div>
                         <fieldset>
                           <div class="form-group input-group-lg" id="groupSMSPhone">
@@ -1185,6 +1185,12 @@
       $('#formSMSSetting input[name^="notify"]:checked').each(function() {
         sms_notify_change += $(this).val();
       });
+    });
+
+    $('#refreshSMSUser').click(function(e) {
+      e.preventDefault();
+      var phone = $('#inputSMSPhone').val();
+      getSMSInfo(phone);
     });
 
     /* Выполняем привязку мобильного телефона для SMS уведомлений.
