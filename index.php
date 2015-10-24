@@ -1687,6 +1687,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$smsMsg->from = 'Lead4CRM';
 				$smsMsg->partner_id = 132872;
 				$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, $smsTxt));
+				$sms_cost = round($sms_cost + ($sms_cost * 0.4), 2);
 				if ($uData['balans'] >= $sms_cost) {
 					$msg['response'] = $sms->smsSend($smsMsg);
 
@@ -1700,7 +1701,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 						$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
 						$_SESSION['sms']['phone'] = $uPhone;
 						pg_query($query);
-						$query = "insert into sms_ids (sms_id, number) values ({$msg['response']['ids'][0]}, {$phone})";
+						$query = "insert into sms_ids (sms_id, number, cost) values ({$msg['response']['ids'][0]}, {$phone}, {$sms_cost})";
 						pg_query($query);
 						pg_close($db);
 					}
@@ -1713,6 +1714,28 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$msg['response']['error'] = '100';
 			}
 			break;
+
+		case 'chargeBalance':
+			if ($conf->db->type == 'postgres')
+			{
+				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+			}
+			foreach ($_POST['data'] as $entry) {
+				list($status, $id, $code) = explode("\n", $entry);
+				if ($status == 'sms_status') {
+					$query = "select cost from sms_ids where sms_id = '{$id}'";
+					$result = pg_query($query);
+					$cost = pg_fetch_result($result, 0, 'cost');
+					pg_free_result($result);
+					if ($cost > 0 && $code == 103) {
+						$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$cost}, 'Lead4CRM: SMS уведомление')";
+						pg_query($query)
+					}
+				}
+			}
+			pg_close($db);
+			echo '100';
+			exit();
 
 		case 'getInfo':
 		default:
