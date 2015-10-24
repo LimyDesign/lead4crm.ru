@@ -1729,7 +1729,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 					pg_free_result($result);
 					if ($cost > 0 && $code == 103) {
 						$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$cost}, 'Lead4CRM: SMS уведомление')";
-						pg_query($query)
+						pg_query($query);
 					}
 				}
 			}
