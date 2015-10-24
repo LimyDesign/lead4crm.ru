@@ -1618,6 +1618,16 @@ function sendSMS($cmd, $phone, $msg = '') {
 	$uData = getUserData('array');
 	switch ($cmd) {
 		case 'sendCode':
+			$code = '';
+			for ($x = 0; $x < 2; $x++) {
+				for ($y = 0; $y < 3; $y++) {
+					$code .= mt_rand(0,9);
+				}
+				$code .= '-';
+			}
+			$code = substr($code, 0, -1);
+			$_SESSION['icq']['code'] = preg_replace('/[^0-9]/', '', $code);
+			$codeTxt = 'Код подтверждения: '.$code;
 			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $codeTxt);
 			$smsMsg->from = 'Lead4CRM';
 			$smsMsg->partner_id = '132872';
