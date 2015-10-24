@@ -671,6 +671,9 @@
                     {% if admin %}
                       <h4>Настройка SMS нотификатора</h4>
                       <form id="formSMSSetting" class="form-horizontal">
+                        <div class="alert alert-success hide" id="statusSMSSetting">
+                          <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+                        </div>
                         <div class="alert alert-danger hide" id="alertSMSService">Сервис временно не доступен. При необходимости активации сервиса обращайтесь в службу поддержки.</div>
                         <div class="alert alert-danger hide" id="alertSMSUser">
                           <p>Сервис для вашего аккаунта не доступен. Пополните баланс и попробуйте снова.</p>
@@ -1242,11 +1245,14 @@
             } else {
               if (sms_phone_start != sms_phone_change || sms_notify_start != sms_notify_change) {
                 $.post('/sms/save/', serialized, function (data) {
-                  if (data == 'error_code') {
+                  if (data.error == 100) {
                     $('#groupSMSCode').addClass('has-error');
                     scrollTo('#groupSMSCode');
                     $fieldset.removeAttr('disabled');
                     $('#inputSMSCode').focus();
+                  } else if (data.error == 200) {
+                    scrollTo('#alertSMSUser');
+                    $('#alertSMSUser').removeClass('hide');
                   } else {
                     sms_phone_start = sms_phone_change;
                     sms_notify_start = sms_notify_change;

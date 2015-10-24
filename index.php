@@ -1655,49 +1655,62 @@ function sendSMS($cmd, $phone, $msg = '') {
 			if (($sPhone != $uPhone && $sCode == $uCode) ||	$sPhone == $uPhone) {
 				$query_notify = '';
 				$noties = array('company' => 'false', 'balans' => 'false', 'renewal' => 'false');
-				$msg = "На ваш номер установлены уведомления: ";
-				$msg_len = strlen($msg);
+				$smsTxt = "На ваш номер установлены уведомления: ";
+				$smsTxt_len = strlen($smsTxt);
 				foreach ($_REQUEST['notify'] as $notify) {
 					switch ($notify) {
 						case 'company':
-							$msg .= "- Об импорте компаний. ";
+							$smsTxt .= "- Об импорте компаний. ";
 							$noties['company'] = 'true';
 							$_SESSION['icq']['company'] = true;
 							break;
 
 						case 'balans':
-							$msg .= "- Об изменении баланса. ";
+							$smsTxt .= "- Об изменении баланса. ";
 							$noties['balans'] = 'true';
 							$_SESSION['icq']['balans'] = true;
 							break;
 
 						case 'renewal':
-							$msg .= "- О предстоящем продлении тарифного плана. ";
+							$smsTxt .= "- О предстоящем продлении тарифного плана. ";
 							$noties['renewal'] = 'true';
 							$_SESSION['icq']['renewal'] = true;
 							break;
 					}
 				}
 
-				if ($msg_len == strlen($msg)) {
-					$msg = "На ваш номер не установлены уведомления.";
+				if ($smsTxt_len == strlen($smsTxt)) {
+					$smsTxt = "На ваш номер не установлены уведомления.";
 				}
 
-				foreach ($noties as $notify_key => $notify_status) {
-					$query_notify .= ', sms_'.$notify_key.' = '.$notify_status;
-				}
+				$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $smsTxt);
+				$smsMsg->from = 'Lead4CRM';
+				$smsMsg->partner_id = 132872;
+				$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, $smsTxt));
+				if ($uData['balans'] >= $sms_cost) {
+					$msg['response'] = $sms->smsSend($smsMsg);
 
-				if ($conf->db->type == 'postgres')
-				{
-					$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-					$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
-					$_SESSION['sms']['phone'] = $uPhone;
-					pg_query($query);
-					pg_close($db);
+					foreach ($noties as $notify_key => $notify_status) {
+						$query_notify .= ', sms_'.$notify_key.' = '.$notify_status;
+					}
+
+					if ($conf->db->type == 'postgres')
+					{
+						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+						$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+						$_SESSION['sms']['phone'] = $uPhone;
+						pg_query($query);
+						$query = "insert into sms_ids (sms_id, number) values ({$msg['response']['ids'][0]}, {$phone})";
+						pg_query($query);
+						pg_close($db);
+					}
+					$msg['response']['error'] = '0';
+					$msg['response']['cost'] = $sms_cost;
+				} else {
+					$msg['response']['error'] = '200';
 				}
-				$msg['response'] = array('error' => '0');
 			} else {
-				$msg['response'] = array('error' => '100');
+				$msg['response']['error'] = '100';
 			}
 			break;
 
