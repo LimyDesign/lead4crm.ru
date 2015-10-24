@@ -1214,6 +1214,7 @@
           $fieldset = $(this).find('fieldset'),
           serialized = $(this).serialize();
       getSMSInfo(phone, function(result) {
+        console.log(result);
         if (!result)
           return;
       });
