@@ -1620,6 +1620,8 @@
             }
           });
         }, 2000);
+      } else {
+        $('#resendSMSCode').removeAttr('disabled');
       }
     }, 'json').done(function() {
       if (callback && typeof(callback) === 'function') {
