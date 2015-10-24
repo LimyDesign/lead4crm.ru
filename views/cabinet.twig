@@ -768,6 +768,7 @@
       icq_uin_change = 0,
       icq_notify_start = '',
       icq_notify_change = '',
+      sms_cost = 0,
       sms_phone_start = 0,
       sms_phone_change = 0,
       sms_notify_start = '',
@@ -1613,10 +1614,13 @@
         id = data.response.ids[0];
         var isSMSDone = setInterval(function() {
           $.post('/sms/getStatus/', { phone: id }, function (status) {
-            console.log(status);
             if (status.response.code > 102 || status.response.code == '') {
               clearInterval(isSMSDone);
               $('#resendSMSCode').removeAttr('disabled');
+              if (status.response.code == 103) {
+                var cuBalance = $('#balans').text().replace(/\s/g, '') - sms_cost.toFixed(2);
+                $('#balans').number(cuBalance, 2, '.', ' ');
+              }
             }
           });
         }, 2000);
@@ -1631,7 +1635,7 @@
   }
 
   function getSMSInfo(phone, callback) {
-    var result = false, cost = 0;
+    var result = false;
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
       cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
