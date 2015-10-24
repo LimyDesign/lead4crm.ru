@@ -1216,21 +1216,27 @@
           serialized = $(this).serialize();
       $fieldset.attr('disabled', 'disabled');
       if (isPhone(phone)) {
-        getSMSInfo(phone, function(result) {
+        getSMSInfo(phone, function(result, cost) {
           if (result === false) {
             return;
           } else {
             if (phone != '{{sms.phone}}' && code == '') {
-              sendSMSCode(phone);
-              $('#resendSMSCode').attr('onclick', 'sendCode('+phone+')');
-              if ($('#groupSMSPhone').hasClass('has-error')) {
-                $('#groupSMSPhone').removeClass('has-error');
+              var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+"\nВы согласны?");
+              if (isSendSMS) {
+                sendSMSCode(phone);
+                $('#resendSMSCode').attr('onclick', 'sendCode('+phone+')');
+                if ($('#groupSMSPhone').hasClass('has-error')) {
+                  $('#groupSMSPhone').removeClass('has-error');
+                }
+                $('#groupSMSPhone').addClass('has-success');
+                $('#groupSMSCode').removeClass('hide');
+                scrollTo('#inputSMSCode');
+                $fieldset.removeAttr('disabled');
+                $('#inputSMSCode').focus();
+              } else {
+                $fieldset.removeAttr('disabled');
+                return;
               }
-              $('#groupSMSPhone').addClass('has-success');
-              $('#groupSMSCode').removeClass('hide');
-              scrollTo('#inputSMSCode');
-              $fieldset.removeAttr('disabled');
-              $('#inputSMSCode').focus();
             } else {
               if (sms_phone_start != sms_phone_change || sms_notify_start != sms_notify_change) {
                 $.post('/sms/save/', serialized, function (data) {
@@ -1608,9 +1614,9 @@
   }
 
   function getSMSInfo(phone, callback) {
-    var result = false;
+    var result = false, cost = 0;
     $.post('/sms/getInfo/', { phone: phone }, function (data) {
-      var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
+      cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
       if (data.agregator.limit.limit == data.agregator.limit.current || 
           data.agregator.balance.balance <= 0
       ) {
@@ -1626,7 +1632,7 @@
       }
     }, 'json').done(function() {
       if (callback && typeof(callback) === 'function') {
-        callback(result);
+        callback(result, cost);
       }
     });
   }
