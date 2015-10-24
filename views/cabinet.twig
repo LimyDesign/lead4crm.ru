@@ -1201,8 +1201,8 @@
         }
       }, 500);
       getSMSInfo(phone, function() {
-        $('#refreshSMSUser').text(text);
         clearInterval(loading);
+        $('#refreshSMSUser').text(text);
       });
     });
 
