@@ -1616,6 +1616,9 @@ function sendICQ($cmd, $uin, $msg = '') {
 function sendSMS($cmd, $phone, $msg = '') {
 	global $sms, $conf;
 	$uData = getUserData('array');
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
 	switch ($cmd) {
 		case 'sendCode':
 			$code = '';
@@ -1631,11 +1634,17 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $codeTxt);
 			$smsMsg->from = 'Lead4CRM';
 			$smsMsg->partner_id = 132872;
-			$msg['response'] = $sms->smsSend($smsMsg);
+			if ($uData['balans'] >= $_SESSION['sms_cost']) {
+				$msg['response'] = $sms->smsSend($smsMsg);
+			}
 			break;
 
 		case 'getStatus':
 			$msg['response'] = $sms->smsStatus($phone);
+			if ($msg['response']['code'] == 103) {
+				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$_SESSION['sms_cost']}, 'Код авторизации для Lead4CRM')";
+				pg_query($query);
+			}
 			break;
 
 		case 'getInfo':
@@ -1644,6 +1653,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$sms_limit = $sms->myLimit();
 			$sms_senders = $sms->mySenders();
 			$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, 'Код подтверждения: 000-000'));
+			$_SESSION['sms_cost'] = $sms_cost;
 			$msg['agregator'] = array(
 				'balance' => $sms_balance,
 				'limit' => $sms_limit,
