@@ -1221,7 +1221,7 @@
             return;
           } else {
             if (phone != '{{sms.phone}}' && code == '') {
-              cost = Math.ceil((cost*100)/100);
+              cost = cost.toFixed(2);
               var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
               if (isSendSMS) {
                 sendSMSCode(phone);
