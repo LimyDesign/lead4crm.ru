@@ -1613,13 +1613,13 @@
         ids = data.response.ids;
         var isSMSDone = setInterval(function() {
           $.post('/sms/getStatus/', { ids: ids }, function (status) {
-            console.log(status);
+            if (status.response.code > 102) {
+              clearInterval(isSMSDone);
+              $('#resendSMSCode').removeAttr('disabled');
+            }
           });
         }, 2000);
       }
-      setTimeout(function() {
-        $('#resendSMSCode').removeAttr('disabled');
-      }, 60000);
     }, 'json').done(function() {
       if (callback && typeof(callback) === 'function') {
         callback();
