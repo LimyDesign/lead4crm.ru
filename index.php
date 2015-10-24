@@ -1629,7 +1629,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$code .= '-';
 			}
 			$code = substr($code, 0, -1);
-			$_SESSION['icq']['code'] = preg_replace('/[^0-9]/', '', $code);
+			$_SESSION['sms']['code'] = preg_replace('/[^0-9]/', '', $code);
 			$codeTxt = 'Код подтверждения: '.$code;
 			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $codeTxt);
 			$smsMsg->from = 'Lead4CRM';
@@ -1644,6 +1644,60 @@ function sendSMS($cmd, $phone, $msg = '') {
 			if ($msg['response']['code'] == 103) {
 				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$_SESSION['sms_cost']}, 'Код авторизации для Lead4CRM')";
 				pg_query($query);
+			}
+			break;
+
+		case 'save':
+			$sPhone = $_SESSION['sms']['phone'];
+			$uPhone = preg_replace('/[^0-9]/', '', $phone);
+			$sCode = $_SESSION['sms']['code'];
+			$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
+			if (($sPhone != $uPhone && $sCode == $uCode) ||	$sPhone == $uPhone) {
+				$query_notify = '';
+				$noties = array('company' => 'false', 'balans' => 'false', 'renewal' => 'false');
+				$msg = "На ваш номер установлены уведомления: ";
+				$msg_len = strlen($msg);
+				foreach ($_REQUEST['notify'] as $notify) {
+					switch ($notify) {
+						case 'company':
+							$msg .= "- Об импорте компаний. ";
+							$noties['company'] = 'true';
+							$_SESSION['icq']['company'] = true;
+							break;
+
+						case 'balans':
+							$msg .= "- Об изменении баланса. ";
+							$noties['balans'] = 'true';
+							$_SESSION['icq']['balans'] = true;
+							break;
+
+						case 'renewal':
+							$msg .= "- О предстоящем продлении тарифного плана. ";
+							$noties['renewal'] = 'true';
+							$_SESSION['icq']['renewal'] = true;
+							break;
+					}
+				}
+
+				if ($msg_len == strlen($msg)) {
+					$msg = "На ваш номер не установлены уведомления.";
+				}
+
+				foreach ($noties as $notify_key => $notify_status) {
+					$query_notify .= ', sms_'.$notify_key.' = '.$notify_status;
+				}
+
+				if ($conf->db->type == 'postgres')
+				{
+					$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+					$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+					$_SESSION['sms']['phone'] = $uPhone;
+					pg_query($query);
+					pg_close($db);
+				}
+				$msg['response'] = array('error' => '0');
+			} else {
+				$msg['response'] = array('error' => '100');
 			}
 			break;
 
@@ -1666,87 +1720,6 @@ function sendSMS($cmd, $phone, $msg = '') {
 	}
 	
 	return json_encode($msg);
-
-	if ($icq->connect($conf->icq->uin, $conf->icq->password)) {
-		switch ($cmd) {
-			case 'sendMsg':
-				break;
-
-			case 'sendCode':
-				$code = '';
-				for ($x = 0; $x < 2; $x++) {
-					for ($y = 0; $y < 3; $y++) {
-						$code .= mt_rand(0,9);
-					}
-					$code .= '-';
-				}
-				$code = substr($code, 0, -1);
-				$_SESSION['icq']['code'] = preg_replace('/[^0-9]/', '', $code);
-				$msg = '-- Ваш код подтверждения: '.$code."\r";
-				$msg.= 'Введите данный код на сайте www.lead4crm.ru.'."\r\n";
-				$msg.= 'Если вы не имеете никакого отношения к данному сайту и не делали никаких действий на данном сайте, то просто проигнорируйте это сообщение.'."\r\n";
-				break;
-
-			case 'save':
-				$sUin = $_SESSION['icq']['uin'];
-				$uUin = preg_replace('/[^0-9]/', '', $_REQUEST['uin']);
-				$sCode = $_SESSION['icq']['code'];
-				$uCode = preg_replace('/[^0-9]/', '', $_REQUEST['code']);
-				if (($sUin != $uUin && $sCode == $uCode) ||	$sUin == $uUin) {
-					$query_notify = '';
-					$noties = array('company' => 'false', 'balans' => 'false', 'renewal' => 'false');
-					$msg = "Теперь на ваш UIN ({$uUin}) будут поступать следующие уведомления: \r";
-					$msg_len = strlen($msg);
-					foreach ($_REQUEST['notify'] as $notify) {
-						switch ($notify) {
-							case 'company':
-								$msg .= "\t- Уведомления об импорте компаний\r";
-								$noties['company'] = 'true';
-								$_SESSION['icq']['company'] = true;
-								break;
-
-							case 'balans':
-								$msg .= "\t- Уведомления об изменении баланса лицевого счета\r";
-								$noties['balans'] = 'true';
-								$_SESSION['icq']['balans'] = true;
-								break;
-
-							case 'renewal':
-								$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r";
-								$noties['renewal'] = 'true';
-								$_SESSION['icq']['renewal'] = true;
-								break;
-						}
-					}
-
-					if ($msg_len == strlen($msg)) {
-						$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r";
-					}
-
-					foreach ($noties as $notify_key => $notify_status) {
-						$query_notify .= ', icq_'.$notify_key.' = '.$notify_status;
-					}
-
-					if ($conf->db->type == 'postgres' && is_numeric($_REQUEST['uin']))
-					{
-						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-						$query = "update users set icq_uin = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
-						$_SESSION['icq']['uin'] = $uUin;
-						pg_query($query);
-						pg_close($db);
-					}
-				} else {
-					echo 'error_code';
-					exit();
-				}
-				break;
-		}
-		$icq->sendMessage($uin, mb_convert_encoding($msg, 'cp1251', 'UTF-8'));
-		$icq->setStatus('STATUS_FREE4CHAT', 'STATUS_DCAUTH', 'Yo!');
-		$icq->setXStatus('business', 'Yo!');
-		sleep(1);
-		$icq->disconnect();
-	}
 }
 
 function vcard() {
