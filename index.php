@@ -1618,6 +1618,11 @@ function sendSMS($cmd, $phone, $msg = '') {
 	$uData = getUserData('array');
 	switch ($cmd) {
 		case 'sendCode':
+			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $codeTxt);
+			$smsMsg->from = 'Lead4CRM';
+			$smsMsg->partner_id = '132872';
+			$msg['response'] = $sms->smsSend($smsMsg);
+			break;
 
 		case 'getInfo':
 		default:

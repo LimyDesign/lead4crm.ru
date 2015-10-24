@@ -1611,7 +1611,11 @@
       setTimeout(function() {
         $('#resendSMSCode').removeAttr('disabled');
       }, 60000);
-    }, 'json');
+    }, 'json').done(function() {
+      if (callback && typeof(callback) === 'function') {
+        callback();
+      }
+    });
   }
 
   function getSMSInfo(phone, callback) {
