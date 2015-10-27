@@ -730,6 +730,47 @@
                 </div>
                 <div class="row">
                   <div class="col-md-3">
+                    <p style="font-size: 200px;"><i class="fa fa-at"></i></p>
+                  </div>
+                  <div class="col-md-9">
+                    <h3>Электронная почта</h3>
+                    <p>По электронной почте можно включить только одно уведомление — это уведомление о предстоящем продлении тарифного плана, но в отличие от месенджеров такие уведомления будут поступать каждый день в течении 1 недели до даты продления тарифа, поэтому рекомендуется включать его, чтобы ненароком не пропустить момент Х, когда вы можете оказаться на тарифе «Демо», что может негативно отразиться на вашем расходе.</p>
+                    <form id="formEmailSetings" class="form-horizontal">
+                      <div class="alert alert-success hide" id="statusEmailSetting">
+                        <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+                      </div>
+                      <fieldset>
+                        <div class="form-group input-group-lg" id="groupEmailAddress">
+                          <label for="inputEmailAddress" class="col-sm-2 control-label">E-mail:</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="email" value="{{email.address}}" class="form-control" id="inputEmailAddress" placeholder="vasya@pupkov.org" aria-describedby="helpEmailAddress">
+                            <span id="helpEmailAddress" class="help-block">По умолчанию система берет именно тот электронный адрес, который был передан тем социальных сервисом, через который вы вошли в личный кабинет. Но вы его можете сменить, указав любой другой адрес. Иногда здесь может не быть вашего адреса, это происходит либо из-за того, что вы не разрешили нашему сервису получить ваш электронный адрес при первой авторизации (регистрации), либо вы вовсе не указали в социальном сервисе свой электронный адрес.</span>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg" id="groupEmailNotify">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpEmailNotifyRenewal" {% if (sms.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+                              <span id="helpEmailNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа. <br><br><mark>Уведомление поступает ежедневно в течении 1 недели до продления текущего тарифа.</mark></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group input-group-lg">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button class="btn btn-primary">Сохранить</button>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <hr>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
                     <p class="text-center"><img src="/public/images/qrcode.png" class="img-responsive"></p>
                   </div>
                   <div class="col-md-9">
@@ -775,7 +816,11 @@
       sms_phone_start = 0,
       sms_phone_change = 0,
       sms_notify_start = '',
-      sms_notify_change = '';
+      sms_notify_change = '',
+      email_address_start = '{{email.address}}',
+      email_address_change = '{{email.address}}',
+      email_notify_start = '',
+      email_notify_change = '';
 
   $(document).ready(function() 
   {

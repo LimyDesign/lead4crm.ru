@@ -116,6 +116,10 @@ if ($cmd[0]) {
 			echo sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
+		case 'forsmsru':
+			echo sendSMS($cmd[1], $_REQUEST['phone']);
+			break;
+
 		case 'vcard':
 			header('Content-Type: text/x-vcard');
 			header('Content-Disposition: attachment; filename=lead4crm.vcf');
@@ -218,7 +222,7 @@ if ($cmd[0]) {
 				'admin' => $_SESSION['is_admin'],
 				'telegram' => $_SESSION['telegram'],
 				'icq' => $_SESSION['icq'],
-				'notify_danger' => (!isset($_SESSION['telegram']) && !isset($_SESSION['icq']) && !isset($_SESSION['sms'])) ? true : false,
+				'notify_danger' => (!isset($_SESSION['telegram']) && !isset($_SESSION['icq']) && !isset($_SESSION['sms']) && !isset($_SESSION['email'])) ? true : false,
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
