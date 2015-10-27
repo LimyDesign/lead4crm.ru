@@ -117,7 +117,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'forsmsru':
-			echo sendSMS($cmd[1], $_REQUEST['phone']);
+			sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
 		case 'vcard':
