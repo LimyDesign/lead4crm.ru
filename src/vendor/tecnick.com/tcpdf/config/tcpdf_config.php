@@ -45,7 +45,7 @@
  * Installation path (/var/www/tcpdf/).
  * By default it is automatically calculated but you can also set it as a fixed string to improve performances.
  */
-define ('K_PATH_MAIN', __DIR__.'/');
+// define ('K_PATH_MAIN', __DIR__.'/');
 
 /**
  * URL path to tcpdf installation folder (http://localhost/tcpdf/).
@@ -57,7 +57,7 @@ define ('K_PATH_MAIN', __DIR__.'/');
  * Path for PDF fonts.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+define ('K_PATH_FONTS', '/var/www/html/public/fonts/');
 
 /**
  * Default images directory.
