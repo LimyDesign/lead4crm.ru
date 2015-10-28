@@ -57,7 +57,7 @@
  * Path for PDF fonts.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-define ('K_PATH_FONTS', '/var/www/html/public/fonts/');
+// define ('K_PATH_FONTS', '/var/www/html/public/fonts/');
 
 /**
  * Default images directory.
