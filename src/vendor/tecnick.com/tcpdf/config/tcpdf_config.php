@@ -45,7 +45,7 @@
  * Installation path (/var/www/tcpdf/).
  * By default it is automatically calculated but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_MAIN', '');
+// define ('K_PATH_MAIN', '');
 
 /**
  * URL path to tcpdf installation folder (http://localhost/tcpdf/).
@@ -57,13 +57,13 @@
  * Path for PDF fonts.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
+define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
 
 /**
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_IMAGES', '');
+define ('K_PATH_IMAGES', '/var/www/html/public/images/');
 
 /**
  * Deafult image logo used be the default Header() method.
@@ -79,7 +79,7 @@
 /**
  * Cache directory for temporary files (full path).
  */
-//define ('K_PATH_CACHE', '/tmp/');
+define ('K_PATH_CACHE', '/tmp/');
 
 /**
  * Generic name for a blank image.
