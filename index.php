@@ -57,6 +57,11 @@ if ($cmd[0]) {
 			echo getWebCall($_POST['phone'], $_POST['delay']);
 			break;
 
+		case 'contact':
+			isAuth();
+			contract($_POST['decision']);
+			break;
+
 		case 'step-2':
 			wizard($_POST['crm_id'], 2);
 			break;
@@ -220,6 +225,7 @@ if ($cmd[0]) {
 				'company' => $_SESSION['company'],
 				'provider' => $_SESSION['provider'],
 				'userid' => $_SESSION['userid'],
+				'contract' => $_SESSION['contract'],
 				'admin' => $_SESSION['is_admin'],
 				'telegram' => $_SESSION['telegram'],
 				'icq' => $_SESSION['icq'],
@@ -688,7 +694,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$result = pg_query($query);
 			if (pg_num_rows($result) != 1) {
 				$state = sha1($_SERVER['HTTP_USER_AGENT'].time());
-				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '{$state}') RETURNING id, vk, ok, fb, gp, mr, ya, contract";
+				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '{$state}') RETURNING id, vk, ok, fb, gp, mr, ya, contract2";
 				$result = pg_query($query);
 				$userid = pg_fetch_result($result, 0, 'id');
 				$vk = pg_fetch_result($result, 0, 'vk');
@@ -697,11 +703,13 @@ function dbLogin($userId, $userEmail, $provider) {
 				$gp = pg_fetch_result($result, 0, 'gp');
 				$mr = pg_fetch_result($result, 0, 'mr');
 				$ya = pg_fetch_result($result, 0, 'ya');
-				$contract = pg_fetch_result($result, 0, 'contract');
+				$contract = pg_fetch_result($result, 0, 'contract2');
+				$contract = ($contract == 't') ? true : false;
 				$apikey = $state;
 			} else {
 				$userid = pg_fetch_result($result, 0, 'id');
-				$contract = pg_fetch_result($result, 0, 'contract');
+				$contract = pg_fetch_result($result, 0, 'contract2');
+				$contract = ($contract == 't') ? true : false;
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
 				$is_admin = ($is_admin == 't') ? true : false;
@@ -747,6 +755,20 @@ function dbLogin($userId, $userEmail, $provider) {
 			pg_free_result($result);
 			pg_close($db);
 			header("Location: /cabinet/");
+		}
+	}
+}
+
+function contract($decision) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "update users set contract2 = {$decision} where id = {$_SESSION['userid']}";
+		pg_query($query);
+		if (!$decision) {
+			unset($_SESSION['userid']);
+		} else {
+			$_SESSION['contact'] = true;
 		}
 	}
 }

@@ -796,6 +796,7 @@
   </div>
   {% include 'layout/search_dialog.twig' %}
   {% include 'layout/tariff.twig' %}
+  {% include 'layput/terms.twig' %}
   {# {% include 'layout/login.twig' %} #}
   {# {% include 'layout/webcall.twig' %} #}
   {% include 'layout/scripts.twig' %}
@@ -808,6 +809,7 @@
   var totalChecked = 0,
       totalFind = 0,
       qty = 0,
+      contract = {{contract}},
       icq_uin_start = 0,
       icq_uin_change = 0,
       icq_notify_start = '',
@@ -840,6 +842,30 @@
       $('#qty').number(data.qty, 0, '.', ' ');
       qty = data.qty;
     }, 'json');
+
+    /* Показываем пользователю запрос на принятие контракта
+    ========================================================================================= */
+    if (!contract) {
+      $('#termsModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true
+      });
+    }
+    
+    /* Обрабатываем действия пользователя по принятию/непринятию контракта
+    ========================================================================================= */
+    $('#termsModal #decline').click(function() {
+      $.post('/contract/', { decision: false }).done(function() {
+        window.location = 'https://www.lead4crm.ru';
+      });
+    });
+    $('#termsModal #accept').click(function() {
+      $.post('/contract/', { decision: true }).done(function() {
+        $('#termsModal').modal('hide');
+      });
+    });
+
 
     /* Мастер экспорта данных из 2ГИС
     ========================================================================================= */
