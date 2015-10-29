@@ -856,11 +856,13 @@
     /* Обрабатываем действия пользователя по принятию/непринятию контракта
     ========================================================================================= */
     $('#termsModal #decline').click(function() {
+      $('#termsModal').find('button').attr('disabled', 'disabled');
       $.post('/contract/', { decision: false }).done(function() {
         window.location = 'https://www.lead4crm.ru';
       });
     });
     $('#termsModal #accept').click(function() {
+      $('#termsModal').find('button').attr('disabled', 'disabled');
       $.post('/contract/', { decision: true }).done(function() {
         $('#termsModal').modal('hide');
       });
