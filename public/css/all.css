@@ -424,6 +424,8 @@ h4.panel-title {
     line-height: 1.12;
     font-weight: bold;
     color: #e3dfed; }
+  .visual-other h3 {
+    color: #e3dfed; }
   .visual-other p {
     margin: 0 0 8px; }
     .visual-other p.tagline {
