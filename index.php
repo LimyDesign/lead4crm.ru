@@ -117,6 +117,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'forsmsru':
+			header('Content-Type: text/plain');
 			sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
