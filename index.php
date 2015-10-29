@@ -704,12 +704,10 @@ function dbLogin($userId, $userEmail, $provider) {
 				$mr = pg_fetch_result($result, 0, 'mr');
 				$ya = pg_fetch_result($result, 0, 'ya');
 				$contract = pg_fetch_result($result, 0, 'contract2');
-				$contract = ($contract == 't') ? true : false;
 				$apikey = $state;
 			} else {
 				$userid = pg_fetch_result($result, 0, 'id');
 				$contract = pg_fetch_result($result, 0, 'contract2');
-				$contract = ($contract == 't') ? true : false;
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
 				$is_admin = ($is_admin == 't') ? true : false;
