@@ -845,7 +845,6 @@
 
     /* Показываем пользователю запрос на принятие контракта
     ========================================================================================= */
-    console.log(contract);
     if (contract == 'f' || contract == '') {
       $('#termsModal').modal({
         backdrop: 'static',
@@ -864,7 +863,9 @@
     });
     $('#termsModal #accept').click(function() {
       $('#termsModal').find('button').attr('disabled', 'disabled');
-      $.post('/contract/', { decision: true }).done(function() {
+      $.post('/contract/', { decision: true }, function(data) {
+        console.log(data);
+      }, 'html').done(function() {
         contract = 't';
         $('#termsModal').modal('hide');
       });
