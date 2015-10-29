@@ -865,6 +865,7 @@
       $('#termsModal').find('button').attr('disabled', 'disabled');
       $.post('/contract/', { decision: true }).done(function() {
         $('#termsModal').modal('hide');
+        contract = true;
       });
     });
 
