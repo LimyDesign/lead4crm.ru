@@ -766,7 +766,7 @@ function contract($decision) {
 		if (!$decision) {
 			unset($_SESSION['userid']);
 		} else {
-			$_SESSION['contact'] = true;
+			$_SESSION['contact'] = 't';
 		}
 	}
 }
