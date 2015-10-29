@@ -57,7 +57,7 @@ if ($cmd[0]) {
 			echo getWebCall($_POST['phone'], $_POST['delay']);
 			break;
 
-		case 'contact':
+		case 'contract':
 			isAuth();
 			contract($_POST['decision']);
 			break;
