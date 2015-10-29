@@ -761,13 +761,12 @@ function contract($decision) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		$query = "update users set contract2 = {$decision} where id = {$_SESSION['userid']}";
-		pg_query($query);
-		if (!$decision) {
-			unset($_SESSION['userid']);
-		} else {
-			$_SESSION['contact'] = 't';
-		}
+		$query = "update users set contract2 = {$decision} where id = {$_SESSION['userid']} returning contract2";
+		$result = pg_query($query);
+		$r = pg_fetch_result($result, 0, 'contract2');
+		$_SESSION['contact'] = $r;
+		pg_free_result($result);
+		pg_close($db);
 	}
 }
 
