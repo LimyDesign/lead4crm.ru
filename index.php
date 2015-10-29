@@ -274,6 +274,7 @@ if ($cmd[0]) {
 				case 'about-us': $title = 'О нас'; break;
 				case 'price': $title = 'Цены'; break;
 				case 'support': $title = 'Поддержка'; break;
+				case 'terms': $title = 'Публичный договор-оферта'; break;
 				case 'subscribe-confirm': $title = 'Подтверждение подписки'; break;
 				case 'subscribe': $title = 'Спасибо!'; break;
 				case 'cabinet': $title = 'Личный кабинет'; break;
@@ -501,6 +502,7 @@ function arrayMenuUrl() {
 		'support_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/support/',
 		'blog_url' => 'http://blog.lead4crm.ru/',
 		'cabinet_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
+		'terms_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/terms/'
 		);
 }
 
