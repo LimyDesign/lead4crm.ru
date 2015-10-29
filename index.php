@@ -501,8 +501,8 @@ function arrayMenuUrl() {
 		'prices_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/price/',
 		'support_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/support/',
 		'blog_url' => 'http://blog.lead4crm.ru/',
-		'cabinet_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/cabinet/'
-		'terms_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/terms/'
+		'cabinet_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/cabinet/',
+		'terms_url' => 'https://' . $_SERVER['SERVER_NAME'] . '/terms/',
 		);
 }
 
