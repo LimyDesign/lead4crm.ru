@@ -858,7 +858,7 @@
     $('#termsModal #decline').click(function() {
       $('#termsModal').find('button').attr('disabled', 'disabled');
       $.post('/contract/', { decision: false }).done(function() {
-        window.location = 'https://www.lead4crm.ru/logout/';
+        window.location = '/logout/';
       });
     });
     $('#termsModal #accept').click(function() {
