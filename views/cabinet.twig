@@ -846,7 +846,7 @@
 
     /* Показываем пользователю запрос на принятие контракта
     ========================================================================================= */
-    if (contract == 'f' || contract == '' || new_contract == '') {
+    if (contract == 'f' && new_contract == '') {
       $('#termsModal').modal({
         backdrop: 'static',
         keyboard: false,
