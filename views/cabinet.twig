@@ -1400,7 +1400,8 @@
         }
         $('#groupEmailAddress').addClass('has-success');
 
-        if (email != email_address_start) {
+        if (email != '{{email.address}}') {
+          console.log('Yo!');
           sendEmail('code', serialized, function() {
             if ($('#groupEmailAddress').hasClass('has-success')) {
               $('#groupEmailAddress').removeClass('has-success');
