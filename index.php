@@ -1817,7 +1817,7 @@ function sendEmail($cmd, $email) {
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
 			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
-			mail($email, $subject, $msg, $headers, '-fsupport@lead4crm.ru');
+			mail($email, $subject, $msg, $headers);
 			echo $code;
 			break;
 
@@ -1857,7 +1857,7 @@ function sendEmail($cmd, $email) {
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
 			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
-			mail($email, $subject, $msg, $headers, '-fsupport@lead4crm.ru');
+			mail($email, $subject, $msg, $headers);
 			header('Location: /cabinet/');
 			break;
 
@@ -1891,7 +1891,7 @@ function sendEmail($cmd, $email) {
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
 			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
-			mail($email, $subject, $msg, $headers, '-fsupport@lead4crm.ru');
+			mail($email, $subject, $msg, $headers);
 			break;
 	}
 
