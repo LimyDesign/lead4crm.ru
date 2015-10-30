@@ -1812,7 +1812,7 @@ function sendEmail($cmd, $email) {
 			$code = exec("/opt/lds/email --encode '{$email};{$notify}'");
 			$code = urlencode($code);
 			$email_url = urlencode($email);
-			$msg = "Кто-то, возможно вы, на сайте www.lead4crm.ru указали данный адрес электронной почты как основной адрес для получения уведомлений.\r\n\r\nЕсли вы подтвердите данный адрес, то вы сможете на него получать уведомления о предстоящем продлении тарифного плана на сайте www.lead4crm.ru.\r\n\r\nНастройка уведомлений делается там же. Подтверждение адреса вовсе не является включением уведомлений, для этого помимо указания нового адреса электронной почты необходимо отметить нужные пункты уведомлений.\r\n\r\nДля подтверждения пройдите по следующему адресу:\r\n\r\nhttps://www.lead4crm.ru/email/confirm/?email={$email_url}&code={$code}\r\n\r\nВНИМАНИЕ! Для подтверждения адреса необходима действующая авторизация на сайте www.lead4crm.ru.";
+			$msg = "Кто-то, возможно вы, на сайте www.lead4crm.ru указали данный адрес электронной почты как основной адрес для получения уведомлений.\r\n\r\nЕсли вы подтвердите данный адрес, то вы сможете на него получать уведомления о предстоящем продлении тарифного плана на сайте www.lead4crm.ru.\r\n\r\nНастройка уведомлений делается там же. Подтверждение адреса вовсе не является включением уведомлений, для этого помимо указания нового адреса электронной почты необходимо отметить нужные пункты уведомлений.\r\n\r\nДля подтверждения пройдите по следующему адресу:\r\n\r\nhttps://www.lead4crm.ru/email/confirm/?email={$email_url}&code={$code}\r\n\r\nВНИМАНИЕ! Для подтверждения адреса необходима действующая авторизация на сайте www.lead4crm.ru.\r\n\r\n---\r\nС уважением,\r\nколлетив сайта www.lead4crm.ru\r\nE-mail: support@lead4crm.ru\r\nТел.: +7 (499) 704-69-17\r\nБазы 2ГИС официально и быстро!";
 			$subject = "Lead4CRM: Подтверждение электронной почты";
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
@@ -1852,6 +1852,7 @@ function sendEmail($cmd, $email) {
 			$query = "update users set email = '{$email}'{$query_notify} where id = {$_SESSION['userid']}";
 			pg_query($query);
 			$_SESSION['email']['address'] = $email;
+			$msg .= "\r\n\r\n---\r\nС уважением,\r\nколлетив сайта www.lead4crm.ru\r\nE-mail: support@lead4crm.ru\r\nТел.: +7 (499) 704-69-17\r\nБазы 2ГИС официально и быстро!";
 			$subject = 'Lead4CRM: Адрес подтвержден';
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
@@ -1885,6 +1886,7 @@ function sendEmail($cmd, $email) {
 			$query = "update users set email = '{$email}'{$query_notify} where id = {$_SESSION['userid']}";
 			pg_query($query);
 			$_SESSION['email']['address'] = $email;
+			$msg .= "\r\n\r\n---\r\nС уважением,\r\nколлетив сайта www.lead4crm.ru\r\nE-mail: support@lead4crm.ru\r\nТел.: +7 (499) 704-69-17\r\nБазы 2ГИС официально и быстро!";
 			$subject = 'Lead4CRM: Изменены уведомления';
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
