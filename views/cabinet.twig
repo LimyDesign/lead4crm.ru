@@ -1818,7 +1818,7 @@
   /* Функция отправляет на указанный 'email' определенный 'type' сообщения.
   ========================================================================================= */
   function sendEmail(type, serialized, callback) {
-    $.post('/email/'+type+'/', serialized).done(function() {
+    $.post('/email/'+type+'/', serialized).always(function() {
       if (callback && typeof(callback) === 'function') {
         callback();
       }
