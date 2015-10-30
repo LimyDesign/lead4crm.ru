@@ -229,6 +229,8 @@ if ($cmd[0]) {
 				'admin' => $_SESSION['is_admin'],
 				'telegram' => $_SESSION['telegram'],
 				'icq' => $_SESSION['icq'],
+				'sms' => $_SESSION['sms'],
+				'email' => $_SESSION['email'],
 				'notify_danger' => (!isset($_SESSION['telegram']) && !isset($_SESSION['icq']) && !isset($_SESSION['sms']) && !isset($_SESSION['email'])) ? true : false,
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
@@ -694,7 +696,7 @@ function dbLogin($userId, $userEmail, $provider) {
 			$result = pg_query($query);
 			if (pg_num_rows($result) != 1) {
 				$state = sha1($_SERVER['HTTP_USER_AGENT'].time());
-				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '{$state}') RETURNING id, vk, ok, fb, gp, mr, ya, contract2";
+				$query = "INSERT INTO users (email, {$provider}, apikey) VALUES ('{$userEmail}', '{$userId}', '{$state}') RETURNING id, vk, ok, fb, gp, mr, ya, contract2, email, email_renewal";
 				$result = pg_query($query);
 				$userid = pg_fetch_result($result, 0, 'id');
 				$vk = pg_fetch_result($result, 0, 'vk');
@@ -704,10 +706,16 @@ function dbLogin($userId, $userEmail, $provider) {
 				$mr = pg_fetch_result($result, 0, 'mr');
 				$ya = pg_fetch_result($result, 0, 'ya');
 				$contract = pg_fetch_result($result, 0, 'contract2');
+				$email = pg_fetch_result($result, 0, 'email');
+				$email_renewal = pg_fetch_result($result, 0, 'email_renewal');
+				$email_renewal = ($email_renewal == 't') ? true : false;
 				$apikey = $state;
 			} else {
 				$userid = pg_fetch_result($result, 0, 'id');
 				$contract = pg_fetch_result($result, 0, 'contract2');
+				$email = pg_fetch_result($result, 0, 'email');
+				$email_renewal = pg_fetch_result($result, 0, 'email_renewal');
+				$email_renewal = ($email_renewal == 't') ? true : false;
 				$company = pg_fetch_result($result, 0, 'company');
 				$is_admin = pg_fetch_result($result, 0, 'is_admin');
 				$is_admin = ($is_admin == 't') ? true : false;
@@ -747,7 +755,8 @@ function dbLogin($userId, $userEmail, $provider) {
 			$_SESSION['apikey'] = $apikey;
 			$_SESSION['telegram'] = array('chat_id' => $telegram_chat_id, 'company' => $telegram_company, 'renewal' => $telegram_renewal, 'balans' => $telegram_balans);
 			$_SESSION['icq'] = array('uin' => $icq_uin, 'company' => $icq_company, 'renewal' => $icq_renewal, 'balans' => $icq_balans);
-			$_SESSION['sms'] = array('uin' => $sms_phone, 'company' => $sms_company, 'renewal' => $sms_renewal, 'balans' => $sms_balans);
+			$_SESSION['sms'] = array('phone' => $sms_phone, 'company' => $sms_company, 'renewal' => $sms_renewal, 'balans' => $sms_balans);
+			$_SESSION['email'] = array('address' => $email, 'renewal' => $email_renewal);
 			$_SESSION['provider'] = array('vk' => $vk, 'ok' => $ok, 'fb' => $fb, 'gp' => $gp, 'mr' => $mr, 'ya' => $ya);
 			$_SESSION['auth'] = true;
 			pg_free_result($result);
