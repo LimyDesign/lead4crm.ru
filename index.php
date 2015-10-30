@@ -1818,7 +1818,7 @@ function sendEmail($cmd, $email) {
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
 			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
 			mail($email, $subject, $msg, $headers);
-			echo '100';
+			echo $code;
 			break;
 
 		case 'confirm':
