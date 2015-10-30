@@ -1850,6 +1850,7 @@ function sendEmail($cmd, $email) {
 			}
 
 			$query = "update users set email = '{$email}{$query_notify} where id = {$_SESSION['userid']}";
+			echo $query;
 			pg_query($query);
 			$_SESSION['email']['address'] = $email;
 			$subject = 'Lead4CRM: Адрес подтвержден';

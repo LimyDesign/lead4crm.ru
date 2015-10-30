@@ -1818,7 +1818,6 @@
   /* Функция отправляет на указанный 'email' определенный 'type' сообщения.
   ========================================================================================= */
   function sendEmail(type, serialized, callback) {
-    console.log(type, serialized);
     $.post('/email/'+type+'/', serialized).done(function() {
       if (callback && typeof(callback) === 'function') {
         callback();
