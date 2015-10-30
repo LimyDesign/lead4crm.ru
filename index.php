@@ -134,7 +134,7 @@ if ($cmd[0]) {
 		case 'email1':
 			header('Content-Type: text/plain');
 			$email = $_REQUEST['email'];
-			$notify = $_REQUEST['notify'][0];
+			$notify = implode(',', $_REQUEST['notify']);
 			echo system("/opt/lds/email --encode '{$email};{$notify}'");
 			break;
 
