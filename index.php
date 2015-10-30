@@ -127,6 +127,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'email':
+			isAuth();
 			header('Content-Type: text/json');
 			echo sendEmail($cmd[1], $_REQUEST['email']);
 			break;
@@ -1811,18 +1812,87 @@ function sendEmail($cmd, $email) {
 			$code = exec("/opt/lds/email --encode '{$email};{$notify}'");
 			$code = urlencode($code);
 			$email = urlencode($email);
-			$msg = "Кто-то, возможно вы, на сайте www.lead4crm.ru указали данный адрес электронной почты как основной адрес для получения уведомлений.\r\n\r\nЕсли вы подтвердите данный адрес, то вы сможете на него получать уведомления о предстоящем продлении тарифного плана на сайте www.lead4crm.ru.\r\n\r\nНастройка уведомлений делается там же. Подтверждение адреса вовсе не является включением уведомлений, для этого помимо указания нового адреса электронной почты необходимо отметить нужные пункты уведомлений.\r\n\r\nДля подтверждения пройдите по следующему адресу:\r\n\r\nhttps://www.lead4crm.ru/email/confirm/?email={$email}&code={$code}";
+			$msg = "Кто-то, возможно вы, на сайте www.lead4crm.ru указали данный адрес электронной почты как основной адрес для получения уведомлений.\r\n\r\nЕсли вы подтвердите данный адрес, то вы сможете на него получать уведомления о предстоящем продлении тарифного плана на сайте www.lead4crm.ru.\r\n\r\nНастройка уведомлений делается там же. Подтверждение адреса вовсе не является включением уведомлений, для этого помимо указания нового адреса электронной почты необходимо отметить нужные пункты уведомлений.\r\n\r\nДля подтверждения пройдите по следующему адресу:\r\n\r\nhttps://www.lead4crm.ru/email/confirm/?email={$email}&code={$code}\r\n\r\nВНИМАНИЕ! Для подтверждения адреса необходима действующая авторизация на сайте www.lead4crm.ru.";
 			$subject = "Lead4CRM: Подтверждение электронной почты";
 			$headers = "From: noreply@lead4crm.ru\r\n";
 			$headers.= "Reply-To: support@lead4crm.ru\r\n";
 			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
 			mail($email, $subject, $msg, $headers);
 			break;
-		
-		default:
-			# code...
+
+		case 'confirm':
+			$query_notify = '';
+			$noties = array('renewal' => 'false');
+			$code = urldecode($_REQUEST['code']);
+			$decode = exec("/opt/lds/email --decode '{$code}'");
+			list($email, $dNoties) = explode(';', $decode);
+			$arrNoties = explode(',', $noties);
+			$msg = "Ваш адрес электронной почты подтвержден.\r\n";
+			$msg.= "Теперь на ваш адрес будут поступать следующие уведомления:\r\n";
+			$msg_len = strlen($msg);
+			foreach ($arrNoties as $notify) {
+				switch($notify) {
+					case 'renewal':
+						$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r\n";
+						$noties['renewal'] = 'true';
+						$_SESSION['email']['renewal'] = true;
+						break;
+				}
+			}
+
+			if ($msg_len == strlen($msg)) {
+				$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r\n";
+			}
+
+			foreach ($noties as $notify_key => $notify_status) {
+				$query_notify .= ', email_'.$notify_key.' = '.$notify_status;
+			}
+
+			$query = "update users set email = '{$email}{$query_notify} where id = {$_SESSION['userid']}";
+			pg_query($query);
+			$_SESSION['email']['address'] = $email;
+			$subject = 'Lead4CRM: Адрес подтвержден';
+			$headers = "From: noreply@lead4crm.ru\r\n";
+			$headers.= "Reply-To: support@lead4crm.ru\r\n";
+			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
+			mail($email, $subject, $msg, $headers);
+			break;
+
+		case 'change':
+			$query_notify = '';
+			$noties = array('renewal' => 'false');
+			$msg = "Для вашего адреса установлены следующие уведомления:\r\n";
+			$msg_len = strlen($msg);
+			foreach ($_REQUEST['notify'] as $notify) {
+				switch ($notify) {
+					case 'renewal':
+						$msg .= "\t- Уведомления о предстоящем продлении тарифного плана\r\n";
+						$noties['renewal'] = 'true';
+						$_SESSION['icq']['renewal'] = true;
+						break;
+				}
+			}
+
+			if ($msg_len == strlen($msg)) {
+				$msg .= "\t- Ни одного уведомления не получите, т.к. всё отключено\r\n";
+			}
+
+			foreach ($noties as $notify_key => $notify_status) {
+				$query_notify .= ', email_'.$notify_key.' = '.$notify_status;
+			}
+			$query = "update users set email = '{$email}{$query_notify} where id = {$_SESSION['userid']}";
+			pg_query($query);
+			$_SESSION['email']['address'] = $email;
+			$subject = 'Lead4CRM: Изменены уведомления';
+			$headers = "From: noreply@lead4crm.ru\r\n";
+			$headers.= "Reply-To: support@lead4crm.ru\r\n";
+			$headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
+			mail($email, $subject, $msg, $headers);
 			break;
 	}
+
+	if ($conf->db->type == 'postgres')
+		pg_close($db);
 }
 
 function vcard() {
