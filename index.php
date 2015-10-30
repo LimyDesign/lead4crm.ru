@@ -765,7 +765,7 @@ function contract($decision) {
 		$result = pg_query($query);
 		$r = pg_fetch_result($result, 0, 'contract2');
 		$_SESSION['contact'] = $r;
-		echo $_SESSION['contact'];
+		echo $_SESSION['contract'];
 		pg_free_result($result);
 		pg_close($db);
 	}

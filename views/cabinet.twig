@@ -810,6 +810,7 @@
       totalFind = 0,
       qty = 0,
       contract = '{{contract}}',
+      new_contract = '',
       icq_uin_start = 0,
       icq_uin_change = 0,
       icq_notify_start = '',
@@ -845,7 +846,7 @@
 
     /* Показываем пользователю запрос на принятие контракта
     ========================================================================================= */
-    if (contract == 'f' || contract == '') {
+    if (contract == 'f' || contract == '' || new_contract == '') {
       $('#termsModal').modal({
         backdrop: 'static',
         keyboard: false,
@@ -864,9 +865,8 @@
     $('#termsModal #accept').click(function() {
       $('#termsModal').find('button').attr('disabled', 'disabled');
       $.post('/contract/', { decision: true }, function(data) {
-        console.log(data);
+        new_contract = data;
       }, 'html').done(function() {
-        contract = 't';
         $('#termsModal').modal('hide');
       });
     });
