@@ -126,6 +126,18 @@ if ($cmd[0]) {
 			sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
+		case 'email':
+			header('Content-Type: text/json');
+			echo sendEmail($cmd[1], $_REQUEST['email']);
+			break;
+
+		case 'email1':
+			header('Content-Type: text/plain');
+			$email = $_REQUEST['email'];
+			$notify = $_REQUEST['notify'][0];
+			echo system("/opt/lds/email --encode '{$email};{$notify}'");
+			break;
+
 		case 'vcard':
 			header('Content-Type: text/x-vcard');
 			header('Content-Disposition: attachment; filename=lead4crm.vcf');
@@ -1792,6 +1804,26 @@ function sendSMS($cmd, $phone, $msg = '') {
 	}
 	
 	return json_encode($msg);
+}
+
+function sendEmail($cmd, $email) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	switch ($cmd) {
+		case 'code':
+			$notify = ($_REQUEST['notify'][0]) ? '1' : '0';
+			$code = system("/opt/lds/email --encode '{$email};{$notify}");
+			$code = urlencode($code);
+			$email = urlencode($email);
+			$msg = "Кто-то, возможно вы, на сайте www.lead4crm.ru указали данный адрес электронной почты как основной адрес для получения уведомлений.\n\nЕсли вы подтвердите данный адрес, то вы сможете на него получать уведомления о предстоящем продлении тарифного плана на сайте www.lead4crm.ru.\n\nНастройка уведомлений делается там же. Подтверждение адреса вовсе не является включением уведомлений, для этого помимо указания нового адреса электронной почты необходимо отметить нужные пункты уведомлений.\n\nДля подтверждения пройдите по следующему адресу:\n\nhttps://www.lead4crm.ru/email/confirm/?email={$email}&code={$code}";
+			break;
+		
+		default:
+			# code...
+			break;
+	}
 }
 
 function vcard() {

@@ -739,6 +739,9 @@
                       <div class="alert alert-success hide" id="statusEmailSetting">
                         <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
                       </div>
+                      <div class="alert alert-info hide" id="statusEmailCode">
+                        <i class="glyphicon glyphicon-ok"></i> На указанный адрес электронной почты отправлена ссылка для подтверждения. Перейдите по ней, чтобы изменить электропочту.
+                      </div>
                       <fieldset>
                         <div class="form-group input-group-lg" id="groupEmailAddress">
                           <label for="inputEmailAddress" class="col-sm-2 control-label">E-mail:</label>
@@ -820,8 +823,8 @@
       sms_phone_change = 0,
       sms_notify_start = '',
       sms_notify_change = '',
-      email_address_start = '{{email.address}}',
-      email_address_change = '{{email.address}}',
+      email_address_start = '',
+      email_address_change = '',
       email_notify_start = '',
       email_notify_change = '';
 
@@ -1195,7 +1198,7 @@
           serialized = $(this).serialize();
       $fieldset.attr('disabled', 'disabled');
       if (isInt(uuin) && uuin != '') {
-        if (uuin != '{{icq.uin}}' && code == '') {
+        if (uuin != icq_uin_start && code == '') {
           sendCode(uuin);
           $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
           if ($('#groupICQUIN').hasClass('has-error')) {
@@ -1258,7 +1261,7 @@
     ========================================================================================= */
     $('#formSMSSetting input[name^="notify"]:checked').each(function() {
       sms_notify_start += $(this).val();
-      sms_notify_change = icq_notify_start;
+      sms_notify_change = sms_notify_start;
     });
     $('#formSMSSetting input[name^="notify"]').change(function() {
       sms_notify_change = '';
@@ -1300,7 +1303,7 @@
           if (result === false) {
             return;
           } else {
-            if (phone != '{{sms.phone}}' && code == '') {
+            if (phone != sms_phone_start && code == '') {
               cost = cost.toFixed(2);
               var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
               if (isSendSMS) {
@@ -1358,6 +1361,78 @@
         $fieldset.removeAttr('disabled');
         scrollTo('#groupSMSPhone');
         $('#inputSMSPhone').focus();
+      }
+    });
+
+    /* Прописываем изначальные и конечные значения телефона для SMS.
+       Необходимо для дальнейшей проверки сделанных изменений.
+    ========================================================================================= */
+    email_address_start = email_address_change = $('#inputEmailAddress').val();
+    $('#inputEmailAddress').change(function() {
+        email_address_change = $(this).val();
+    });
+
+    /* Прописываем изначальные и конечные значения настроек уведомлений для SMS.
+       Необходимо для дальнейшей проверки сделанных изменений.
+    ========================================================================================= */
+    $('#formEmailSetings input[name^="notify"]:checked').each(function() {
+      email_notify_start += $(this).val();
+      email_notify_change = email_notify_start;
+    });
+    $('#formEmailSetings input[name^="notify"]').change(function() {
+      email_notify_change = '';
+      $('#formEmailSetings input[name^="notify"]:checked').each(function() {
+        email_notify_change += $(this).val();
+      });
+    });
+
+    /* Выполняем привязку мобильного телефона для SMS уведомлений.
+    ========================================================================================= */
+    $('#formEmailSetings').submit(function (e) {
+      e.preventDefault();
+      var email = $('#inputEmailAddress').val(),
+          $fieldset = $(this).find('fieldset'),
+          serialized = $(this).serialize();
+      $fieldset.attr('disabled', 'disabled');
+      if (isEmail(email)) {
+        if ($('#groupEmailAddress').hasClass('has-error')) {
+          $('#groupEmailAddress').removeClass('has-error');
+        }
+        $('#groupEmailAddress').addClass('has-success');
+
+        if (email != email_address_start) {
+          sendEmail('code', email, function() {
+            if ($('#groupEmailAddress').hasClass('has-success')) {
+              $('#groupEmailAddress').removeClass('has-success');
+            }
+            $('#statusEmailCode').removeClass('hide');
+            scrollTo('#statusEmailCode');
+            $fieldset.removeAttr('disabled');
+          });
+        } else {
+          if (email_address_start != email_address_change || email_notify_start != email_notify_change) {
+            sendEmail('change', email, function() {
+              email_address_start = email_address_change;
+              email_notify_start = email_notify_change;
+              if ($('#groupEmailAddress').hasClass('has-success')) {
+                $('#groupEmailAddress').removeClass('has-success');
+              }
+              $('#statusEmailSetting').removeClass('hide');
+              scrollTo('#statusEmailSetting');
+              setTimeout(function() {
+                $('#statusEmailSetting').addClass('hide');
+              }, 5000);
+              $fieldset.removeAttr('disabled');
+            });
+          } else {
+            $fieldset.removeAttr('disabled');
+          }         
+        }
+      } else {
+        $('#groupEmailAddress').addClass('has-error');
+        $fieldset.removeAttr('disabled');
+        scrollTo('#groupEmailAddress');
+        $('#inputEmailAddress').focus();
       }
     });
   });
@@ -1740,6 +1815,16 @@
     });
   }
 
+  /* Функция отправляет на указанный 'email' определенный 'type' сообщения.
+  ========================================================================================= */
+  function sendEmail(type, email, callback) {
+    $.post('/email/'+type+'/', { email: email }).done(function() {
+      if (callback && typeof(callback) === 'function') {
+        callback();
+      }
+    });
+  }
+
   /* Функция проверяет является ли переменная 'n' целочисленной.
   ========================================================================================= */
   function isInt(n) {
@@ -1754,6 +1839,13 @@
       return 1;
     else
       return 0;
+  }
+
+  /* Функция проверяет является ли переменная 'n' адресом электронной почты.
+  ========================================================================================= */
+  function isEmail(n) {
+    var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return re.test(n);
   }
   </script>
   {# {% endjshrink %} #}
