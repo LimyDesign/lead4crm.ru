@@ -135,7 +135,7 @@ if ($cmd[0]) {
 			header('Content-Type: text/plain');
 			$email = strtolower($_REQUEST['email']);
 			$notify = implode(',', $_REQUEST['notify']);
-			echo system("/opt/lds/email --encode '{$email};{$notify}'");
+			system("/opt/lds/email --encode '{$email};{$notify}'");
 			break;
 
 		case 'vcard':
@@ -1813,7 +1813,8 @@ function sendEmail($cmd, $email) {
 	}
 	switch ($cmd) {
 		case 'code':
-			$notify = ($_REQUEST['notify'][0]) ? '1' : '0';
+			$email = strtolower($email);
+			$notify = implode(',', $_REQUEST['notify']);
 			$code = system("/opt/lds/email --encode '{$email};{$notify}");
 			$code = urlencode($code);
 			$email = urlencode($email);
