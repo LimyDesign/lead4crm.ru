@@ -231,7 +231,7 @@ if ($cmd[0]) {
 				'icq' => $_SESSION['icq'],
 				'sms' => $_SESSION['sms'],
 				'email' => $_SESSION['email'],
-				'notify_danger' => (!isset($_SESSION['telegram']) && !isset($_SESSION['icq']) && !isset($_SESSION['sms']) && !isset($_SESSION['email'])) ? true : false,
+				'notify_danger' => (!isset($_SESSION['telegram']) || !isset($_SESSION['icq']) || !isset($_SESSION['sms']) || !isset($_SESSION['email'])) ? true : false,
 				'crm_list' => getCRM(),
 				'countries' => getCountries(getUserCityByIP()),
 				'top_rubrics' => $top_rubrics,
