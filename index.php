@@ -131,14 +131,6 @@ if ($cmd[0]) {
 			echo sendEmail($cmd[1], $_REQUEST['email']);
 			break;
 
-		case 'email1':
-			header('Content-Type: text/plain');
-			$email = strtolower($_REQUEST['email']);
-			$notify = implode(',', $_REQUEST['notify']);
-			$echo = exec("/opt/lds/email --encode '{$email};{$notify}'");
-			echo $echo;
-			break;
-
 		case 'vcard':
 			header('Content-Type: text/x-vcard');
 			header('Content-Disposition: attachment; filename=lead4crm.vcf');

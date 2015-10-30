@@ -1401,7 +1401,7 @@
         $('#groupEmailAddress').addClass('has-success');
 
         if (email != email_address_start) {
-          sendEmail('code', email, function() {
+          sendEmail('code', serialized, function() {
             if ($('#groupEmailAddress').hasClass('has-success')) {
               $('#groupEmailAddress').removeClass('has-success');
             }
@@ -1411,7 +1411,7 @@
           });
         } else {
           if (email_address_start != email_address_change || email_notify_start != email_notify_change) {
-            sendEmail('change', email, function() {
+            sendEmail('change', serialized, function() {
               email_address_start = email_address_change;
               email_notify_start = email_notify_change;
               if ($('#groupEmailAddress').hasClass('has-success')) {
@@ -1817,8 +1817,8 @@
 
   /* Функция отправляет на указанный 'email' определенный 'type' сообщения.
   ========================================================================================= */
-  function sendEmail(type, email, callback) {
-    $.post('/email/'+type+'/', { email: email }).done(function() {
+  function sendEmail(type, serialized, callback) {
+    $.post('/email/'+type+'/', serialized).done(function() {
       if (callback && typeof(callback) === 'function') {
         callback();
       }
