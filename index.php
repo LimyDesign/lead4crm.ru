@@ -135,7 +135,7 @@ if ($cmd[0]) {
 			header('Content-Type: text/plain');
 			$email = strtolower($_REQUEST['email']);
 			$notify = implode(',', $_REQUEST['notify']);
-			system("/opt/lds/email --encode '{$email};{$notify}'");
+			$echo = exec("/opt/lds/email --encode '{$email};{$notify}'");
 			break;
 
 		case 'vcard':
