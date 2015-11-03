@@ -817,6 +817,7 @@
   var totalChecked = 0,
       totalFind = 0,
       qty = 0,
+      ii = '',
       contract = '{{contract}}',
       new_contract = '',
       icq_uin_start = 0,
@@ -885,7 +886,6 @@
     var current_step = 1;
     $('#wizard-form').submit(function(event) {
       event.preventDefault();
-      var ii = '';
       var form_action = $(this).attr('action');
       var crm_id = $(this).find('#selectCRM').val();
       var city = $(this).find('#selectCity').val();
