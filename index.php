@@ -346,12 +346,13 @@ function getCRM() {
 			$crm_list[$row['id']]['id'] = $row['id'];
 			$crm_list[$row['id']]['name'] = $row['name'];
 			$crm_list[$row['id']]['dev'] = ($row['dev'] == 't') ? true : false;
-			$query2 = "select id, version from crm_versions where crmid = {$row['id']} order by version asc";
+			$query2 = "select id, version, ii from crm_versions where crmid = {$row['id']} order by version asc";
 			$result2 = pg_query($query2);
 			$crm = array();
 			while ($row2 = pg_fetch_assoc($result2)) {
 				$crm[$row2['id']]['id'] = $row2['id'];
 				$crm[$row2['id']]['version'] = $row2['version'];
+				$crm[$row2['id']]['ii'] = $row2['ii'];
 			}
 			pg_free_result($result2);
 			$crm_list[$row['id']]['versions'] = $crm;
@@ -370,7 +371,7 @@ function wizard($crm_id, $step) {
 		if ($step == 2) {
 			if ($conf->db->type == 'postgres') {
 				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-				$query = "select crm_versions.module, crm_systems.name from crm_versions left join crm_systems on crm_systems.id = crm_versions.crmid where crm_versions.id = {$crm_id}";
+				$query = "select crm_versions.module, crm_versions.ii, crm_systems.name from crm_versions left join crm_systems on crm_systems.id = crm_versions.crmid where crm_versions.id = {$crm_id}";
 				$result = pg_query($query);
 				if ($module = pg_fetch_result($result, 0, 'module')) {
 					$return_array['error'] = '0';
@@ -378,6 +379,7 @@ function wizard($crm_id, $step) {
 					$return_array['name'] = pg_fetch_result($result, 0, 'name');
 				} else {
 					$return_array['error'] = '0';
+					$return_array['ii'] = pg_fetch_result($result, 0, 'ii');
 					$return_array['module'] = '';
 				}
 			}

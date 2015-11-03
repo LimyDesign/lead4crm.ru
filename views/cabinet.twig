@@ -216,7 +216,10 @@
                 </div>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(3)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-cloud-download"></i> Импорт компаний</button>
-                <hr style="border-color:#8d81ac;">
+                {% if admin %}
+                  <hr style="border-color:#8d81ac;">
+                  <span id="crm_ii_result"></span>
+                {% endif %}
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
                 <div class="form-group">
@@ -882,6 +885,7 @@
     var current_step = 1;
     $('#wizard-form').submit(function(event) {
       event.preventDefault();
+      var ii = '';
       var form_action = $(this).attr('action');
       var crm_id = $(this).find('#selectCRM').val();
       var city = $(this).find('#selectCity').val();
@@ -921,6 +925,7 @@
                 });
               } else {
                 current_step = 2;
+                ii = data.ii;
                 $('#wizard-form').attr('action', '/step-3/');
                 $('#wizard-helper #step-1').fadeOut('fast', function() {
                   $('#wizard-helper #step-2').fadeIn('fast');
@@ -954,6 +959,7 @@
         }
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
+          console.log(ii);
           localStorage.setItem('search_id', searchType);
           renderSelections(4);
           $('.overlay').fadeOut();
