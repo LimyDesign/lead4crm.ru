@@ -346,13 +346,12 @@ function getCRM() {
 			$crm_list[$row['id']]['id'] = $row['id'];
 			$crm_list[$row['id']]['name'] = $row['name'];
 			$crm_list[$row['id']]['dev'] = ($row['dev'] == 't') ? true : false;
-			$query2 = "select id, version, ii from crm_versions where crmid = {$row['id']} order by version asc";
+			$query2 = "select id, version from crm_versions where crmid = {$row['id']} order by version asc";
 			$result2 = pg_query($query2);
 			$crm = array();
 			while ($row2 = pg_fetch_assoc($result2)) {
 				$crm[$row2['id']]['id'] = $row2['id'];
 				$crm[$row2['id']]['version'] = $row2['version'];
-				$crm[$row2['id']]['ii'] = $row2['ii'];
 			}
 			pg_free_result($result2);
 			$crm_list[$row['id']]['versions'] = $crm;
