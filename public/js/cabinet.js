@@ -149,8 +149,8 @@ $(document).ready(function()
           $('#ii').removeClass('hide');
           $('#ii_help').removeClass('hide');
           $.post('/getIntegrated/', { ii: ii }, function (data) {
-
-          });
+            $('#ii_html').html(data);
+          }, 'html');
         } else {
           if ($('#ii').hasClass('hide') === false)
             $('#ii').addClass('hide');

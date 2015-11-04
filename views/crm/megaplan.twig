@@ -1,0 +1,20 @@
+{% if connected %}
+{% else %}
+	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
+	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="megaplanConnectLabel">Подключение к Мегаплану</h4>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-warning"><strong>ВНИМАНИЕ!</strong> Введенные ниже данные мы не сохраняем и в дальнейшем не используем, а также не передаем третьим лицам. В CRM «Мегаплан» это единственный способ интеграции. Все действия в данной системе будут выполняться от имени того пользователя, чьи логин и пароль вы здесь укажите. В целях повышения безопасности мы рекомендуем добавить отдельного сотрудника, о том как это делается можно посмотреть видео ниже.</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Отменить</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}

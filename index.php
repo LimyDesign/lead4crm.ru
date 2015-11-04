@@ -66,6 +66,10 @@ if ($cmd[0]) {
 			wizard($_POST['crm_id'], 2);
 			break;
 
+		case 'getIntegrated':
+			getIntegrated($_REQUEST['ii']);
+			break;
+
 		case 'initTelegram':
 			isAdmin();
 			try {
@@ -389,6 +393,27 @@ function wizard($crm_id, $step) {
 	}
 	
 	echo json_encode($return_array, JSON_UNESCAPED_UNICODE);
+}
+
+function getIntegrated($crm) {
+	global $twig, $conf;
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	$result = pg_query($query);
+	$crmid = pg_fetch_result($result, 0, $crm);
+	if ($crmid) {
+		if (crmTestConnect($id)) {
+			$opt['connected'] = true;
+		} else {
+			$opt['connected'] = false;
+		}
+	} else {
+		$opt['connected'] = false;
+	}
+	echo $twig->render('crm/'.$crm.'.twig', $opt);
 }
 
 function getUserCityByIP() {
