@@ -53,14 +53,35 @@
 
 	<script>
 	$(function() {
-		$('#formMegaplanConnect').submit(function(event) {
-			event.preventDefault();
-			$('#megaplanConnect').modal('hide');
+		var megaplanHost = $('#inputMegaplanHost'),
+				megaplanLogin = $('#inputMegaplanLogin'),
+				megaplanPassword = $('#inputMegaplanPassword'),
+				megaplanGroupHost = $('#groupMegaplanHost'),
+				megaplanGroupLogin = $('#groupMegaplanLogin'),
+				megaplanGroupPassword = $('#groupMegaplanPassword'),
+				megaplanForm = $('#formMegaplanConnect'),
+				megaplanModal = $('#megaplanConnect');
 
+		megaplanForm.submit(function(event) {
+			event.preventDefault();
+			if (megaplanLogin.val() && megaplanPassword.val() && megaplanHost.val()) {
+				megaplanModal.modal('hide');
+			} else {
+				if (!megaplanHost.val()) {
+					megaplanGroupHost.addClass('has-error');
+					megaplanHost.focus();
+				} else if (!megaplanLogin.val()) {
+					megaplanGroupLogin.addClass('has-error');
+					megaplanLogin.focus();
+				} else if (!megaplanPassword.val()) {
+					megaplanGroupPassword.addClass('has-error');
+					megaplanPassword.focus();
+				}
+			}
 		});
 
-		$('#megaplanConnect #ok').click(function() {
-			$('#formMegaplanConnect').submit();
+		megaplanModal.find('#ok').click(function() {
+			megaplanForm.submit();
 		});
 	});
 	</script>
