@@ -88,6 +88,7 @@
 					}
 				}, 400);
 				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password }, function(data) {
+					console.log(data);
 					if (data) {
 						megaplanAlertUser.removeClass('hide').text(data);
 						setTimeout(function() {
