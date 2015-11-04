@@ -179,7 +179,7 @@ $(document).ready(function()
           showSearchDialog(searchType, crm_id, city);
         } else {
           var postData = {
-            importAPI: '{{apikey}}',
+            importAPI: getParamByName('k'),
             importDomain: 'www.lead4crm.ru'
           };
           $.post('/getRubricList/', postData, function (data) {
@@ -403,7 +403,7 @@ $(document).ready(function()
         serialized = $(this).serialize();
     $fieldset.attr('disabled', 'disabled');
     if (isInt(uuin) && uuin != '') {
-      if (uuin != '{{icq.uin}}' && code == '') {
+      if (uuin != getParamByName('icq') && code == '') {
         sendCode(uuin);
         $('#resendICQCode').attr('onclick', 'sendCode('+uuin+')');
         if ($('#groupICQUIN').hasClass('has-error')) {
@@ -508,7 +508,7 @@ $(document).ready(function()
         if (result === false) {
           return;
         } else {
-          if (phone != '{{sms.phone}}' && code == '') {
+          if (phone != getParamByName('sms') && code == '') {
             cost = cost.toFixed(2);
             var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
             if (isSendSMS) {
@@ -605,7 +605,7 @@ $(document).ready(function()
       }
       $('#groupEmailAddress').addClass('has-success');
 
-      if (email != '{{email.address}}') {
+      if (email != getParamByName('email')) {
         sendEmail('code', serialized, function() {
           if ($('#groupEmailAddress').hasClass('has-success')) {
             $('#groupEmailAddress').removeClass('has-success');
@@ -786,7 +786,7 @@ function chMarkAll(sdn) {
 function renderPage(pageNum, search_text, callback) {
   totalChecked = 0;
   var formData = {
-    searchAPI: '{{apikey}}',
+    searchAPI: getParamByName('k'),
     searchDomain: 'www.lead4crm.ru',
     searchCity: localStorage.getItem('city_id'),
     searchPage: pageNum
@@ -890,7 +890,7 @@ function renderPage(pageNum, search_text, callback) {
 function importCompany(id, hash, from2gis, callback) {
   from2gis = typeof from2gis !== 'underfined' ? from2gis : false;
   var importData = {
-    importAPI: '{{apikey}}',
+    importAPI: getParamByName('k'),
     importDomain: 'www.lead4crm.ru',
     importCompanyID: id,
     importCompanyHash: hash,
