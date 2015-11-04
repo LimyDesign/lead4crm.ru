@@ -16,7 +16,7 @@ function crmAuthorize() {
 		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, array('login' => $login, 'password' => $password));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array('Login' => $login, 'Password' => $password));
 		$result = curl_exec($ch);
 		var_dump($result);
 		curl_close($ch);
