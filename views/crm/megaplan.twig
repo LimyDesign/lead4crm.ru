@@ -83,7 +83,7 @@
 						megaplanModal.find('#ok').text(button_text);
 						i = 0;
 					}
-				}, 300);
+				}, 400);
 				$.post('/crmConnect/megaplan/', {host: host, login: login, password: password})
 				.done(function() {
 					megaplanForm.find('fieldset').removeAttr('disabled');
