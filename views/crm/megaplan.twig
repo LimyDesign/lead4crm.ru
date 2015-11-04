@@ -80,7 +80,7 @@
 			}
 		});
 
-		megaplanHost.keydown(function(event) {
+		megaplanHost.keypress(function(event) {
 			if ($(this).val()) {
 				if (megaplanGroupHost.hasClass('has-error'))
 					megaplanGroupHost.removeClass('has-error');
@@ -89,7 +89,7 @@
 			}
 		});
 
-		megaplanLogin.keydown(function(event) {
+		megaplanLogin.keypress(function(event) {
 			if ($(this).val()) {
 				if (megaplanGroupLogin.hasClass('has-error'))
 					megaplanGroupLogin.removeClass('has-error');
@@ -98,7 +98,7 @@
 			}
 		});
 
-		megaplanPassword.keydown(function(event) {
+		megaplanPassword.keypress(function(event) {
 			if ($(this).val()) {
 				if (megaplanGroupPassword.hasClass('has-error'))
 					megaplanGroupPassword.removeClass('has-error');
