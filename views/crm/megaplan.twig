@@ -80,6 +80,13 @@
 			}
 		});
 
+		megaplanHost.keydown(function(event) {
+			if ($(this).val()) {
+				if (megaplanGroupHost.hasClass('has-error'))
+					megaplanGroupHost.removeClass('has-error');
+			}
+		});
+
 		megaplanModal.find('#ok').click(function() {
 			megaplanForm.submit();
 		});
