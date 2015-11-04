@@ -221,12 +221,6 @@
                 </div>
                 <button type="button" class="btn btn-lg btn-primary" onclick="wizardStep(3)">Назад <i class="fa fa-fw fa-arrow-left"></i></button>&nbsp;&nbsp;
                 <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-fw fa-cloud-download"></i> Импорт компаний</button>
-                {% if admin %}
-                  <div id="ii" class="hide">
-                    <hr style="border-color:#8d81ac;">
-                    <div id="ii_html"></div>
-                  </div>
-                {% endif %}
               </fieldset>
               <fieldset id="step-9999" style="display:none;">
                 <div class="form-group">
@@ -239,6 +233,12 @@
                 <button type="submit" class="btn btn-block btn-link"><i class="fa fa-fw fa-arrow-left"></i> Назад</button>
               </fieldset>
             </form>
+            {% if admin %}
+              <div id="ii" class="hide">
+                <hr style="border-color:#8d81ac;">
+                <div id="ii_html"></div>
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>
