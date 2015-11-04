@@ -81,29 +81,41 @@
 		});
 
 		megaplanHost.keyup(function(event) {
+			var code = event.which;
 			if ($(this).val()) {
 				if (megaplanGroupHost.hasClass('has-error'))
 					megaplanGroupHost.removeClass('has-error');
 			} else {
 				megaplanGroupHost.addClass('has-error');
 			}
+			if (code == 13) {
+				megaplanForm.submit();
+			}
 		});
 
 		megaplanLogin.keyup(function(event) {
+			var code = event.which;
 			if ($(this).val()) {
 				if (megaplanGroupLogin.hasClass('has-error'))
 					megaplanGroupLogin.removeClass('has-error');
 			} else {
 				megaplanGroupLogin.addClass('has-error');
 			}
+			if (code == 13) {
+				megaplanForm.submit();
+			}
 		});
 
 		megaplanPassword.keyup(function(event) {
+			var code = event.which;
 			if ($(this).val()) {
 				if (megaplanGroupPassword.hasClass('has-error'))
 					megaplanGroupPassword.removeClass('has-error');
 			} else {
 				megaplanGroupPassword.addClass('has-error');
+			}
+			if (code == 13) {
+				megaplanForm.submit();
 			}
 		});
 
