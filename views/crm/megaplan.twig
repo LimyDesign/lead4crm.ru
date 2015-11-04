@@ -87,6 +87,20 @@
 			}
 		});
 
+		megaplanLogin.keydown(function(event) {
+			if ($(this).val()) {
+				if (megaplanGroupLogin.hasClass('has-error'))
+					megaplanGroupLogin.removeClass('has-error');
+			}
+		});
+
+		megaplanPassword.keydown(function(event) {
+			if ($(this).val()) {
+				if (megaplanGroupPassword.hasClass('has-error'))
+					megaplanGroupPassword.removeClass('has-error');
+			}
+		});
+
 		megaplanModal.find('#ok').click(function() {
 			megaplanForm.submit();
 		});
