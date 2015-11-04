@@ -423,7 +423,7 @@ function getIntegrated($crm) {
 function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
-	crmConnect();
+	crmAuthorize();
 }
 
 function getUserCityByIP() {

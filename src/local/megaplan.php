@@ -6,7 +6,7 @@ function crmTestConnect($id) {
 	return;
 }
 
-function crmConnect() {
+function crmAuthorize() {
 	$host = $_REQUEST['host'];
 	$login = urlencode($_REQUEST['login']);
 	$password = md5($_REQUEST['password']);
