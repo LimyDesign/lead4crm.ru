@@ -74,7 +74,7 @@
 					button_text = megaplanModal.find('#ok').text();
 			if (host && login && password) {
 				megaplanForm.find('fieldset').attr('disabled', 'disabled');
-				megaplanForm.find('button').attr('disabled', 'disabled');
+				megaplanModal.find('button').attr('disabled', 'disabled');
 				var i = 0;
 				var loading = setInterval(function() {
 					if (i < 3) {
@@ -88,7 +88,7 @@
 				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password })
 				.done(function() {
 					megaplanForm.find('fieldset').removeAttr('disabled');
-					megaplanForm.find('button').removeAttr('disabled');
+					megaplanModal.find('button').removeAttr('disabled');
 					megaplanModal.modal('hide');
 				})
 				.fail(function() {
@@ -96,7 +96,7 @@
 					setTimeout(function() {
 						megaplanAlertDanger.addClass('hide');
 						megaplanForm.find('fieldset').removeAttr('disabled');
-						megaplanForm.find('button').removeAttr('disabled');
+						megaplanModal.find('button').removeAttr('disabled');
 					}, 10000);
 				}).always(function() {
 					clearInterval(loading);
