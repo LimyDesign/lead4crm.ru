@@ -824,7 +824,7 @@
   var totalChecked = 0,
       totalFind = 0,
       qty = 0,
-      ii = '',
+      ii = null,
       contract = '{{contract}}',
       new_contract = '',
       icq_uin_start = 0,
@@ -967,7 +967,7 @@
       } else if (form_action == '/step-4/') {
         if (searchType != null) {
           console.log(ii);
-          if (ii != '' || ii != null) {
+          if (ii != null) {
             $('#ii').removeClass('hide');
             $('#ii_help').removeClass('hide');
             $('#crm_ii_result').text(ii);
