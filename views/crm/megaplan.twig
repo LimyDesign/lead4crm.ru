@@ -93,11 +93,12 @@
 						setTimeout(function() {
 							megaplanAlertUser.addClass('hide');
 						}, 5000);
+					} else {
+						megaplanModal.modal('hide');
 					}
 				}).done(function() {
 					megaplanForm.find('fieldset').removeAttr('disabled');
 					megaplanModal.find('button').removeAttr('disabled');
-					megaplanModal.modal('hide');
 				}).fail(function() {
 					megaplanAlertDanger.removeClass('hide');
 					setTimeout(function() {
