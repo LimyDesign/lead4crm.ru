@@ -28,7 +28,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="aler alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
+					<div class="alert alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
 					<form id="formMegaplanConnect">
 						<fieldset>
 							<div class="form-group" id="groupMegaplanHost">
@@ -92,7 +92,7 @@
 					megaplanModal.modal('hide');
 				})
 				.fail(function() {
-					megaplanAlertDanger.removeAttr('hide');
+					megaplanAlertDanger.removeClass('hide');
 					setTimeout(function() {
 						megaplanAlertDanger.addClass('hide');
 						megaplanForm.find('fieldset').removeAttr('disabled');
