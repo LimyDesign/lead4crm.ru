@@ -1058,5 +1058,5 @@ function getParamByName(name) {
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
       results = regex.exec(me_src);
-  return results === null ? "" : decodeURIComponent(result[1].replace(/\+/g, " "));
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
