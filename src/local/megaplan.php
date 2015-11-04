@@ -8,8 +8,8 @@ function crmTestConnect($id) {
 
 function crmAuthorize() {
 	$host = $_REQUEST['host'];
-	$login = urldecode($_REQUEST['login']);
-	$password = md5(urldecode($_REQUEST['password']));
+	$login = $_REQUEST['login'];
+	$password = md5($_REQUEST['password']);
 
 	if ($ch = curl_init()) {
 		curl_setopt($ch, CURLOPT_URL, 'https://'.$host.'/BumsCommonApiV01/User/authorize.api');
