@@ -12,5 +12,5 @@ function crmAuthorize() {
 	$password = md5($_REQUEST['password']);
 
 	$result = file_get_contents('https://'.$host.'/BumsCommonApiV01/User/authorize.api?login='.$login.'&password='.$password);
-	var_dump($result);
+	var_dump('https://'.$host.'/BumsCommonApiV01/User/authorize.api?login='.$login.'&password='.$password);
 }
