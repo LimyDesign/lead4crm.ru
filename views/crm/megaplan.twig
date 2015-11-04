@@ -68,12 +68,12 @@
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
-			megaplanForm.find('fieldset').attr('disabled', 'disabled');
 			var host = megaplanHost.val(),
 					login = megaplanLogin.val(),
 					password = megaplanPassword.val(),
 					button_text = megaplanModal.find('#ok').text();
 			if (host && login && password) {
+				megaplanForm.find('fieldset').attr('disabled', 'disabled');
 				var i = 0;
 				var loading = setInterval(function() {
 					if (i < 3) {
