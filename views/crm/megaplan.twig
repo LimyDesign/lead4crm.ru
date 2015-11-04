@@ -29,6 +29,7 @@
 						</div>
 					</div>
 					<div class="alert alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
+					<div class="alert alert-danger hide" id="alertMegaplanUser"></div>
 					<form id="formMegaplanConnect">
 						<fieldset>
 							<div class="form-group" id="groupMegaplanHost">
@@ -63,7 +64,8 @@
 				megaplanGroupLogin = $('#groupMegaplanLogin'),
 				megaplanGroupPassword = $('#groupMegaplanPassword'),
 				megaplanForm = $('#formMegaplanConnect'),
-				megaplanAlertDanger = $('#alertMegaplan');
+				megaplanAlertDanger = $('#alertMegaplan'),
+				megaplanAlertUser = $('#alertMegaplanUser'),
 				megaplanModal = $('#megaplanConnect');
 
 		megaplanForm.submit(function(event) {
@@ -85,8 +87,14 @@
 						i = 0;
 					}
 				}, 400);
-				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password })
-				.done(function() {
+				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password }, function(data) {
+					if (data) {
+						megaplanAlertUser.removeClass('hide').text(data);
+						setTimeout(function() {
+							megaplanAlertUser.addClass('hide');
+						}, 5000);
+					}
+				}).done(function() {
 					megaplanForm.find('fieldset').removeAttr('disabled');
 					megaplanModal.find('button').removeAttr('disabled');
 					megaplanModal.modal('hide');

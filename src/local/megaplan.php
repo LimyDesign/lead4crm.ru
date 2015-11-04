@@ -7,6 +7,8 @@ function crmTestConnect($id) {
 }
 
 function crmAuthorize() {
+	global $conf;
+
 	$host = $_REQUEST['host'];
 	$login = $_REQUEST['login'];
 	$password = md5($_REQUEST['password']);
@@ -17,8 +19,22 @@ function crmAuthorize() {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, array('Login' => $login, 'Password' => $password));
-		$result = curl_exec($ch);
-		var_dump($result);
+		$response = curl_exec($ch);
 		curl_close($ch);
 	}
+	$response = json_decode($response, true);
+	
+	if ($response['status']['code'] == 'ok') {
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		}
+
+		$query = 'INSERT INTO "public"."crm_megaplan" ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId") VALUES ('."'{$host}', '{$response['data']['AccessId']}', '{$response['data']['SecretKey']}', '{$response['data']['UserId']}', '{$response['data']['EmployeeId']}')";
+		pg_query($query);
+		pg_close($db);
+		$return = true;
+	} else {
+		$return = false;
+	}
+	return $return;
 }
