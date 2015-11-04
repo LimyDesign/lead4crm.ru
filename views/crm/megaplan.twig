@@ -84,7 +84,7 @@
 						i = 0;
 					}
 				}, 400);
-				$.post('/crmConnect/megaplan/', {host: host, login: login, password: password})
+				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password })
 				.done(function() {
 					megaplanForm.find('fieldset').removeAttr('disabled');
 					megaplanModal.modal('hide');
