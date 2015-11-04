@@ -1,8 +1,10 @@
-var totalChecked = 0,
+var me = document.querySelector('script[data-name="cabinet"]'),
+    me_src = me.getAttribute('src'),
+    totalChecked = 0,
     totalFind = 0,
     qty = 0,
     ii = null,
-    contract = '{{contract}}',
+    contract = getParamByName('c'),
     new_contract = '',
     icq_uin_start = 0,
     icq_uin_change = 0,
@@ -1048,4 +1050,13 @@ function isPhone(n) {
 function isEmail(n) {
   var re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
   return re.test(n);
+}
+
+/* Функция получает необходимый параметр 'name' из URI текущего скрипта.
+========================================================================================= */
+function getParamByName(name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(me_src);
+  return results === null ? "" : decodeURIComponent(result[1].replace(/\+/g, " "));
 }

@@ -820,15 +820,10 @@
   {# // <script src="/public/js/modalEffects.min.js"></script> #}
   {# // <script src="/public/js/webcall.js"></script> #}
   {% if admin %}
-    <script src="/public/js/cabinet.js"></script>
+    <script data-name="cabinet" src="/public/js/cabinet.js?c={{contract}}"></script>
   {% else %}
-    <script src="/public/js/cabinet.min.js"></script>
+    <script data-name="cabinet" src="/public/js/cabinet.min.js?c={{contract}}"></script>
   {% endif %}
-  {# {% jshrink %} #}
-  <script type="text/javascript">
-  
-  </script>
-  {# {% endjshrink %} #}
 </body>
 </html>
 {% endspaceless %}
