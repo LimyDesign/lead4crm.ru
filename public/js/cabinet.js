@@ -80,6 +80,12 @@ $(document).ready(function()
         wzd_height = $('.wizard').height();
     $(this).find('fieldset').attr('disabled', 'disabled');
     $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
+
+    if ($('#ii').hasClass('hide') === false)
+      $('#ii').addClass('hide');
+    if ($('#ii_help').hasClass('hide') === false)
+      $('#ii_help').addClass('hide');
+
     if (form_action == '/step-1/') {
       $('.overlay').fadeOut();
       $(this).find('fieldset').removeAttr('disabled');
@@ -151,11 +157,6 @@ $(document).ready(function()
           $.post('/getIntegrated/', { ii: ii }, function (data) {
             $('#ii_html').html(data);
           }, 'html');
-        } else {
-          if ($('#ii').hasClass('hide') === false)
-            $('#ii').addClass('hide');
-          if ($('#ii_help').hasClass('hide') === false)
-            $('#ii_help').addClass('hide');
         }
         localStorage.setItem('search_id', searchType);
         renderSelections(4);
