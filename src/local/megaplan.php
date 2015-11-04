@@ -8,7 +8,7 @@ function crmTestConnect($id) {
 
 function crmAuthorize() {
 	$host = $_REQUEST['host'];
-	$login = urlencode($_REQUEST['login']);
+	$login = $_REQUEST['login'];
 	$password = md5($_REQUEST['password']);
 
 	if ($ch = curl_init()) {
