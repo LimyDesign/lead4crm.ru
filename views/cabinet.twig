@@ -971,10 +971,8 @@
             $('#ii_help').removeClass('hide');
             $('#crm_ii_result').text(ii);
           } else {
-            if ($('#ii').hasClass('hide') === false)
-              $('#ii').addClass('hide');
-            if ($('#ii_help').hasClass('hide') === false)
-              $('#ii_help').addClass('hide');
+            $('#ii').addClass('hide');
+            $('#ii_help').addClass('hide');
           }
           localStorage.setItem('search_id', searchType);
           renderSelections(4);
