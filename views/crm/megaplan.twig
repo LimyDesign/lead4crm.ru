@@ -84,6 +84,8 @@
 			if ($(this).val()) {
 				if (megaplanGroupHost.hasClass('has-error'))
 					megaplanGroupHost.removeClass('has-error');
+			} else {
+				megaplanGroupHost.addClass('has-error');
 			}
 		});
 
@@ -91,6 +93,8 @@
 			if ($(this).val()) {
 				if (megaplanGroupLogin.hasClass('has-error'))
 					megaplanGroupLogin.removeClass('has-error');
+			} else {
+				megaplanGroupLogin.addClass('has-error');
 			}
 		});
 
@@ -98,6 +102,8 @@
 			if ($(this).val()) {
 				if (megaplanGroupPassword.hasClass('has-error'))
 					megaplanGroupPassword.removeClass('has-error');
+			} else {
+				megaplanGroupPassword.addClass('has-error');
 			}
 		});
 
