@@ -90,8 +90,7 @@
 					megaplanForm.find('fieldset').removeAttr('disabled');
 					megaplanModal.find('button').removeAttr('disabled');
 					megaplanModal.modal('hide');
-				})
-				.fail(function() {
+				}).fail(function() {
 					megaplanAlertDanger.removeClass('hide');
 					setTimeout(function() {
 						megaplanAlertDanger.addClass('hide');

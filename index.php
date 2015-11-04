@@ -70,6 +70,10 @@ if ($cmd[0]) {
 			getIntegrated($_REQUEST['ii']);
 			break;
 
+		case 'crmConnect':
+			crmConnect($cmd[1]);
+			break;
+
 		case 'initTelegram':
 			isAdmin();
 			try {
@@ -414,6 +418,12 @@ function getIntegrated($crm) {
 		$opt['connected'] = false;
 	}
 	echo $twig->render('crm/'.$crm.'.twig', $opt);
+}
+
+function crmConnect($crm) {
+	global $conf;
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	crmConnect();
 }
 
 function getUserCityByIP() {
