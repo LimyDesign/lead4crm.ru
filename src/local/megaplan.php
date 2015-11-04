@@ -11,6 +11,14 @@ function crmAuthorize() {
 	$login = urlencode($_REQUEST['login']);
 	$password = md5($_REQUEST['password']);
 
-	$result = file_get_contents('https://'.$host.'/BumsCommonApiV01/User/authorize.api?login='.$login.'&password='.$password);
-	var_dump('https://'.$host.'/BumsCommonApiV01/User/authorize.api?login='.$login.'&password='.$password);
+	if ($ch = curl_init()) {
+		curl_setopt($ch, CURLOPT_URL, 'https://'.$host.'/BumsCommonApiV01/User/authorize.api');
+		curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTPS);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array('login' => $login, 'password' => $password));
+		$result = curl_exec($ch);
+		var_dump($result);
+		curl_close($ch);
+	}
 }
