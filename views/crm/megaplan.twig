@@ -28,19 +28,22 @@
 							</div>
 						</div>
 					</div>
+					<div class="aler alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
 					<form id="formMegaplanConnect">
-						<div class="form-group" id="groupMegaplanHost">
-							<label for="inputMegaplanHost" class="control-label">Домен</label>
-							<input type="text" class="form-control" id="inputMegaplanHost" placeholder="mycompany.megaplan.ru">
-						</div>
-						<div class="form-group" id="groupMegaplanLogin">
-							<label for="inputMegaplanLogin" class="control-label">Логин</label>
-							<input type="text" class="form-control" id="inputMegaplanLogin" placeholder="Логин в Мегаплане">
-						</div>
-						<div class="form-group" id="groupMegaplanPassword">
-							<label for="inputMegaplanPassword" class="control-label">Пароль</label>
-							<input type="password" class="form-control" id="inputMegaplanPassword" placeholder="Пароль в Мегаплане">
-						</div>
+						<fieldset>
+							<div class="form-group" id="groupMegaplanHost">
+								<label for="inputMegaplanHost" class="control-label">Домен</label>
+								<input type="text" class="form-control" id="inputMegaplanHost" placeholder="mycompany.megaplan.ru">
+							</div>
+							<div class="form-group" id="groupMegaplanLogin">
+								<label for="inputMegaplanLogin" class="control-label">Логин</label>
+								<input type="text" class="form-control" id="inputMegaplanLogin" placeholder="Логин в Мегаплане">
+							</div>
+							<div class="form-group" id="groupMegaplanPassword">
+								<label for="inputMegaplanPassword" class="control-label">Пароль</label>
+								<input type="password" class="form-control" id="inputMegaplanPassword" placeholder="Пароль в Мегаплане">
+							</div>
+						</fieldset>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -60,20 +63,50 @@
 				megaplanGroupLogin = $('#groupMegaplanLogin'),
 				megaplanGroupPassword = $('#groupMegaplanPassword'),
 				megaplanForm = $('#formMegaplanConnect'),
+				megaplanAlertDanger = $('#alertMegaplan');
 				megaplanModal = $('#megaplanConnect');
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
-			if (megaplanLogin.val() && megaplanPassword.val() && megaplanHost.val()) {
-				megaplanModal.modal('hide');
+			megaplanForm.find('fieldset').attr('disabled', 'disabled');
+			var host = megaplanHost.val(),
+					login = megaplanLogin.val(),
+					password = megaplanPassword.val(),
+					button_text = megaplanModal.find('#ok').text();
+			if (host && login && password) {
+				var i = 0;
+				var loading = setInterval(function() {
+					if (i < 3) {
+						megaplanModal.find('#ok').text(button_text+'.');
+						i++;
+					} else {
+						megaplanModal.find('#ok').text(button_text);
+						i = 0;
+					}
+				}, 300);
+				$.post('/crmConnect/megaplan/', {host: host, login: login, password: password})
+				.done(function() {
+					megaplanForm.find('fieldset').removeAttr('disabled');
+					megaplanModal.modal('hide');
+				})
+				.fail(function() {
+					megaplanAlertDanger.removeAttr('hide');
+					setTimeout(function() {
+						megaplanAlertDanger.addClass('hide');
+						megaplanForm.find('fieldset').removeAttr('disabled');
+					}, 10000);
+				}).always(function() {
+					clearInterval(loading);
+					megaplanModal.find('#ok').text(button_text);
+				});
 			} else {
-				if (!megaplanHost.val()) {
+				if (!host) {
 					megaplanGroupHost.addClass('has-error');
 					megaplanHost.focus();
-				} else if (!megaplanLogin.val()) {
+				} else if (!login) {
 					megaplanGroupLogin.addClass('has-error');
 					megaplanLogin.focus();
-				} else if (!megaplanPassword.val()) {
+				} else if (!password) {
 					megaplanGroupPassword.addClass('has-error');
 					megaplanPassword.focus();
 				}
