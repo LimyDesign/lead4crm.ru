@@ -150,7 +150,6 @@ $(document).ready(function()
           $('#ii_help').removeClass('hide');
           $.post('/getIntegrated/', { ii: ii }, function (data) {
             $('#ii_html').html(data);
-            $.getScript("/public/js/crm/"+ii+".js");
           }, 'html');
         } else {
           if ($('#ii').hasClass('hide') === false)
