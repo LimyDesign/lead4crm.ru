@@ -33,6 +33,7 @@
 						<button type="button" class="close" data-dismiss="alert" aria-label="Закрыть">
 							<span aria-hidden="true">&times;</span>
 						</button>
+						<p id="msg"></p>
 					</div>
 					<form id="formMegaplanConnect">
 						<fieldset>
@@ -61,7 +62,7 @@
 
 	<script>
 	$(function() {
-		
+
 		var megaplanHost = $('#inputMegaplanHost'),
 				megaplanLogin = $('#inputMegaplanLogin'),
 				megaplanPassword = $('#inputMegaplanPassword'),
@@ -94,9 +95,8 @@
 					}
 				}, 400);
 				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password }, function(data) {
-					console.log(data);
 					if (data) {
-						megaplanAlertUser.removeClass('hide').text(data);
+						megaplanAlertUser.removeClass('hide').find('#msg').text(data);
 					} else {
 						megaplanModal.modal('hide');
 					}
