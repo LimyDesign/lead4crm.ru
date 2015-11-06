@@ -37,7 +37,6 @@ function crmAuthorize() {
 		$result = pg_query($query);
 		$megaplanid = pg_fetch_result($result, 0, 0);
 		$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = '{$megaplanid}' WHERE \"id\" = '{$_SESSION['userid']}'";
-		var_dump($query);
 		pg_query($query);
 		pg_free_result($result);
 		pg_close($db);

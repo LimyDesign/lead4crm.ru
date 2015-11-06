@@ -29,6 +29,7 @@
 						</div>
 					</div>
 					<div class="alert alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
+					<div class="alert alert-success hide" id="alertMegaplanSuccess">Аккаунт успешно привязан.</div>
 					<div class="alert alert-danger hide" id="alertMegaplanUser">
 						<button type="button" class="close" onclick="hideAlert('alertMegaplanUser')" aria-label="Закрыть">
 							<span aria-hidden="true">&times;</span>
@@ -71,8 +72,11 @@
 				megaplanGroupPassword = $('#groupMegaplanPassword'),
 				megaplanForm = $('#formMegaplanConnect'),
 				megaplanAlertDanger = $('#alertMegaplan'),
+				megaplanAlertSuccess = $('#alertMegaplanSuccess'),
 				megaplanAlertUser = $('#alertMegaplanUser'),
 				megaplanModal = $('#megaplanConnect');
+
+		console.log(ii);
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
@@ -99,7 +103,10 @@
 						if (data) {
 							megaplanAlertUser.removeClass('hide').find('#msg').text(data);
 						} else {
-							megaplanModal.modal('hide');
+							megaplanAlertSuccess.removeClass('hide');
+							setTimeout(function() {
+								megaplanModal.modal('hide');
+							}, 10000);
 						}
 					}).done(function() {
 						megaplanForm.find('fieldset').removeAttr('disabled');
