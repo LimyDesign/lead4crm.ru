@@ -49,7 +49,7 @@ class megaplan extends SdfApi_Request
 			"Model[TypePerson]" => "company",
 			"Model[CompanyName]" => "Хуй!!!",
 			"Model[Email]" => "mega@huy.org",
-			"Model[Phones]" => array("ph_w-7-3952-781089"),
+			"Model[Phones]" => array("ph_w-7-3952-781089\tАхуенный!"),
 			"Model[Responsibles]" => "1000000",
 			"Model[ActivityType]" => "1000002",
 			"Model[Icq]" => "881129",
