@@ -80,6 +80,7 @@
 					login = megaplanLogin.val(),
 					password = megaplanPassword.val(),
 					button_text = megaplanModal.find('#ok').text();
+			megaplanAlertUser.addClass('hide');
 			if (host && login && password) {
 				megaplanForm.find('fieldset').attr('disabled', 'disabled');
 				megaplanModal.find('button').attr('disabled', 'disabled');
