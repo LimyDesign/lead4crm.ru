@@ -423,7 +423,9 @@ function getIntegrated($crm) {
 function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
-	if (!crmAuthorize()) {
+	$auth = crmAuthorize();
+	var_dump($auth);
+	if (!$auth) {
 		$msg = 'Для данного домена логин/пароль не верный.';
 	}
 	return $msg ? $msg : '';
