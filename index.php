@@ -67,14 +67,17 @@ if ($cmd[0]) {
 			break;
 
 		case 'getIntegrated':
+			isAuth();
 			getIntegrated($_REQUEST['ii']);
 			break;
 
 		case 'crmConnect':
+			isAuth();
 			crmConnect($cmd[1]);
 			break;
 
 		case 'addCompany':
+			isAuth();
 			addCompany($_REQUEST['ii']);
 			break;
 
@@ -418,11 +421,6 @@ function getIntegrated($crm) {
 		$opt['employees'] = $crmClass->getEmployee();
 		$opt['fields'] = $crmClass->getFields();
 		$opt['ph_t'] = $crmClass->getPhoneTypes();
-		// if (crmTestConnect($id)) {
-		// 	$opt['connected'] = true;
-		// } else {
-		// 	$opt['connected'] = false;
-		// }
 	} else {
 		$opt['connected'] = false;
 	}
@@ -439,7 +437,8 @@ function addCompany($crm) {
 	$result = pg_query($query);
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
-		call_user_func($crm.'AddCompany', $crmid);
+		$crmClass = new $crm($crmid);
+		echo $crmClass->putCompany();
 	}
 }
 

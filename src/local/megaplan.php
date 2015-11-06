@@ -45,6 +45,15 @@ class megaplan extends SdfApi_Request
 
 	public function putCompany()
 	{
+		$opt = array(
+			"Model[TypePerson]" => "company",
+			"Model[CompanyName]" => "Хуй!!!",
+			"Model[Email]" => "mega@huy.org",
+			"Model[Phones]" => "ph_w-73952781089",
+			"Model[Responsibles]" => ""
+		);
+		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
+		return $result;
 	}
 
 }
