@@ -2,7 +2,7 @@
 	<h4>Список сотрудников:</h4>
 	<ul>
 		{% for employee in employees %}
-			<li>{{employee}}</li>
+			<li>{{employee.name}}</li>
 		{% endfor %}
 	</ul>
 {% else %}
