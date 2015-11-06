@@ -86,13 +86,13 @@
 				var i = 0;
 				var loading = setInterval(function() {
 					if (i < 3) {
-						megaplanModal.find('#ok').text(button_text+'.');
+						megaplanModal.find('#ok').append('.');
 						i++;
 					} else {
 						megaplanModal.find('#ok').text(button_text);
 						i = 0;
 					}
-				}, 300);
+				}, 200);
 				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password }, function(data) {
 					if (data) {
 						megaplanAlertUser.removeClass('hide').find('#msg').text(data);
