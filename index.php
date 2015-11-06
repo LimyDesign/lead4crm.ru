@@ -74,6 +74,10 @@ if ($cmd[0]) {
 			crmConnect($cmd[1]);
 			break;
 
+		case 'addCompany':
+			addCompany($_REQUEST['ii']);
+			break;
+
 		case 'initTelegram':
 			isAdmin();
 			try {
@@ -410,8 +414,8 @@ function getIntegrated($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$opt['connected'] = true;
-		$opt['employees'] = call_user_func($crm.'GetEmployee', $crmid);
-		$opt['task'] = call_user_func($crm.'GetTask', $crmid);
+		$opt['employees'] = call_user_func(array($crm, 'getEmployee'), $crmid);
+		$opt['fields'] = call_user_func(array($crm, 'getFields'), $crmid);
 		// if (crmTestConnect($id)) {
 		// 	$opt['connected'] = true;
 		// } else {
@@ -421,6 +425,20 @@ function getIntegrated($crm) {
 		$opt['connected'] = false;
 	}
 	echo $twig->render('crm/'.$crm.'.twig', $opt);
+}
+
+function addCompany($crm) {
+	global $conf;
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	$result = pg_query($query);
+	$crmid = pg_fetch_result($result, 0, 0);
+	if ($crmid) {
+		call_user_func($crm.'AddCompany', $crmid);
+	}
 }
 
 function crmConnect($crm) {

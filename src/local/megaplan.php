@@ -2,40 +2,40 @@
 
 require_once __DIR__.'/Request.php';
 
-function megaplanGetEmployee($crmid) {
-	global $conf;
-	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-	}
-	$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
-	$result = pg_query($query);
-	$AccessId = pg_fetch_result($result, 0, 0);
-	$SecretKey = pg_fetch_result($result, 0, 1);
-	$Domain = pg_fetch_result($result, 0, 2);
-	pg_free_result($result);
-	pg_close($db);
-	$mp = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
-	$employee = $mp->get('/BumsStaffApiV01/Employee/list.api');
-	$employee = json_decode($employee, true);
-	return $employee['data']['employees'];
-}
+class megaplan extends SdfApi_Request 
+{
+	protected static $sdf;
 
-function megaplanGetTask($crmid) {
-	global $conf;
-	if ($conf->db->type == 'postgres') {
-		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	public function __construct($crmid)
+	{
+		global $conf;
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		}
+		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
+		$result = pg_query($query);
+		$AccessId = pg_fetch_result($result, 0, 0);
+		$SecretKey = pg_fetch_result($result, 0, 1);
+		$Domain = pg_fetch_result($result, 0, 2);
+		pg_free_result($result);
+		pg_close($db);
+		$this->sdf = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
 	}
-	$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
-	$result = pg_query($query);
-	$AccessId = pg_fetch_result($result, 0, 0);
-	$SecretKey = pg_fetch_result($result, 0, 1);
-	$Domain = pg_fetch_result($result, 0, 2);
-	pg_free_result($result);
-	pg_close($db);
-	$mp = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
-	$task = $mp->get('/BumsCrmApiV01/Contractor/listFields.api');
-	$task = json_decode($task, true);
-	return $task['data']['Fields'];
+
+	public function getEmployee()
+	{
+		$employee = $this->sdf->get('/BumsStaffApiV01/Employee/list.api');
+		$employee = json_decode($employee, true);
+		return $employee['data']['employees'];
+	}
+
+	public function getFields()
+	{
+		$fields = $this->sdf->get('/BumsCrmApiV01/Contractor/listFields.api');
+		$fields = json_decode($fields, true);
+		return $fields['data']['Fields'];
+	}
+
 }
 
 function megaplanAuthorize() {
