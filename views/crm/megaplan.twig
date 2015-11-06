@@ -30,10 +30,10 @@
 					</div>
 					<div class="alert alert-danger hide" id="alertMegaplan">Что-то пошло не так, попробуйте повторить попытку позже!</div>
 					<div class="alert alert-danger hide" id="alertMegaplanUser">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Закрыть">
+						<button type="button" class="close" onclick="hideAlert('alertMegaplanUser')" aria-label="Закрыть">
 							<span aria-hidden="true">&times;</span>
 						</button>
-						<p id="msg"></p>
+						<span id="msg"></span>
 					</div>
 					<form id="formMegaplanConnect">
 						<fieldset>
