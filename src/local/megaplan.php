@@ -57,8 +57,7 @@ class megaplan extends SdfApi_Request
 			"Model[Facebook]" => "https://www.fb.com/arsen.bespalov",
 			"Model[Twitter]" => "https://www.twitter.com/arsenbespalov",
 			"Model[Site]" => "https://www.arsen.pw",
-			"Model[AdvertisingWay]" => "2ГИС",
-			"Model[Type]" => "Клиент"
+			"Model[AdvertisingWay]" => "2ГИС"
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
 		return $result;
