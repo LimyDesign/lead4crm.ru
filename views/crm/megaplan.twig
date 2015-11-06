@@ -73,7 +73,6 @@
 				megaplanAlertDanger = $('#alertMegaplan'),
 				megaplanAlertUser = $('#alertMegaplanUser'),
 				megaplanModal = $('#megaplanConnect'),
-				alert_close = $('[data-dismiss="alert"]');
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
@@ -171,10 +170,10 @@
 			megaplanForm.submit();
 		});
 
-		alert_close.on('click', function() {
-			$(this).parent().addClass('hide');
-		});
-
 	});
+
+	function hideAlert(id) {
+		$('#'+id).addClass('hide');
+	}
 	</script>
 {% endif %}
