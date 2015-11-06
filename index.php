@@ -414,8 +414,9 @@ function getIntegrated($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$opt['connected'] = true;
-		$opt['employees'] = call_user_func(array($crm, 'getEmployee'), $crmid);
-		$opt['fields'] = call_user_func(array($crm, 'getFields'), $crmid);
+		$crmClass = new $crm($crmid);
+		$opt['employees'] = $crmClass->getEmployee();
+		$opt['fields'] = $crmClass->getFields();
 		// if (crmTestConnect($id)) {
 		// 	$opt['connected'] = true;
 		// } else {

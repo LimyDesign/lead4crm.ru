@@ -22,14 +22,14 @@ class megaplan extends SdfApi_Request
 		$this->sdf = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
 	}
 
-	public static function getEmployee()
+	public function getEmployee()
 	{
 		$employee = $this->sdf->get('/BumsStaffApiV01/Employee/list.api');
 		$employee = json_decode($employee, true);
 		return $employee['data']['employees'];
 	}
 
-	public static function getFields()
+	public function getFields()
 	{
 		$fields = $this->sdf->get('/BumsCrmApiV01/Contractor/listFields.api');
 		$fields = json_decode($fields, true);
