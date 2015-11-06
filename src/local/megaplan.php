@@ -35,7 +35,7 @@ function crmAuthorize() {
 
 		$query = 'INSERT INTO "public"."crm_megaplan" ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId") VALUES ('."'{$host}', '{$response['data']['AccessId']}', '{$response['data']['SecretKey']}', '{$response['data']['UserId']}', '{$response['data']['EmployeeId']}') ".' RETURNING "Id"';
 		$result = pg_query($query);
-		$megaplanid = pg_fetch_result($result, 0, 'Id');
+		$megaplanid = pg_fetch_result($result, 0, 0);
 		$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = '{$megaplanid}' WHERE \"id\" = '{$_SESSION['userid']}'";
 		var_dump($query);
 		pg_query($query);
