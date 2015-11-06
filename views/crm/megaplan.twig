@@ -1,4 +1,5 @@
 {% if connected %}
+	<h1>Хуй!</h1>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
@@ -75,8 +76,6 @@
 				megaplanAlertSuccess = $('#alertMegaplanSuccess'),
 				megaplanAlertUser = $('#alertMegaplanUser'),
 				megaplanModal = $('#megaplanConnect');
-
-		console.log(ii);
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
@@ -181,6 +180,12 @@
 
 		megaplanModal.find('#ok').click(function() {
 			megaplanForm.submit();
+		});
+
+		megaplanModal.on('hide.bs.modal', function() {
+			$.post('/getIntegrated/', { ii: ii }, function (data) {
+				$('#ii_html').html(data);
+			}, 'html');
 		});
 
 	});
