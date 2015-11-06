@@ -409,11 +409,12 @@ function getIntegrated($crm) {
 	$result = pg_query($query);
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
-		if (crmTestConnect($id)) {
-			$opt['connected'] = true;
-		} else {
-			$opt['connected'] = false;
-		}
+		$opt['connected'] = true;
+		// if (crmTestConnect($id)) {
+		// 	$opt['connected'] = true;
+		// } else {
+		// 	$opt['connected'] = false;
+		// }
 	} else {
 		$opt['connected'] = false;
 	}
@@ -423,7 +424,7 @@ function getIntegrated($crm) {
 function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
-	$auth = crmAuthorize();
+	$auth = call_user_func($crm.'Authorize');
 	if ($auth === false) {
 		$msg = 'Для данного домена логин/пароль не верный.';
 	}

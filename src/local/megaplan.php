@@ -2,11 +2,11 @@
 
 require_once __DIR__.'/Request.php';
 
-function crmTestConnect($id) {
+function megaplanTestConnect($id) {
 	return;
 }
 
-function crmAuthorize() {
+function megaplanAuthorize() {
 	global $conf;
 
 	$host = $_REQUEST['host'];
