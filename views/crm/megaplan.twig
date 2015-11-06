@@ -95,9 +95,6 @@
 					console.log(data);
 					if (data) {
 						megaplanAlertUser.removeClass('hide').text(data);
-						setTimeout(function() {
-							megaplanAlertUser.addClass('hide');
-						}, 5000);
 					} else {
 						megaplanModal.modal('hide');
 					}
