@@ -92,7 +92,7 @@
 						megaplanModal.find('#ok').text(button_text);
 						i = 0;
 					}
-				}, 400);
+				}, 300);
 				$.post('/crmConnect/megaplan/', { host:host, login:login, password:password }, function(data) {
 					if (data) {
 						megaplanAlertUser.removeClass('hide').find('#msg').text(data);
