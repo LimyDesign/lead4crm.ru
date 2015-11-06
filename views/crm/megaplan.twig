@@ -72,7 +72,7 @@
 				megaplanForm = $('#formMegaplanConnect'),
 				megaplanAlertDanger = $('#alertMegaplan'),
 				megaplanAlertUser = $('#alertMegaplanUser'),
-				megaplanModal = $('#megaplanConnect'),
+				megaplanModal = $('#megaplanConnect');
 
 		megaplanForm.submit(function(event) {
 			event.preventDefault();
@@ -171,5 +171,9 @@
 		});
 
 	});
+
+	function hideAlert(id) {
+		$('#'+id).addClass('hide');
+	}
 	</script>
 {% endif %}
