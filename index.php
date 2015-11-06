@@ -411,6 +411,7 @@ function getIntegrated($crm) {
 	if ($crmid) {
 		$opt['connected'] = true;
 		$opt['employees'] = call_user_func($crm.'GetEmployee', $crmid);
+		$opt['task'] = call_user_func($crm.'GetTask', $crmid);
 		// if (crmTestConnect($id)) {
 		// 	$opt['connected'] = true;
 		// } else {
