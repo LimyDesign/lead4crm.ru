@@ -5,6 +5,8 @@
 			<li>{{employee.Name}}</li>
 		{% endfor %}
 	</ul>
+	<h4>Справочник</h4>
+	<p>{{task}}</p>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
