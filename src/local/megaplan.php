@@ -36,6 +36,18 @@ class megaplan extends SdfApi_Request
 		return $fields['data']['Fields'];
 	}
 
+	public function getPhoneTypes()
+	{
+		$phTypes = $this->sdf->get('/BumsStaffApiV01/Employee/phoneTypes.api');
+		$phTypes = json_decode($phTypes, true);
+		return $phTypes['data']['PhoneTypes'];
+	}
+
+	public function putCompany()
+	{
+		$
+	}
+
 }
 
 function megaplanAuthorize() {

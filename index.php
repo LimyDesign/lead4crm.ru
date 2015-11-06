@@ -417,6 +417,7 @@ function getIntegrated($crm) {
 		$crmClass = new $crm($crmid);
 		$opt['employees'] = $crmClass->getEmployee();
 		$opt['fields'] = $crmClass->getFields();
+		$opt['ph_t'] = $crmClass->getPhoneTypes();
 		// if (crmTestConnect($id)) {
 		// 	$opt['connected'] = true;
 		// } else {

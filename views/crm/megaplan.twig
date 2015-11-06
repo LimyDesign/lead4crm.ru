@@ -11,6 +11,12 @@
 			<li>{{field.Name}} : {{field.Translation}}</li>
 		{% endfor %}
 	</ul>
+	<h4>Типы телефонов</h4>
+	<ul>
+		{% for type in ph_t %}
+			<li>{{field.Prefix}} : {{field.Name}}</li>
+		{% endfor %}
+	</ul>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
