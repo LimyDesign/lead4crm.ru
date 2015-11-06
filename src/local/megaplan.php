@@ -45,7 +45,7 @@ class megaplan extends SdfApi_Request
 
 	public function getAdvertisingWays()
 	{
-		$opt = array('RequestedFields' => array('AdvertisingWay'));
+		$opt = array('Id' => 0, 'RequestedFields' => array('AdvertisingWay'));
 		$AdvertisingWays = $this->sdf->get('/BumsCrmApiV01/Contractor/card.api', $opt);
 		// $AdvertisingWays = json_decode($AdvertisingWays, true)
 		return $AdvertisingWays;
@@ -57,7 +57,7 @@ class megaplan extends SdfApi_Request
 			"Model[TypePerson]" => "company",
 			"Model[CompanyName]" => "Хуй!!!",
 			"Model[Email]" => "mega@huy.org",
-			"Model[Phones]" => array("ph_w-7-3952781089\t", "ph_w-7-3952-401079\t"),
+			"Model[Phones]" => array("ph_w-7-3952-781089\t", "ph_w-7-3952-401079\t"),
 			"Model[Responsibles]" => "1000000",
 			"Model[ActivityType]" => "1000002",
 			"Model[Icq]" => "881129",
