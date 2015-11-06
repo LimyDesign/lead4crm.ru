@@ -33,7 +33,7 @@ function megaplanGetTask($crmid) {
 	pg_free_result($result);
 	pg_close($db);
 	$mp = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
-	$task = $mp->get('/BumsTaskApiV01/Severity/list.api');
+	$task = $mp->get('/BumsCrmApiV01/Contractor/listFields.api');
 	return $task;
 }
 
