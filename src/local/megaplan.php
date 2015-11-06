@@ -2,8 +2,22 @@
 
 require_once __DIR__.'/Request.php';
 
-function megaplanTestConnect($id) {
-	return;
+function megaplanGetEmployee($crmid) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
+	$result = pg_query($query);
+	$AccessId = pg_fetch_result($result, 0, 0);
+	$SecretKey = pg_fetch_result($result, 0, 1);
+	$Domain = pg_fetch_result($result, 0, 2);
+	pg_free_result($result);
+	pg_close($db);
+	$mp = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
+	$employee = $mp->get('/BumsStaffApiV01/Employee/list.api');
+	$employee = json_decode($employee, true);
+	return $employee['data']['employees'];
 }
 
 function megaplanAuthorize() {

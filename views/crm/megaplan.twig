@@ -1,5 +1,10 @@
 {% if connected %}
-	<h1>Хуй!</h1>
+	<h4>Список сотрудников:</h4>
+	<ul>
+		{% for employee in employees %}
+			<li>{{employee}}</li>
+		{% endfor %}
+	</ul>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">

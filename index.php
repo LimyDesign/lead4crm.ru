@@ -410,6 +410,7 @@ function getIntegrated($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$opt['connected'] = true;
+		$opt['employees'] = call_user_func($crm.'GetEmployee', $crmid);
 		// if (crmTestConnect($id)) {
 		// 	$opt['connected'] = true;
 		// } else {
