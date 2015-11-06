@@ -45,7 +45,6 @@ class megaplan extends SdfApi_Request
 
 	public function putCompany()
 	{
-		$
 	}
 
 }
