@@ -424,11 +424,10 @@ function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
 	$auth = crmAuthorize();
-	var_dump($auth);
-	if (!$auth) {
+	if ($auth === false) {
 		$msg = 'Для данного домена логин/пароль не верный.';
 	}
-	return $msg ? $msg : '';
+	echo $msg ? $msg : '';
 }
 
 function getUserCityByIP() {
