@@ -4,7 +4,7 @@ require_once __DIR__.'/Request.php';
 
 class megaplan extends SdfApi_Request 
 {
-	protected static $sdf;
+	protected $sdf;
 
 	public function __construct($crmid)
 	{
