@@ -22,8 +22,10 @@ function crmAuthorize() {
 		$response = curl_exec($ch);
 		curl_close($ch);
 	}
-	var_dump($response);
-	$response = json_decode($response, true);
+	if ($response)
+		$response = json_decode($response, true);
+	else
+		return;
 	
 	if ($response['status']['code'] == 'ok') {
 		if ($conf->db->type == 'postgres') {
