@@ -34,7 +34,8 @@ function megaplanGetTask($crmid) {
 	pg_close($db);
 	$mp = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
 	$task = $mp->get('/BumsCrmApiV01/Contractor/listFields.api');
-	return $task;
+	$task = json_decode($task, true);
+	return $task['data']['Fields'];
 }
 
 function megaplanAuthorize() {
