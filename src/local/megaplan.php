@@ -51,13 +51,13 @@ class megaplan extends SdfApi_Request
 			"Model[Email]" => "mega@huy.org",
 			"Model[Phones]" => "ph_w-73952781089",
 			"Model[Responsibles]" => "1000000",
-			"Model[ActivityType]" => "Город / Власть",
+			"Model[ActivityType]" => "1000002",
 			"Model[Icq]" => "881129",
 			"Model[Skype]" => "arsen_loren",
 			"Model[Facebook]" => "https://www.fb.com/arsen.bespalov",
 			"Model[Twitter]" => "https://www.twitter.com/arsenbespalov",
 			"Model[Site]" => "https://www.arsen.pw",
-			// "Model[AdvertisingWay]" => "2ГИС"
+			"Model[AdvertisingWay]" => "9"
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
 		return $result;
