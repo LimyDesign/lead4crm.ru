@@ -406,8 +406,9 @@ function getIntegrated($crm) {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}
 	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	die($query);
 	$result = pg_query($query);
-	$crmid = pg_fetch_result($result, 0, $crm);
+	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		if (crmTestConnect($id)) {
 			$opt['connected'] = true;
