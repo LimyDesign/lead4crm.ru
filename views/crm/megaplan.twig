@@ -14,7 +14,7 @@
 	<h4>Типы телефонов</h4>
 	<ul>
 		{% for type in ph_t %}
-			<li>{{field.Prefix}} : {{field.Name}}</li>
+			<li>{{type.Prefix}} : {{type.Name}}</li>
 		{% endfor %}
 	</ul>
 {% else %}
