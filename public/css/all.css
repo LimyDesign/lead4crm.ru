@@ -146,6 +146,15 @@ h4.panel-title {
 }
 
 
+img.online {
+  border: 3px solid #4cae4c;
+}
+
+img.offline {
+  border: 3px solid #d43f3a;
+}
+
+
 .btn, a {
   -webkit-transition: color linear .4s, background-color linear .4s, border-color linear .4s;
   transition: color linear .4s, background-color linear .4s, border-color linear .4s; }
