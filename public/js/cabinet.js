@@ -175,6 +175,17 @@ $(document).ready(function()
         });
       }
     } else if (form_action == '/showSearchDialog/') {
+      if (ii != null) {
+        $('#ii').removeClass('hide');
+        $('#ii_help').removeClass('hide');
+        $.post('/getIntegrated/', { ii: ii }, function (data) {
+          $('#ii_html').html(data);
+        }, 'html').done(function() {
+          $('.overlay').fadeOut();
+        });
+      } else {
+        $('.overlay').fadeOut();
+      }
       if (searchType == 1) {
         $('#searchDialog-'+searchType).find('dl').empty();
         if (localStorage.getItem('2GISRubrics')) {
@@ -678,10 +689,10 @@ function scrollTo(element) {
 function wizardStep(step) {
   var curr_step = step + 1;
   
-  // if ($('#ii').hasClass('hide') === false)
-  //   $('#ii').addClass('hide');
-  // if ($('#ii_help').hasClass('hide') === false)
-  //   $('#ii_help').addClass('hide');
+  if ($('#ii').hasClass('hide') === false)
+    $('#ii').addClass('hide');
+  if ($('#ii_help').hasClass('hide') === false)
+    $('#ii_help').addClass('hide');
 
   $('#wizard-form').attr('action', '/step-'+curr_step+'/');
   $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
