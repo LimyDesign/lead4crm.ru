@@ -2,12 +2,14 @@
 	<div class="media">
 		<div class="media-left">
 			<a href="#.">
-				<img src="{{leadUser}}" alt="" class="media-object">
+				<img src="{{leadUser.Avatar}}" alt="{{leadUser.Name}}" class="media-object">
 			</a>
 		</div>
+		<div class="media-body">
+			<h4 class="media-heading">Вход в Мегаплан выполнен через сотрудника:</h4>
+			<p>{{leadUser.Name}}</p>
+		</div>
 	</div>
-	<h4>«Генератор лидов» связан с Мегапланом через сотрудника:</h4>
-	<p>{{leadUser.Name}}</p>
 	<h4>Ответственные:</h4>
 	<ul>
 		{% for employee in employees %}
