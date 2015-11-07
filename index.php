@@ -2045,7 +2045,7 @@ function getRealIpAddr() {
 }
 
 function getPhoneConvert($phone) {
-	if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
+	if (preg_match('/(\d)(\d{3})(\d{7})/', $phone, $matches))
 		return $matches[1].'-'.$matches[2].'-'.$matches[3];
 }
 
