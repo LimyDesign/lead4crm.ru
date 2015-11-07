@@ -1245,20 +1245,23 @@ function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix 
 	for ($i = 0; $i < count($json['contacts']); $i++) {
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
+				if ($type == 'phone' || $type == 'fax') {
+					$contact['value'] = getPhoneConvert($contact['value']);
+				}
 				if ($prefix && $suffix) {
-					$suffix = ($comment ? $suffix.$contact['comment'] : $suffix);
+					$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
 					$_return[] = $prefix.$contact['value'].$suffix;
 				}
 				elseif ($prefix) {
-					$end = ($comment ? $contact['comment'] : "");
+					$end = ($comment ? ' '.$contact['comment'] : "");
 					$_return[] = $prefix.$contact['value'].$end;
 				}
 				elseif ($suffix) {
-					$suffix = ($comment ? $suffix.$contact['comment'] : $suffix);
+					$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
 					$_return[] = $contact['value'].$suffix;
 				}
 				else {
-					$end = ($comment ? $contact['comment'] : "");
+					$end = ($comment ? ' '.$contact['comment'] : "");
 					$_return[] = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
 				}
 			}
@@ -2038,6 +2041,11 @@ function getRealIpAddr() {
 	else
 		$ipaddress = '77.88.8.8';
 	return $ipaddress;
+}
+
+function getPhoneConvert($phone) {
+	if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
+		return $matches[1].'-'.$matches[2].'-'.$matches[3];
 }
 
 function russian_date() {
