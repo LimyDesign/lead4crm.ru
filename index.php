@@ -1078,7 +1078,7 @@ function getSelection($date, $crm_id) {
 								if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
 									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
 								} else {
-									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp));
+									$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']));
 								}	
 							} else {
 								$csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp));
@@ -1161,7 +1161,7 @@ function getSelection($date, $crm_id) {
 								if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
 									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp), $cellType);
 								} else {
-									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp), $cellType);
+									$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']), $cellType);
 								}	
 							} else {
 								$xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp), $cellType);
@@ -1235,12 +1235,32 @@ function getFullAddress($json) {
 	return implode(', ', $fullAddr);
 }
 
-function get2GISContact($type, $json, $asString = true) {
+function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix = null, $comment = null) {
 	$_return = array();
+	
+	if (null === $asString) {
+		$asString = true;
+	}
+
 	for ($i = 0; $i < count($json['contacts']); $i++) {
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
-				$_return[] = ($type != 'website' ? $contact['value'] : 'http://'.$contact['alias']);
+				if ($prefix && $suffix) {
+					$suffix = ($comment ? $suffix.$contract['comment'] : $suffix);
+					$_return[] = $prefix.$contract['value'].$suffix;
+				}
+				elseif ($prefix) {
+					$end = ($comment ? $contract['comment'] : "");
+					$_return[] = $prefix.$contract['value'].$end;
+				}
+				elseif ($suffix) {
+					$suffix = ($comment ? $suffix.$contract['comment'] : $suffix);
+					$_return[] = $contract['value'].$suffix;
+				}
+				else {
+					$end = ($comment ? $contract['comment'] : "");
+					$_return[] = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
+				}
 			}
 		}
 	}

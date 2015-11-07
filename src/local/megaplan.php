@@ -70,6 +70,7 @@ class megaplan extends SdfApi_Request
 			"Model[Responsibles]" => $coFields['Responsibles'],
 			// "Model[ActivityType]" => "1000002",
 			"Model[Icq]" => $coFields['Icq'],
+			"Model[Jabber]" => $coFields['Jabber'],
 			"Model[Skype]" => $coFields['Skype'],
 			"Model[Facebook]" => $coFields['Facebook'],
 			"Model[Twitter]" => $coFields['Twitter'],
@@ -81,7 +82,7 @@ class megaplan extends SdfApi_Request
 		return $result;
 	}
 
-	public function convertPhone($number)
+	public static function convertPhone($number)
 	{
 		if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
 		{
