@@ -678,10 +678,10 @@ function scrollTo(element) {
 function wizardStep(step) {
   var curr_step = step + 1;
   
-  if ($('#ii').hasClass('hide') === false)
-    $('#ii').addClass('hide');
-  if ($('#ii_help').hasClass('hide') === false)
-    $('#ii_help').addClass('hide');
+  // if ($('#ii').hasClass('hide') === false)
+  //   $('#ii').addClass('hide');
+  // if ($('#ii_help').hasClass('hide') === false)
+  //   $('#ii_help').addClass('hide');
 
   $('#wizard-form').attr('action', '/step-'+curr_step+'/');
   $('#wizard-helper #step-'+curr_step).fadeOut('fast', function() {
