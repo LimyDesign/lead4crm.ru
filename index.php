@@ -1246,19 +1246,19 @@ function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix 
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
 				if ($prefix && $suffix) {
-					$suffix = ($comment ? $suffix.$contract['comment'] : $suffix);
-					$_return[] = $prefix.$contract['value'].$suffix;
+					$suffix = ($comment ? $suffix.$contact['comment'] : $suffix);
+					$_return[] = $prefix.$contact['value'].$suffix;
 				}
 				elseif ($prefix) {
-					$end = ($comment ? $contract['comment'] : "");
-					$_return[] = $prefix.$contract['value'].$end;
+					$end = ($comment ? $contact['comment'] : "");
+					$_return[] = $prefix.$contact['value'].$end;
 				}
 				elseif ($suffix) {
-					$suffix = ($comment ? $suffix.$contract['comment'] : $suffix);
-					$_return[] = $contract['value'].$suffix;
+					$suffix = ($comment ? $suffix.$contact['comment'] : $suffix);
+					$_return[] = $contact['value'].$suffix;
 				}
 				else {
-					$end = ($comment ? $contract['comment'] : "");
+					$end = ($comment ? $contact['comment'] : "");
 					$_return[] = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
 				}
 			}
