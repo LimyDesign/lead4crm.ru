@@ -442,7 +442,7 @@ function crmTest($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		$test = $crmClass->getUserInfo('1000115');
+		$test = $crmClass->getUserInfo('1000005');
 	}
 	header('Content-Type: text/plain');
 	print_r($test);
