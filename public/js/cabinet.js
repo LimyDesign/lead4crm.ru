@@ -81,11 +81,13 @@ $(document).ready(function()
     $(this).find('fieldset').attr('disabled', 'disabled');
     $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
 
-    if ($('#ii').hasClass('hide') === false)
-      $('#ii').addClass('hide');
-    if ($('#ii_help').hasClass('hide') === false)
-      $('#ii_help').addClass('hide');
-
+    if (form_action != '/showSearchDialog/') {
+      if ($('#ii').hasClass('hide') === false)
+        $('#ii').addClass('hide');
+      if ($('#ii_help').hasClass('hide') === false)
+        $('#ii_help').addClass('hide');
+    }
+    
     if (form_action == '/step-1/') {
       $('.overlay').fadeOut();
       $(this).find('fieldset').removeAttr('disabled');
@@ -175,17 +177,6 @@ $(document).ready(function()
         });
       }
     } else if (form_action == '/showSearchDialog/') {
-      if (ii != null) {
-        $('#ii').removeClass('hide');
-        $('#ii_help').removeClass('hide');
-        $.post('/getIntegrated/', { ii: ii }, function (data) {
-          $('#ii_html').html(data);
-        }, 'html').done(function() {
-          $('.overlay').fadeOut();
-        });
-      } else {
-        $('.overlay').fadeOut();
-      }
       if (searchType == 1) {
         $('#searchDialog-'+searchType).find('dl').empty();
         if (localStorage.getItem('2GISRubrics')) {
