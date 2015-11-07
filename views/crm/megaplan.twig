@@ -2,7 +2,7 @@
 	<h4>Список сотрудников:</h4>
 	<ul>
 		{% for employee in employees %}
-			{% if is null employee.FireDay %}
+			{% if not employee.FireDay %}
 				<li>{{employee.Id}} : {{employee.Name}}</li>
 			{% endif %}
 		{% endfor %}
