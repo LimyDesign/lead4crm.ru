@@ -22,6 +22,8 @@
 					{% for Responsible in Responsibles %}
 						{% if Responsible == employee.Id %}
 							{% set checked = 'checked' %}
+						{% else %}
+							{% set checked = '' %}
 						{% endif %}
 					{% endfor %}
 					<div class="checkbox"><label><input type="checkbox" name="Responsibles[]" value="{{employee.Id}}" {{checked}}> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
