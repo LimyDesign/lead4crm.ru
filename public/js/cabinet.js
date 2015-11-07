@@ -152,9 +152,8 @@ $(document).ready(function()
     } else if (form_action == '/step-4/') {
       if (searchType != null) {
         if (ii != null) {
-          wzd_pos = $('.wizard').offset();
           wzd_height = $('.wizard').height();
-          $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
+          $('.overlay').height(wzd_height);
           $('#ii').removeClass('hide');
           $('#ii_help').removeClass('hide');
           $.post('/getIntegrated/', { ii: ii }, function (data) {
