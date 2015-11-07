@@ -443,7 +443,7 @@ function crmTest($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		$test = $crmClass->getLeadUser();
+		$test = $crmClass->getResponsibles();
 	}
 	header('Content-Type: text/plain');
 	print_r($test);
