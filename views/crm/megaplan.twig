@@ -14,7 +14,7 @@
 			<p><strong>{{leadUser.Name}}</strong>: {{leadUser.Login}} ({{leadUser.Position.Name}})</p>
 		</div>
 	</div>
-	<h4>Ответственные:</h4>
+	<h4>Ответственные: <small>Назначьте ответственного для импортированных компаний</small></h4>
 	<form id="megaplanResponsiblesForm">
 		{% for employee in employees %}
 			{% if not employee.FireDay %}
