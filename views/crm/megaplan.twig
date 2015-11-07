@@ -25,7 +25,6 @@
 						{% endif %}
 					{% endfor %}
 					<div class="checkbox"><label><input type="checkbox" name="Responsibles[]" value="{{employee.Id}}" {{checked}}> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
-					}
 				{% endif %}
 			{% endfor %}
 			<button class="btn btn-primary" id="save"><i class="fa fa-floppy-o fa-fw"></i> Сохранить</button>
