@@ -1,8 +1,14 @@
 {% if connected %}
+	{% if leadUser.IsOnline %}
+		{% set status = ' в сети' %}
 	<div class="media">
 		<div class="media-left">
 			<a href="#.">
-				<img src="{{leadUser.Avatar}}" alt="{{leadUser.Name}}" class="media-object">
+				{% if leadUser.IsOnline %}
+					<img src="{{leadUser.Avatar}}" alt="{{leadUser.Name}} в сети" title="{{leadUser.Name}} в сети" class="media-object online" width="60" height="60">
+				{% else %}
+					<img src="{{leadUser.Avatar}}" alt="{{leadUser.Name}} не в сети" title="{{leadUser.Name}} не в сети" class="media-object offline" width="60" height="60">
+				{% endif %}
 			</a>
 		</div>
 		<div class="media-body">
