@@ -422,6 +422,7 @@ function getIntegrated($crm) {
 		$opt['fields'] = $crmClass->getFields();
 		$opt['ph_t'] = $crmClass->getPhoneTypes();
 		$opt['AdvertisingWays'] = $crmClass->getAdvertisingWays();
+		$opt['ClientList'] = $crmClass->getClientList();
 	} else {
 		$opt['connected'] = false;
 	}
