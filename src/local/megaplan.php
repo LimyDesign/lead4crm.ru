@@ -43,12 +43,12 @@ class megaplan extends SdfApi_Request
 		return $phTypes['data']['PhoneTypes'];
 	}
 
-	public function getAdvertisingWays()
+	public function getAdvertisingWays($Id)
 	{
-		$opt = array('Id' => null, 'RequestedFields' => array('AdvertisingWay'));
-		$AdvertisingWays = $this->sdf->get('/BumsCrmApiV01/Contractor/card.api', $opt);
-		// $AdvertisingWays = json_decode($AdvertisingWays, true)
-		return $AdvertisingWays;
+		$opt = array('Id' => $Id, 'RequestedFields' => array('AdvertisingWay'));
+		$response = $this->sdf->get('/BumsCrmApiV01/Contractor/card.api', $opt);
+		$response = json_decode($response, true);
+		return $response;
 	}
 
 	public function getClient($companyName)
@@ -59,22 +59,23 @@ class megaplan extends SdfApi_Request
 		return $response;
 	}
 
-	public function putCompany()
+	public function putCompany($coFields)
 	{
 		$opt = array(
 			"Model[TypePerson]" => "company",
-			"Model[CompanyName]" => "Хуй!!!",
-			"Model[Email]" => "mega@huy.org",
-			"Model[Phones]" => array("ph_w-7-3952-781089\t", "ph_w-7-3952-401079\t"),
-			"Model[Responsibles]" => "1000000",
-			"Model[ActivityType]" => "1000002",
-			"Model[Icq]" => "881129",
-			"Model[Skype]" => "arsen_loren",
-			"Model[Facebook]" => "https://www.fb.com/arsen.bespalov",
-			"Model[Twitter]" => "https://www.twitter.com/arsenbespalov",
-			"Model[Site]" => "https://www.arsen.pw",
-			"Model[AdvertisingWay]" => "9",
-			"Model[Description]" => "sjkdgfjhsdgfjh<br><strong>dsfsdf</strong><br><a href=sdfsdf>ssdfsdf</a>"
+			"Model[CompanyName]" => $coFields['CompanyName'],
+			"Model[Email]" => $coFields['Email'],
+			"Model[Phones]" => $coFields['Phones'],
+			// "Model[Phones]" => array("ph_w-7-3952-781089\t", "ph_w-7-3952-401079\t"),
+			"Model[Responsibles]" => $coFields['Responsibles'],
+			// "Model[ActivityType]" => "1000002",
+			"Model[Icq]" => $coFields['Icq'],
+			"Model[Skype]" => $coFields['Skype'],
+			"Model[Facebook]" => $coFields['Facebook'],
+			"Model[Twitter]" => $coFields['Twitter'],
+			"Model[Site]" => $coFields['Site'],
+			// "Model[AdvertisingWay]" => "9",
+			"Model[Description]" => $coFields['Description']
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
 		return $result;
