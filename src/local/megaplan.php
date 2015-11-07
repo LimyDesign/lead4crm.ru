@@ -64,7 +64,7 @@ class megaplan extends SdfApi_Request
 
 	public function getLeadUser()
 	{
-		return getUserInfo($this->UserId);
+		return $this->getUserInfo($this->UserId);
 	}
 
 	private function getUserInfo($id)
