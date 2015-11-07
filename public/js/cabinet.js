@@ -156,11 +156,14 @@ $(document).ready(function()
           $('#ii_help').removeClass('hide');
           $.post('/getIntegrated/', { ii: ii }, function (data) {
             $('#ii_html').html(data);
-          }, 'html');
+          }, 'html').done(function() {
+            $('.overlay').fadeOut();
+          });
+        } else {
+          $('.overlay').fadeOut();
         }
         localStorage.setItem('search_id', searchType);
         renderSelections(4);
-        $('.overlay').fadeOut();
         $('#wizard-form').find('fieldset').removeAttr('disabled');
         current_step = 4;
         $('#wizard-form').attr('action', '/showSearchDialog/');
