@@ -80,6 +80,7 @@ $(document).ready(function()
         wzd_height = $('.wizard').height();
     $(this).find('fieldset').attr('disabled', 'disabled');
     $('.overlay').css({ 'top': wzd_pos.top, 'left': wzd_pos.left }).height(wzd_height).fadeIn('fast');
+    console.log(wzd_height);
 
     if ($('#ii').hasClass('hide') === false)
       $('#ii').addClass('hide');
@@ -153,6 +154,7 @@ $(document).ready(function()
       if (searchType != null) {
         if (ii != null) {
           wzd_height = $('.wizard').height();
+          console.log(wzd_height);
           $('.overlay').height(wzd_height);
           $('#ii').removeClass('hide');
           $('#ii_help').removeClass('hide');
