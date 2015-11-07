@@ -4,6 +4,7 @@ var me = document.querySelector('script[data-name="cabinet"]'),
     totalFind = 0,
     qty = 0,
     ii = null,
+    connected = false,
     contract = getParamByName('c'),
     new_contract = '',
     icq_uin_start = 0,
@@ -157,8 +158,9 @@ $(document).ready(function()
           $('#ii').removeClass('hide');
           $('#ii_help').removeClass('hide');
           $.post('/getIntegrated/', { ii: ii }, function (data) {
-            $('#ii_html').html(data);
-          }, 'html').done(function() {
+            $('#ii_html').html(data.html);
+            connected = data.connected;
+          }, 'json').done(function() {
             $('.overlay').fadeOut();
           });
         } else {
@@ -721,10 +723,14 @@ function renderSelections(step) {
 /* Функция загрузки уже имеющихся выборок.
 ========================================================================================= */
 function downloadSelection(sDate, crm_id) {
-  var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
-  window.setTimeout(function() {
-    downloadWindow.close();
-  }, 10000);
+  if (connected) {
+    alert('Yo!');
+  } else {
+    var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
+    window.setTimeout(function() {
+      downloadWindow.close();
+    }, 10000);
+  }
 }
 
 /* Функция показа диалогов поиска.

@@ -432,7 +432,9 @@ function getIntegrated($crm) {
 	} else {
 		$opt['connected'] = false;
 	}
-	echo $twig->render('crm/'.$crm.'.twig', $opt);
+	$html = $twig->render('crm/'.$crm.'.twig', $opt);
+	header('Content-Type: text/json');
+	echo json_encode(array('html' => $html, 'connected' => $opt['connected']));
 }
 
 function crmTest($crm) {

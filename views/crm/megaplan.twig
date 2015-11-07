@@ -33,12 +33,13 @@
 		megaplanSettingForm.on('click', '#unlink', function() {
 			var deleted = confirm("Вы действительно хотите отвязать текущий аккаунт от «Генератора лидов»?");
 			if (deleted)
+				megaplanSettingForm.find('fieldset').attr('disabled', 'disabled');
 				$.post('/crmDisconnect/megaplan/');
 		});
 	});
 	</script>
 {% else %}
-	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
+	<button type="button" id="connect" class="btn btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
