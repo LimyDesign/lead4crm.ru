@@ -51,9 +51,10 @@ class megaplan extends SdfApi_Request
 		return $AdvertisingWays;
 	}
 
-	public function getClientList()
+	public function getClient($companyName)
 	{
-		$list = $this->sdf->get('/BumsCrmApiV01/Contractor/list.api');
+		$opt = array("Model[PersonType]" => "company", "Model[CompanyName]" => $companyName);
+		$list = $this->sdf->get('/BumsCrmApiV01/Contractor/list.api', $opt);
 		return $list;
 	}
 

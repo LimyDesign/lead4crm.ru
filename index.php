@@ -426,8 +426,6 @@ function getIntegrated($crm) {
 		$opt['employees'] = $crmClass->getEmployee();
 		$opt['fields'] = $crmClass->getFields();
 		$opt['ph_t'] = $crmClass->getPhoneTypes();
-		$opt['AdvertisingWays'] = $crmClass->getAdvertisingWays();
-		$opt['ClientList'] = $crmClass->getClientList();
 	} else {
 		$opt['connected'] = false;
 	}
@@ -445,11 +443,7 @@ function crmTest($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		$test = $crmClass->getEmployee();
-		// $opt['fields'] = $crmClass->getFields();
-		// $opt['ph_t'] = $crmClass->getPhoneTypes();
-		// $opt['AdvertisingWays'] = $crmClass->getAdvertisingWays();
-		// $opt['ClientList'] = $crmClass->getClientList();
+		$test = $crmClass->getClient($_REQUEST['name']);
 	}
 	header('Content-Type: text/plain');
 	print_r($test);
