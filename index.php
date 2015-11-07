@@ -1235,7 +1235,15 @@ function getFullAddress($json) {
 	return implode(', ', $fullAddr);
 }
 
-function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix = null, $comment = null) {
+function get2GISContact(
+	$type, 
+	$json, 
+	$asString = null, 
+	$prefix = null, 
+	$suffix = null, 
+	$comment = null,
+	$useAddon = false
+) {
 	$_return = array();
 	
 	if (null === $asString) {
@@ -1248,22 +1256,27 @@ function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix 
 				if ($type == 'phone' || $type == 'fax') {
 					$contact['value'] = getPhoneConvert($contact['value']);
 				}
-				if ($prefix && $suffix) {
-					$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
-					$_return[] = $prefix.$contact['value'].$suffix;
+				if ($useAddon) {
+					if ($prefix && $suffix) {
+						$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
+						$_r = $prefix.$contact['value'].$suffix;
+					}
+					elseif ($prefix) {
+						$end = ($comment ? ' '.$contact['comment'] : "");
+						$_r = $prefix.$contact['value'].$end;
+					}
+					elseif ($suffix) {
+						$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
+						$_r = $contact['value'].$suffix;
+					}
+					else {
+						$end = ($comment ? ' '.$contact['comment'] : "");
+						$_r = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
+					}
+				} else {
+					$_r = $contact['value'];
 				}
-				elseif ($prefix) {
-					$end = ($comment ? ' '.$contact['comment'] : "");
-					$_return[] = $prefix.$contact['value'].$end;
-				}
-				elseif ($suffix) {
-					$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
-					$_return[] = $contact['value'].$suffix;
-				}
-				else {
-					$end = ($comment ? ' '.$contact['comment'] : "");
-					$_return[] = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
-				}
+				$_return[] = ($type != 'website' ? $_r : 'http://'.$contact['alias']);
 			}
 		}
 	}
