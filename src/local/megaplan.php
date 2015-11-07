@@ -81,6 +81,14 @@ class megaplan extends SdfApi_Request
 		return $result;
 	}
 
+	public function convertPhone($number)
+	{
+		if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
+		{
+			return $matches[1].'-'.$matches[2].'-'.$matches[3];
+		}
+	}
+
 }
 
 function megaplanAuthorize() {
