@@ -724,7 +724,10 @@ function renderSelections(step) {
 ========================================================================================= */
 function downloadSelection(sDate, crm_id) {
   if (connected) {
-    alert('Yo!');
+    var exportToCRM = confirm("Начать экспорт в вашу CRM?\n\nЕсли вы хотите скачать файл, то отключитесь от Мегаплана, нажав на красную кнопку.");
+    if (exportToCRM) {
+      alert('Yo!');
+    }
   } else {
     var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
     window.setTimeout(function() {
