@@ -81,6 +81,11 @@ if ($cmd[0]) {
 			addCompany($_REQUEST['ii']);
 			break;
 
+		case 'crmTest':
+			isAdmin();
+			crmTest($cmd[1]);
+			break;
+
 		case 'initTelegram':
 			isAdmin();
 			try {
@@ -427,6 +432,27 @@ function getIntegrated($crm) {
 		$opt['connected'] = false;
 	}
 	echo $twig->render('crm/'.$crm.'.twig', $opt);
+}
+
+function crmTest($crm) {
+	global $twig, $conf;
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	$result = pg_query($query);
+	$crmid = pg_fetch_result($result, 0, 0);
+	if ($crmid) {
+		$crmClass = new $crm($crmid);
+		$test = $crmClass->getEmployee();
+		// $opt['fields'] = $crmClass->getFields();
+		// $opt['ph_t'] = $crmClass->getPhoneTypes();
+		// $opt['AdvertisingWays'] = $crmClass->getAdvertisingWays();
+		// $opt['ClientList'] = $crmClass->getClientList();
+	}
+	header('Content-Type: text/plain');
+	print_r($test);
 }
 
 function addCompany($crm) {
