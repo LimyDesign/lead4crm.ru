@@ -5,6 +5,7 @@ require_once __DIR__.'/Request.php';
 class megaplan extends SdfApi_Request 
 {
 	protected $sdf;
+	protected $UserId;
 
 	public function __construct($crmid)
 	{
@@ -12,14 +13,16 @@ class megaplan extends SdfApi_Request
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
-		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
+		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"UserId\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
 		$result = pg_query($query);
 		$AccessId = pg_fetch_result($result, 0, 0);
 		$SecretKey = pg_fetch_result($result, 0, 1);
 		$Domain = pg_fetch_result($result, 0, 2);
+		$UserId = pg_fetch_result($result, 0, 3);
 		pg_free_result($result);
 		pg_close($db);
 		$this->sdf = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
+		$this->UserId = $UserId;
 	}
 
 	public function getEmployee()
@@ -55,6 +58,19 @@ class megaplan extends SdfApi_Request
 	{
 		$opt = array("Model[PersonType]" => "company", "Model[CompanyName]" => $companyName);
 		$response = $this->sdf->get('/BumsCrmApiV01/Contractor/list.api', $opt);
+		$response = json_decode($response, true);
+		return $response;
+	}
+
+	public function getLeadUser()
+	{
+		return getUserInfo($this->UserId);
+	}
+
+	private function getUserInfo($id)
+	{
+		$opt = array("Id" => $id);
+		$response = $this->sdf->get('/BumsStaffApiV01/Employee/card.api', $opt);
 		$response = json_decode($response, true);
 		return $response;
 	}

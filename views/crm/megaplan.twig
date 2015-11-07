@@ -1,5 +1,14 @@
 {% if connected %}
-	<h4>Список сотрудников:</h4>
+	<div class="media">
+		<div class="media-left">
+			<a href="#.">
+				<img src="{{leadUser}}" alt="" class="media-object">
+			</a>
+		</div>
+	</div>
+	<h4>«Генератор лидов» связан с Мегапланом через сотрудника:</h4>
+	<p>{{leadUser.Name}}</p>
+	<h4>Ответственные:</h4>
 	<ul>
 		{% for employee in employees %}
 			{% if not employee.FireDay %}
@@ -7,22 +16,6 @@
 			{% endif %}
 		{% endfor %}
 	</ul>
-	<h4>Всякое</h4>
-	<ul>
-		{% for field in fields %}
-			<li>{{field.Name}} : {{field.Translation}}</li>
-		{% endfor %}
-	</ul>
-	<h4>Типы телефонов</h4>
-	<ul>
-		{% for type in ph_t %}
-			<li>{{type.Prefix}} : {{type.Name}}</li>
-		{% endfor %}
-	</ul>
-	<h4>Каналы привлечения</h4>
-	<p>{{AdvertisingWays}}</p>
-	<h4>Список клиентов</h4>
-	<p>{{ClientList}}</p>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
