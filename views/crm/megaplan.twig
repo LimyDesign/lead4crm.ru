@@ -15,17 +15,22 @@
 		</div>
 	</div>
 	<h4>Ответственные: <small>Назначьте ответственного для импортированных компаний</small></h4>
-	<form id="megaplanResponsiblesForm">
+	<form id="megaplanSettingForm">
 		<fieldset>
 			{% for employee in employees %}
 				{% if not employee.FireDay %}
-					<div class="checkbox"><label><input type="checkbox"> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
+					<div class="checkbox"><label><input type="checkbox" name="Responsibles[]" value="{{employee.Id}}"> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
 				{% endif %}
 			{% endfor %}
 			<button class="btn btn-primary" id="save"><i class="fa fa-floppy-o fa-fw"></i> Сохранить</button>
 			<button type="button" class="btn btn-danger" id="unlink"><i class="fa fa-ban fa-fw"></i> Отключиться от Мегаплана</button>
 		</fieldset>
 	</form>
+	<script>
+	$(function() {
+		var megaplanSettingForm = $('#megaplanSettingForm');
+	});
+	</script>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
