@@ -29,6 +29,12 @@
 	<script>
 	$(function() {
 		var megaplanSettingForm = $('#megaplanSettingForm');
+
+		megaplanSettingForm.on('click', '#unlink', function() {
+			var deleted = confirm("Вы действительно хотите отвязать текущий аккаунт от «Генератора лидов»?");
+			if (deleted)
+				$.post('/crmDisconnect/megaplan/');
+		});
 	});
 	</script>
 {% else %}
