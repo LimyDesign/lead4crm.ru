@@ -13,7 +13,7 @@ class megaplan extends SdfApi_Request
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
-		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"UserId\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
+		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"EmployeeId\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
 		$result = pg_query($query);
 		$AccessId = pg_fetch_result($result, 0, 0);
 		$SecretKey = pg_fetch_result($result, 0, 1);
