@@ -433,6 +433,7 @@ function getIntegrated($crm) {
 }
 
 function crmTest($crm) {
+	die(getPhoneConvert('+79041326000'));
 	global $twig, $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
