@@ -425,6 +425,7 @@ function getIntegrated($crm) {
 		$crmClass = new $crm($crmid);
 		$opt['employees'] = $crmClass->getEmployee();
 		$opt['leadUser'] = $crmClass->getLeadUser();
+		$opt['Responsibles'] = $crmClass->getResponsibles();
 	} else {
 		$opt['connected'] = false;
 	}

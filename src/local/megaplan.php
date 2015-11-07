@@ -5,7 +5,9 @@ require_once __DIR__.'/Request.php';
 class megaplan extends SdfApi_Request 
 {
 	protected $sdf;
+	protected $crmid;
 	protected $UserId;
+	protected $Responsibles;
 
 	public function __construct($crmid)
 	{
@@ -13,16 +15,19 @@ class megaplan extends SdfApi_Request
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
-		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"EmployeeId\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
+		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"EmployeeId\", \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
 		$result = pg_query($query);
 		$AccessId = pg_fetch_result($result, 0, 0);
 		$SecretKey = pg_fetch_result($result, 0, 1);
 		$Domain = pg_fetch_result($result, 0, 2);
 		$UserId = pg_fetch_result($result, 0, 3);
+		$Responsibles = pg_fetch_result($result, 0, 4);
 		pg_free_result($result);
 		pg_close($db);
 		$this->sdf = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
+		$this->crmid = $crmid;
 		$this->UserId = $UserId;
+		$this->Responsibles = $Responsibles;
 	}
 
 	public function getEmployee()
@@ -73,6 +78,20 @@ class megaplan extends SdfApi_Request
 		$response = $this->sdf->get('/BumsStaffApiV01/Employee/card.api', $opt);
 		$response = json_decode($response, true);
 		return $response['data']['employee'];
+	}
+
+	public function getResponsibles()
+	{
+		global $conf;
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		}
+		$query = "SELECT \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
+		$result = pg_query($query);
+		$Responsibles = pg_fetch_result($result, 0, 0);
+		pg_free_result($result);
+		pg_close($db);
+		return explode(',', $Responsibles);
 	}
 
 	public function putCompany($coFields)
@@ -135,7 +154,7 @@ function megaplanAuthorize() {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
 
-		$query = 'INSERT INTO "public"."crm_megaplan" ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId") VALUES ('."'{$host}', '{$response['data']['AccessId']}', '{$response['data']['SecretKey']}', '{$response['data']['UserId']}', '{$response['data']['EmployeeId']}') ".' RETURNING "Id"';
+		$query = 'INSERT INTO "public"."crm_megaplan" ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId", "Responsibles") VALUES ('."'{$host}', '{$response['data']['AccessId']}', '{$response['data']['SecretKey']}', '{$response['data']['UserId']}', '{$response['data']['EmployeeId']}', '{$response['data']['EmployeeId']}') ".' RETURNING "Id"';
 		$result = pg_query($query);
 		$megaplanid = pg_fetch_result($result, 0, 0);
 		$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = '{$megaplanid}' WHERE \"id\" = '{$_SESSION['userid']}'";
