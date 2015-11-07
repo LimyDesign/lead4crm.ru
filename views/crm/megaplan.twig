@@ -18,7 +18,7 @@
 	<form id="megaplanResponsiblesForm">
 		{% for employee in employees %}
 			{% if not employee.FireDay %}
-				<div class="checkbox"><label><input type="checkbox"> {{employee.Name}}</label></div>
+				<div class="checkbox"><label><input type="checkbox"> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
 			{% endif %}
 		{% endfor %}
 	</form>
