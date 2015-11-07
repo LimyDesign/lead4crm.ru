@@ -15,13 +15,13 @@
 		</div>
 	</div>
 	<h4>Ответственные:</h4>
-	<ul>
+	<form id="megaplanResponsiblesForm">
 		{% for employee in employees %}
 			{% if not employee.FireDay %}
-				<li>{{employee.Id}} : {{employee.Name}}</li>
+				<div class="checkbox"><label><input type="checkbox"> {{employee.Name}}</label></div>
 			{% endif %}
 		{% endfor %}
-	</ul>
+	</form>
 {% else %}
 	<button type="button" id="connect" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#megaplanConnect">Подключиться к Мегаплану...</button>
 	<div class="modal fade" id="megaplanConnect" tabindex="-1" role="dialog" aria-labelledby="megaplanConnectLabel">
