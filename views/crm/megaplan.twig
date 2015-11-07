@@ -19,7 +19,7 @@
 		<fieldset>
 			{% for employee in employees %}
 				{% if not employee.FireDay %}
-					<div class="checkbox"><label><input type="checkbox" name="Responsibles[]" value="{{employee.Id}}" {% if employee.Id = leadUser.Id %}checked{% endif %}> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
+					<div class="checkbox"><label><input type="checkbox" name="Responsibles[]" value="{{employee.Id}}" {% if employee.Id == leadUser.Id %}checked{% endif %}> <strong>{{employee.Name}}</strong> ({{employee.Position.Name}})</label></div>
 				{% endif %}
 			{% endfor %}
 			<button class="btn btn-primary" id="save"><i class="fa fa-floppy-o fa-fw"></i> Сохранить</button>
