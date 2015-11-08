@@ -492,6 +492,7 @@ function crmSaveSettings($crm) {
 		echo 'asdasd';
 		echo $crmClass->putSetting();
 	}
+	echo 'asdasd';
 }
 
 function crmConnect($crm) {
