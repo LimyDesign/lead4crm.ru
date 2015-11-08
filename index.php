@@ -489,7 +489,7 @@ function crmSaveSettings($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		echo 'asdasd';
+		echo 'manda';
 		echo $crmClass->putSetting();
 	}
 	echo 'huy!';
