@@ -172,7 +172,7 @@ class megaplan extends SdfApi_Request
 		if ($conf->db->type == 'postgres') {
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
-		$query = "UPDATE \"public\".\"crm_megaplan\" SET \"megaplan\" = DEFAULT WHERE \"id\" = '{$_SESSION['userid']}'";
+		$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = DEFAULT WHERE \"id\" = '{$_SESSION['userid']}'";
 		pg_query($query);
 		$query = "DELETE FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
 		pg_query($query);
