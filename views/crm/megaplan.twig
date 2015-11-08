@@ -33,6 +33,7 @@
 		megaplanSettingForm.submit(function(event) {
 			event.preventDefault();
 			var serialize = $(this).serialize();
+			console.log(serialize);
 			megaplanSettingForm.find('fieldset').attr('disabled', 'disabled');
 			$.post('/crmSaveSettings/megaplan/', { serialize }, function (data) {
 				console.log(data);
