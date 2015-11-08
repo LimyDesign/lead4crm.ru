@@ -487,12 +487,12 @@ function crmSaveSettings($crm) {
 	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
 	$result = pg_query($query);
 	$crmid = pg_fetch_result($result, 0, 0);
+	echo $crmid;
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
 		echo 'manda';
 		echo $crmClass->putSetting();
 	}
-	echo $crmid;
 }
 
 function crmConnect($crm) {
