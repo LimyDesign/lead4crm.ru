@@ -34,7 +34,11 @@
 			var deleted = confirm("Вы действительно хотите отвязать текущий аккаунт от «Генератора лидов»?");
 			if (deleted)
 				megaplanSettingForm.find('fieldset').attr('disabled', 'disabled');
-				$.post('/crmDisconnect/megaplan/');
+				$.post('/crmDisconnect/megaplan/').done(function() {
+					$.post('/getIntegrated/', { ii: ii }, function (data) {
+						$('#ii_html').html(data.html);
+					}, 'json');
+				});
 		});
 	});
 	</script>

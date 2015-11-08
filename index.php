@@ -86,6 +86,11 @@ if ($cmd[0]) {
 			crmTest($cmd[1]);
 			break;
 
+		case 'crmDisconnect':
+			isAuth();
+			crmDisconnect($cmd[1]);
+			break;
+
 		case 'initTelegram':
 			isAdmin();
 			try {
@@ -472,11 +477,26 @@ function addCompany($crm) {
 function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
-	$auth = call_user_func($crm.'Authorize');
+	$auth = call_user_func(array($crm,'Authorize'));
 	if ($auth === false) {
 		$msg = 'Для данного домена логин/пароль не верный.';
 	}
 	echo $msg ? $msg : '';
+}
+
+function crmDisconnect($crm) {
+	global $conf;
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	$result = pg_query($query);
+	$crmid = pg_fetch_result($result, 0, 0);
+	if ($crmid) {
+		$crmClass = new $crm($crmid);
+		echo $crmClass->Disconnect();
+	}
 }
 
 function getUserCityByIP() {
