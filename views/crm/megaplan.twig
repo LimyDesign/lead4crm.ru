@@ -30,6 +30,11 @@
 	$(function() {
 		var megaplanSettingForm = $('#megaplanSettingForm');
 
+		megaplanSettingForm.submit(function(event) {
+			event.preventDefault();
+			alert('Yo!');
+		});
+
 		megaplanSettingForm.on('click', '#unlink', function() {
 			var deleted = confirm("Вы действительно хотите отвязать текущий аккаунт от «Генератора лидов»?");
 			if (deleted)
