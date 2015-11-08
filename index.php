@@ -490,7 +490,7 @@ function crmSaveSettings($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		print_r($crmClass->putSetting());
+		echo $crmClass->putSetting();
 	}
 }
 
