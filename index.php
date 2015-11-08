@@ -81,6 +81,11 @@ if ($cmd[0]) {
 			addCompany($_REQUEST['ii']);
 			break;
 
+		case 'crmSaveSettings':
+			isAuth();
+			crmSaveSettings($cmd[1]);
+			break;
+
 		case 'crmTest':
 			isAdmin();
 			crmTest($cmd[1]);
