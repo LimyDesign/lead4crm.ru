@@ -37,6 +37,7 @@
 				$.post('/crmDisconnect/megaplan/').done(function() {
 					$.post('/getIntegrated/', { ii: ii }, function (data) {
 						$('#ii_html').html(data.html);
+						connected = data.connected;
 					}, 'json');
 				});
 		});
@@ -227,6 +228,7 @@
 		megaplanModal.on('hide.bs.modal', function() {
 			$.post('/getIntegrated/', { ii: ii }, function (data) {
 				$('#ii_html').html(data.html);
+				connected = data.connected;
 			}, 'json');
 		});
 
