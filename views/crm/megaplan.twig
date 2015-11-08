@@ -32,9 +32,9 @@
 
 		megaplanSettingForm.submit(function(event) {
 			event.preventDefault();
-			var responsibles = $(this).serialize();
+			var serialize = $(this).serialize();
 			megaplanSettingForm.find('fieldset').attr('disabled', 'disabled');
-			$.post('/crmSaveSettings/megaplan/', { responsibles:responsibles }, function (data) {
+			$.post('/crmSaveSettings/megaplan/', { serialize }, function (data) {
 				console.log(data);
 			}).done(function() {
 				$.post('/getIntegrated/', { ii: ii }, function (data) {
