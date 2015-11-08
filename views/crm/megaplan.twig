@@ -222,8 +222,8 @@
 
 		megaplanModal.on('hide.bs.modal', function() {
 			$.post('/getIntegrated/', { ii: ii }, function (data) {
-				$('#ii_html').html(data);
-			}, 'html');
+				$('#ii_html').html(data.html);
+			}, 'json');
 		});
 
 	});
