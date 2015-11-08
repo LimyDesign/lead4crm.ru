@@ -491,8 +491,8 @@ function crmSaveSettings($crm) {
 		$crmClass = new $crm($crmid);
 		echo 'manda';
 		echo $crmClass->putSetting();
-	}
-	echo 'huy!';
+	} else
+		echo 'huy!';
 }
 
 function crmConnect($crm) {
