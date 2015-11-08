@@ -492,7 +492,7 @@ function crmSaveSettings($crm) {
 		echo 'manda';
 		echo $crmClass->putSetting();
 	}
-	echo $query;
+	echo $crmid;
 }
 
 function crmConnect($crm) {
