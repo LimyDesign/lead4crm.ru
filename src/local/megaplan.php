@@ -127,7 +127,7 @@ class megaplan extends SdfApi_Request
 		$query = "UPDATE \"public\".\"crm_megaplan\" SET \"Responsibles\" = '{$responsibles}' WHERE \"Id\" = '{$this->crmid}'";
 		pg_query($query);
 		pg_close($db);
-		return $_REQUEST['Responsibles'];
+		return $query;
 	}
 
 	public static function convertPhone($number)
