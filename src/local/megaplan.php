@@ -117,6 +117,19 @@ class megaplan extends SdfApi_Request
 		return $result;
 	}
 
+	public function putSetting()
+	{
+		global $conf;
+		if ($conf->db->type == 'postgres') {
+			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		}
+		$responsibles = implode(',', $_REQUEST['Responsibles']);
+		$query = "UPDATE \"public\".\"crm_megaplan\" SET \"Responsibles\" = '{$responsibles}' WHERE \"Id\" = '{$this->crmid}'";
+		pg_query($query);
+		pg_close($db);
+		return true;
+	}
+
 	public static function convertPhone($number)
 	{
 		if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
@@ -125,7 +138,8 @@ class megaplan extends SdfApi_Request
 		}
 	}
 
-	public static function Authorize() {
+	public static function Authorize() 
+	{
 		global $conf;
 
 		$host = $_REQUEST['host'];

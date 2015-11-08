@@ -474,6 +474,20 @@ function addCompany($crm) {
 	}
 }
 
+function crmSaveSettings($crm) {
+	require_once __DIR__.'/src/local/'.$crm.'.php';
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+	}
+	$query = "select {$crm} from users where id = {$_SESSION['userid']}";
+	$result = pg_query($query);
+	$crmid = pg_fetch_result($result, 0, 0);
+	if ($crmid) {
+		$crmClass = new $crm($crmid);
+		echo $crmClass->putSetting();
+	}
+}
+
 function crmConnect($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
