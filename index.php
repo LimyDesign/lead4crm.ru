@@ -1412,7 +1412,7 @@ function get2GISContact(
 			}
 		}
 	}
-	return ($asString ? implode(', ', $_return) : $_return);
+	return ($asString ? implode(',', $_return) : $_return);
 }
 
 function bx24Comment($cp) {
