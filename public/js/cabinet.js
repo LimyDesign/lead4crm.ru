@@ -779,7 +779,9 @@ function exportSelection(sDate, crm_id) {
     setTimeout(function() {
       exportDialog.modal('hide');
     }, 500);
-  }, 'json');
+  }, 'json').fail(function(e) {
+    console.log(e);
+  });
 }
 
 /* Функция показа диалогов поиска.
