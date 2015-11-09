@@ -770,7 +770,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
         if (res) {
           exportSelection(sDate, crm_id, true, increment, data);
         }
-      }).done(function() {
+      }, 'json').done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
