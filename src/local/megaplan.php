@@ -89,7 +89,7 @@ class megaplan extends SdfApi_Request
 		$query = "SELECT \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
 		$result = pg_query($query);
 		$Responsibles = pg_fetch_result($result, 0, 0);
-		
+
 		pg_free_result($result);
 		pg_close($db);
 		return explode(',', $Responsibles);
@@ -115,6 +115,14 @@ class megaplan extends SdfApi_Request
 			"Model[Description]" => $coFields['comment']
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
+		$result = json_decode($result, true);
+		$opt = array(
+			"ContractorId" => $result['data']['Id'],
+			"PayerId" => $result['data']['PayerId'],
+			"Model[Address]" => $coFields['address']
+		);
+		$result = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt);
+		$result = json_decode($result, true);
 		return $result;
 	}
 
@@ -125,6 +133,7 @@ class megaplan extends SdfApi_Request
 			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		}
 		$responsibles = implode(',', $_REQUEST['Responsibles']);
+		$this->Responsibles = $responsibles;
 		$query = "UPDATE \"public\".\"crm_megaplan\" SET \"Responsibles\" = '{$responsibles}' WHERE \"Id\" = '{$this->crmid}'";
 		pg_query($query);
 		pg_close($db);
