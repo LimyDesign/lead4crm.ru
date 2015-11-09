@@ -769,11 +769,11 @@ function exportSelection(sDate, crm_id) {
       if (percent >= 100) {
         clearInterval(q);
         setTimeout(function() {
+          exportDialog.modal('hide');
           exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
           exportDialog.find('.progress-bar').css('width', '0');
           exportDialog.find('.progress-bar').text('0%');
           exportDialog.find('#companyName').text('n/a');
-          exportDialog.modal('hide');
         }, 2000);
       } else {
         $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[i] }).done(function() {
