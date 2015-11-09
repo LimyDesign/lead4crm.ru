@@ -1281,7 +1281,6 @@ function getSelectionArray($date, $crm_id, $json = false) {
 			$query2 = "select json from geodata where lon = '".$row['lon']."' and lat = '".$row['lat']."'";
 			$result2 = pg_query($query2);
 			$gd = json_decode(pg_fetch_result($result2, 0, 'json'), true);
-			$_compnay = array();
 			foreach ($template as $key => $value) {
 				if ($template[$key]['cp']) {
 					if (preg_match('/^%(.*)%$/', $template[$key]['cp'], $cp_match)) {
@@ -1291,27 +1290,27 @@ function getSelectionArray($date, $crm_id, $json = false) {
 							foreach($_vals as $key2) {
 								$tmp_arr = empty($tmp_arr) ? $cp[$key2] : $tmp_arr[$key2];
 							}
-							$_compnay[][$key] = $tmp_arr;
+							$_compnay[$key] = $tmp_arr;
 						} else {
-							$_compnay[][$key] = $cp[$cp_match[1]];
+							$_compnay[$key] = $cp[$cp_match[1]];
 						}
 					} else {
 						if ($template[$key]['argv']) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-								$_compnay[][$key] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+								$_compnay[$key] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
 							} else {
-								$_compnay[][$key] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']);
+								$_compnay[$key] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']);
 							}
 						} else {
-							$_compnay[][$key] = call_user_func($template[$key]['cp'], $cp);
+							$_compnay[$key] = call_user_func($template[$key]['cp'], $cp);
 						}
 					}
 				} else if ($template[$key]['gd']) {
 					if (preg_match('/^%(.*)%$/', $template[$key]['gd'], $gd_match)) {
-						$_compnay[][$key] = $gd['result'][0]['attributes'][$gd_match[1]];
+						$_compnay[$key] = $gd['result'][0]['attributes'][$gd_match[1]];
 					}
 				} else {
-					$_compnay[][$key] = $template[$key]['default'];
+					$_compnay[$key] = $template[$key]['default'];
 				}
 			}
 			$_return[] = $_compnay;
