@@ -763,6 +763,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
       }, 2000);
     } else {
       $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
+        console.log(res);
         if (res) {
           if (res.status.code == 'error') {
             alert(res.status.message);
