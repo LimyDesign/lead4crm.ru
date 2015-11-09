@@ -121,9 +121,9 @@ class megaplan extends SdfApi_Request
 			"PayerId" => $result['data']['PayerId'],
 			"Model[Address]" => $coFields['address']
 		);
-		$result = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt);
-		$result = json_decode($result, true);
-		return $result;
+		$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt);
+		$result2 = json_decode($result, true);
+		return $result2;
 	}
 
 	public function putSetting()
