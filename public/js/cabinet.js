@@ -768,6 +768,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
     } else {
       $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
         if (res) {
+          console.log(res);
           if (res.status.code == 'error') {
             alert(res.status.message);
             exportDialog.modal('hide');
