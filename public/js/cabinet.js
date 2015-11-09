@@ -754,17 +754,17 @@ function exportSelection(sDate, crm_id) {
   var t = setInterval(function() {
     i++;
     if (i <= 100) {
-      exportDialog.find('.progress-bar').delay('1000').attr('aria-valuenow', i);
-      exportDialog.find('.progress-bar').delay('1000').css('width', i+'%');
-      exportDialog.find('.progress-bar').delay('1000').text(i+'%');
-      exportDialog.find('#companyName').delay('1000').text('Фирма №'+i);
+      exportDialog.find('.progress-bar').attr('aria-valuenow', i);
+      exportDialog.find('.progress-bar').css('width', i+'%');
+      exportDialog.find('.progress-bar').text(i+'%');
+      exportDialog.find('#companyName').text('Фирма №'+i);
     } else {
       clearInterval(t);
       setTimeout(function() {
         exportDialog.modal('hide');
       }, 500);
     }
-  }, 1000);
+  }, 300);
 }
 
 /* Функция показа диалогов поиска.
