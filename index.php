@@ -1318,7 +1318,12 @@ function getSelectionArray($date, $crm_id, $json = false) {
 		}
 	}
 	$return = array('opt' => $_return, 'total' => count($_return));
-	return $json ? json_encode($return) : $return;
+	if ($json) {
+		header('Content-Type: text/json');
+		echo json_encode($return);
+	} else {
+		return $return;
+	}
 }
 
 function fileForceDownload($date, $type, $affix) {
