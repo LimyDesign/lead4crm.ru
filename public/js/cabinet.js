@@ -763,24 +763,25 @@ function exportSelection(sDate, crm_id) {
     show: true
   });
   $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
-    var percent = 0;
-    console.log(data);
-    for (var i = 0; i < data.total; i++) {
+    var percent = 0, i = 0;
+    var q = setInterval(function() {
       percent = Math.round((i + 1) * 100 / data.total);
-      $.post('/crmPostCompany/'+ii+'/', { opt: data['opt'][i] }, function (res) {
+      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[i] }, function (res) {
         console.log(res);
       }).done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
-        exportDialog.find('#companyName').text(data['opt'][i]['name']);
+        exportDialog.find('#companyName').text(data.opt[i].name);
+        i++;
       });
       if (percent == 100) {
+        clearInterval(q);
         setTimeout(function() {
           exportDialog.modal('hide');
         }, 500);
       }
-    }
+    }, 100);
   }, 'json');
 }
 
