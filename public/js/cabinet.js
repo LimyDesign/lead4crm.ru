@@ -768,9 +768,10 @@ function exportSelection(sDate, crm_id, post, increment, data) {
     } else {
       $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
         if (res) {
-          exportDialog.find('#status').css('color', '#4cae4c').text('добавлена.');
+          console.log(res);
+          exportDialog.find('#status').css('color', '#4cae4c').text(' добавлена.');
         } else {
-          exportDialog.find('#status').css('color', '#d43f3a').text('дубликат.');
+          exportDialog.find('#status').css('color', '#d43f3a').text(' дубликат.');
         }
       }, 'json').done(function() {
         increment++;
