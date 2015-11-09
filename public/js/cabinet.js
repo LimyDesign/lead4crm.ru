@@ -790,7 +790,10 @@ function exportSelection(sDate, crm_id, post, increment, data) {
       show: true
     });
 
-    $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
+    $.post('/getSelectionArray/'+sDate+'/', 
+      { crm_id: crm_id, json: true, addon: true }, 
+      function (data) 
+    {
       exportSelection(sDate, crm_id, true, 0, data)
     }, 'json');
   }

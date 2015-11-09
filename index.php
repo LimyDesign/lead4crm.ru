@@ -189,7 +189,7 @@ if ($cmd[0]) {
 
 		case 'getSelectionArray':
 			isAuth();
-			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json']);
+			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json'], $_REQUEST['addon']);
 			break;
 
 		case 'getB24UserData':
@@ -1244,7 +1244,7 @@ function getSelection($date, $crm_id) {
 	}
 }
 
-function getSelectionArray($date, $crm_id, $json = false) {
+function getSelectionArray($date, $crm_id, $json = false, $useAddon = false) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
@@ -1299,7 +1299,7 @@ function getSelectionArray($date, $crm_id, $json = false) {
 							if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
 								$_compnay[$key] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
 							} else {
-								$_compnay[$key] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']);
+								$_compnay[$key] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment'], $useAddon);
 							}
 						} else {
 							$_compnay[$key] = call_user_func($template[$key]['cp'], $cp);
