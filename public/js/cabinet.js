@@ -749,7 +749,7 @@ function exportSelection(sDate, crm_id) {
       exportDialog.find('.progress-bar').css('width', i+'%');
       exportDialog.find('.progress-bar').text(i+'%');
       exportDialog.find('#companyName').text('Фирма №'+i);
-    }, 300);
+    }, 2000);
   }
   setTimeout(function() {
     exportDialog.modal('hide');
