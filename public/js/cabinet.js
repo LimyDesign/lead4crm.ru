@@ -305,10 +305,10 @@ $(document).ready(function()
   });
 
   $('#exportDialog').on('hidden.bs.modal', function() {
-    $(this).find('.progress-bar').attr('aria-valuenow', '0');
-    $(this).find('.progress-bar').css('width', '0');
-    $(this).find('.progress-bar').text('0%');
-    $(this).find('#companyName').text('n/a');
+    $('#exportDialog').find('.progress-bar').attr('aria-valuenow', '0');
+    $('#exportDialog').find('.progress-bar').css('width', '0');
+    $('#exportDialog').find('.progress-bar').text('0%');
+    $('#exportDialog').find('#companyName').text('n/a');
   })
 
   /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
@@ -775,7 +775,7 @@ function exportSelection(sDate, crm_id) {
         exportDialog.find('#companyName').text(data.opt[i].name);
         i++;
       });
-      if (percent == 100) {
+      if (percent >= 100) {
         clearInterval(q);
         setTimeout(function() {
           exportDialog.modal('hide');
