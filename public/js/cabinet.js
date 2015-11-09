@@ -764,6 +764,7 @@ function exportSelection(sDate, crm_id) {
   });
   $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id }, function (data) {
     var percent = 0;
+    console.log(data);
     for (var i = 0; i < data.total; i++) {
       percent = Math.round((i + 1) * 100 / data.total);
       $.post('/crmPostCompany/'+ii+'/', { opt: data.opt.i }, function (res) {
