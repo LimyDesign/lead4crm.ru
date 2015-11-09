@@ -117,6 +117,7 @@ class megaplan extends SdfApi_Request
 				"Model[Description]" => $coFields['comment']
 			);
 			$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
+			$return = $result;
 			$result = json_decode($result, true);
 			$opt2 = array(
 				"ContractorId" => $result['data']['Id'],
@@ -124,7 +125,7 @@ class megaplan extends SdfApi_Request
 				"Model[Address]" => $coFields['address']
 			);
 			$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
-			return true;
+			return $return;
 		} else {
 			return false;
 		}
