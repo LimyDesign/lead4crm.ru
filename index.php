@@ -463,7 +463,7 @@ function crmTest($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
-		$test = $crmClass->getClient($_REQUEST['client']);
+		$test = $crmClass->getPhoneTypes();
 	}
 	header('Content-Type: text/plain');
 	print_r($test);
