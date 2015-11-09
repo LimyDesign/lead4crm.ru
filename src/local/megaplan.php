@@ -122,7 +122,7 @@ class megaplan extends SdfApi_Request
 			"Model[Address]" => $coFields['address']
 		);
 		$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
-		$result2 = json_decode($result, true);
+		$result2 = json_decode($result2, true);
 		return $result2;
 	}
 
