@@ -744,12 +744,11 @@ function exportSelection(sDate, crm_id) {
     show: true
   });
   for (var i = 1; i <= 100; i++) {
-    setTimeout(function() {
-      exportDialog.find('.progress-bar').attr('aria-valuenow', i);
-      exportDialog.find('.progress-bar').css('width', i+'%');
-      exportDialog.find('.progress-bar').text(i+'%');
-      exportDialog.find('#companyName').text('Фирма №'+i);
-    }, 2000);
+    exportDialog.find('.progress-bar').delay('300').attr('aria-valuenow', i);
+    exportDialog.find('.progress-bar').delay('300').css('width', i+'%');
+    exportDialog.find('.progress-bar').delay('300').text(i+'%');
+    exportDialog.find('#companyName').delay('300').text('Фирма №'+i);
+
   }
   setTimeout(function() {
     exportDialog.modal('hide');
