@@ -773,13 +773,13 @@ function exportSelection(sDate, crm_id, post, increment, data) {
           exportDialog.find('#status').css('color', '#d43f3a').text('дубликат.');
         }
       }, 'json').done(function() {
+        increment++;
         exportSelection(sDate, crm_id, true, increment, data);
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
         exportDialog.find('#companyName').text(data.opt[increment].name);
       });
-      increment++;
     }
   } else {
     exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
