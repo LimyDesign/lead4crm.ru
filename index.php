@@ -480,6 +480,7 @@ function crmPostCompany($crm) {
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
 		$crmClass = new $crm($crmid);
+		header('Content-Type: text/json');
 		echo $crmClass->putCompany($_REQUEST['opt']);
 	}
 }

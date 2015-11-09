@@ -766,13 +766,15 @@ function exportSelection(sDate, crm_id, post, increment, data) {
         exportDialog.modal('hide');
       }, 2000);
     } else {
-      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }).done(function() {
+      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
+        if (res) {
+          exportSelection(sDate, crm_id, true, increment, data);
+        }
+      }).done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
         exportDialog.find('#companyName').text(data.opt[increment].name);
-      }).done(function() {
-        exportSelection(sDate, crm_id, true, increment, data);
       });
       increment++;
     }
