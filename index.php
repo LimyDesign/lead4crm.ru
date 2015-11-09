@@ -481,7 +481,7 @@ function crmPostCompany($crm) {
 	if ($crmid) {
 		print_r($_REQUEST['opt']);
 		// $crmClass = new $crm($crmid);
-		// echo $crmClass->putCompany();
+		// echo $crmClass->putCompany($_REQUEST['opt']);
 	}
 }
 

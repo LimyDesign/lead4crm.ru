@@ -98,9 +98,9 @@ class megaplan extends SdfApi_Request
 	{
 		$opt = array(
 			"Model[TypePerson]" => "company",
-			"Model[CompanyName]" => $coFields['CompanyName'],
-			"Model[Email]" => $coFields['Email'],
-			"Model[Phones]" => $coFields['Phones'],
+			"Model[CompanyName]" => $coFields['name'],
+			"Model[Email]" => $coFields['email'],
+			"Model[Phones]" => $coFields['phone'],
 			// "Model[Phones]" => array("ph_w-7-3952-781089\t", "ph_w-7-3952-401079\t"),
 			"Model[Responsibles]" => $coFields['Responsibles'],
 			// "Model[ActivityType]" => "1000002",
