@@ -771,11 +771,13 @@ function exportSelection(sDate, crm_id, post, increment, data) {
           if (res.status.code == 'error') {
             alert(res.status.message);
             exportDialog.modal('hide');
+          } else if (res.status.code == 'warning') {
+            exportDialog.find('#status').css('color', '#d43f3a').text(' дубликат.');
           } else {
             exportDialog.find('#status').css('color', '#4cae4c').text(' добавлена.');
           }
         } else {
-          exportDialog.find('#status').css('color', '#d43f3a').text(' дубликат.');
+          exportDialog.modal('hide');
         }
       }, 'json').done(function() {
         increment++;
@@ -802,7 +804,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
       { crm_id: crm_id, json: true, addon: true }, 
       function (data) 
     {
-      exportSelection(sDate, crm_id, true, 0, data)
+      exportSelection(sDate, crm_id, true, 0, data);
     }, 'json');
   }
 }

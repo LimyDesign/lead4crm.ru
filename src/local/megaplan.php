@@ -126,7 +126,7 @@ class megaplan extends SdfApi_Request
 			$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
 			return json_encode(array_merge($result, $opt), JSON_UNESCAPED_UNICODE);
 		} else {
-			return false;
+			return json_encode(array('status' => array('code' => 'warning', 'message' => 'Дубликат')), JSON_UNESCAPED_UNICODE);
 		}
 	}
 
