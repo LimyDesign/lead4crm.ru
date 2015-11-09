@@ -1361,7 +1361,7 @@ function fileForceDownload($date, $type, $affix) {
 
 function getFullAddress($json) {
 	if ($json['additional_info']['office'])
-		$fullAddr = array('г.'.$json['city_name'], $json['address'], $json['additional_info']['office']);
+		$fullAddr = array('г. '.$json['city_name'], $json['address'], $json['additional_info']['office']);
 	else
 		$fullAddr = array('г. '.$json['city_name'], $json['address']);
 	return implode(', ', $fullAddr);
