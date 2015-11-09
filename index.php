@@ -479,6 +479,7 @@ function crmPostCompany($crm) {
 	$result = pg_query($query);
 	$crmid = pg_fetch_result($result, 0, 0);
 	if ($crmid) {
+		echo $_REQUEST['opt'];
 		// $crmClass = new $crm($crmid);
 		// echo $crmClass->putCompany();
 	}
