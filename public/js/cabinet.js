@@ -757,11 +757,18 @@ function downloadSelection(sDate, crm_id) {
 
 function exportSelection(sDate, crm_id) {
   var exportDialog = $('#exportDialog');
+
+  exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
+  exportDialog.find('.progress-bar').css('width', '0');
+  exportDialog.find('.progress-bar').text('0%');
+  exportDialog.find('#companyName').text('n/a');
+  
   exportDialog.modal({
     backdrop: false,
     keyboard: false,
     show: true
   });
+
   $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
     var percent = 0, i = 0;
     var q = setInterval(function() {
@@ -770,10 +777,6 @@ function exportSelection(sDate, crm_id) {
         clearInterval(q);
         setTimeout(function() {
           exportDialog.modal('hide');
-          exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
-          exportDialog.find('.progress-bar').css('width', '0');
-          exportDialog.find('.progress-bar').text('0%');
-          exportDialog.find('#companyName').text('n/a');
         }, 2000);
       } else {
         $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[i] }).done(function() {
