@@ -748,40 +748,47 @@ function downloadSelection(sDate, crm_id) {
   }
 }
 
-function exportSelection(sDate, crm_id) {
+function exportSelection(sDate, crm_id, post, increment, data) {
+  post = typeof post !== 'underfined' ? post : false;
+  increment = typeof increment !== 'underfined' ? increment : 0;
+  data = typeof data !== 'underfined' ? data : null;
+  
   var exportDialog = $('#exportDialog');
 
-  exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
-  exportDialog.find('.progress-bar').css('width', '0');
-  exportDialog.find('.progress-bar').text('0%');
-  exportDialog.find('#companyName').text('n/a');
-  
-  exportDialog.modal({
-    backdrop: false,
-    keyboard: false,
-    show: true
-  });
+  if (post) {
+    percent = Math.round((increment + 1) * 100 / data.total);
+    if (percent >= 100) {
+      clearInterval(q);
+      setTimeout(function() {
+        exportDialog.modal('hide');
+      }, 2000);
+    } else {
+      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }).done(function() {
+        exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
+        exportDialog.find('.progress-bar').css('width', percent+'%');
+        exportDialog.find('.progress-bar').text(percent+'%');
+        exportDialog.find('#companyName').text(data.opt[increment].name);
+      }).done(function() {
+        exportSelection(sDate, crm_id, true, increment, data);
+      });
+      increment++;
+    }
+  } else {
+    exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
+    exportDialog.find('.progress-bar').css('width', '0');
+    exportDialog.find('.progress-bar').text('0%');
+    exportDialog.find('#companyName').text('n/a');
+    
+    exportDialog.modal({
+      backdrop: false,
+      keyboard: false,
+      show: true
+    });
 
-  $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
-    var percent = 0, i = 0;
-    var q = setInterval(function() {
-      percent = Math.round((i + 1) * 100 / data.total);
-      if (percent >= 100) {
-        clearInterval(q);
-        setTimeout(function() {
-          exportDialog.modal('hide');
-        }, 2000);
-      } else {
-        $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[i] }).done(function() {
-          exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
-          exportDialog.find('.progress-bar').css('width', percent+'%');
-          exportDialog.find('.progress-bar').text(percent+'%');
-          exportDialog.find('#companyName').text(data.opt[i].name);
-        });
-        i++;
-      }
-    }, 200);
-  }, 'json');
+    $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
+      exportSelection(sDate, crm_id, true, 0, data)
+    }, 'json');
+  }
 }
 
 /* Функция показа диалогов поиска.
