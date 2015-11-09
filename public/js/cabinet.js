@@ -726,7 +726,7 @@ function downloadSelection(sDate, crm_id) {
   if (connected) {
     var exportToCRM = confirm("Начать экспорт в вашу CRM?\n\nЕсли вы хотите скачать файл, то отключитесь от CRM, нажав на соответствующую красную кнопку.");
     if (exportToCRM) {
-      alert('Yo!');
+      exportSelection(sDate, crm_id);
     }
   } else {
     var downloadWindow = window.open('/getSelection/'+sDate+'/?crm_id='+crm_id);
@@ -734,6 +734,18 @@ function downloadSelection(sDate, crm_id) {
       downloadWindow.close();
     }, 10000);
   }
+}
+
+function exportSelection(sDate, crm_id) {
+  var exportDialog = $('#exportDialog');
+  exportDialog.modal({
+    backdrop: false,
+    keyboard: false,
+    show: true
+  });
+  setTimeout(function() {
+    exportDialog.modal('hide');
+  }, 5000);
 }
 
 /* Функция показа диалогов поиска.
