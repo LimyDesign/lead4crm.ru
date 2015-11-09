@@ -766,7 +766,9 @@ function exportSelection(sDate, crm_id, post, increment, data) {
         exportDialog.modal('hide');
       }, 2000);
     } else {
-      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }).done(function() {
+      $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
+        console.log(res);
+      }).done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
