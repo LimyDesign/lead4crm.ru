@@ -756,6 +756,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
   var exportDialog = $('#exportDialog');
 
   if (post) {
+    console.log('Huy!');
     percent = Math.round((increment + 1) * 100 / data.total);
     if (percent >= 100) {
       exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
@@ -794,6 +795,8 @@ function exportSelection(sDate, crm_id, post, increment, data) {
       keyboard: false,
       show: true
     });
+
+    console.log('Yo!');
 
     $.post('/getSelectionArray/'+sDate+'/', 
       { crm_id: crm_id, json: true, addon: true }, 
