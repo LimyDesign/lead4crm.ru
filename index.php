@@ -76,9 +76,9 @@ if ($cmd[0]) {
 			crmConnect($cmd[1]);
 			break;
 
-		case 'addCompany':
+		case 'crmPostCompany':
 			isAuth();
-			addCompany($_REQUEST['ii']);
+			crmPostCompany($cmd[1]);
 			break;
 
 		case 'crmSaveSettings':
@@ -183,8 +183,13 @@ if ($cmd[0]) {
 			break;
 
 		case 'getSelection':
-			isAuth($cmd);
+			isAuth();
 			getSelection($cmd[1], $_REQUEST['crm_id']);
+			break;
+
+		case 'getSelectionArray':
+			isAuth();
+			getSelectionArray($cmd[1], $_REQUEST['crm_id']);
 			break;
 
 		case 'getB24UserData':
@@ -464,7 +469,7 @@ function crmTest($crm) {
 	print_r($test);
 }
 
-function addCompany($crm) {
+function crmPostCompany($crm) {
 	global $conf;
 	require_once __DIR__.'/src/local/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
@@ -1235,6 +1240,18 @@ function getSelection($date, $crm_id) {
 			$xlsw->save($filename);
 		}
 		fileForceDownload($date, $type, $affix);
+	}
+}
+
+function getSelectionArray($date, $crm_id) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select t1.type, t1.name, t1.template from crm_templates as t1 left join crm_versions as t2 on t1.id = t2.templateid where t2.id = ".$crm_id;
+		$result = pg_query($query);
+		$type = pg_fetch_result($result, 0, 'type');
+		$affix = pg_fetch_result($result, 0, 'name');
+		$template = json_decode(pg_fetch_result($result, 0, 'template'), true);
 	}
 }
 
