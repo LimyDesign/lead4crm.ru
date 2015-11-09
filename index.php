@@ -1385,7 +1385,7 @@ function get2GISContact(
 	for ($i = 0; $i < count($json['contacts']); $i++) {
 		foreach ($json['contacts'][$i]['contacts'] as $contact) {
 			if ($contact['type'] == $type) {
-				if ($type == 'phone' || $type == 'fax') {
+				if (($type == 'phone' || $type == 'fax') && $contact['value']) {
 					$contact['value'] = getPhoneConvert($contact['value']);
 				}
 				if ($useAddon && $contact['value']) {
