@@ -176,6 +176,17 @@ $(document).ready(function()
           });
         } else {
           $('.overlay').fadeOut();
+          localStorage.setItem('search_id', searchType);
+          renderSelections(4);
+          $('#wizard-form').find('fieldset').removeAttr('disabled');
+          current_step = 4;
+          $('#wizard-form').attr('action', '/showSearchDialog/');
+          $('#wizard-helper #step-3').fadeOut('fast', function() {
+            $('#wizard-helper #step-4').fadeIn('fast');
+          });
+          $('#wizard-form #step-3').fadeOut('fast', function() {
+            $('#wizard-form #step-4').fadeIn('fast');
+          });
         }
         
       }
