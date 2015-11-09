@@ -116,12 +116,12 @@ class megaplan extends SdfApi_Request
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
 		$result = json_decode($result, true);
-		$opt = array(
+		$opt2 = array(
 			"ContractorId" => $result['data']['Id'],
 			"PayerId" => $result['data']['PayerId'],
 			"Model[Address]" => $coFields['address']
 		);
-		$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt);
+		$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
 		$result2 = json_decode($result, true);
 		return $result2;
 	}
