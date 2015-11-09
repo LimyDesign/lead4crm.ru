@@ -769,6 +769,9 @@ function exportSelection(sDate, crm_id, post, increment, data) {
       $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[increment] }, function (res) {
         if (res) {
           exportSelection(sDate, crm_id, true, increment, data);
+        } else {
+          alert('Ошибка!');
+          exportDialog.modal('hide');
         }
       }, 'json').done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
