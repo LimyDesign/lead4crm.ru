@@ -779,7 +779,6 @@ function exportSelection(sDate, crm_id, post, increment, data) {
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
         exportDialog.find('#companyName').text(data.opt[increment].name);
-        exportSelection(sDate, crm_id, true, increment, data);
       });
       increment++;
     }
