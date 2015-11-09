@@ -768,11 +768,11 @@ function exportSelection(sDate, crm_id) {
       percent = Math.round((i + 1) * 100 / data.total);
       if (percent >= 100) {
         clearInterval(q);
-        exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
-        exportDialog.find('.progress-bar').css('width', '0');
-        exportDialog.find('.progress-bar').text('0%');
-        exportDialog.find('#companyName').text('n/a');
         setTimeout(function() {
+          exportDialog.find('.progress-bar').attr('aria-valuenow', '0');
+          exportDialog.find('.progress-bar').css('width', '0');
+          exportDialog.find('.progress-bar').text('0%');
+          exportDialog.find('#companyName').text('n/a');
           exportDialog.modal('hide');
         }, 2000);
       } else {
