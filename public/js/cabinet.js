@@ -756,7 +756,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
   var exportDialog = $('#exportDialog');
 
   if (post) {
-    percent = Math.round(increment * 100 / data.total);
+    percent = Math.round((increment + 1) * 100 / data.total);
     if (increment  == data.total) {
       setTimeout(function() {
         exportDialog.modal('hide');
