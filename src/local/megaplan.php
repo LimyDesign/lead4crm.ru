@@ -89,6 +89,7 @@ class megaplan extends SdfApi_Request
 		$query = "SELECT \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
 		$result = pg_query($query);
 		$Responsibles = pg_fetch_result($result, 0, 0);
+		
 		pg_free_result($result);
 		pg_close($db);
 		return explode(',', $Responsibles);
@@ -100,18 +101,18 @@ class megaplan extends SdfApi_Request
 			"Model[TypePerson]" => "company",
 			"Model[CompanyName]" => $coFields['name'],
 			"Model[Email]" => $coFields['email'],
-			"Model[Phones]" => $coFields['phone'],
-			// "Model[Phones]" => array("ph_w-7-3952-781089\t", "ph_w-7-3952-401079\t"),
-			"Model[Responsibles]" => $coFields['Responsibles'],
+			"Model[Phones]" => explode(',', $coFields['phone']),
+			"Model[Fax]" => explode(',', $coFields['fax']),
+			"Model[Responsibles]" => $this->Responsibles,
 			// "Model[ActivityType]" => "1000002",
-			"Model[Icq]" => $coFields['Icq'],
-			"Model[Jabber]" => $coFields['Jabber'],
-			"Model[Skype]" => $coFields['Skype'],
-			"Model[Facebook]" => $coFields['Facebook'],
-			"Model[Twitter]" => $coFields['Twitter'],
-			"Model[Site]" => $coFields['Site'],
+			"Model[Icq]" => $coFields['icq'],
+			"Model[Jabber]" => $coFields['jabber'],
+			"Model[Skype]" => $coFields['skype'],
+			"Model[Facebook]" => $coFields['facebook'],
+			"Model[Twitter]" => $coFields['twitter'],
+			"Model[Site]" => $coFields['website'],
 			// "Model[AdvertisingWay]" => "9",
-			"Model[Description]" => $coFields['Description']
+			"Model[Description]" => $coFields['comment']
 		);
 		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
 		return $result;
