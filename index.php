@@ -1320,7 +1320,7 @@ function getSelectionArray($date, $crm_id, $json = false) {
 	$return = array('opt' => $_return, 'total' => count($_return));
 	if ($json) {
 		header('Content-Type: text/json');
-		echo json_encode($return);
+		echo json_encode($return, JSON_UNESCAPED_UNICODE);
 	} else {
 		return $return;
 	}
