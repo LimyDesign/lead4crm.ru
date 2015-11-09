@@ -750,16 +750,21 @@ function exportSelection(sDate, crm_id) {
     keyboard: false,
     show: true
   });
-  for (var i = 1; i <= 100; i++) {
-    exportDialog.find('.progress-bar').delay('1000').attr('aria-valuenow', i);
-    exportDialog.find('.progress-bar').delay('1000').css('width', i+'%');
-    exportDialog.find('.progress-bar').delay('1000').text(i+'%');
-    exportDialog.find('#companyName').delay('1000').text('Фирма №'+i);
-
-  }
-  setTimeout(function() {
-    exportDialog.modal('hide');
-  }, 5000);
+  var i = 0;
+  var t = setInterval(function() {
+    i++;
+    if (i <= 100) {
+      exportDialog.find('.progress-bar').delay('1000').attr('aria-valuenow', i);
+      exportDialog.find('.progress-bar').delay('1000').css('width', i+'%');
+      exportDialog.find('.progress-bar').delay('1000').text(i+'%');
+      exportDialog.find('#companyName').delay('1000').text('Фирма №'+i);
+    } else {
+      clearInterval(t);
+      setTimeout(function() {
+        exportDialog.modal('hide');
+      }, 500);
+    }
+  }, 1000);
 }
 
 /* Функция показа диалогов поиска.
