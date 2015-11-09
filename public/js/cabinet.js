@@ -777,8 +777,8 @@ function exportSelection(sDate, crm_id) {
           exportDialog.find('.progress-bar').css('width', percent+'%');
           exportDialog.find('.progress-bar').text(percent+'%');
           exportDialog.find('#companyName').text(data.opt[i].name);
-          i++;
         });
+        i++;
       }
     }, 200);
   }, 'json');
