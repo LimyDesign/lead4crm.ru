@@ -748,6 +748,7 @@ function exportSelection(sDate, crm_id) {
       exportDialog.find('.progress-bar').attr('aria-valuenow', i);
       exportDialog.find('.progress-bar').css('width', i+'%');
       exportDialog.find('.progress-bar').text(i+'%');
+      exportDialog.find('#companyName').text('Фирма №'+i);
     }, 300);
   }
   setTimeout(function() {
