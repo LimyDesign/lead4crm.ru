@@ -781,7 +781,7 @@ function exportSelection(sDate, crm_id) {
           exportDialog.modal('hide');
         }, 500);
       }
-    }, 100);
+    }, 200);
   }, 'json');
 }
 
