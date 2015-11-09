@@ -767,7 +767,6 @@ function exportSelection(sDate, crm_id, post, increment, data) {
         if (res) {
           if (res.status.code == 'error') {
             alert(res.status.message);
-            exportDialog.modal('hide');
           } else if (res.status.code == 'warning') {
             exportDialog.find('#status').css('color', '#d43f3a').text(' дубликат.');
           } else {
