@@ -97,32 +97,37 @@ class megaplan extends SdfApi_Request
 
 	public function putCompany($coFields)
 	{
-		$opt = array(
-			"Model[TypePerson]" => "company",
-			"Model[CompanyName]" => $coFields['name'],
-			"Model[Email]" => $coFields['email'],
-			"Model[Phones]" => explode(',', $coFields['phone']),
-			"Model[Fax]" => explode(',', $coFields['fax']),
-			"Model[Responsibles]" => $this->Responsibles,
-			// "Model[ActivityType]" => "1000002",
-			"Model[Icq]" => $coFields['icq'],
-			"Model[Jabber]" => $coFields['jabber'],
-			"Model[Skype]" => $coFields['skype'],
-			"Model[Facebook]" => $coFields['facebook'],
-			"Model[Twitter]" => $coFields['twitter'],
-			"Model[Site]" => $coFields['website'],
-			// "Model[AdvertisingWay]" => "9",
-			"Model[Description]" => $coFields['comment']
-		);
-		$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
-		$result = json_decode($result, true);
-		$opt2 = array(
-			"ContractorId" => $result['data']['Id'],
-			"PayerId" => $result['data']['PayerId'],
-			"Model[Address]" => $coFields['address']
-		);
-		$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
-		return $result2;
+		$dubl = $this->getClient($coFields['name']);
+		if (count($dubl['data']['clients']) == 0) {
+			$opt = array(
+				"Model[TypePerson]" => "company",
+				"Model[CompanyName]" => $coFields['name'],
+				"Model[Email]" => $coFields['email'],
+				"Model[Phones]" => explode(',', $coFields['phone']),
+				"Model[Fax]" => explode(',', $coFields['fax']),
+				"Model[Responsibles]" => $this->Responsibles,
+				// "Model[ActivityType]" => "1000002",
+				"Model[Icq]" => $coFields['icq'],
+				"Model[Jabber]" => $coFields['jabber'],
+				"Model[Skype]" => $coFields['skype'],
+				"Model[Facebook]" => $coFields['facebook'],
+				"Model[Twitter]" => $coFields['twitter'],
+				"Model[Site]" => $coFields['website'],
+				// "Model[AdvertisingWay]" => "9",
+				"Model[Description]" => $coFields['comment']
+			);
+			$result = $this->sdf->post('/BumsCrmApiV01/Contractor/save.api', $opt);
+			$result = json_decode($result, true);
+			$opt2 = array(
+				"ContractorId" => $result['data']['Id'],
+				"PayerId" => $result['data']['PayerId'],
+				"Model[Address]" => $coFields['address']
+			);
+			$result2 = $this->sdf->post('/BumsCrmApiV01/Payer/save.api', $opt2);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function putSetting()
