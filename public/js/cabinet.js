@@ -758,7 +758,6 @@ function exportSelection(sDate, crm_id, post, increment, data) {
   if (post) {
     percent = Math.round((increment + 1) * 100 / data.total);
     if (percent >= 100) {
-      clearInterval(q);
       setTimeout(function() {
         exportDialog.modal('hide');
       }, 2000);
