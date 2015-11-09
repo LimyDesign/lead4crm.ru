@@ -758,6 +758,10 @@ function exportSelection(sDate, crm_id, post, increment, data) {
   if (post) {
     percent = Math.round((increment + 1) * 100 / data.total);
     if (percent >= 100) {
+      exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
+      exportDialog.find('.progress-bar').css('width', percent+'%');
+      exportDialog.find('.progress-bar').text(percent+'%');
+      exportDialog.find('#companyName').text(data.opt[increment].name);
       setTimeout(function() {
         exportDialog.modal('hide');
       }, 2000);
