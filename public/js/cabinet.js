@@ -769,7 +769,7 @@ function exportSelection(sDate, crm_id) {
       percent = Math.round((i + 1) * 100 / data.total);
       $.post('/crmPostCompany/'+ii+'/', { opt: data['opt'][i] }, function (res) {
         console.log(res);
-      }, 'json').done(function() {
+      }).done(function() {
         exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
         exportDialog.find('.progress-bar').css('width', percent+'%');
         exportDialog.find('.progress-bar').text(percent+'%');
