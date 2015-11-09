@@ -1388,7 +1388,7 @@ function get2GISContact(
 				if ($type == 'phone' || $type == 'fax') {
 					$contact['value'] = getPhoneConvert($contact['value']);
 				}
-				if ($useAddon) {
+				if ($useAddon && $contact['value']) {
 					if ($prefix && $suffix) {
 						$suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
 						$_r = $prefix.$contact['value'].$suffix;
