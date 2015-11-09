@@ -762,7 +762,7 @@ function exportSelection(sDate, crm_id) {
     keyboard: false,
     show: true
   });
-  $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id }, function (data) {
+  $.post('/getSelectionArray/'+sDate+'/', { crm_id: crm_id, json: true }, function (data) {
     var percent = 0;
     console.log(data);
     for (var i = 0; i < data.total; i++) {
@@ -779,9 +779,7 @@ function exportSelection(sDate, crm_id) {
     setTimeout(function() {
       exportDialog.modal('hide');
     }, 500);
-  }, 'json').fail(function(e) {
-    console.log(e);
-  });
+  }, 'json');
 }
 
 /* Функция показа диалогов поиска.

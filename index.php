@@ -189,7 +189,7 @@ if ($cmd[0]) {
 
 		case 'getSelectionArray':
 			isAuth();
-			getSelectionArray($cmd[1], $_REQUEST['crm_id']);
+			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json']);
 			break;
 
 		case 'getB24UserData':
@@ -1244,7 +1244,7 @@ function getSelection($date, $crm_id) {
 	}
 }
 
-function getSelectionArray($date, $crm_id) {
+function getSelectionArray($date, $crm_id, $json = false) {
 	global $conf;
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
@@ -1317,7 +1317,8 @@ function getSelectionArray($date, $crm_id) {
 			$_return[] = $_compnay;
 		}
 	}
-	return array('opt' => $_return, 'total' => count($_return));
+	$return = array('opt' => $_return, 'total' => count($_return));
+	return $json ? json_encode($return) : $return;
 }
 
 function fileForceDownload($date, $type, $affix) {
