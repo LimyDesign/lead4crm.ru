@@ -770,7 +770,7 @@ function exportSelection(sDate, crm_id) {
         clearInterval(q);
         setTimeout(function() {
           exportDialog.modal('hide');
-        }, 500);
+        }, 2000);
       } else {
         $.post('/crmPostCompany/'+ii+'/', { opt: data.opt[i] }).done(function() {
           exportDialog.find('.progress-bar').attr('aria-valuenow', percent);
