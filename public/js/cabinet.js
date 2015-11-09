@@ -304,13 +304,6 @@ $(document).ready(function()
     modal.find('input[type="text"]').focus();
   });
 
-  $('#exportDialog').on('hidden.bs.modal', function() {
-    $('#exportDialog').find('.progress-bar').attr('aria-valuenow', '0');
-    $('#exportDialog').find('.progress-bar').css('width', '0');
-    $('#exportDialog').find('.progress-bar').text('0%');
-    $('#exportDialog').find('#companyName').text('n/a');
-  })
-
   /* Выделяем ключ доступа, чтобы после авторизации и по клику по нему можно было бы сразу
      копировать ключ полностью и без погрешности ошибки при выделении пользователем
      самостоятельно.
