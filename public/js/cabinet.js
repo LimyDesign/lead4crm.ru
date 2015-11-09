@@ -743,6 +743,13 @@ function exportSelection(sDate, crm_id) {
     keyboard: false,
     show: true
   });
+  for (var i = 1; i <= 100; i++) {
+    setTimeout(function() {
+      exportDialog.find('.progress-bar').attr('aria-valuenow', i);
+      exportDialog.find('.progress-bar').css('width', i+'%');
+      exportDialog.find('.progress-bar').text(i+'%');
+    }, 300);
+  }
   setTimeout(function() {
     exportDialog.modal('hide');
   }, 5000);
