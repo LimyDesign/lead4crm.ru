@@ -1,0 +1,16 @@
+{
+	"widget": {
+		"name": "Lead generator",
+		"description": "This widget allows you to import data from the 2GIS directory by specified criteria. Form the basis of cool customers in the most minimal time.",
+		"short_description": "Import campaigns from the 2GIS directory"
+	},
+	"settings": {
+		"api_key": "API Key"
+	},
+	"userLang": {
+		"errors": {
+			"connection": "Error connecting to <a href=\"https://www.lead4crm.ru\" target=\"_blank\">www.lead4crm.ru</a> server. Unable to retrieve user data. Refresh the page.",
+			"empty_qty": "You do not have any requests. For correct operation of the widget, replenish balance on the website <a href=\"https://www.lead4crm.ru/cabinet/\" target=\"_blank\">www.lead4crm.ru</a>."
+		}
+	}
+}

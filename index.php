@@ -2285,12 +2285,14 @@ function isAuth($cmd) {
 	if (!$_SESSION['userid']) {
 		global $twig;
 		$cmd = implode('/', $cmd);
+		$browser = get_browser(null, true);
 		$options = array(
-			'title' => '403 Доступ запрещен',
-			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/');
+			'title' => '401 Требуется авторизация',
+			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/',
+			'browser' => $browser);
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-		header('HTTP/1.0 403 Forbidden');
-		echo $twig->render('403.twig', $options);
+		header('HTTP/1.0 401 Unauthorized');
+		echo $twig->render('401.twig', $options);
 		exit(3);
 	}
 }
