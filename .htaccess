@@ -1,5 +1,7 @@
 Header set Access-Control-Allow-Origin "*"
 
+php_value browscap browscap.ini
+
 Options +FollowSymLinks
 RewriteEngine On
 
