@@ -68,6 +68,43 @@ $(document).ready(function()
   });
 
 
+  /* Анимация SVG лоадера
+  ========================================================================================= */
+  var svg_loader = $('#loader');
+  TweenMax.set(['svg'], {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    xPercent: -50,
+    yPercent: -50
+  });
+  TweenMax.set([svg_loader], {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    xPercent: -50,
+    yPercent: -50
+  });
+  var tl = new TimelineMax({
+    repeat: -1
+  });
+  tl.set('#outline', {
+    drawSVG: '0% 0%'
+  })
+  .to('#outline', 0.2, {
+    drawSVG: '11% 25%',
+    ease: Linear.easeNone
+  })
+  .to('#outline', 0.5, {
+    drawSVG: '35% 70%',
+    ease: Linear.easeNone
+  })
+  .to('#outline', 0.9, {
+    drawSVG: '99% 100%',
+    ease: Linear.easeNone
+  });
+
+
   /* Мастер экспорта данных из 2ГИС
   ========================================================================================= */
   var current_step = 1;
