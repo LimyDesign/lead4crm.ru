@@ -49,10 +49,6 @@ $cmd = array_values($requestURI);
 
 if ($cmd[0]) {
 	switch ($cmd[0]) {
-		case 'test':
-			isAuth_dev();
-			break;
-
 		case 'logout':
 			logout();
 			break;
@@ -2289,22 +2285,6 @@ function isAuth($cmd) {
 	if (!$_SESSION['userid']) {
 		global $twig;
 		ini_set('browscap', __DIR__.'/browscap.ini');
-		$cmd = implode('/', $cmd);
-		$browser = get_browser(null, true);
-		$options = array(
-			'title' => '401 Требуется авторизация',
-			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/',
-			'browser' => $_SERVER['HTTP_USER_AGENT']);
-		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
-		header('HTTP/1.0 401 Unauthorized');
-		echo $twig->render('401.twig', $options);
-		exit(3);
-	}
-}
-
-function isAuth_dev() {
-	if (!$_SESSION['userid']) {
-		global $twig;
 		$cmd = implode('/', $cmd);
 		$browser = get_browser(null, true);
 		$options = array(
