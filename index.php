@@ -2285,7 +2285,7 @@ function isAuth($cmd) {
 	if (!$_SESSION['userid']) {
 		global $twig;
 		$cmd = implode('/', $cmd);
-		$browser = get_browser(null, true);
+		$browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
 		$options = array(
 			'title' => '401 Требуется авторизация',
 			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/',
