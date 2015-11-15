@@ -2286,11 +2286,11 @@ function isAuth($cmd) {
 		global $twig;
 		ini_set('browscap', __DIR__.'/browscap.ini');
 		$cmd = implode('/', $cmd);
-		$browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
+		$browser = get_browser(null, true);
 		$options = array(
 			'title' => '401 Требуется авторизация',
 			'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd . '/',
-			'browser' => $browser);
+			'browser' => $_SERVER['HTTP_USER_AGENT']);
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		header('HTTP/1.0 401 Unauthorized');
 		echo $twig->render('401.twig', $options);
