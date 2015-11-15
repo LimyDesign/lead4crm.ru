@@ -2277,13 +2277,14 @@ function isAdmin($cmd) {
 		$options = array_merge($options, arrayOAuthLoginURL(), arrayMenuUrl());
 		header('HTTP/1.0 403 Forbidden');
 		echo $twig->render('403.twig', $options);
-		exit(3);
+		exit(5);
 	}
 }
 
 function isAuth($cmd) {
 	if (!$_SESSION['userid']) {
 		global $twig;
+		ini_set('browscap', __DIR__.'/browscap.ini');
 		$cmd = implode('/', $cmd);
 		$browser = get_browser($_SERVER['HTTP_USER_AGENT'], true);
 		$options = array(
