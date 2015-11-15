@@ -1,0 +1,302 @@
+{% if (notify_danger) %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-danger">
+        Для корректной работы сервиса нотификаций, необходимо перелогиниться. Для этого нажмите на кнопку «Выход» и снова войдите.
+      </div>
+    </div>
+  </div>
+{% endif %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-info"><strong>Помните!</strong> Чем больше нотификаторов одновременно работающих вы настроите, тем дольше будет происходить процесс импорта компаний, поэтому, рекомендуется использовать один из перечисленных, однако, можно настроить и все подряд.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p class="text-center"><img class="img-responsive" src="https://telegram.org/img/t_logo.png" alt=""></p>
+  </div>
+  <div class="col-md-9">
+    <h3>Telegram</h3>
+    <p>Приятная новость для тех, кто хочет везде и во всем контролировать различные действия. Не смотря на то, что наш сервис предусматривает авторизацию только по персональным социальным аккаунтам, которыми навряд ли кто-либо будет делиться, тем не менее мы посчитали нужным включить уведомления об изменении баланса, об импорте компаний, а также отправлять предупреждения об очередном будущем списании средств в счет продления тарифного плана.</p>
+    <p>Пока уведомления поступают только в мессенджер Телеграм</p>
+    <p>Запустить очень просто:</p>
+    <ol>
+      <li>Установите <a href="https://telegram.org" target="_blank">Telegram</a>.</li>
+      <li>Подключите бота <a href="https://telegram.me/lead4crmbot" target="_blank">@lead4crmbot</a></li>
+      <li>Введите команду: <code id="tlgrm_step1" onclick="selectText('tlgrm_step1')">/start {{apikey}}</code></li>
+      <li>Введите команду: <code id="tlgrm_step2" onclick="selectText('tlgrm_step2')">/notify company on</code></li>
+      <li>Введите команду: <code id="tlgrm_step3" onclick="selectText('tlgrm_step3')">/notify renewal on</code></li>
+      <li>Введите команду: <code id="tlgrm_step4" onclick="selectText('tlgrm_step4')">/notify balans on</code></li>
+      <li>Готово!</li>
+    </ol>
+    <div class="alert alert-warning">
+      <h4>Для групповых чатов:</h4>
+      <p><strong>Внимание!</strong> Если вы хотите чтобы уведомления поступали в групповой чат, необходимо после добавления бота в групповой чат снова выполнить команду: <code id="tlgrm_start" onclick="selectText('tlgrm_start')">/start {{apikey}}</code>. Больше никаких команд выполнять не нужно, если ранее вы все настроили.</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p class="text-center"><img src="/public/images/icons-bundle-icq.png" alt="" class="img-responsive"></p>
+  </div>
+  <div class="col-md-9">
+    <h3>ICQ</h3>
+    <p>Для тех, кто еще в полной мере пользуется ICQ, как основным месенджером, мы реализовали поддержку уведомлений в вашу любимую ICQ. Для того, чтобы настроить нотификации достаточно указать нужный ICQ UIN в форме ниже, а также отметить тип уведомлений, которые хотите получать.</p>
+    <div class="alert alert-warning"><strong>Внимание!</strong> Если у вас стоит АнтиСПАМ фильтр с вопросом на который необходимо ответить или стоит опция получения сообщений только от авторизованных пользователей, то для правильной работы ICQ нотификатора, необходимо добавить его с вой список контактов.</div>
+    <p>
+      <strong>ICQ UIN нотификатора:</strong>
+    </p>
+    <div class="well" id="icq_bot_uin" onclick=selectText("icq_bot_uin")>658127246</div>
+    <p>Добавьте данный UIN с вой список контактов, тогда вы точно сможете настроить нотификатор и у вас не возникнет проблем с получением уведомлений в свою ICQ.</p>
+    <h4>Настройка ICQ нотификатора</h4>
+    <div class="alert alert-success hide" id="statusICQSetting">
+      <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+    </div>
+    <form id="formICQSetting" class="form-horizontal">
+      <fieldset>
+        <div class="form-group input-group-lg" id="groupICQUIN">
+          <label for="inputICQUIN" class="col-sm-2 control-label">ICQ UIN:</label>
+          <div class="col-sm-10">
+            <input type="text" name="uin" class="form-control" id="inputICQUIN" placeholder="881129" value="{{icq.uin}}" aria-describedby="helpICQUIN">
+            <span id="helpICQUIN" class="help-block">Введите ваш или любой другой ICQ UIN на который вы хотите получать уведомления, но при первой настройке его необходимо будет подтвердить.</span>
+          </div>
+        </div>
+        <div class="form-group input-group-lg" id="groupICQNotify">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpICQNotifyCompany" {% if (icq.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+              <span id="helpICQNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpICQNotifyBalans" {% if (icq.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+              <span id="helpICQNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpICQNotifyRenewal" {% if (icq.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+              <span id="helpICQNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа. <mark>Уведомление поступает единожды за 1 неделю до продления текущего тарифа.</mark></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group input-group-lg hide" id="groupICQCode">
+          <label for="inputICQCode" class="col-sm-2 control-label">Код:</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="text" name="code" class="form-control" id="inputICQCode" aria-describedby="helpICQCode">
+              <span class="input-group-btn"><button type="button" id="resendICQCode" class="btn btn-default" disabled>Отправить повторно</button></span>
+            </div>
+            <span id="helpICQCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный UIN. Помните, если у вас стоит настройка необходимости авторизации пользователя перед получением от него сообщений, то вам необходимо заранее добавить UIN (<mark>658127246</mark>) нашего ICQ информатора в список контактов.</span>
+          </div>
+        </div>
+        <div class="form-group input-group-lg">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p class="text-center"><img src="/public/images/icons-bundle-whatsapp.png" alt="" class="img-responsive"></p>
+  </div>
+  <div class="col-md-9">
+    <h3>WhatsApp</h3>
+    <p>Пожалуй, один из самых популярных месенджеров на сегодняшний день. Не можем оставить без внимания тех пользователей, которые активно пользуются WhatsApp в личном общении и в бизнесе в том числе. Пока мы реализуем поддержку данного приложения, но очень скоро мы и вас обрадуем, а тем временем вы можете воспользоваться двумя предыдущими приложениями для получения уведомлений.</p>
+    {% if admin %}
+      <h4>Настройка WhatsApp нотификатора</h4>
+      <form id="formWASetting" class="form-horizontal">
+        <fieldset>
+          <div class="form-group input-group-lg" id="groupWAPhone">
+            <label for="inputWAPhone" class="col-sm-2 control-label">Телефон:</label>
+            <div class="col-sm-10">
+              <input type="text" name="phone" value="{{wa.phone}}" class="form-control" id="inputWAPhone" placeholder="+7 (914) 926-96-17" aria-describedby="helpWAPhone">
+              <span id="helpWAPhone" class="help-block">Введите номер, который используется в приложении WhatsApp. Именно на этот номер будут в дальнейшем отправляться подключенные уведомления, а также код авторизации при первом подключении.</span>
+            </div>
+          </div>
+          <div class="form-group input-group-lg" id="groupWANotify">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpWANotifyCompany" {% if (wa.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+              <span id="helpWANotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 сообщений.</span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpWANotifyBalans" {% if (wa.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+              <span id="helpWANotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету.</span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpWANotifyRenewal" {% if (wa.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+              <span id="helpWANotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа. <mark>Уведомление поступает единожды за 1 неделю до продления текущего тарифа.</mark></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group input-group-lg hide" id="groupWACode">
+          <label for="inputWACode" class="col-sm-2 control-label">Код:</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="text" name="code" class="form-control" id="inputWACode" aria-describedby="helpWACode">
+              <span class="input-group-btn"><button type="button" id="resendWACode" class="btn btn-default" disabled>Отправить повторно</button></span>
+            </div>
+            <span id="helpWACode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный номер телефона. Сообщение должно прийти с номера <a href="/vcard/">+7 (914) 926-96-17</a>.</span>
+          </div>
+        </div>
+        <div class="form-group input-group-lg">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+        </fieldset>
+      </form>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p class="text-center" style="font-size:200px;"><i class="fa fa-mobile"></i></p>
+  </div>
+  <div class="col-md-9">
+    <h3>SMS</h3>
+    <p class="lead">Хотите получать смс уведомления, тогда нужно ввести свой номер мобильного телефона. Однако в отличие от других способов уведомления, данный способ дополнительно оплачиваться. Оплата производиться с вашего лицевого счета.</p>
+    <div class="alert alert-danger">Сервис временно недоступен в связи с некорректной работой SMS оператора.</div>
+    {% if admin %}
+      <h4>Настройка SMS нотификатора</h4>
+      <form id="formSMSSetting" class="form-horizontal">
+        <div class="alert alert-success hide" id="statusSMSSetting">
+          <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+        </div>
+        <div class="alert alert-danger hide" id="alertSMSService">Сервис временно не доступен. При необходимости активации сервиса обращайтесь в службу поддержки.</div>
+        <div class="alert alert-danger hide" id="alertSMSUser">
+          <p>Сервис для вашего аккаунта не доступен. Пополните баланс и попробуйте снова.</p>
+          <a href="#." class="btn btn-danger" id="refreshSMSUser">Обновить данные</a>
+        </div>
+        <fieldset>
+          <div class="form-group input-group-lg" id="groupSMSPhone">
+            <label for="inputSMSPhone" class="col-sm-2 control-label">Телефон:</label>
+            <div class="col-sm-10">
+              <input type="text" name="phone" value="{{sms.phone}}" class="form-control" id="inputSMSPhone" placeholder="+7 (914) 926-96-17" aria-describedby="helpSMSPhone">
+              <span id="helpSMSPhone" class="help-block">Введите номер, на который вы хотите получать SMS уведомления. При первой настройке или при смене номера вам придет код подтверждения. Номер может быть в любом произвольном формате.<br><br><mark>Стоимость подтверждения номера: <strong id="sms_price">0.00</strong> руб.</mark></span>
+            </div>
+          </div>
+          <div class="form-group input-group-lg" id="groupSMSNotify">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="company" aria-describedby="helpSMSNotifyCompany" {% if (sms.company) %}checked{% endif %}> Уведомлять об импорте компаний.</label>
+              <span id="helpSMSNotifyCompany" class="help-block">Внимание! Уведомление поступает при каждом импорте компаний, поэтому даже при 50 одновременно добавляемых компаний вы получите 50 SMS сообщений.<br><br><mark>Не рекомендуется подключать в связи с возможными большими дополнительными расходами.</mark></span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="balans" aria-describedby="helpSMSNotifyBalans" {% if (sms.balans) %}checked{% endif %}> Уведомлять об изменении баланса.</label>
+              <span id="helpSMSNotifyBalans" class="help-block">Уведомления будут приходить при уменьшении или увеличении баланса. Вы всегда будете в курсе суммы списания или зачисления, но информатор не отправляет оставшуюся сумма на лицевом счету. <br><br><mark>Возможны большие накладные расходы в случае, когда происходит импорт компаний свыше установленных тарифом карточек компаний.</mark></span>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpSMSNotifyRenewal" {% if (sms.renewal) %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+              <span id="helpSMSNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа. <br><br><mark>Уведомление поступает единожды за 1 неделю до продления текущего тарифа.</mark></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group input-group-lg hide" id="groupSMSCode">
+          <label for="inputSMSCode" class="col-sm-2 control-label">Код:</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+              <input type="text" name="code" class="form-control" id="inputSMSCode" aria-describedby="helpSMSCode">
+              <span class="input-group-btn"><button type="button" id="resendSMSCode" class="btn btn-default" disabled>Отправить повторно</button></span>
+            </div>
+            <span id="helpSMSCode" class="help-block">Введите код подтверждения, который вы должны были получить на ранее указанный номер телефона. Сообщение должно прийти с номера <a href="/vcard/">Lead4CRM</a>.</span>
+          </div>
+        </div>
+        <div class="form-group input-group-lg">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+        </fieldset>
+      </form>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p style="font-size: 200px;"><i class="fa fa-at"></i></p>
+  </div>
+  <div class="col-md-9">
+    <h3>Электронная почта</h3>
+    <p>По электронной почте можно включить только одно уведомление — это уведомление о предстоящем продлении тарифного плана, но в отличие от месенджеров такие уведомления будут поступать каждый день в течении 1 недели до даты продления тарифа, поэтому рекомендуется включать его, чтобы ненароком не пропустить момент Х, когда вы можете оказаться на тарифе «Демо», что может негативно отразиться на вашем расходе.</p>
+    <form id="formEmailSetings" class="form-horizontal">
+      <div class="alert alert-success hide" id="statusEmailSetting">
+        <i class="glyphicon glyphicon-ok"></i> Ваши изменения сохранены.
+      </div>
+      <div class="alert alert-info hide" id="statusEmailCode">
+        <i class="glyphicon glyphicon-ok"></i> На указанный адрес электронной почты отправлена ссылка для подтверждения. Перейдите по ней, чтобы изменить электропочту. Сообщение может доставляться до 10 минут в зависимости от загруженности нашего сервера. Также в клинических случаях письмо может попасть в спам, однако, все письма с нашего сервиса подписаны и следовательно не могут быть расценены как спам при нормальной настройке.
+      </div>
+      <fieldset>
+        <div class="form-group input-group-lg" id="groupEmailAddress">
+          <label for="inputEmailAddress" class="col-sm-2 control-label">E-mail:</label>
+          <div class="col-sm-10">
+            <input type="text" name="email" value="{{email.address}}" class="form-control" id="inputEmailAddress" placeholder="vasya@pupkov.org" aria-describedby="helpEmailAddress">
+            <span id="helpEmailAddress" class="help-block">По умолчанию система берет именно тот электронный адрес, который был передан тем социальных сервисом, через который вы вошли в личный кабинет. Но вы его можете сменить, указав любой другой адрес. Иногда здесь может не быть вашего адреса, это происходит либо из-за того, что вы не разрешили нашему сервису получить ваш электронный адрес при первой авторизации (регистрации), либо вы вовсе не указали в социальном сервисе свой электронный адрес.</span>
+          </div>
+        </div>
+        <div class="form-group input-group-lg" id="groupEmailNotify">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label><input type="checkbox" name="notify[]" value="renewal" aria-describedby="helpEmailNotifyRenewal" {% if email.renewal %}checked{% endif %}> Уведомлять о предстоящем продлении тарифного плана.</label>
+              <span id="helpEmailNotifyRenewal" class="help-block">На всех тарифах кроме "Демо" действует система ежемесячного списания средств с лицевого счета для продления тарифа. Для того, чтобы не забыть предварительно пополнить баланс, рекомендуем включить данную опцию, иначе вы можете пропустить дату продления о оказаться на тарифе "Демо", где стоимость каждой компании значительно больше любого платного тарифа. <br><br><mark>Уведомление поступает ежедневно в течении 1 недели до продления текущего тарифа.</mark></span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group input-group-lg">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button class="btn btn-primary">Сохранить</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <hr>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <p class="text-center"><img src="/public/images/qrcode.png" class="img-responsive"></p>
+  </div>
+  <div class="col-md-9">
+    <h3>Визитная карточка</h3>
+    <p class="lead">Для упрощения взаимодействия с нашим сервисом мы рекомендуем воспользоваться нашей визитной карточной — это позволит:</p>
+    <ul>
+      <li>Понять кто вам позвонил или кто отправил сообщение.</li>
+      <li>С легкостью писать письма из ваших почтовых программ, т.к. в вашей адресной книге уже будут все наши электронные адреса.</li>
+      <li>Знать о всех возможных месенджерах нашего сервиса.</li>
+      <li>И, вообще, все это безумно удобно!</li>
+    </ul>
+    <p>Сканируйте QR-код прямо со страницы и открывайте каточку в любой удобной адресной программе.</p>
+    <p>Также вы можете скачать визитку по данному адресу: <a href="https://www.lead4crm.ru/vcard/">https://www.lead4crm.ru/vcard/</a></p>
+  </div>
+</div>
