@@ -52,7 +52,7 @@ if ($cmd[0]) {
 		case 'test':
 			isAuth_dev();
 			break;
-			
+
 		case 'logout':
 			logout();
 			break;
@@ -2305,8 +2305,10 @@ function isAuth($cmd) {
 function isAuth_dev() {
 	if (!$_SESSION['userid']) {
 		global $twig;
-		ini_set('browscap', __DIR__.'/browscap.ini');
-		echo ini_get('browscap');
+		if (ini_set('browscap', __DIR__.'/browscap.ini') !== false)
+			echo ini_get('browscap');
+		else
+			echo 'Хуй!';
 		die();
 		$cmd = implode('/', $cmd);
 		$browser = get_browser(null, true);
