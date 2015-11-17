@@ -221,7 +221,6 @@ $(document).ready(function()
   $('#searchDialog-0 form').submit(function(event) {
     event.preventDefault();
     var search_text = $(this).find('#searchInput').val();
-    var city_id = localStorage.getItem('city_id');
     if (search_text != search_text_prev && search_text != '') {
       search_text_prev = search_text;
       renderPage(1, search_text);
@@ -352,7 +351,7 @@ $(document).ready(function()
      введет требуемую минимальную сумму. Остальные ограничения по суммам смотрит сама
      платежная система.
   ========================================================================================= */
-  $('#yaform').submit(function(event) {
+  $('#yaform').submit(function() {
     $('#inputSum').number(true, 2, '.', '');
     if ($('#inputSum').val() >= 100) {
       return true;
@@ -756,7 +755,7 @@ function exportSelection(sDate, crm_id, post, increment, data) {
   var exportDialog = $('#exportDialog');
 
   if (post) {
-    percent = Math.round((increment + 1) * 100 / data.total);
+    var percent = Math.round((increment + 1) * 100 / data.total);
     if (increment  == data.total) {
       setTimeout(function() {
         exportDialog.modal('hide');
@@ -883,7 +882,7 @@ function renderPage(pageNum, search_text, callback) {
 
   var requestURL = '',
       type = localStorage.getItem('search_id');
-      companyList = {};
+      companyList;
 
   $.post('/getUserCache/', function (data) {
     companyList = data;
@@ -1087,7 +1086,7 @@ function sendSMSCode(phone, callback) {
 function getSMSInfo(phone, callback) {
   var result = false;
   $.post('/sms/getInfo/', { phone: phone }, function (data) {
-    cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
+    var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
     if (data.agregator.limit.limit == data.agregator.limit.current || 
         data.agregator.balance.balance <= 0
     ) {
