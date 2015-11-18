@@ -2032,7 +2032,8 @@ function sendSMS($cmd, $phone, $msg = '') {
 				'balance' => $sms_balance,
 				'limit' => $sms_limit,
 				'sernders' => $sms_senders,
-				'cost' => round($sms_cost + ($sms_cost * 0.4), 2)
+				// 'cost' => round($sms_cost + ($sms_cost * 0.4), 2)
+				'cost' => $sms_cost
 			);
 			$msg['balance'] = $uData['balans'];
 			$msg['command'] = $cmd;
