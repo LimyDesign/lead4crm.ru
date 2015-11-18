@@ -1087,7 +1087,7 @@ function sendSMSCode(phone, callback) {
 function getSMSInfo(phone, callback) {
   var result = false;
   $.post('/sms/getInfo/', { phone: phone }, function (data) {
-    var cost = data.agregator.cost.price;
+    cost = data.agregator.cost.price;
     if (data.agregator.limit.limit == data.agregator.limit.current || 
         data.agregator.balance.balance <= 0
     ) {
