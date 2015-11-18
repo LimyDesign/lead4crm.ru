@@ -531,17 +531,16 @@ $(document).ready(function()
             cost = cost.toFixed(2);
             var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
             if (isSendSMS) {
-              sendSMSCode(phone, function() {
-                $('#resendSMSCode').attr('onclick', 'sendSMSCode('+phone+')');
-                if ($('#groupSMSPhone').hasClass('has-error')) {
-                  $('#groupSMSPhone').removeClass('has-error');
-                }
-                $('#groupSMSPhone').addClass('has-success');
-                $('#groupSMSCode').removeClass('hide');
-                scrollTo('#inputSMSCode');
-                $fieldset.removeAttr('disabled');
-                $('#inputSMSCode').focus();
-              });
+              sendSMSCode(phone);
+              $('#resendSMSCode').attr('onclick', 'sendSMSCode('+phone+')');
+              if ($('#groupSMSPhone').hasClass('has-error')) {
+                $('#groupSMSPhone').removeClass('has-error');
+              }
+              $('#groupSMSPhone').addClass('has-success');
+              $('#groupSMSCode').removeClass('hide');
+              scrollTo('#inputSMSCode');
+              $fieldset.removeAttr('disabled');
+              $('#inputSMSCode').focus();
             } else {
               $fieldset.removeAttr('disabled');
               return;
