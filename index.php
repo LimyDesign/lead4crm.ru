@@ -1940,7 +1940,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$smsMsg->from = 'Lead4CRM';
 			$smsMsg->partner_id = 132872;
 			$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, $msg));
-			$sms_cost = round($sms_cost['price'] + ($sms_cost['price'] * 0.4), 2);
+			$sms_cost = round($sms_cost->price + ($sms_cost->price * 0.4), 2);
 			if ($uData['balans'] >= $sms_cost) {
 				$msg['response'] = $sms->smsSend($msg);
 				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$sms_cost}, 'SMS уведомление от Lead4CRM')";
@@ -1998,7 +1998,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$smsMsg->from = 'Lead4CRM';
 				$smsMsg->partner_id = 132872;
 				$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, $smsTxt));
-				$sms_cost = round($sms_cost['price'] + ($sms_cost['price'] * 0.4), 2);
+				$sms_cost = round($sms_cost->price + ($sms_cost->price * 0.4), 2);
 				if ($uData['balans'] >= $sms_cost) {
 					$msg['response'] = $sms->smsSend($smsMsg);
 
