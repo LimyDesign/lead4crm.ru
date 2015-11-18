@@ -528,7 +528,7 @@ $(document).ready(function()
           return;
         } else {
           if (phone != getParamByName('sms') && code == '') {
-            // cost = cost.toFixed(2);
+            cost = cost.toFixed(2);
             var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
             if (isSendSMS) {
               sendSMSCode(phone, function() {
@@ -1087,7 +1087,7 @@ function sendSMSCode(phone, callback) {
 function getSMSInfo(phone, callback) {
   var result = false;
   $.post('/sms/getInfo/', { phone: phone }, function (data) {
-    cost = data.agregator.cost.price;
+    cost = data.agregator.cost;
     if (data.agregator.limit.limit == data.agregator.limit.current || 
         data.agregator.balance.balance <= 0
     ) {
