@@ -2027,6 +2027,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$sms_limit = $sms->myLimit();
 			$sms_senders = $sms->mySenders();
 			$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, 'Код подтверждения: 000-000'));
+			$sms_cost = round($sms_cost['price'] + ($sms_cost['price'] * 0.4), 2);
 			$_SESSION['sms_cost'] = $sms_cost;
 			$msg['agregator'] = array(
 				'balance' => $sms_balance,
