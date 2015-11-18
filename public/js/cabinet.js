@@ -528,7 +528,7 @@ $(document).ready(function()
           return;
         } else {
           if (phone != getParamByName('sms') && code == '') {
-            cost = cost.toFixed(2);
+            // cost = cost.toFixed(2);
             var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
             if (isSendSMS) {
               sendSMSCode(phone, function() {
