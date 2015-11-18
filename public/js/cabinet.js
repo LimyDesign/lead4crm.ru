@@ -531,16 +531,17 @@ $(document).ready(function()
             cost = cost.toFixed(2);
             var isSendSMS = confirm('Стоимость подтверждения номера будет составлять: '+cost+" руб.\nВы согласны?");
             if (isSendSMS) {
-              sendSMSCode(phone);
-              $('#resendSMSCode').attr('onclick', 'sendSMSCode('+phone+')');
-              if ($('#groupSMSPhone').hasClass('has-error')) {
-                $('#groupSMSPhone').removeClass('has-error');
-              }
-              $('#groupSMSPhone').addClass('has-success');
-              $('#groupSMSCode').removeClass('hide');
-              scrollTo('#inputSMSCode');
-              $fieldset.removeAttr('disabled');
-              $('#inputSMSCode').focus();
+              sendSMSCode(phone, function() {
+                $('#resendSMSCode').attr('onclick', 'sendSMSCode('+phone+')');
+                if ($('#groupSMSPhone').hasClass('has-error')) {
+                  $('#groupSMSPhone').removeClass('has-error');
+                }
+                $('#groupSMSPhone').addClass('has-success');
+                $('#groupSMSCode').removeClass('hide');
+                scrollTo('#inputSMSCode');
+                $fieldset.removeAttr('disabled');
+                $('#inputSMSCode').focus();
+              });
             } else {
               $fieldset.removeAttr('disabled');
               return;
@@ -1067,7 +1068,7 @@ function sendSMSCode(phone, callback) {
             clearInterval(isSMSDone);
             $('#resendSMSCode').removeAttr('disabled');
             if (status.response.code == 103) {
-              var cuBalance = $('#balans').text().replace(/\s/g, '') - sms_cost.toFixed(2);
+              var cuBalance = $('#balans').text().replace(/\s/g, '') - status.response.cost.toFixed(2);
               $('#balans').number(cuBalance, 2, '.', ' ');
             }
           }
@@ -1086,7 +1087,7 @@ function sendSMSCode(phone, callback) {
 function getSMSInfo(phone, callback) {
   var result = false;
   $.post('/sms/getInfo/', { phone: phone }, function (data) {
-    var cost = data.agregator.cost.price + (data.agregator.cost.price * 0.4);
+    var cost = data.agregator.cost.price;
     if (data.agregator.limit.limit == data.agregator.limit.current || 
         data.agregator.balance.balance <= 0
     ) {

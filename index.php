@@ -151,11 +151,6 @@ if ($cmd[0]) {
 			echo sendSMS($cmd[1], $_REQUEST['phone']);
 			break;
 
-		case 'forsmsru':
-			header('Content-Type: text/plain');
-			sendSMS($cmd[1], $_REQUEST['phone']);
-			break;
-
 		case 'email':
 			isAuth();
 			header('Content-Type: text/json');
@@ -1930,15 +1925,37 @@ function sendSMS($cmd, $phone, $msg = '') {
 			$smsMsg->partner_id = 132872;
 			if ($uData['balans'] >= $_SESSION['sms_cost']) {
 				$msg['response'] = $sms->smsSend($smsMsg);
+				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$_SESSION['sms_cost']}, 'Код авторизации для Lead4CRM')";
+				pg_query($query);
 			}
 			break;
 
 		case 'getStatus':
-			$msg['response'] = $sms->smsStatus($phone);
-			if ($msg['response']['code'] == 103) {
-				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$_SESSION['sms_cost']}, 'Код авторизации для Lead4CRM')";
+			$sms['response'] = $sms->smsStatus($phone);
+			$sms['response']['cost'] = $_SESSION['sms_cost'];
+			break;
+
+		case 'sendMessage':
+			$smsMsg = new \Zelenin\SmsRu\Entity\Sms($phone, $msg);
+			$smsMsg->from = 'Lead4CRM';
+			$smsMsg->partner_id = 132872;
+			$sms_cost = $sms->smsCost(new \Zelenin\SmsRu\Entity\Sms($phone, $msg));
+			$sms_cost = round($sms_cost + ($sms_cost * 0.4), 2);
+			if ($uData['balans'] >= $sms_cost) {
+				$msg['response'] = $sms->smsSend($msg);
+				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$sms_cost}, 'SMS уведомление от Lead4CRM')";
 				pg_query($query);
+				pg_close($db);
+				$msg['response']['error'] = '0';
+				$msg['response']['cost'] = $sms_cost;
+			} else {
+				$msg['response']['error'] = '200';
 			}
+			break;
+
+		case 'getStatus':
+			$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$_SESSION['sms_cost']}, 'Код авторизации для Lead4CRM')";
+			pg_query($query);
 			break;
 
 		case 'save':
@@ -1988,17 +2005,12 @@ function sendSMS($cmd, $phone, $msg = '') {
 					foreach ($noties as $notify_key => $notify_status) {
 						$query_notify .= ', sms_'.$notify_key.' = '.$notify_status;
 					}
-
-					if ($conf->db->type == 'postgres')
-					{
-						$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-						$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
-						$_SESSION['sms']['phone'] = $uPhone;
-						pg_query($query);
-						$query = "insert into sms_ids (sms_id, number, cost) values ({$msg['response']['ids'][0]}, {$phone}, {$sms_cost})";
-						pg_query($query);
-						pg_close($db);
-					}
+					$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+					$_SESSION['sms']['phone'] = $uPhone;
+					pg_query($query);
+					$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$sms_cost}, 'SMS уведомление от Lead4CRM')";
+					pg_query($query);
+					pg_close($db);
 					$msg['response']['error'] = '0';
 					$msg['response']['cost'] = $sms_cost;
 				} else {
@@ -2008,28 +2020,6 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$msg['response']['error'] = '100';
 			}
 			break;
-
-		case 'chargeBalance':
-			if ($conf->db->type == 'postgres')
-			{
-				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-			}
-			foreach ($_POST['data'] as $entry) {
-				list($status, $id, $code) = explode("\n", $entry);
-				if ($status == 'sms_status') {
-					$query = "select cost from sms_ids where sms_id = '{$id}'";
-					$result = pg_query($query);
-					$cost = pg_fetch_result($result, 0, 'cost');
-					pg_free_result($result);
-					if ($cost > 0 && $code == 103) {
-						$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$cost}, 'Lead4CRM: SMS уведомление')";
-						pg_query($query);
-					}
-				}
-			}
-			pg_close($db);
-			echo '100';
-			exit();
 
 		case 'getInfo':
 		default:
@@ -2042,7 +2032,7 @@ function sendSMS($cmd, $phone, $msg = '') {
 				'balance' => $sms_balance,
 				'limit' => $sms_limit,
 				'sernders' => $sms_senders,
-				'cost' => $sms_cost
+				'cost' => round($sms_cost + ($sms_cost * 0.4), 2);
 			);
 			$msg['balance'] = $uData['balans'];
 			$msg['command'] = $cmd;
