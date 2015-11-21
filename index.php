@@ -696,6 +696,7 @@ function fblogin() {
 		'redirect_uri' => $redirect_uri));
 	curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com/oauth/access_token?'.$data);
 	parse_str($response = curl_exec($curl));
+	$access_token =;
 	curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com/me?access_token='.$access_token);
 	$res = json_decode(curl_exec($curl));
 	dbLogin($res->id, $res->email, 'fb');
