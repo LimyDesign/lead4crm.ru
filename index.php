@@ -695,8 +695,8 @@ function fblogin() {
 		'code' => $_GET['code'],
 		'redirect_uri' => $redirect_uri));
 	curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com/oauth/access_token?'.$data);
+	$access_token = null;
 	parse_str($response = curl_exec($curl));
-	$access_token =;
 	curl_setopt($curl, CURLOPT_URL, 'https://graph.facebook.com/me?access_token='.$access_token);
 	$res = json_decode(curl_exec($curl));
 	dbLogin($res->id, $res->email, 'fb');
@@ -1946,7 +1946,6 @@ function sendSMS($cmd, $phone, $msg = '') {
 				$msg['response'] = $sms->smsSend($msg);
 				$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$sms_cost}, 'SMS уведомление от Lead4CRM')";
 				pg_query($query);
-				pg_close($db);
 				$msg['response']['error'] = '0';
 				$msg['response']['cost'] = $sms_cost;
 			} else {
@@ -2006,12 +2005,11 @@ function sendSMS($cmd, $phone, $msg = '') {
 					foreach ($noties as $notify_key => $notify_status) {
 						$query_notify .= ', sms_'.$notify_key.' = '.$notify_status;
 					}
-					$query = "update users set sms_phone = {$uUin}".$query_notify." WHERE id = {$_SESSION['userid']}";
+					$query = "update users set sms_phone = '{$uPhone}'".$query_notify." WHERE id = {$_SESSION['userid']}";
 					$_SESSION['sms']['phone'] = $uPhone;
 					pg_query($query);
 					$query = "insert into log (uid, credit, client) values ({$_SESSION['userid']}, {$sms_cost}, 'SMS уведомление от Lead4CRM')";
 					pg_query($query);
-					pg_close($db);
 					$msg['response']['error'] = '0';
 					$msg['response']['cost'] = $sms_cost;
 				} else {
