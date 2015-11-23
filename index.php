@@ -58,7 +58,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'contract':
-			isAuth();
+			isAuth($cmd);
 			contract($_POST['decision']);
 			break;
 
@@ -67,37 +67,37 @@ if ($cmd[0]) {
 			break;
 
 		case 'getIntegrated':
-			isAuth();
+			isAuth($cmd);
 			getIntegrated($_REQUEST['ii']);
 			break;
 
 		case 'crmConnect':
-			isAuth();
+			isAuth($cmd);
 			crmConnect($cmd[1]);
 			break;
 
 		case 'crmPostCompany':
-			isAuth();
+			isAuth($cmd);
 			crmPostCompany($cmd[1]);
 			break;
 
 		case 'crmSaveSettings':
-			isAuth();
+			isAuth($cmd);
 			crmSaveSettings($cmd[1]);
 			break;
 
 		case 'crmTest':
-			isAdmin();
+			isAdmin($cmd);
 			crmTest($cmd[1]);
 			break;
 
 		case 'crmDisconnect':
-			isAuth();
+			isAuth($cmd);
 			crmDisconnect($cmd[1]);
 			break;
 
 		case 'initTelegram':
-			isAdmin();
+			isAdmin($cmd);
 			try {
 				$link = 'https://'.$_SERVER['SERVER_NAME'].'/telegram/';
 				$result = $telegram->setWebHook($link);
