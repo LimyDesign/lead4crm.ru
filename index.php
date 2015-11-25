@@ -192,7 +192,7 @@ if ($cmd[0]) {
 
 		case 'getAmoUserData':
 		case 'getB24UserData':
-			getB24UserData($_POST['apikey']);
+			getB24UserData($_REQUEST['apikey']);
 			break;
 
 		case 'getDataSearch':
