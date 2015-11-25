@@ -930,7 +930,6 @@ function getB24UserData($apikey) {
 		$result = pg_query($query);
 		$qty = pg_fetch_result($result, 0, 'qty');
 		pg_free_result($result);
-		pg_query($db);
 	}
 	$fullData = array('tariff' => $tariff, 'qty' => $qty);
 	header("Content-Type: text/json");
