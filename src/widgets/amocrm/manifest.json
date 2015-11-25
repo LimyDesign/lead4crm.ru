@@ -4,11 +4,11 @@
 		"description": "widget.description",
 		"short_description": "widget.short_description",
 		"code": "amo_lead4crm",
-		"secret_key": "733ddb5a584fac1851f3e116efe097a45652e7e9c8ca7683f6210fe919fd24f7",
+		"secret_key": "d0b511fbeb6577273e448c61d4eae992419855cee76bf3b868937ddfe0efcbe6",
 		"version": "1.0.0",
 		"interface_version": 2,
-		"init_once": false,
-		"locale": ["en", "ru"],
+		"init_once": true,
+		"locale": ["ru"],
 		"installation": true
 	},
 	"locations": [
