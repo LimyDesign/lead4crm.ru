@@ -188,7 +188,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'checkAPIKey':
-			checkAPIKey($_POST['apikey']);
+			checkAPIKey($_REQUEST['apikey']);
 
 		case 'getAmoUserData':
 		case 'getB24UserData':

@@ -14,14 +14,16 @@ define(['jquery'], function($){
             onSave: function(data) {
                 var lang = self.i18n('userLang');
                 self.crm_post('https://www.lead4crm.ru/checkAPIKey/', { apikey: data.fields.api_key }, function (res) {
-                    alert('Хуй!');
                     console.log(res);
-                    return true;
+                    if (res.userid === null) {
+                        alert(lang.errors.apikey);
+                        self.set_status('error');
+                    }
                 }, 'json', function() {
                     alert(lang.errors.connection);
                     self.set_status('error');
-                    return false;
                 });
+                return true;
             }
         };
         return this;
