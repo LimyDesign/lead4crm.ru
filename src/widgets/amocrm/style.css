@@ -1,0 +1,42 @@
+/*.card-widgets__widget-new_widget .card-widgets__widget__body {*/
+    /*padding: 0 10px 0px;*/
+    /*padding-bottom: 5px;*/
+    /*background-color: grey;*/
+/*}*/
+
+.lead4crm-form {
+    padding: 5px 15px 15px;
+    margin-bottom: 10px;
+    background: #8d81ac;
+}
+
+.lead4crm-form > .helper {
+    color: #fafafb;
+    margin: 10px 0;
+}
+
+.js-lead4crm-caption  {
+    display: block;
+    margin: auto;
+    background-color : #8d81ac;
+}
+
+.lead4crm-form-button{
+    padding: 5px 0;
+    background: #fafafb;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    -webkit-box-shadow: 0 1px 0 0 rgba(0,0,0,0.15);
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.15);
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.lead4crm-form-button:active{
+    background: grey;
+}
+
