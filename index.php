@@ -187,6 +187,9 @@ if ($cmd[0]) {
 			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json'], $_REQUEST['addon']);
 			break;
 
+		case 'checkAPIKey':
+			checkAPIKey($_POST['apikey']);
+
 		case 'getAmoUserData':
 		case 'getB24UserData':
 			getB24UserData($_POST['apikey']);
@@ -916,6 +919,19 @@ function contract($decision) {
 		pg_free_result($result);
 		pg_close($db);
 	}
+}
+
+function checkAPIKey($apikey) {
+	global $conf;
+	if ($conf->db->type == 'postgres') {
+		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
+		$query = "select id from users where apikey = '{$apikey}'";
+		$result = pg_query($query);
+		$userid = pg_fetch_result($result);
+	}
+	header("Content-Type: text/json");
+	echo json_encode(array('userid' => $userid));
+	exit();
 }
 
 function getB24UserData($apikey) {
