@@ -927,7 +927,7 @@ function checkAPIKey($apikey) {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 		$query = "select id from users where apikey = '{$apikey}'";
 		$result = pg_query($query);
-		$userid = pg_fetch_result($result, 0, 'id');
+		$userid = pg_fetch_result($result, 0, 0);
 	}
 	header("Content-Type: text/json");
 	echo json_encode(array('userid' => $userid));
