@@ -187,6 +187,7 @@ if ($cmd[0]) {
 			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json'], $_REQUEST['addon']);
 			break;
 
+		case 'getAmoUserData':
 		case 'getB24UserData':
 			getB24UserData($_POST['apikey']);
 			break;

@@ -9,7 +9,7 @@
 	},
 	"userLang": {
 		"errors": {
-			"connection": "Ошибка подключения к серверу <a href=\"https://www.lead4crm.ru\" target=\"_blank\">www.lead4crm.ru</a>. Не возможно получить данные пользователя. Обновите страницу.",
+			"connection": "Ошибка подключения к серверу <a href=\"https://www.lead4crm.ru\" target=\"_blank\">www.lead4crm.ru</a>. Не возможно получить данные пользователя. Попробуйте еще раз.",
 			"empty_qty": "У вас нет ни одного запроса. Для корректной работы виджета, пополните баланс на сайте <a href=\"https://www.lead4crm.ru/cabinet/\" target=\"_blank\">www.lead4crm.ru</a>."
 		}
 	}

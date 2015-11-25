@@ -1,5 +1,6 @@
 define(['jquery'], function($){
     var CustomWidget = function () {
+        var self = this;
         this.callbacks = {
             init: function() {
                 return true;
@@ -11,9 +12,16 @@ define(['jquery'], function($){
                 return true;
             },
             onSave: function(data) {
-                crm_post('https://www.lead4crm.ru/')
-                alert(data.fields.api_key);
-                return true;
+                var lang = self.i18n('userLang');
+                self.crm_post('https://www.lead4crm.ru/getAmoUserData/', { apikey: data.fields.api_key }, function (res) {
+                    alert('Хуй!');
+                    console.log(res);
+                    return true;
+                }, 'json', function() {
+                    alert(lang.errors.connection);
+                    self.set_status('error');
+                    return false;
+                });
             }
         };
         return this;
