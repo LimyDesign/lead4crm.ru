@@ -1,7 +1,6 @@
 define(['jquery', 'lib/components/base/modal'], function($, Modal) {
     var CustomWidget = function () {
-        var self = this,
-            LEAD4CRM = {};
+        var self = this;
 
         this.add_call_notify = function(mess) {
             var w_name = self.i18n('widget').name,
@@ -54,13 +53,9 @@ define(['jquery', 'lib/components/base/modal'], function($, Modal) {
         this.get_lead4crm_data = function(apikey, callback) {
             var lang = self.i18n('userLang'),
                 notify_data = {};
-            LEAD4CRM.tariff = lang.default_tariff;
-            LEAD4CRM.qty = 0;
-            self.crm_post('http://www.lead4crm.ru/getAmoUserData/', { apikey: apikey }, function(data) {
-                LEAD4CRM.tariff = data.tariff;
-                LEAD4CRM.qty = data.qty;
+            self.crm_post('https://www.lead4crm.ru/getAmoUserData/', { apikey: apikey }, function(data) {
                 if (callback && typeof(callback) === 'function') {
-                    callback(LEAD4CRM);
+                    callback(data);
                 }
             }, 'json', function() {
                 notify_data.id = 1;
@@ -81,15 +76,16 @@ define(['jquery', 'lib/components/base/modal'], function($, Modal) {
             render: function() {
                 if (self.system().area != 'settings') {
                     var lang = self.i18n('userLang');
+                    self.render_template({
+                        caption: {
+                            class_name: 'js-lead4crm-caption',
+                            html: '<image class="lead4crm_logo" src="' + self.params.path + '/images/logo.png" />'
+                        },
+                        body: '<link type="text/css" rel="stylesheet" href="' + self.params.path + '/style.css">',
+                        render: '<div class="lead4crm-form"><p class="helper">' + lang.help + ' <span id="lead4crm-qty">0</span></p><div class="lead4crm-form-button lead4crm_sub">' + lang.modal_button + '</div></div>'
+                    });
                     self.get_lead4crm_data(self.params.api_key, function(ud) {
-                        self.render_template({
-                            caption: {
-                                class_name: 'js-lead4crm-caption',
-                                html: '<image class="lead4crm_logo" src="' + self.params.path + '/images/logo.png" />'
-                            },
-                            body: '<link type="text/css" rel="stylesheet" href="' + self.params.path + '/style.css">',
-                            render: '<div class="lead4crm-form"><p class="helper">' + lang.help + ' <span id="lead4crm-qty">' + ud.qty + '</span></p><div class="lead4crm-form-button lead4crm_sub">' + lang.modal_button + '</div></div>'
-                        });
+                        $('#lead4crm-qty').text(ud.qty);
                     });
                 }
                 return true;
@@ -97,7 +93,11 @@ define(['jquery', 'lib/components/base/modal'], function($, Modal) {
             bind_actions: function() {
                 var $button = $('.lead4crm-form-button.lead4crm_sub'),
                     lang = self.i18n('userLang'),
-                    data = '<h2 class="content__top__preset__caption">' + lang.modal_title + '</h2>';
+                    login = self.system().amouser,
+                    hash = self.system().amohash,
+                    subdomain = self.system().subdomain,
+                    apikey = self.params.api_key,
+                    data = '<h2 class="content__top__preset__caption">' + lang.modal_title + '</h2><div id="lead4crmwidget"><iframe style="width: 100%; height: 405px;" src="https://www.lead4crm.ru/amo-index/?apikey=' + encodeURIComponent(apikey) + '&login=' + encodeURIComponent(login) + '&hash=' + encodeURIComponent(hash) + '&subdomain=' + encodeURIComponent(subdomain) + '"></iframe></div>';
                 $button.on(AMOCRM.click_event + self.ns, function() {
                     new Modal({
                         class_name: 'modal-lead4crm',
