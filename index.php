@@ -280,6 +280,18 @@ if ($cmd[0]) {
 				'yaSCId' => $conf->payments->SCID,
 				'tariffs' => getUserTariffList());
 
+		case 'amo-index':
+			if ($apikey = $_REQUEST['apikey'] &&
+				$login = $_REQUEST['login'] &&
+				$hash = $_REQUEST['hash'] &&
+				$subdomain = $_REQUEST['subdomain']
+			) {
+				$cOptions = array(
+					'isAMOUser' => true,
+					'request' => $_REQUEST,
+				);
+			}
+
 		case 'b24-install':
 		case 'b24-index':
 			if ($auth = $_REQUEST['AUTH_ID']) {
