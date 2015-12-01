@@ -880,7 +880,7 @@ function renderPage(pageNum, search_text, callback) {
   };
 
   var requestURL = '',
-      type = localStorage.getItem('search_id');
+      type = localStorage.getItem('search_id'),
       companyList;
 
   $.post('/getUserCache/', function (data) {
