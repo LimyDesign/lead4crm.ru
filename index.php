@@ -282,7 +282,7 @@ if ($cmd[0]) {
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
 				'tariffs' => getUserTariffList());
-//            break;
+            break;
 
 		case 'amo-index':
 			if ($apikey = $_REQUEST['apikey'] &&
