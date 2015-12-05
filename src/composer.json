@@ -14,7 +14,7 @@
             "Lead4CRM": "lib/"
         },
         "classmap": [
-            "lib/Megaplan/Megaplan.php"
+            "lib/Megaplan/megaplan.php"
         ]
     }
 }
