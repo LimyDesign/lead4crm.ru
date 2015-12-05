@@ -780,7 +780,7 @@ class PHPExcel
             // global scope
             $this->_namedRanges[$namedRange->getName()] = $namedRange;
         } else {
-            // local scope
+            // lib scope
             $this->_namedRanges[$namedRange->getScope()->getTitle().'!'.$namedRange->getName()] = $namedRange;
         }
         return true;
@@ -802,7 +802,7 @@ class PHPExcel
                 $returnValue = $this->_namedRanges[$namedRange];
             }
 
-            // then look for local defined name (has priority over global defined name if both names exist)
+            // then look for lib defined name (has priority over global defined name if both names exist)
             if (($pSheet !== NULL) && isset($this->_namedRanges[$pSheet->getTitle() . '!' . $namedRange])) {
                 $returnValue = $this->_namedRanges[$pSheet->getTitle() . '!' . $namedRange];
             }

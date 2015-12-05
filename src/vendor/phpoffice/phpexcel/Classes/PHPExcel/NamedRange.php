@@ -57,7 +57,7 @@ class PHPExcel_NamedRange
 	private $_range;
 
 	/**
-	 * Is the named range local? (i.e. can only be used on $this->_worksheet)
+	 * Is the named range lib? (i.e. can only be used on $this->_worksheet)
 	 *
 	 * @var bool
 	 */
@@ -87,7 +87,7 @@ class PHPExcel_NamedRange
     		throw new PHPExcel_Exception('Parameters can not be null.');
     	}
 
-    	// Set local members
+    	// Set lib members
     	$this->_name 		= $pName;
     	$this->_worksheet 	= $pWorksheet;
     	$this->_range 		= $pRange;

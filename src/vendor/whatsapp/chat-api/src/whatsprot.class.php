@@ -639,7 +639,7 @@ class WhatsProt
      * Approx 20 (unverified) is the maximum number of targets
      *
      * @param array  $targets       An array of numbers to send to.
-     * @param string $path          URL or local path to the audio file to send
+     * @param string $path          URL or lib path to the audio file to send
      * @param bool   $storeURLmedia Keep a copy of the audio file on your server
      * @param int    $fsize
      * @param string $fhash
@@ -663,7 +663,7 @@ class WhatsProt
      * Approx 20 (unverified) is the maximum number of targets
      *
      * @param array  $targets       An array of numbers to send to.
-     * @param string $path          URL or local path to the image file to send
+     * @param string $path          URL or lib path to the image file to send
      * @param bool   $storeURLmedia Keep a copy of the audio file on your server
      * @param int    $fsize
      * @param string $fhash
@@ -735,7 +735,7 @@ class WhatsProt
      * Approx 20 (unverified) is the maximum number of targets
      *
      * @param array   $targets       An array of numbers to send to.
-     * @param string  $path          URL or local path to the video file to send
+     * @param string  $path          URL or lib path to the video file to send
      * @param bool    $storeURLmedia Keep a copy of the audio file on your server
      * @param int     $fsize
      * @param string  $fhash
@@ -3484,7 +3484,7 @@ class WhatsProt
      * If the media file was originally from a URL, this function either deletes it
      * or renames it depending on the user option.
      *
-     * @param bool $storeURLmedia Save or delete the media file from local server
+     * @param bool $storeURLmedia Save or delete the media file from lib server
      */
     protected function processTempMediaFile($storeURLmedia)
     {

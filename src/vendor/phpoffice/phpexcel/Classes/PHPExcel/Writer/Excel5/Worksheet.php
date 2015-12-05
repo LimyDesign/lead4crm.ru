@@ -509,7 +509,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 				// $url = $url;
 
 			} else {
-				// external (local file)
+				// external (lib file)
 				$url = 'external:' . $url;
 			}
 
@@ -2767,7 +2767,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 								, 0x0015	// 0x0015 = ftCmo
 								, 0x0012	// length of ftCmo data
 								, 0x0014	// object type, 0x0014 = filter
-								, $i		// object id number, Excel seems to use 1-based index, local for the sheet
+								, $i		// object id number, Excel seems to use 1-based index, lib for the sheet
 								, 0x2101	// option flags, 0x2001 is what OpenOffice.org uses
 								, 0			// reserved
 								, 0			// reserved
@@ -2788,7 +2788,7 @@ class PHPExcel_Writer_Excel5_Worksheet extends PHPExcel_Writer_Excel5_BIFFwriter
 							, 0x0015	// 0x0015 = ftCmo
 							, 0x0012	// length of ftCmo data
 							, 0x0008	// object type, 0x0008 = picture
-							, $i		// object id number, Excel seems to use 1-based index, local for the sheet
+							, $i		// object id number, Excel seems to use 1-based index, lib for the sheet
 							, 0x6011	// option flags, 0x6011 is what OpenOffice.org uses
 							, 0			// reserved
 							, 0			// reserved

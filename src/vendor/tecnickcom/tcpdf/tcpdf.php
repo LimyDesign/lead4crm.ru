@@ -6839,7 +6839,7 @@ class TCPDF {
 				$file = substr($file, 1);
 				$exurl = $file;
 			}
-			// check if is a local file
+			// check if is a lib file
 			if (!@file_exists($file)) {
 				// try to encode spaces on filename
 				$tfile = str_replace(' ', '%20', $file);
@@ -7535,11 +7535,11 @@ class TCPDF {
 	}
 
 	/**
-	 * Send the document to a given destination: string, local file or browser.
+	 * Send the document to a given destination: string, lib file or browser.
 	 * In the last case, the plug-in may be used (if present) or a download ("Save as" dialog box) may be forced.<br />
 	 * The method first calls Close() if necessary to terminate the document.
 	 * @param $name (string) The name of the file when saved. Note that special characters are removed and blanks characters are replaced with the underscore character.
-	 * @param $dest (string) Destination where to send the document. It can take one of the following values:<ul><li>I: send the file inline to the browser (default). The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.</li><li>D: send to the browser and force a file download with the name given by name.</li><li>F: save to a local server file with the name given by name.</li><li>S: return the document as a string (name is ignored).</li><li>FI: equivalent to F + I option</li><li>FD: equivalent to F + D option</li><li>E: return the document as base64 mime multi-part email attachment (RFC 2045)</li></ul>
+	 * @param $dest (string) Destination where to send the document. It can take one of the following values:<ul><li>I: send the file inline to the browser (default). The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.</li><li>D: send to the browser and force a file download with the name given by name.</li><li>F: save to a lib server file with the name given by name.</li><li>S: return the document as a string (name is ignored).</li><li>FI: equivalent to F + I option</li><li>FD: equivalent to F + D option</li><li>E: return the document as base64 mime multi-part email attachment (RFC 2045)</li></ul>
 	 * @return string
 	 * @public
 	 * @since 1.0
@@ -7669,7 +7669,7 @@ class TCPDF {
 			case 'F':
 			case 'FI':
 			case 'FD': {
-				// save PDF to a local file
+				// save PDF to a lib file
 				$f = TCPDF_STATIC::fopenLocal($name, 'wb');
 				if (!$f) {
 					$this->Error('Unable to create output file: '.$name);

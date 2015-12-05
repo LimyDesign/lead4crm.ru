@@ -3,44 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {% include 'layout/header.twig' %}
+    {% include 'layout/amo-header.twig' %}
 </head>
 <body>
-<div id="wraper">
-    <div class="main">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="search-options">
-                        <h2><span id="greeting">Добрый день!</span> &nbsp; <small>Тариф компании: <span id="tariff">Демо</span></small></h2>
-                        <p class="lead">Получите ваших потенциальных клиентов за пару кликов. Начните искать по любым нужным критериям с помощью текстового ассоциативного поиска или точечного по видам деятельности.</p>
-
-                        <form id="searchForm" class="form-horizontal">
-                            <fieldset id="searchGroupText">
-                                <div class="form-group fom-group-lg">
-                                    <label for="inputSearchText" class="control-label col-sm-3">
-                                        Текстовый поиск: <br>
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-spinner fa-pulse fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                        <strong id="changeToRubricsLoading">&nbsp;<u>Вид деятельности</u></strong>
-                                        <a href="#." id="changeToRubrics" class="hide">Вид деятельности</a>
-                                    </label>
-                                    <div class="col-sm-9">
-                                        <input name="searchText" type="text" class="form-control" id="inputSearchText" placeholder="салоны красоты" aria-describedby="helpSearchText" autofocus>
-                                        <span id="helpSearchText" class="help-block">Введите вид деятельности или название компании или любой другой критерий поиска потенциальных клиентов. Поиск такой же как и в справочнике 2ГИС. Этот поиск ассоциативный и порой может выводить довольно большой список компаний, если вам требуется точечная выборка по определенным видам деятельности, то рекомендуем вам переключиться в поиск по виду деятельсности, однако, там поиск будет производиться строго по выбранной деятельсноти.</span>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid">
+    <div class="row">
+        <p>API key: {{ request.apikey }}</p>
+        <p>Login: {{ request.login }}</p>
+        <p>Hash: {{ request.hash }}</p>
+        <p>Subdomain: {{ request.subdomain }}</p>
     </div>
 </div>
 {% include 'layout/scripts.twig' %}

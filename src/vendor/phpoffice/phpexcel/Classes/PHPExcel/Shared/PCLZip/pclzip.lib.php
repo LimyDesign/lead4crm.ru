@@ -2102,7 +2102,7 @@
         else {
         }
           
-        // ----- Free local array
+        // ----- Free lib array
         unset($v_dirlist_descr);
       }
     }
@@ -2612,7 +2612,7 @@
     // ----- Look for pre-add callback
     if (isset($p_options[PCLZIP_CB_PRE_ADD])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_header, $v_local_header);
 
@@ -2766,7 +2766,7 @@
     // ----- Look for post-add callback
     if (isset($p_options[PCLZIP_CB_POST_ADD])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_header, $v_local_header);
 
@@ -3689,7 +3689,7 @@
     // ----- Look for pre-extract callback
     if (isset($p_options[PCLZIP_CB_PRE_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
 
@@ -3936,7 +3936,7 @@
     // ----- Look for post-extract callback
     elseif (isset($p_options[PCLZIP_CB_POST_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
 
@@ -4057,7 +4057,7 @@
     // ----- Look for pre-extract callback
     if (isset($p_options[PCLZIP_CB_PRE_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
 
@@ -4125,7 +4125,7 @@
     // ----- Look for post-extract callback
     elseif (isset($p_options[PCLZIP_CB_POST_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
 
@@ -4172,7 +4172,7 @@
     // ----- Look for pre-extract callback
     if (isset($p_options[PCLZIP_CB_PRE_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
 
@@ -4239,7 +4239,7 @@
     // ----- Look for post-extract callback
     elseif (isset($p_options[PCLZIP_CB_POST_EXTRACT])) {
 
-      // ----- Generate a local information
+      // ----- Generate a lib information
       $v_local_header = array();
       $this->privConvertHeader2FileInfo($p_entry, $v_local_header);
       
@@ -4870,7 +4870,7 @@
                 return $v_result;
             }
             
-            // ----- Check that local file header is same as central file header
+            // ----- Check that lib file header is same as central file header
             if ($this->privCheckFileHeaders($v_local_header,
 			                                $v_header_list[$i]) != 1) {
                 // TBC

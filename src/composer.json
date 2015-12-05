@@ -8,5 +8,13 @@
         "whatsapp/chat-api": "^2.5",
         "zelenin/smsru": "~4",
         "tecnickcom/tcpdf": "^6.2"
+    },
+    "autoload": {
+        "psr-0": {
+            "Lead4CRM": "lib/"
+        },
+        "classmap": [
+            "lib/Megaplan/Megaplan.php"
+        ]
     }
 }

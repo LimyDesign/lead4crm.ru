@@ -354,7 +354,7 @@ class WebIcqPro_SNAC extends WebIcqPro_TLV {
 	0x0D => 'Request denied',
 	0x0E => 'Incorrect SNAC format',
 	0x0F => 'Insufficient rights',
-	0x10 => 'In local permit/deny (recipient blocked)',
+	0x10 => 'In lib permit/deny (recipient blocked)',
 	0x11 => 'Sender too evil',
 	0x12 => 'Receiver too evil',
 	0x13 => 'User temporarily unavailable',

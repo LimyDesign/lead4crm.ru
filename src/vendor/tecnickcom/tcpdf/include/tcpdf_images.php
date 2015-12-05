@@ -160,7 +160,7 @@ class TCPDF_IMAGES {
 	 * @public static
 	 */
 	public static function _parsejpeg($file) {
-		// check if is a local file
+		// check if is a lib file
 		if (!@file_exists($file)) {
 			// try to encode spaces on filename
 			$tfile = str_replace(' ', '%20', $file);

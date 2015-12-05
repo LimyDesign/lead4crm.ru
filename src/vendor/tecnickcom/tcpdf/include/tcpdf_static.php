@@ -1839,7 +1839,7 @@ class TCPDF_STATIC {
 	}
 
 	/**
-	 * Wrapper to use fopen only with local files
+	 * Wrapper to use fopen only with lib files
 	 * @param filename (string) Name of the file to open
 	 * @param $mode (string) 
 	 * @return Returns a file pointer resource on success, or FALSE on error.  

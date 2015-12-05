@@ -4545,7 +4545,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 			} else if (!$isFileLinkOrUrl) {
 				$hyperlinkType = 'workbook';
 			} else if (ord($recordData{$offset}) == 0x03) {
-				$hyperlinkType = 'local';
+				$hyperlinkType = 'lib';
 			} else if (ord($recordData{$offset}) == 0xE0) {
 				$hyperlinkType = 'URL';
 			}
@@ -4569,8 +4569,8 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 				$offset += $us;
 				break;
 
-			case 'local':
-				// section 5.58.3: Hyperlink to local file
+			case 'lib':
+				// section 5.58.3: Hyperlink to lib file
 				// examples:
 				//   mydoc.txt
 				//   ../../somedoc.xls#Sheet!A1
@@ -4842,7 +4842,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		// move stream pointer to next record
 		$this->_pos += 4 + $length;
 
-		// local pointer in record data
+		// lib pointer in record data
 		$offset = 0;
 
 		if (!$this->_readDataOnly) {
@@ -4983,7 +4983,7 @@ class PHPExcel_Reader_Excel5 extends PHPExcel_Reader_Abstract implements PHPExce
 		// move stream pointer to next record
 		$this->_pos += 4 + $length;
 
-		// local pointer in record data
+		// lib pointer in record data
 		$offset = 0;
 
 		if (!$this->_readDataOnly) {

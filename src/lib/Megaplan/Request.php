@@ -1,6 +1,6 @@
 <?php
 
-require dirname( __FILE__ ) . '/RequestInfo.php';
+require dirname(__FILE__) . '/RequestInfo.php';
 
 //{{{ SdfApi_Request
 /**

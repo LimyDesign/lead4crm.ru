@@ -9,5 +9,6 @@ return array(
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
+    'Lead4CRM' => array($baseDir . '/lib'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
 );

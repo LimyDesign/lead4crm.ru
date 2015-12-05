@@ -140,6 +140,8 @@ if ($cmd[0]) {
 			$wa->sendGetStatuses('79041326000');
 			$wa->sendGetProfilePicture('79041326000');
 			$wa->sendPing();
+            break;
+
 		case 'wa':
 			$wa->sendMessageComposing('79041326000');
 			$wa->sendMessagePaused('79041326000');
@@ -152,7 +154,7 @@ if ($cmd[0]) {
 			break;
 
 		case 'email':
-			isAuth();
+			isAuth($cmd);
 			header('Content-Type: text/json');
 			echo sendEmail($cmd[1], $_REQUEST['email']);
 			break;
@@ -178,17 +180,18 @@ if ($cmd[0]) {
 			break;
 
 		case 'getSelection':
-			isAuth();
+			isAuth($cmd);
 			getSelection($cmd[1], $_REQUEST['crm_id']);
 			break;
 
 		case 'getSelectionArray':
-			isAuth();
+			isAuth($cmd);
 			getSelectionArray($cmd[1], $_REQUEST['crm_id'], $_REQUEST['json'], $_REQUEST['addon']);
 			break;
 
 		case 'checkAPIKey':
 			checkAPIKey($_REQUEST['apikey']);
+			break;
 
 		case 'getAmoUserData':
 		case 'getB24UserData':
@@ -279,6 +282,7 @@ if ($cmd[0]) {
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
 				'tariffs' => getUserTariffList());
+            break;
 
 		case 'amo-index':
 			if ($apikey = $_REQUEST['apikey'] &&
@@ -291,6 +295,7 @@ if ($cmd[0]) {
 					'request' => $_REQUEST,
 				);
 			}
+            break;
 
 		case 'b24-install':
 		case 'b24-index':
@@ -309,6 +314,7 @@ if ($cmd[0]) {
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
+            break;
 
 		case 'b24-install-dev':
 		case 'b24-index-dev':
@@ -327,6 +333,7 @@ if ($cmd[0]) {
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
+            break;
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
@@ -439,7 +446,7 @@ function wizard($crm_id, $step) {
 
 function getIntegrated($crm) {
 	global $twig, $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}
@@ -465,7 +472,7 @@ function getIntegrated($crm) {
 
 function crmTest($crm) {
 	global $twig, $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}
@@ -482,7 +489,7 @@ function crmTest($crm) {
 
 function crmPostCompany($crm) {
 	global $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}
@@ -498,7 +505,7 @@ function crmPostCompany($crm) {
 
 function crmSaveSettings($crm) {
 	global $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}
@@ -513,7 +520,7 @@ function crmSaveSettings($crm) {
 
 function crmConnect($crm) {
 	global $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	$auth = call_user_func(array($crm,'Authorize'));
 	if ($auth === false) {
 		$msg = 'Для данного домена логин/пароль не верный.';
@@ -523,7 +530,7 @@ function crmConnect($crm) {
 
 function crmDisconnect($crm) {
 	global $conf;
-	require_once __DIR__.'/src/local/'.$crm.'.php';
+//	require_once __DIR__.'/src/lib/'.$crm.'.php';
 	if ($conf->db->type == 'postgres') {
 		$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
 	}

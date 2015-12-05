@@ -680,7 +680,7 @@ class PHPExcel_Writer_Excel5_Workbook extends PHPExcel_Writer_Excel5_BIFFwriter
 					}
 
 					if ($namedRange->getLocalOnly()) {
-						// local scope
+						// lib scope
 						$scope = $this->_phpExcel->getIndex($namedRange->getScope()) + 1;
 					} else {
 						// global scope

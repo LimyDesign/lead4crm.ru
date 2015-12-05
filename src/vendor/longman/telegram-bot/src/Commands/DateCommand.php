@@ -110,7 +110,7 @@ class DateCommand extends Command
 
         $date_utc = new \DateTime(gmdate('Y-m-d H:i:s', $local_time), new \DateTimeZone($timezone_id));
 
-        $return = 'The local time in ' . $timezone_id . ' is: ' . $date_utc->format($this->date_format) . '';
+        $return = 'The lib time in ' . $timezone_id . ' is: ' . $date_utc->format($this->date_format) . '';
 
         return $return;
     }
