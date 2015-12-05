@@ -282,7 +282,7 @@ if ($cmd[0]) {
 				'yaShopId' => $conf->payments->ShopID,
 				'yaSCId' => $conf->payments->SCID,
 				'tariffs' => getUserTariffList());
-            break;
+//            break;
 
 		case 'amo-index':
 			if ($apikey = $_REQUEST['apikey'] &&
@@ -295,7 +295,7 @@ if ($cmd[0]) {
 					'request' => $_REQUEST,
 				);
 			}
-            break;
+//            break;
 
 		case 'b24-install':
 		case 'b24-index':
@@ -314,7 +314,7 @@ if ($cmd[0]) {
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
-            break;
+//            break;
 
 		case 'b24-install-dev':
 		case 'b24-index-dev':
@@ -333,7 +333,7 @@ if ($cmd[0]) {
 					'countries' => getCountries($arRes['result']['PERSONAL_CITY']),
 					'userData' => getUserData('array'));
 			}
-            break;
+//            break;
 
 		case $cmd[0]:
 			switch ($cmd[0]) {
