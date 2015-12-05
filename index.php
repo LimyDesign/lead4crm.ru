@@ -261,6 +261,7 @@ if ($cmd[0]) {
 
 		case 'cabinet':
 			isAuth($cmd);
+            echo "ffff";
 			$top_rubrics = importRubrics($_SESSION['apikey'], 'www.lead4crm.ru');
 			$top_rubrics = json_decode($top_rubrics, true);
 			$cOptions = array(
