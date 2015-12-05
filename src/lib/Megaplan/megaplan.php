@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/Request.php';
 
-class Megaplan extends SdfApi_Request
+class megaplan extends SdfApi_Request
 {
 	protected $sdf;
 	protected $crmid;

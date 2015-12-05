@@ -17,7 +17,6 @@ return array(
     'IncompleteMessageException' => $vendorDir . '/whatsapp/chat-api/src/protocol.class.php',
     'KeyStream' => $vendorDir . '/whatsapp/chat-api/src/keystream.class.php',
     'LoginFailureException' => $vendorDir . '/whatsapp/chat-api/src/exception.php',
-    'Megaplan' => $baseDir . '/lib/Megaplan/megaplan.php',
     'MessageStoreInterface' => $vendorDir . '/whatsapp/chat-api/src/SqliteMessageStore.php',
     'MyEvents' => $vendorDir . '/whatsapp/chat-api/src/events/MyEvents.php',
     'PDF417' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
@@ -48,6 +47,7 @@ return array(
     'WhatsApiEventsManager' => $vendorDir . '/whatsapp/chat-api/src/events/WhatsApiEventsManager.php',
     'WhatsMediaUploader' => $vendorDir . '/whatsapp/chat-api/src/mediauploader.php',
     'WhatsProt' => $vendorDir . '/whatsapp/chat-api/src/whatsprot.class.php',
+    'megaplan' => $baseDir . '/lib/Megaplan/megaplan.php',
     'rc4' => $vendorDir . '/whatsapp/chat-api/src/rc4.php',
     'vCard' => $vendorDir . '/whatsapp/chat-api/src/vCard.php',
 );
