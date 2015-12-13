@@ -805,12 +805,26 @@ class API
                         } else {
                             if ($template[$key]['argv']) {
                                 if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-                                    $csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp));
+                                    if ($template[$key]['cp'] == 'getMainIndustry')
+                                        $_str = $this->getMainIndustry($cp[$argv_match[1]]);
+                                    else
+                                        $_str = '';
+                                    $csv_line[] = iconv('UTF-8', 'Windows-1251', $_str);
                                 } else {
-                                    $csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']));
+                                    if ($template[$key]['cp'] == 'get2GISContact')
+                                        $_str = $this->get2GISContact($template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']);
+                                    else
+                                        $_str = '';
+                                    $csv_line[] = iconv('UTF-8', 'Windows-1251', $_str);
                                 }
                             } else {
-                                $csv_line[] = iconv('UTF-8', 'Windows-1251', call_user_func($template[$key]['cp'], $cp));
+                                if ($template[$key]['cp'] == 'bx24Comment')
+                                    $_str = $this->bx24Comment($cp);
+                                elseif ($template[$key]['cp'] == 'getFullAddress')
+                                    $_str = $this->getFullAddress($cp);
+                                else
+                                    $_str = '';
+                                $csv_line[] = iconv('UTF-8', 'Windows-1251', $_str);
                             }
                         }
                     } else if ($template[$key]['gd']) {
@@ -900,12 +914,26 @@ class API
                         } else {
                             if ($template[$key]['argv']) {
                                 if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-                                    $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp), $cellType);
+                                    if ($template[$key]['cp'] == 'getMainIndustry')
+                                        $_str = $this->getMainIndustry($cp[$argv_match[1]]);
+                                    else
+                                        $_str = '';
+                                    $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($_str, $cellType);
                                 } else {
-                                    $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']), $cellType);
+                                    if ($template[$key]['cp'] == 'get2GISContact')
+                                        $_str = $this->get2GISContact($template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment']);
+                                    else
+                                        $_str = '';
+                                    $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($_str, $cellType);
                                 }
                             } else {
-                                $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit(call_user_func($template[$key]['cp'], $cp), $cellType);
+                                if ($template[$key]['cp'] == 'bx24Comment')
+                                    $_str = $this->bx24Comment($cp);
+                                elseif ($template[$key]['cp'] == 'getFullAddress')
+                                    $_str = $this->getFullAddress($cp);
+                                else
+                                    $_str = '';
+                                $xls->getActiveSheet()->getCellByColumnAndRow($col, $rows)->setValueExplicit($_str, $cellType);
                             }
                         }
                     } else if ($template[$key]['gd']) {
@@ -1003,12 +1031,26 @@ class API
                     } else {
                         if ($template[$key]['argv']) {
                             if (preg_match('/^%(.*)%$/', $template[$key]['argv'], $argv_match)) {
-                                $_compnay[$key] = call_user_func($template[$key]['cp'], $cp[$argv_match[1]], $cp);
+                                if ($template[$key]['cp'] == 'getMainIndustry')
+                                    $_str = $this->getMainIndustry($cp[$argv_match[1]]);
+                                else
+                                    $_str = '';
+                                $_compnay[$key] = $_str;
                             } else {
-                                $_compnay[$key] = call_user_func($template[$key]['cp'], $template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment'], $useAddon);
+                                if ($template[$key]['cp'] == 'get2GISContact')
+                                    $_str = $this->get2GISContact($template[$key]['argv'], $cp, null, $template[$key]['prefix'], $template[$key]['suffix'], $template[$key]['comment'], $useAddon);
+                                else
+                                    $_str = '';
+                                $_compnay[$key] = $_str;
                             }
                         } else {
-                            $_compnay[$key] = call_user_func($template[$key]['cp'], $cp);
+                            if ($template[$key]['cp'] == 'bx24Comment')
+                                $_str = $this->bx24Comment($cp);
+                            elseif ($template[$key]['cp'] == 'getFullAddress')
+                                $_str = $this->getFullAddress($cp);
+                            else
+                                $_str = '';
+                            $_compnay[$key] = $_str;
                         }
                     }
                 } else if ($template[$key]['gd']) {
@@ -1974,6 +2016,148 @@ class API
     }
 
     /**
+     * Функция оформления контактной информации полученной из 2ГИС.
+     *
+     * @param string $type
+     * @param string $json
+     * @param null $asString
+     * @param null $prefix
+     * @param null $suffix
+     * @param null $comment
+     * @param bool $useAddon
+     * @return array|string
+     */
+    static private function get2GISContact($type, $json, $asString = null, $prefix = null, $suffix = null, $comment = null, $useAddon = false)
+    {
+        $_return = array();
+        if (null === $asString) {
+            $asString = true;
+        }
+        for ($i = 0; $i < count($json['contacts']); $i++) {
+            foreach ($json['contacts'][$i]['contacts'] as $contact) {
+                if ($contact['type'] == $type) {
+                    if (($type == 'phone' || $type == 'fax') && $contact['value']) {
+                        $contact['value'] = self::getPhoneConvert($contact['value']);
+                    }
+                    if ($useAddon && $contact['value']) {
+                        if ($prefix && $suffix) {
+                            $suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
+                            $_r = $prefix.$contact['value'].$suffix;
+                        }
+                        elseif ($prefix) {
+                            $end = ($comment ? ' '.$contact['comment'] : "");
+                            $_r = $prefix.$contact['value'].$end;
+                        }
+                        elseif ($suffix) {
+                            $suffix = ($comment ? $suffix.' '.$contact['comment'] : $suffix);
+                            $_r = $contact['value'].$suffix;
+                        }
+                        else {
+                            $end = ($comment ? ' '.$contact['comment'] : "");
+                            $_r = ($type != 'website' ? $contact['value'].$end : 'http://'.$contact['alias']);
+                        }
+                    } else {
+                        $_r = $contact['value'];
+                    }
+                    $_return[] = ($type != 'website' ? $_r : 'http://'.$contact['alias']);
+                }
+            }
+        }
+        return ($asString ? implode(',', $_return) : $_return);
+    }
+
+    /**
+     * Функция вычисляет основной вид деятельсноти компании — только один!
+     * Эта функция необходима из-за того, что во многих CRM системах вид деятельсности компании можно выбрать
+     * только один, поэтому из множества выбирается один наиболее общий и подходящий.
+     *
+     * @param array $rubrics Массив рубрик компании, по которому предстоит совершить выборку.
+     * @return string Название основной рубрики 2ГИС для данной компании.
+     */
+    private function getMainIndustry($rubrics)
+    {
+        if (count($rubrics)) {
+            $parents = array();
+            foreach ($rubrics as $rubric) {
+                $sql = "SELECT parent FROM rubrics WHERE name = :rubric";
+                $params = array();
+                $params[] = array(':rubric', $rubric, \PDO::PARAM_STR);
+                $parent = $this->getSingleRow($sql, $params);
+                $parent_id1 = $parent['parent'];
+                $sql = "SELECT parent FROM rubrics WHERE id = :parent";
+                $params = array();
+                $params[] = array(':parent', $parent_id1, \PDO::PARAM_INT);
+                $parent = $this->getSingleRow($sql, $params);
+                $parent_id2 = $parent['parent'];
+                if ($parent_id2)
+                    $parents[] = $parent_id2;
+                else
+                    $parents[] = $parent_id1;
+            }
+            $main_parent = $main_parent2 = array_count_values($parents);
+            arsort($main_parent2);
+            $params = array();
+            foreach ($main_parent2 as $parent_id => $count) {
+                if ($count <= 1) {
+                    $parent_id = key($main_parent);
+                }
+                $params[] = array(':parent', $parent_id, \PDO::PARAM_INT);
+                break;
+            }
+            $sql = "SELECT name FROM rubrics WHERE id = :parent";
+            $rubric = $this->getSingleRow($sql, $params);
+            $name = $rubric['name'];
+        } else {
+            $name = 'Другое';
+        }
+        return $name;
+    }
+
+    /**
+     * Функция генерирует расширенный комментарий по конкретной компании для дальнейшего использования
+     * в карточке компании в любой поддерживающий комментацрии CRM системе.
+     *
+     * @param array $cp Массив данных о компании.
+     * @return string Расширенный комментарий.
+     */
+    static private function bx24Comment($cp)
+    {
+        $comment = '';
+        if (count($cp['rubrics'])) {
+            $comment .= '<p><b>Виды деятельности:</b></p><ul>';
+            foreach ($cp['rubrics'] as $rubric)
+                $comment .= '<li>'.$rubric.'</li>';
+            $comment .= '</ul>';
+        }
+        $url_name = rawurlencode($cp['name']);
+        $comment .= "<p><b>Дополнительная информация:</b></p><ul>"
+            . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17/routeTab/to/{$cp['lon']}%2C{$cp['lat']}%E2%95%8E{$url_name}?utm_source=profile&utm_medium=route_to&utm_campaign=partnerapi' target='_blank'>Проложить маршрут до {$cp['name']}</a></li>"
+            . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17/routeTab/from/{$cp['lon']}%2C{$cp['lat']}%E2%95%8E{$url_name}?utm_source=profile&utm_medium=route_from&utm_campaign=partnerapi' target='_blank'>Проложить маршрут от {$cp['name']}</a></li>"
+            . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/entrance/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=entrance&utm_campaign=partnerapi' target='_blank'>Показать вход</a></li>"
+            . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/photos/{$cp['id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=photo&utm_campaign=partnerapi' target='_blank'>Фотографии {$cp['name']}</a></li>"
+            . "<li><a href='http://2gis.ru/city/{$cp['project_id']}/firm/{$cp['id']}/flamp/{$cp['id']}/callout/firms-{$cp['id']}/center/{$cp['lon']}%2C{$cp['lat']}/zoom/17?utm_source=profile&utm_medium=review&utm_campaign=partnerapi' target='_blank'>Отзывы о {$cp['name']}</a></li>";
+        $additional_info = "<li><a href='{$cp['bookle_url']}?utm_source=profile&utm_medium=booklet&utm_campaign=partnerapi' target='_blank'>Услуги и цены {$cp['name']}</a></li>";
+        if ($cp['bookle_url'])
+            $comment .= $additional_info;
+        return $comment;
+    }
+
+    /**
+     * Функция генерирует полный адрес компании в одну строку. Требуется для некоторых CRM систем.
+     *
+     * @param array $json Массив данных с адресной информацией о компании.
+     * @return string Полный адрес в одну строку.
+     */
+    static private function getFullAddress($json)
+    {
+        if ($json['additional_info']['office'])
+            $fullAddr = array('г. '.$json['city_name'], $json['address'], $json['additional_info']['office']);
+        else
+            $fullAddr = array('г. '.$json['city_name'], $json['address']);
+        return implode(', ', $fullAddr);
+    }
+
+    /**
      * Приватная функция для выполнения запросов к базе без получения в результате запроса ответа.
      * Наиболее полезна для запросов UPDATE и DELETE, без использования RETURNING.
      *
@@ -2093,6 +2277,13 @@ class API
             }
             fclose($fd);
         }
+    }
+
+    static private function getPhoneConvert($phone)
+    {
+        if (preg_match('/(\d)(\d{3})(\d{7})/', $phone, $matches))
+            return $matches[1].'-'.$matches[2].'-'.$matches[3];
+        return $phone;
     }
 
     /**
