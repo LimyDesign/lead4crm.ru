@@ -286,7 +286,7 @@ class API
             $cities = $this->getMultipleRows($sql, $param);
             $arrCities = array();
             foreach ($cities as $city) {
-                if ($city['parent_id']) {
+                if (isset($city['parent_id'])) {
                     $arrCities[$city['parent_id']]['children'] = $arrCities[$city['parent_id']]['children'] ? $arrCities[$city['parent_id']]['children'] . ', ' . $city['name'] : $city['name'];
                     if ($userCityName == $city['name'])
                         $arrCities[$city['parent_id']]['selected'] = 1;
