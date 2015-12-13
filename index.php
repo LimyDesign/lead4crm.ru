@@ -48,8 +48,7 @@ for ($i = 0; $i < count($scriptName); $i++) {
 		unset($requestURI[$i]);
 }
 $cmd = array_values($requestURI);
-if (isAdmin($cmd))
-    print_r($cmd);
+print_r($cmd);
 
 if ($cmd[0]) {
     if ($cmd[0] == 'logout') {
