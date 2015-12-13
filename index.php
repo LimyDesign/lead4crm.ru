@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 		header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
 }
 
+if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
+    ob_start('ob_gzhandler');
+else
+    ob_start();
+
 require_once __DIR__.'/src/vendor/autoload.php';
 
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
@@ -336,11 +341,6 @@ if ($cmd[0]) {
 	$options = array_merge($options, $api->getOAuthLoginURL(), $api->getMenuUrl());
 	$render = $twig->render('index.twig', $options);
 }
-
-if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
-    ob_start('ob_gzhandler');
-else
-    ob_start();
 
 echo $render;
 
