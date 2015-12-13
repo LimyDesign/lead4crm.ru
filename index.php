@@ -47,6 +47,11 @@ for ($i = 0; $i < count($scriptName); $i++) {
 	if ($requestURI[$i] == $scriptName[$i])
 		unset($requestURI[$i]);
 }
+foreach ($requestURI as $key => $uri) {
+    if (is_null($uri))
+        unset($requestURI[$key]);
+}
+
 $cmd = array_values($requestURI);
 print_r($cmd);
 
