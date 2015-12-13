@@ -51,6 +51,11 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'login') {
         $api->getDataLogin($cmd[1]);
         exit;
+    } elseif ($cmd[0] == 'getcountry') {
+        isAdmin($cmd);
+        header("Content-Type: text/plain");
+        print_r($api->getCountries('Иркутск'));
+        exit;
     } elseif ($cmd[0] == 'webcall') {
         header("Content-Type: application/json");
         echo $api->getWebCall($_POST['phone'], $_POST['delay']);
