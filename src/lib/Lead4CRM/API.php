@@ -276,7 +276,7 @@ class API
     {
         $arrCountries = array();
         $sql = "SELECT id, name FROM country ORDER BY sort ASC, name ASC";
-        $countries = $this->getSingleRow($sql, array());
+        $countries = $this->getMultipleRows($sql, array());
         foreach ($countries as $country) {
             $arrCountries[$country['id']]['id'] = $country['id'];
             $arrCountries[$country['id']]['name'] = $country['name'];
