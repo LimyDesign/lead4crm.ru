@@ -307,6 +307,7 @@ if ($cmd[0]) {
 
 				case 'cabinet':
                     isAuth($cmd);
+                    echo 'te';
                     $title = 'Личный кабинет';
                     $top_rubrics = $api->getRubricList($_SESSION['apikey'], 'www.lead4crm.ru');
                     $top_rubrics = json_decode($top_rubrics, true);
@@ -386,7 +387,7 @@ if ($cmd[0]) {
 
 				case 'login':
                     $api->getDataLogin($cmd[1]);
-                    exit(2);
+                    break;
 
 				default:
                     $title = '404 - Страница не найдена';
