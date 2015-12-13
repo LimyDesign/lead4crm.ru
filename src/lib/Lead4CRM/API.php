@@ -771,11 +771,9 @@ class API
                 $_month = $em[6] + 1;
                 $end_date = $_year . '-0' . $_month . '-01';
             }
-            $sql = "SELECT t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime AS addtime FROM cnam_cache t1 LEFT JOIN log t2 ON t1.logid = t2.id WHERE t2.uid = :uid AND t2.modtime >= DATE :sdate AND t2.modtime < DATE :edate ORDER BY t2.modtime DESC";
+            $sql = "SELECT t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime AS addtime FROM cnam_cache t1 LEFT JOIN log t2 ON t1.logid = t2.id WHERE t2.uid = :uid AND t2.modtime >= DATE '{$start_date}' AND t2.modtime < DATE '{$end_date}' ORDER BY t2.modtime DESC";
             $params = array();
             $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $params[] = array(':sdate', $start_date, \PDO::PARAM_STR);
-            $params[] = array(':edate', $end_date, \PDO::PARAM_STR);
             $arrCache = $this->getMultipleRows($sql, $params);
             foreach ($arrCache as $cache) {
                 $sql = "SELECT json FROM cnam_cp WHERE id = :cpid AND hash = :cphash";
@@ -971,11 +969,9 @@ class API
             $_month = $em[6] + 1;
             $end_date = $_year . '-0' . $_month . '-01';
         }
-        $sql = "SELECT t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime AS addtime FROM cnam_cache t1 LEFT JOIN log t2 ON t1.logid = t2.id WHERE t2.uid = :uid AND t2.modtime >= DATE :sdate AND t2.modtime < DATE :edate ORDER BY t2.modtime DESC";
+        $sql = "SELECT t1.cp_id, t1.cp_hash, t1.lon, t1.lat, t2.modtime AS addtime FROM cnam_cache t1 LEFT JOIN log t2 ON t1.logid = t2.id WHERE t2.uid = :uid AND t2.modtime >= DATE '{$start_date}' AND t2.modtime < DATE '{$end_date}' ORDER BY t2.modtime DESC";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-        $params[] = array(':sdate', $start_date, \PDO::PARAM_STR);
-        $params[] = array(':edate', $end_date, \PDO::PARAM_STR);
         $arrCache = $this->getMultipleRows($sql, $params);
         foreach ($arrCache as $cache) {
             $sql = "SELECT json FROM cnam_cp WHERE id = :cpid AND hash = :cphash";
