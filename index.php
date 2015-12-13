@@ -309,7 +309,6 @@ if ($cmd[0]) {
                     isAuth($cmd);
                     $title = 'Личный кабинет';
                     $top_rubrics = $api->getRubricList($_SESSION['apikey'], 'www.lead4crm.ru');
-                    echo $top_rubrics;
                     $top_rubrics = json_decode($top_rubrics, true);
                     $cOptions = array(
                         'apikey' => $_SESSION['apikey'],
@@ -398,6 +397,8 @@ if ($cmd[0]) {
 				'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/',
             );
 			$options = array_merge($options, $api->getOAuthLoginURL(), $api->getMenuUrl());
+
+            print_r($options);
 			
 			if (count($cOptions) > 0)
 				$options = array_merge($options, $cOptions);
