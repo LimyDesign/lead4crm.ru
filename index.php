@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 session_start();
 
 if (isset($_SERVER['HTTP_ORIGIN']))
