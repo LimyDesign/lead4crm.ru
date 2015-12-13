@@ -43,11 +43,13 @@ $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
-for ($i=0;$i<sizeof($scriptName);$i++) {
+for ($i = 0; $i < count($scriptName); $i++) {
 	if ($requestURI[$i] == $scriptName[$i])
 		unset($requestURI[$i]);
 }
 $cmd = array_values($requestURI);
+if ($isAdmin($cmd))
+    print_r($cmd);
 
 if ($cmd[0]) {
     if ($cmd[0] == 'logout') {
