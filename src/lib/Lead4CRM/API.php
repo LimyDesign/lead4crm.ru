@@ -282,7 +282,7 @@ class API
             $arrCountries[$country['id']]['name'] = $country['name'];
             $sql = "SELECT id, name, parent_id FROM cities WHERE country_id = :cid ORDER BY name ASC";
             $param = array();
-            $param[] = array(':uid', $country['id'], \PDO::PARAM_INT);
+            $param[] = array(':cid', $country['id'], \PDO::PARAM_INT);
             $cities = $this->getMultipleRows($sql, $param);
             $arrCities = array();
             foreach ($cities as $city) {
