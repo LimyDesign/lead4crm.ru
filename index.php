@@ -48,7 +48,7 @@ for ($i = 0; $i < count($scriptName); $i++) {
 		unset($requestURI[$i]);
 }
 foreach ($requestURI as $key => $uri) {
-    if (is_null($uri))
+    if ($uri == '')
         unset($requestURI[$key]);
 }
 
