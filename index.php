@@ -323,10 +323,10 @@ if ($cmd[0]) {
         $options = array_merge($options, $cOptions);
 
     if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig') && $cmd[0] != '403') {
-        echo $twig->render($cmd[0].'.twig', $options);
+        $render = $twig->render($cmd[0].'.twig', $options);
     } else {
         header("HTTP/1.0 404 Not Found");
-        echo $twig->render('404.twig', $options);
+        $render = $twig->render('404.twig', $options);
     }
 } else {
 	$options = array(
@@ -334,8 +334,15 @@ if ($cmd[0]) {
 		'userid' => $_SESSION['userid'],
 		'currentUrl' => 'https://' . $_SERVER['SERVER_NAME']);
 	$options = array_merge($options, $api->getOAuthLoginURL(), $api->getMenuUrl());
-	echo $twig->render('index.twig', $options);
+	$render = $twig->render('index.twig', $options);
 }
+
+if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
+    ob_start('ob_gzhandler');
+else
+    ob_start();
+
+echo $render;
 
 function isAdmin($cmd) {
 	if (!$_SESSION['is_admin']) {
