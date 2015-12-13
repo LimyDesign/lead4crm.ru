@@ -2219,6 +2219,7 @@ class API
             array(
                 'error' => $event->getCode(),
                 'message' => $event->getMessage(),
+                'line' => $event->getLine(),
             )
         );
         die($json_message);
