@@ -48,7 +48,7 @@ for ($i = 0; $i < count($scriptName); $i++) {
 		unset($requestURI[$i]);
 }
 foreach ($requestURI as $key => $uri) {
-    if ($uri == '')
+    if ($uri == '' || preg_match('@^\?@i', $uri))
         unset($requestURI[$key]);
 }
 
