@@ -51,9 +51,7 @@ foreach ($requestURI as $key => $uri) {
     if ($uri == '' || preg_match('@^\?@i', $uri))
         unset($requestURI[$key]);
 }
-
 $cmd = array_values($requestURI);
-print_r($cmd);
 
 if ($cmd[0]) {
     if ($cmd[0] == 'logout') {
