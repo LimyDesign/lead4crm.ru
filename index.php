@@ -307,9 +307,9 @@ if ($cmd[0]) {
 
 				case 'cabinet':
                     isAuth($cmd);
-                    echo 'te';
                     $title = 'Личный кабинет';
                     $top_rubrics = $api->getRubricList($_SESSION['apikey'], 'www.lead4crm.ru');
+                    echo $top_rubrics;
                     $top_rubrics = json_decode($top_rubrics, true);
                     $cOptions = array(
                         'apikey' => $_SESSION['apikey'],
