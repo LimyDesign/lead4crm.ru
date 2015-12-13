@@ -33,7 +33,7 @@ $(document).ready(function()
     placement: 'auto'
   });
   $.post('/getUserData/', function(data) {
-    $('#balans').number(data.balans, 2, '.', ' ');
+    $('#balance').number(data.balance, 2, '.', ' ');
     $('#tariff').text(data.tariff);
     $('#qty').number(data.qty, 0, '.', ' ');
     qty = data.qty;
@@ -1022,7 +1022,7 @@ function changeMark(id) {
 ========================================================================================= */
 function selectText(element) {
     var doc = document;
-    var text = doc.getElementById(element);    
+    var text = doc.getElementById(element);
 
     if (doc.body.createTextRange) { // ms
         var range = doc.body.createTextRange();

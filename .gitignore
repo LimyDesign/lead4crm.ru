@@ -2,6 +2,7 @@
 .env
 .env~
 .gitignore~
+.idea
 email
 email.cc
 config.json
