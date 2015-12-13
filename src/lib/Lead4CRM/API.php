@@ -2220,6 +2220,7 @@ class API
                 'error' => $event->getCode(),
                 'message' => $event->getMessage(),
                 'line' => $event->getLine(),
+                'trace' => $event->getTrace(),
             )
         );
         die($json_message);
