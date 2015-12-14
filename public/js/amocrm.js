@@ -3,7 +3,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 (function($){
     var $citysearch = $('[id^=inputCitySearch]'),
-        $inputRubricSearch = $('#inputRubricSearch');
+        $inputRubricSearch = $('#inputRubricSearch'),
+        $inputTextSearch = $('#inputTextSearch'),
+        $formTextSearch = $('#formTextSearch'),
+        $resultTable = $('#resultTable');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -57,20 +60,20 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         }, 'json');
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 40; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    $("html:not(.legacy) table").styckyTableHeaders();
+    $resultTable.styckyTableHeaders();
 
-    $('#formTextSearch').submit(function(e){
+    $formTextSearch.submit(function(e){
         e.preventDefault();
         var inputCity = $citysearch.val(),
-            inputText = $('#inputTextSearch').val();
+            inputText = $inputTextSearch.val();
         if (!inputCity) {
             $citysearch.focus();
             return false;
         } else if (!inputText) {
-            $('#inputTextSearch').focus();
+            $inputTextSearch.focus();
             return false;
         }
     });
