@@ -4,9 +4,16 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 (function($){
     var $citysearch = $('#inputCitySearch');
-    $citysearch.typeahead({
-        source: $.get('/getSupportCities/'),
-        autocomplete: true
+    $.get('/getSupportCities/', function(data){
+        $citysearch.typeahead({
+            source: data,
+            autocomplete: true
+        });
+        data.forEach(function (entiry) {
+            if (entiry.name == usercity) {
+                $citysearch.val(usercity);
+            }
+        });
     });
 
     $('#formTextSearch').submit(function(e){
