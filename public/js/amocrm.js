@@ -3,16 +3,12 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     usercity = getParamByName('uc');
 
 (function($){
-    var $typeahead = $('#inputCitySearch');
-    $.get('/getSupportCities/', function(data){
-        $typeahead.typeahead({ source: data, autoselect: true });
-        $.each(data, function(key, value) {
-            if (value == usercity) {
-                $typeahead.val(usercity);
-                return false;
-            }
-        });
-    }, 'json');
+    var $citysearch = $('#inputCitySearch');
+    $citysearch.tagsinput({
+        itemValue: 'id',
+        itemText: 'name',
+        typeahead: $.get('/getSupportCities/')
+    });
 
     $('#formTextSearch').submit(function(e){
         e.preventDefault();

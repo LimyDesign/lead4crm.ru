@@ -4,6 +4,7 @@
 <html>
 <head>
     {% include 'layout/amo-header.twig' %}
+    <link rel="stylesheet" href="/public/css/bootstrap-tagsinput.min.css">
 </head>
 <body>
 <h3>Поиск и импорт компаний из справочника 2ГИС</h3>
@@ -25,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inputCitySearch">Город:</label>
-                        <input type="text" class="form-control" id="inputCitySearch" data-provide="typeahead" autocomplete="off">
+                        <input type="text" class="form-control" id="inputCitySearch" data-provide="typeahead" data-role="tagsinput" autocomplete="off">
                         <p class="help-block">Начните вводить город в котором собираетесь выполнять поиск компаний. Если данный город поддерживается нашей системой, то он появится в списке.</p>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
@@ -45,6 +46,7 @@
     </div>
 </div>
 {% include 'layout/scripts.twig' %}
+<script type="text/javascript" src="/public/js/bootstrap-tagsinput.min.js"></script>
 <script type="text/javascript" src="/public/js/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript" src="/public/js/amocrm.min.js?uc={{ usercity }}" data-name="amocrm"></script>
 </body>
