@@ -2,9 +2,7 @@
     var $typeahead = $('#inputCitySearch');
     $typeahead.typeahead({
         source: function(){
-            $.get('/getSupportCities/', function(data){
-                return data;
-            });
+            return $.get('/getSupportCities/');
         },
         autoselect: true
     });
