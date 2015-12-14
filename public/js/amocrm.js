@@ -67,7 +67,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     $resultTable.stickyTableHeaders();
 
     $tabs.on('shown.bs.tab', function(e) {
-        console.log(e.target);
+        console.log(e.target.attr('aria-controls'));
     });
     Ps.initialize(document.getElementById('ps'));
 
