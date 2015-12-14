@@ -277,6 +277,7 @@ if ($cmd[0]) {
             $cOptions = array(
                 'isAMOUser' => true,
                 'request' => $_REQUEST,
+                'usercity' => $api::getUserCityByIP(),
             );
         }
     } elseif ($cmd[0] == 'b24-install' || $cmd[0] == 'b24-index') {
