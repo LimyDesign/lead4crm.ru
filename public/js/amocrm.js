@@ -8,7 +8,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $formTextSearch = $('#formTextSearch'),
         $resultTable = $('#resultTable'),
         $tabs = $('a[data-toggle="tab"]'),
-        $body = $('html, body');
+        $body = $('.tab-content');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
