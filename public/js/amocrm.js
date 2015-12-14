@@ -1,11 +1,10 @@
 (function($){
     var $typeahead = $('#inputCitySearch');
     $typeahead.typeahead({
-        source: function(handleData){
+        source: function(){
             $.get('/getSupportCities/', function(data){
-                handleData(data);
+                return data;
             });
-            return handleData;
         },
         autoselect: true
     });
