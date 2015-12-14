@@ -63,7 +63,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     for (var i = 0; i < 10; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    $resultTable.styckyTableHeaders();
+    $resultTable.stickyTableHeaders();
 
     $formTextSearch.submit(function(e){
         e.preventDefault();
