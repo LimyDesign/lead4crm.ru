@@ -4022,7 +4022,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav-tabs > li {
     /*float: left;*/
-    /*margin-bottom: -1px;*/
+    margin-bottom: -1px;
     float: none;
     display: inline-block;
     *display: inline;
