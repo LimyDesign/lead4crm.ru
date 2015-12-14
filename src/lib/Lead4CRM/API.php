@@ -1332,9 +1332,9 @@ class API
         if (file_exists(__DIR__.'/cities.json')) {
             $json = file_get_contents(__DIR__.'/cities.json');
         } else {
-            $sql = "SELECT name FROM cities ORDER BY name ASC";
+            $sql = "SELECT id, name FROM cities ORDER BY name ASC";
             $cities = $this->getMultipleRows($sql, array());
-            $json = json_encode(array('city' => $cities), JSON_UNESCAPED_UNICODE);
+            $json = json_encode($cities, JSON_UNESCAPED_UNICODE);
             file_put_contents(__DIR__.'/cities.json', $json);
         }
         return $json;

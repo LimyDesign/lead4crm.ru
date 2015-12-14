@@ -62,7 +62,7 @@
 		$(document).ready(function() {
 			$.post('/getSupportCities/', function(data) {
 				$('#total_cities').text(data.city.length);
-				data.city.forEach(function(entry) {
+				data.forEach(function(entry) {
 					$('#cities').append('<div class="ticket"><span class="circle"></span><a href="#.">'+entry.name+'</a></div>');
 				});
 			});
