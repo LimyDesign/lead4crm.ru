@@ -51,7 +51,7 @@
                                 </optgroup>
                             {% endfor %}
                         </select>
-                        <p class="help-block">Начните вводить город в котором собираетесь выполнять поиск компаний. Если данный город поддерживается нашей системой, то он появится в списке.</p>
+                        <p class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</p>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
@@ -69,8 +69,24 @@
                     </div>
                     <div class="form-group">
                         <label for="inputCitySearch">Город:</label>
-                        <input type="text" class="form-control" id="inputCitySearch" data-provide="typeahead" autocomplete="off">
-                        <p class="help-block">Начните вводить город в котором собираетесь выполнять поиск компаний. Если данный город поддерживается нашей системой, то он появится в списке.</p>
+                        <select name="selectSearchCity" class="selectpicker" id="inputCitySearch" data-live-search="true" data-width="100%" data-style="btn-default input" title="[ выберите город ]">
+                            {% for country in countries %}
+                                <optgroup label="{{ country.name }}">
+                                    {% for city in country.cities %}
+                                        {% if city.selected %}
+                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}" selected>
+                                                {{ city.name }}
+                                            </option>
+                                        {% else %}
+                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}">
+                                                {{ city.name }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                        <p class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</p>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
                 </form>
