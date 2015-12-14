@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
+        <item url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.jquery.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/classie.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/jquery.stickytableheaders.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/amocrm.min.js" />
@@ -23,14 +24,16 @@
       <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/classie.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/jquery.stickytableheaders.min.js" />
-      <root url="file://$PROJECT_DIR$/public/js/amocrm.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/webcall.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/cabinet.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
-      <root url="file://$PROJECT_DIR$/src/widgets/amocrm/script.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/modalEffects.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.jquery.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/amocrm.min.js" />
+      <root url="file://$PROJECT_DIR$/src/widgets/amocrm/script.min.js" />
     </CLASSES>
     <SOURCES />
   </library>

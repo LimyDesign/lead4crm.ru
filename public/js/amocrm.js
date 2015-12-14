@@ -7,7 +7,8 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
         $resultTable = $('#resultTable'),
-        $tabs = $('a[data-toggle="tab"]');
+        $tabs = $('a[data-toggle="tab"]'),
+        $body = $('html, body');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -67,9 +68,12 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     $resultTable.stickyTableHeaders();
 
     $tabs.on('shown.bs.tab', function(e) {
-        console.log(e.target.attr('aria-controls'));
+        if ($(e.target).attr('aria-controls') == 'result') {
+            $body.perfectScrollbar();
+        } else {
+            $body.perfectScrollbar('destroy');
+        }
     });
-    Ps.initialize(document.getElementById('ps'));
 
     $formTextSearch.submit(function(e){
         e.preventDefault();
