@@ -61,11 +61,11 @@
 	<script>
 		$(document).ready(function() {
 			$.post('/getSupportCities/', function(data) {
-				$('#total_cities').text(data.city.length);
+				$('#total_cities').text(data.length);
 				data.forEach(function(entry) {
 					$('#cities').append('<div class="ticket"><span class="circle"></span><a href="#.">'+entry.name+'</a></div>');
 				});
-			});
+			}, 'json');
 		});
 	</script>
 	{# {% endjshrink %} #}
