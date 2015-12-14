@@ -28,7 +28,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             inputText = $('#inputTextSearch').val();
         if (!inputCity || !inputText) {
             alert('Необходимо заполнить все поля.');
-            return;
+            return false;
         }
     });
 })(jQuery);
