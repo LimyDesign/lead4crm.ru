@@ -6,7 +6,8 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     var $typeahead = $('#inputCitySearch');
     $.get('/getSupportCities/', function(data){
         $typeahead.typeahead({ source: data, autoselect: true });
-        $typeahead.val(usercity);
+        if ($.inArray(usercity, data) > -1)
+            $typeahead.val(usercity);
     }, 'json');
 
     $('#formTextSearch').submit(function(e){
