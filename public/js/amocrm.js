@@ -1,11 +1,8 @@
 (function($){
     var $typeahead = $('#inputCitySearch');
     $.get('/getSupportCities/', function(data){
-        $typeahead({ source: data });
+        $typeahead.typeahead({ source: data, autoselect: true });
     }, 'json');
-    $typeahead.typeahead({
-        autoselect: true
-    });
     $typeahead.change(function() {
         var current = $typeahead.typeahead("getActive");
         if (current) {
