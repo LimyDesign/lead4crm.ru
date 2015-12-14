@@ -17,7 +17,11 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     });
     $citysearch.change(function() {
         var current = $citysearch.typeahead("getActive");
-        if (!current) {
+        if (current) {
+            if (current.name != $citysearch.val()) {
+                $citysearch.val('');
+            }
+        } else {
             $citysearch.val('');
         }
     });
