@@ -97,7 +97,7 @@ define(['jquery', 'lib/components/base/modal'], function($, Modal) {
                     hash = self.system().amohash,
                     subdomain = self.system().subdomain,
                     apikey = self.params.api_key,
-                    data = '<h2 class="content__top__preset__caption">' + lang.modal_title + '</h2><div id="lead4crmwidget"><iframe style="width: 100%; height: 405px;" src="https://www.lead4crm.ru/amo-index/?apikey=' + encodeURIComponent(apikey) + '&login=' + encodeURIComponent(login) + '&hash=' + encodeURIComponent(hash) + '&subdomain=' + encodeURIComponent(subdomain) + '"></iframe></div>';
+                    data = '<div id="lead4crmwidget"><iframe style="width: 100%; height: 405px;" src="https://www.lead4crm.ru/amo-index/?apikey=' + encodeURIComponent(apikey) + '&login=' + encodeURIComponent(login) + '&hash=' + encodeURIComponent(hash) + '&subdomain=' + encodeURIComponent(subdomain) + '"></iframe></div>';
                 $button.on(AMOCRM.click_event + self.ns, function() {
                     new Modal({
                         class_name: 'modal-lead4crm',
