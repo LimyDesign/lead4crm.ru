@@ -31,7 +31,23 @@
                     </div>
                     <div class="form-group">
                         <label for="inputCitySearch">Город:</label>
-                        <input type="text" class="form-control" id="inputCitySearch" data-provide="typeahead" autocomplete="off">
+                        <select name="selectSearchCity" class="selectpicker" id="inputCitySearch" data-live-search="true" data-width="100%" data-style="btn-default input" title="[ выберите город ]">
+                            {% for country in countries %}
+                                <optgroup label="{{ country.name }}">
+                                    {% for city in country.cities %}
+                                        {% if city.selected %}
+                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}" selected>
+                                                {{ city.name }}
+                                            </option>
+                                        {% else %}
+                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}">
+                                                {{ city.name }}
+                                            </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
                         <p class="help-block">Начните вводить город в котором собираетесь выполнять поиск компаний. Если данный город поддерживается нашей системой, то он появится в списке.</p>
                     </div>
                     <button type="submit" class="btn btn-primary">Найти</button>
@@ -80,7 +96,7 @@
 {% include 'layout/scripts.twig' %}
 <script type="text/javascript" src="/public/js/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript" src="/public/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="/public/js/amocrm.min.js?uc={{ usercity }}" data-name="amocrm"></script>
+<script type="text/javascript" src="/public/js/amocrm.min.js?apikey={{ request.apikey }}&subdomain={{ request.subdomain }}" data-name="amocrm"></script>
 </body>
 </html>
 {% endspaceless %}
