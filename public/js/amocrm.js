@@ -6,8 +6,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputRubricSearch = $('#inputRubricSearch'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
-        $resultTable = $('#resultTable'),
-        $body = $('html, body');
+        $resultTable = $('#resultTable');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -65,7 +64,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $('tbody tr').clone().appendTo('table');
     }
     $resultTable.stickyTableHeaders();
-    Ps.initialize($body);
+    Ps.initialize(document.getElementById('ps'));
 
     $formTextSearch.submit(function(e){
         e.preventDefault();
