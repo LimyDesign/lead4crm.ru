@@ -9,7 +9,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $.each(data, function(key, value) {
             if (value == usercity) {
                 $typeahead.val(usercity);
-                return;
+                return false;
             }
         });
     }, 'json');
