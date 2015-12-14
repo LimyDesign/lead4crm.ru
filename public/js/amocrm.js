@@ -4,7 +4,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 (function($){
     var $citysearch = $('#inputCitySearch');
-    $.get('/getSupportCities/', function(data){
+    $.get('/getSupportCities/', function(data) {
         $citysearch.typeahead({
             source: data,
             autocomplete: true
@@ -14,6 +14,12 @@ var self = document.querySelector('script[data-name="amocrm"]'),
                 $citysearch.val(usercity);
             }
         });
+    });
+    $citysearch.change(function() {
+        var current = $citysearch.typeahead("getActive");
+        if (!current) {
+            $(this).val('');
+        }
     });
 
     $('#formTextSearch').submit(function(e){
