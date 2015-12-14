@@ -3,7 +3,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     usercity = getParamByName('uc');
 
 (function($){
-    var $citysearch = $('#inputCitySearch');
+    var $citysearch = $('[id^=inputCitySearch]');
     $.get('/getSupportCities/', function(data) {
         $citysearch.typeahead({
             source: data,
