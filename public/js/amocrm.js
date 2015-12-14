@@ -33,8 +33,11 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         e.preventDefault();
         var inputCity = $citysearch.val(),
             inputText = $('#inputTextSearch').val();
-        if (!inputCity || !inputText) {
-            alert('Необходимо заполнить все поля.');
+        if (!inputCity) {
+            $citysearch.focus();
+            return false;
+        } else if (!inputText) {
+            $('#inputTextSearch').focus();
             return false;
         }
     });
