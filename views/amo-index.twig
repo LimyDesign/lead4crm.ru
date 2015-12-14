@@ -9,20 +9,25 @@
 <h3>Поиск и импорт компаний из справочника 2ГИС</h3>
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#textsearch" aria-controls="textsearch" role="tab" data-toggle="tab">Текстовый ассоциативный поиск</a></li>
-    <li role="presentation"><a href="#rubricsearch" aria-controls="rubricsearch" role="tab" data-toggle="tab">Поиск по видам деятельности</a></li>
-    <li role="presentation"><a href="#result" aria-controls="result" role="tab" data-toggle="tab">Результаты поиска</a></li>
+    <li role="presentation" class="disabled"><a href="#rubricsearch" aria-controls="rubricsearch" role="tab" data-toggle="tab">Поиск по видам деятельности</a></li>
+    <li role="presentation" class="disabled"><a href="#result" aria-controls="result" role="tab" data-toggle="tab">Результаты поиска</a></li>
 </ul>
 
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade in active" id="textsearch">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <p>Test1</p>
+                <form>
+                    <div class="form-group">
+                        <label for="inputTextSearch">Поиск:</label>
+                        <input type="text" class="form-control" id="inputTextSearch" placeholder="новостройки">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="rubricsearch">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <p>test2</p>
             </div>
