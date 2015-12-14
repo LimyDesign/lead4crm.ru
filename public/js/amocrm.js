@@ -25,6 +25,9 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             $citysearch.val('');
         }
     });
+    $citysearch.on('mouseup', function() {
+        $(this).select();
+    });
 
     $('#formTextSearch').submit(function(e){
         e.preventDefault();
