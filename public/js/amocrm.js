@@ -4,10 +4,9 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 (function($){
     var $citysearch = $('#inputCitySearch');
-    $citysearch.tagsinput({
-        itemValue: 'id',
-        itemText: 'name',
-        typeahead: $.get('/getSupportCities/')
+    $citysearch.typeahead({
+        source: $.get('/getSupportCities/'),
+        autocomplete: true
     });
 
     $('#formTextSearch').submit(function(e){
