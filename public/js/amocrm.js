@@ -18,7 +18,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     $citysearch.change(function() {
         var current = $citysearch.typeahead("getActive");
         if (!current) {
-            $(this).val('');
+            $citysearch.val('');
         }
     });
 
