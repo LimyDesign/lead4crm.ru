@@ -1,34 +1,9 @@
 var self = document.querySelector('script[data-name="amocrm"]'),
-    script_src = self.getAttribute('src'),
-    usercity = getParamByName('uc');
+    script_src = self.getAttribute('src');
 
 (function($){
     var $citysearch = $('[id^=inputCitySearch]'),
         $inputRubricSearch = $('#inputRubricSearch');
-    $.get('/getSupportCities/', function(data) {
-        $citysearch.typeahead({
-            source: data,
-            autocomplete: true
-        });
-        data.forEach(function (entiry) {
-            if (entiry.name == usercity) {
-                $citysearch.val(usercity);
-            }
-        });
-    });
-    $citysearch.change(function() {
-        var current = $citysearch.typeahead("getActive");
-        if (current) {
-            if (current.name != $citysearch.val()) {
-                $citysearch.val('');
-            }
-        } else {
-            $citysearch.val('');
-        }
-    });
-    $citysearch.on('mouseup', function() {
-        $(this).select();
-    });
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
