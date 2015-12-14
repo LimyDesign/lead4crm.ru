@@ -8,14 +8,24 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <h2>Поиск и импорт компаний из справочника 2ГИС</h2>
-        <p>API key: {{ request.apikey }}</p>
-        <p>Login: {{ request.login }}</p>
-        <p>Hash: {{ request.hash }}</p>
-        <p>Subdomain: {{ request.subdomain }}</p>
+        <h3>Поиск и импорт компаний из справочника 2ГИС</h3>
+        <ul class="nav nav-pills nav-justified" role="tablist">
+            <li role="presentation" class="active"><a href="#textsearch" aria-controls="textsearch" role="tab" data-toggle="tab">Текстовый ассоциативный поиск</a></li>
+            <li role="presentation"><a href="#rubricsearch" aria-controls="rubricsearch" role="tab" data-toggle="tab">Поиск по видам деятельности</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="textsearch">
+                Test1
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="rubricsearch">
+                test2
+            </div>
+        </div>
     </div>
 </div>
 {% include 'layout/scripts.twig' %}
+<script type="text/javascript" src="/public/js/amocrm.min.js"></script>
 </body>
 </html>
 {% endspaceless %}
