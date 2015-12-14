@@ -4018,10 +4018,15 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav-tabs {
     border-bottom: 1px solid #e7e7e7;
+    text-align: center;
 }
 .nav-tabs > li {
-    float: left;
-    margin-bottom: -1px;
+    /*float: left;*/
+    /*margin-bottom: -1px;*/
+    float: none;
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
 }
 .nav-tabs > li > a {
     margin-right: 2px;
