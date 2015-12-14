@@ -4,6 +4,11 @@
 <html>
 <head>
     {% include 'layout/amo-header.twig' %}
+    <style>
+        .tab-pane {
+            padding-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <h3>Поиск и импорт компаний из справочника 2ГИС</h3>
@@ -41,26 +46,22 @@
         </div>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="result">
-        <div class="container">
-            <div class="row">
-                <table class="table table-striped table-bordered" id="resultTable">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>Название компании</th>
-                        <th>Адрес</th>
-                        <th>Филиалов</th>
-                        <th>Ответственный</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td colspan="5" class="info">Воспользуйтесь один из методов поиска, чтобы получить результат.</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <table class="table table-striped table-bordered" id="resultTable">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Название компании</th>
+                <th>Адрес</th>
+                <th>Филиалов</th>
+                <th>Ответственный</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="5" class="info">Воспользуйтесь один из методов поиска, чтобы получить результат.</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 {% include 'layout/scripts.twig' %}
