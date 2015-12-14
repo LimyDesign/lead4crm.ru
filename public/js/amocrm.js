@@ -24,7 +24,12 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
     $('#formTextSearch').submit(function(e){
         e.preventDefault();
-        alert('Yo!');
+        var inputCity = $citysearch.val(),
+            inputText = $('#inputTextSearch').val();
+        if (!inputCity || !inputText) {
+            alert('Необходимо заполнить все поля.');
+            return;
+        }
     });
 })(jQuery);
 
