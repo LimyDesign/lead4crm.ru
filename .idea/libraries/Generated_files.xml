@@ -2,6 +2,7 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/classie.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/jquery.stickytableheaders.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/amocrm.min.js" />
@@ -10,8 +11,8 @@
         <item url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
         <item url="file://$PROJECT_DIR$/src/widgets/amocrm/script.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
-        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/modalEffects.min.js" />
+        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -19,6 +20,7 @@
       <root url="file://$PROJECT_DIR$/public/js/bootstrap3-typeahead.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap-tagsinput.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap3-typeahead.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/classie.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/jquery.stickytableheaders.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/amocrm.min.js" />
@@ -27,8 +29,8 @@
       <root url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
       <root url="file://$PROJECT_DIR$/src/widgets/amocrm/script.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
-      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/modalEffects.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
     </CLASSES>
     <SOURCES />
   </library>
