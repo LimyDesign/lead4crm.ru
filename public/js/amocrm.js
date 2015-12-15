@@ -6,7 +6,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputRubricSearch = $('#inputRubricSearch'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
-        $resultTable = $('#resultTable')
+        $resultTable = $('#resultTable'),
         $gototab = $('.gototab');
 
     if (localStorage.getItem('2GISRubrics')) {
