@@ -24,10 +24,10 @@
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-nl_NL.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-pt_BR.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-ro_RO.min.min.js" />
-        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-pl_PL.min.min.js" />
-        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.min.js" />
+        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-sk_SK.min.min.js" />
+        <item url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-ko_KR.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-ru_RU.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-sv_SE.min.min.js" />
@@ -36,6 +36,7 @@
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-tr_TR.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_CN.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_TW.min.min.js" />
+        <item url="file://$PROJECT_DIR$/public/js/sticky.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/classie.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
@@ -100,10 +101,10 @@
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-nl_NL.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-pt_BR.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-ro_RO.min.min.js" />
-      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-pl_PL.min.min.js" />
-      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-sk_SK.min.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/bootstrap-select.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-ko_KR.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-ru_RU.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-sv_SE.min.min.js" />
@@ -112,6 +113,7 @@
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-tr_TR.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_CN.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_TW.min.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/sticky.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/classie.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />

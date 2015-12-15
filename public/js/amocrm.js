@@ -73,9 +73,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         var selectCity = $(this).find('[name="selectSearchCity"]'),
             inputText = $inputTextSearch;
         if (!selectCity.val()) {
-            selectCity.focus();
+            $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
             return false;
         } else if (!inputText.val()) {
+            $.sticky('Введите текст поиска', { classList: 'important', position: 'top-center'});
             inputText.focus();
             return false;
         }
@@ -86,10 +87,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         var selectCity = $(this).find('[name="selectSearchCity"]'),
             selectRubric = $inputRubricSearch;
         if (!selectCity.val()) {
-            selectCity.focus();
+            $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
             return false;
         } else if (!selectRubric.val()) {
-            selectRubric.focus();
+            $.sticky('Выберите вид деятельности для поиска', { classList: 'important', position: 'top-center'});
             return false;
         }
     });
