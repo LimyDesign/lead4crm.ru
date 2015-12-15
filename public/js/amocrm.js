@@ -65,16 +65,16 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     for (var i = 0; i < 6; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    //$resultTable.stickyTableHeaders({ fixedOffset: $('.nav') });
-    $tbody.css('height', window.screen.availHeight - $tbody.offset().top - 70);
+    $resultTable.stickyTableHeaders({ fixedOffset: $('.nav') });
+    //$tbody.css('height', window.screen.availHeight - $tbody.offset().top - 70);
 
-    $tabs.on('shown.bs.tab', function(e) {
-        if ($(e.target).attr('aria-controls') == 'result') {
-            $tbody.perfectScrollbar();
-        } else {
-            $tbody.perfectScrollbar('destroy');
-        }
-    });
+    //$tabs.on('shown.bs.tab', function(e) {
+    //    if ($(e.target).attr('aria-controls') == 'result') {
+    //        $tbody.perfectScrollbar();
+    //    } else {
+    //        $tbody.perfectScrollbar('destroy');
+    //    }
+    //});
 
     $formTextSearch.submit(function(e){
         e.preventDefault();
