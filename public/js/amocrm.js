@@ -7,8 +7,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
         $resultTable = $('#resultTable'),
-        $tabs = $('a[data-toggle="tab"]'),
-        $tbody = $('tbody');
+        $tabs = $('a[data-toggle="tab"]');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -65,7 +64,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     for (var i = 0; i < 6; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    $resultTable.stickyTableHeaders({ fixedOffset: $resultTable });
+    $resultTable.stickyTableHeaders();
     //$tbody.css('height', window.screen.availHeight - $tbody.offset().top - 70);
 
     //$tabs.on('shown.bs.tab', function(e) {
