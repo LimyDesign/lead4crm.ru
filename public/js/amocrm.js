@@ -64,8 +64,8 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
     $gototab.click(function() {
         var target = $(this).attr('href');
-        console.log(target);
-        $(target).tab('show');
+        $('#main-tabs a:last').tab('show');
+        //$(target).tab('show');
     });
 
     $formTextSearch.submit(function(e){
