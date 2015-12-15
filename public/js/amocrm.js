@@ -76,7 +76,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
             return false;
         } else if (!inputText.val()) {
-            $.sticky('Введите текст поиска', { classList: 'important', position: 'top-center'});
+            $.sticky('Введите текст поиска', { classList: 'danger', position: 'top-center'});
             inputText.focus();
             return false;
         }
