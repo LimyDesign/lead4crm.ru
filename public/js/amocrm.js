@@ -65,7 +65,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     for (var i = 0; i < 6; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    $resultTable.stickyTableHeaders({ fixedOffset: $body });
+    $resultTable.stickyTableHeaders({ fixedOffset: $('.nav') });
     $body.css('height', window.screen.availHeight - $body.offset().top - 70);
 
     $tabs.on('shown.bs.tab', function(e) {
