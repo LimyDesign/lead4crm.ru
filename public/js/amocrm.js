@@ -8,7 +8,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $formTextSearch = $('#formTextSearch'),
         $resultTable = $('#resultTable'),
         $tabs = $('a[data-toggle="tab"]'),
-        $body = $('.tab-content');
+        $tbody = $resultTable.find('tbody');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -65,14 +65,14 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     for (var i = 0; i < 6; i++) {
         $('tbody tr').clone().appendTo('table');
     }
-    $resultTable.stickyTableHeaders({ fixedOffset: $('.nav') });
-    $body.css('height', window.screen.availHeight - $body.offset().top - 70);
+    //$resultTable.stickyTableHeaders({ fixedOffset: $('.nav') });
+    $tbody.css('height', window.screen.availHeight - $tbody.offset().top - 70);
 
     $tabs.on('shown.bs.tab', function(e) {
         if ($(e.target).attr('aria-controls') == 'result') {
-            $body.perfectScrollbar();
+            $tbody.perfectScrollbar();
         } else {
-            $body.perfectScrollbar('destroy');
+            $tbody.perfectScrollbar('destroy');
         }
     });
 
