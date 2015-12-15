@@ -6,8 +6,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputRubricSearch = $('#inputRubricSearch'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
-        $resultTable = $('#resultTable'),
-        $tabs = $('a[data-toggle="tab"]');
+        $resultTable = $('#resultTable');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -60,20 +59,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             }
         }, 'json');
     }
-
-    for (var i = 0; i < 6; i++) {
-        $('tbody tr').clone().appendTo('table');
-    }
     $resultTable.stickyTableHeaders();
-    //$tbody.css('height', window.screen.availHeight - $tbody.offset().top - 70);
-
-    //$tabs.on('shown.bs.tab', function(e) {
-    //    if ($(e.target).attr('aria-controls') == 'result') {
-    //        $tbody.perfectScrollbar();
-    //    } else {
-    //        $tbody.perfectScrollbar('destroy');
-    //    }
-    //});
 
     $formTextSearch.submit(function(e){
         e.preventDefault();
