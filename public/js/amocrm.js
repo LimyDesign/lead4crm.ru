@@ -2,10 +2,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
     script_src = self.getAttribute('src');
 
 (function($){
-    var $citysearch = $('[id^=inputCitySearch]'),
-        $inputRubricSearch = $('#inputRubricSearch'),
+    var $inputRubricSearch = $('#inputRubricSearch'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
+        $formRubricSearch = $('#formRubricSearch'),
         $resultTable = $('#resultTable'),
         $gototab = $('.gototab'),
         $tabs = $('#main-tabs');
@@ -68,15 +68,28 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $tabs.find('a[href="'+target+'"]').tab('show');
     });
 
-    $formTextSearch.submit(function(e){
+    $formTextSearch.submit(function(e) {
         e.preventDefault();
-        var inputCity = $citysearch.val(),
-            inputText = $inputTextSearch.val();
-        if (!inputCity) {
-            $citysearch.focus();
+        var selectCity = $(this).find('[name="selectSearchCity"]'),
+            inputText = $inputTextSearch;
+        if (!selectCity.val()) {
+            selectCity.focus();
             return false;
-        } else if (!inputText) {
-            $inputTextSearch.focus();
+        } else if (!inputText.val()) {
+            inputText.focus();
+            return false;
+        }
+    });
+
+    $formRubricSearch.submit(function(e) {
+        e.preventDefault();
+        var selectCity = $(this).find('[name="selectSearchCity"]'),
+            selectRubric = $inputRubricSearch;
+        if (!selectCity.val()) {
+            selectCity.focus();
+            return false;
+        } else if (!selectRubric.val()) {
+            selectRubric.focus();
             return false;
         }
     });
