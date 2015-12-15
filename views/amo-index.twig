@@ -5,7 +5,7 @@
 <head>
     {% include 'layout/amo-header.twig' %}
     <link rel="stylesheet" href="/public/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/public/css/sticky.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <style>
         .tab-pane {
             padding-top: 10px;
@@ -107,9 +107,9 @@
     </div>
 </div>
 {% include 'layout/scripts.twig' %}
-<script type="text/javascript" src="/public/js/sticky.min.js"></script>
 <script type="text/javascript" src="/public/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="/public/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script type="text/javascript" src="/public/js/amocrm.min.js?apikey={{ request.apikey }}&subdomain={{ request.subdomain }}" data-name="amocrm"></script>
 </body>
 </html>

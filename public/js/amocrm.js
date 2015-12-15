@@ -10,6 +10,24 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $gototab = $('.gototab'),
         $tabs = $('#main-tabs');
 
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
         var level2 = null,
@@ -73,10 +91,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         var selectCity = $(this).find('[name="selectSearchCity"]'),
             inputText = $inputTextSearch;
         if (!selectCity.val()) {
-            $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
+            toastr['error']('Выберите город для поиска');
             return false;
         } else if (!inputText.val()) {
-            $.sticky('Введите текст поиска', { classList: 'danger', position: 'top-center'});
+            toastr['error']('Введите текст поиска');
             inputText.focus();
             return false;
         }
@@ -86,10 +104,10 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         e.preventDefault();
         var selectCity = $(this).find('[name="selectSearchCity"]');
         if (!selectCity.val()) {
-            $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
+            toastr['error']('Выберите город для поиска');
             return false;
         } else if (!$inputRubricSearch.val()) {
-            $.sticky('Выберите вид деятельности для поиска', { classList: 'important', position: 'top-center'});
+            toastr['error']('Выберите вид деятельности для поиска');
             return false;
         }
     });

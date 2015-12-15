@@ -36,7 +36,6 @@
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-tr_TR.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_CN.min.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_TW.min.min.js" />
-        <item url="file://$PROJECT_DIR$/public/js/sticky.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/classie.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
@@ -79,6 +78,7 @@
       <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.jquery.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/perfect-scrollbar.jquery.min.js" />
+      <root url="file://$PROJECT_DIR$/public/js/sticky.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-sv_SE.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-tr_TR.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-ua_UA.min.js" />
@@ -113,7 +113,6 @@
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-tr_TR.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_CN.min.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-zh_TW.min.min.js" />
-      <root url="file://$PROJECT_DIR$/public/js/sticky.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/classie.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/jquery.main.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/bootstrap.min.js" />
