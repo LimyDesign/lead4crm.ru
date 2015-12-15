@@ -40,6 +40,7 @@
                         <p class="help-block">Данный тип поиска позволяет находить компании по любым критериям поиска, можно искать что угодно, результат скорее всего будет положительным. Для более точных результатов поиска пользуйтесь
                             <a href="#rubricsearch" class="gototab">поиском по видам деятельности</a>.</p>
                     </div>
+                    {% block city %}
                     <div class="form-group">
                         <label for="inputCitySearch">Город:</label>
                         <select name="selectSearchCity" class="selectpicker" id="inputCitySearch" data-live-search="true" data-width="100%" data-style="btn-default input" title="[ выберите город ]">
@@ -61,7 +62,10 @@
                         </select>
                         <p class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</p>
                     </div>
+                    {% endblock %}
+                    {% block btn_search %}
                     <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-search"></i> Найти</button>
+                    {% endblock %}
                 </form>
             </div>
         </div>
@@ -76,28 +80,8 @@
                         <p class="help-block">Выберите вид деятельности в котором собираетесь искать потенциальных клиентов. Этот рубрикатор даст более точную выборку компаний нежели ассоциативный текстовый поиск, в том случае, если вы не можете найти подходящий вид деятельности, то вы можете переключиться в
                             <a href="#textsearch" class="gototab">текстовый ассоциативный поиск</a> и там ввести искомую комбинацию.</p>
                     </div>
-                    <div class="form-group">
-                        <label for="inputCitySearch">Город:</label>
-                        <select name="selectSearchCity" class="selectpicker" id="inputCitySearch" data-live-search="true" data-width="100%" data-style="btn-default input" title="[ выберите город ]">
-                            {% for country in countries %}
-                                <optgroup label="{{ country.name }}">
-                                    {% for city in country.cities %}
-                                        {% if city.selected %}
-                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}" selected>
-                                                {{ city.name }}
-                                            </option>
-                                        {% else %}
-                                            <option value="{{ city.code }}" data-subtext="{{ city.children }}">
-                                                {{ city.name }}
-                                            </option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </optgroup>
-                            {% endfor %}
-                        </select>
-                        <p class="help-block">Выберите город в котором осуществляете поиск. По-умолчанию выбран город, в котором работает ваша компания, но если необходимо искать в другом городе, выбирайте смело другой город.</p>
-                    </div>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-search"></i> Найти</button>
+                    {% block city %}{% endblock %}
+                    {% block btn_search %}{% endblock %}
                 </form>
             </div>
         </div>
