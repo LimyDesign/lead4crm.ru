@@ -62,7 +62,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         }, 'json');
     }
 
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 6; i++) {
         $('tbody tr').clone().appendTo('table');
     }
     $resultTable.stickyTableHeaders({ fixedOffset: $body });
