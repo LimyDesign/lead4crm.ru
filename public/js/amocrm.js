@@ -66,7 +66,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $('tbody tr').clone().appendTo('table');
     }
     $resultTable.stickyTableHeaders();
-    $body.css('height', $body.outerHeight(true));
+    $body.css('height', screen.availHeight - $body.offset().top);
 
     $tabs.on('shown.bs.tab', function(e) {
         if ($(e.target).attr('aria-controls') == 'result') {
