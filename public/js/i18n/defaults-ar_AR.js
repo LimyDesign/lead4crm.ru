@@ -21,20 +21,27 @@
   }
 }(this, function (jQuery) {
 
+/*!
+ * Translated default messages for bootstrap-select.
+ * Locale: AR (Arabic)
+ * Author: Yasser Lotfy <y_l@alive.com>
+ */
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Aucune s&eacute;lection',
-    noneResultsText: 'Aucun r&eacute;sultat pour {0}',
+    noneSelectedText: 'لم يتم إختيار شئ',
+    noneResultsText: 'لا توجد نتائج مطابقة لـ {0}',
     countSelectedText: function (numSelected, numTotal) {
-      return (numSelected > 1) ? "{0} &eacute;l&eacute;ments s&eacute;lectionn&eacute;s" : "{0} &eacute;l&eacute;ment s&eacute;lectionn&eacute;";
+      return (numSelected == 1) ? "{0} خيار تم إختياره" : "{0} خيارات تمت إختيارها";
     },
     maxOptionsText: function (numAll, numGroup) {
       return [
-        (numAll > 1) ? 'Limite atteinte ({n} &eacute;l&eacute;ments max)' : 'Limite atteinte ({n} &eacute;l&eacute;ment max)',
-        (numGroup > 1) ? 'Limite du groupe atteinte ({n} &eacute;l&eacute;ments max)' : 'Limite du groupe atteinte ({n} &eacute;l&eacute;ment max)'
+        (numAll == 1) ? 'تخطى الحد المسموح ({n} خيار بحد أقصى)' : 'تخطى الحد المسموح ({n} خيارات بحد أقصى)',
+        (numGroup == 1) ? 'تخطى الحد المسموح للمجموعة ({n} خيار بحد أقصى)' : 'تخطى الحد المسموح للمجموعة ({n} خيارات بحد أقصى)'
       ];
     },
-    multipleSeparator: ', '
+    selectAllText: 'إختيار الجميع',
+    deselectAllText: 'إلغاء إختيار الجميع',
+    multipleSeparator: '، '
   };
 })(jQuery);
 
