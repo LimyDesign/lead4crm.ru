@@ -40,7 +40,7 @@
                         <p class="help-block">Данный тип поиска позволяет находить компании по любым критериям поиска, можно искать что угодно, результат скорее всего будет положительным. Для более точных результатов поиска пользуйтесь
                             <a href="#rubricsearch" class="gototab">поиском по видам деятельности</a>.</p>
                     </div>
-                    {% block select_city %}
+                    {% block city %}
                     <div class="form-group">
                         <label for="inputCitySearch">Город:</label>
                         <select name="selectSearchCity" class="selectpicker" id="inputCitySearch" data-live-search="true" data-width="100%" data-style="btn-default input" title="[ выберите город ]">
@@ -80,8 +80,8 @@
                         <p class="help-block">Выберите вид деятельности в котором собираетесь искать потенциальных клиентов. Этот рубрикатор даст более точную выборку компаний нежели ассоциативный текстовый поиск, в том случае, если вы не можете найти подходящий вид деятельности, то вы можете переключиться в
                             <a href="#textsearch" class="gototab">текстовый ассоциативный поиск</a> и там ввести искомую комбинацию.</p>
                     </div>
-                    {% block select_city %}{% endblock %}
-                    {% block btn_search %}{% endblock %}
+                    {{ block('city') }}
+                    {{ block('btn_search') }}
                 </form>
             </div>
         </div>
