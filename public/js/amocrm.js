@@ -7,7 +7,8 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $inputTextSearch = $('#inputTextSearch'),
         $formTextSearch = $('#formTextSearch'),
         $resultTable = $('#resultTable'),
-        $gototab = $('.gototab');
+        $gototab = $('.gototab'),
+        $tabs = $('#main-tabs');
 
     if (localStorage.getItem('2GISRubrics')) {
         var rubrics = JSON.parse(localStorage.getItem('2GISRubrics'));
@@ -64,7 +65,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
     $gototab.click(function() {
         var target = $(this).attr('href');
-        $('#main-tabs a:last').tab('show');
+        $tabs.find('a:last').tab('show');
         //$(target).tab('show');
     });
 
