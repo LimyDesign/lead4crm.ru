@@ -32,7 +32,7 @@ if (typeof jQuery === 'undefined') {
   // ============================================================
 
   function transitionEnd() {
-    var el = document.createElement('bootstrap')
+    var el = document.createElement('bootstrap-lumen')
 
     var transEndEventNames = {
       WebkitTransition : 'webkitTransitionEnd',

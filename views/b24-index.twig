@@ -216,7 +216,6 @@
 </body>
 </html>
 {% endspaceless %}
-{# {% jshrink %} #}
 <script>
 // Объявляем переменные
 var page = 1;
@@ -923,5 +922,4 @@ function decOfNum(number, titles)
   return titles[(number%100 > 4 && number%100 < 20) ? 2 : cases[(number%10 < 5) ? number%10 : 5]];
 }
 </script>
-{# {% endjshrink %} #}
 {% endif %}
