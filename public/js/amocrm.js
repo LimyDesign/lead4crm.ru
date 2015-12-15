@@ -84,12 +84,11 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
     $formRubricSearch.submit(function(e) {
         e.preventDefault();
-        var selectCity = $(this).find('[name="selectSearchCity"]'),
-            selectRubric = $inputRubricSearch;
+        var selectCity = $(this).find('[name="selectSearchCity"]');
         if (!selectCity.val()) {
             $.sticky('Выберите город для поиска', { classList: 'important', position: 'top-center'});
             return false;
-        } else if (!selectRubric.val()) {
+        } else if (!$inputRubricSearch.val()) {
             $.sticky('Выберите вид деятельности для поиска', { classList: 'important', position: 'top-center'});
             return false;
         }
