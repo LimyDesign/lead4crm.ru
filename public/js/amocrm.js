@@ -1,5 +1,7 @@
 var self = document.querySelector('script[data-name="amocrm"]'),
-    script_src = self.getAttribute('src');
+    script_src = self.getAttribute('src'),
+    search_text = '',
+    search_result = false;
 
 (function($){
     var $inputRubricSearch = $('#inputRubricSearch'),
@@ -48,17 +50,11 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             }
         });
         $inputRubricSearch.selectpicker('render');
-        var postData = {
-            importAPI: getParamByName('apikey'),
-            importDomain: getParamByName('subdomain') + '.amocrm.ru'
-        };
-        console.log(postData);
     } else {
         var postData = {
             importAPI: getParamByName('apikey'),
             importDomain: getParamByName('subdomain') + '.amocrm.ru'
         };
-        console.log(postData);
         $.post('/getRubricList/', postData, function (data) {
             if (data.error == 0) {
                 if (data.rubrics) {
@@ -94,15 +90,28 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
     $formTextSearch.submit(function(e) {
         e.preventDefault();
-        var selectCity = $(this).find('[name="selectSearchCity"]'),
-            inputText = $inputTextSearch;
+        var selectCity = $(this).find('[name="selectSearchCity"]');
         if (!selectCity.val()) {
             toastr['error']('Выберите город для поиска');
             return false;
-        } else if (!inputText.val()) {
+        } else if (!$inputTextSearch.val()) {
             toastr['error']('Введите текст поиска');
-            inputText.focus();
+            $inputTextSearch.focus();
             return false;
+        } else {
+            var _result = false;
+            if (search_text != $inputTextSearch.val()) {
+                _result = getSearch(selectCity.val(), $inputTextSearch.val(), 'text');
+                search_text = $inputTextSearch.val();
+                search_result = _result;
+            } else {
+                _result = search_result;
+            }
+            if (_result) {
+                $tabs.find('a:last').tab('show');
+            } else {
+                toastr['error']('По вашему запросу ничего не найдено. Попробуйте изменить условия поиска.');
+            }
         }
     });
 
@@ -116,9 +125,15 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             toastr['error']('Выберите вид деятельности для поиска');
             return false;
         } else {
-            var result = getSearch(selectCity.val(), $inputRubricSearch.val(), 'rubric');
-            console.log(selectCity.val(), $inputRubricSearch.find(':selected').text(), result);
-            if (result) {
+            var _result = false;
+            if (search_text != $inputRubricSearch.find(':selected').text()) {
+                _result = getSearch(selectCity.val(), $inputRubricSearch.find(':selected').text(), 'rubric');
+                search_text = $inputRubricSearch.find(':selected').text();
+                search_result = _result;
+            } else {
+                _result = search_result;
+            }
+            if (_result) {
                 $tabs.find('a:last').tab('show');
             } else {
                 toastr['error']('По вашему запросу ничего не найдено. Возможно компаний, занимающиеся данным видом деятельности в выбранном городе, нет.');
