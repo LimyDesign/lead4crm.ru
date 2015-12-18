@@ -53,6 +53,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             importAPI: getParamByName('apikey'),
             importDomain: getParamByName('subdomain') + '.amocrm.ru'
         };
+        console.log(postData);
         $.post('/getRubricList/', postData, function (data) {
             if (data.error == 0) {
                 if (data.rubrics) {
