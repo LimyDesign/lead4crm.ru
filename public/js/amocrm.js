@@ -111,7 +111,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             return false;
         } else {
             var result = getSearch(selectCity.val(), $inputRubricSearch.val(), 'rubric');
-            console.log(selectCity.val(), $inputRubricSearch.val(), result);
+            console.log(selectCity.val(), $inputRubricSearch.text(), result);
             if (result) {
                 $tabs.find('a:last').tab('show');
             } else {
