@@ -122,6 +122,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 })(jQuery);
 
 function getSearch(text, city, type) {
+    var rer = text + city + type;
     return true;
 }
 
