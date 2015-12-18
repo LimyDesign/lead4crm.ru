@@ -48,6 +48,11 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             }
         });
         $inputRubricSearch.selectpicker('render');
+        var postData = {
+            importAPI: getParamByName('apikey'),
+            importDomain: getParamByName('subdomain') + '.amocrm.ru'
+        };
+        console.log(postData);
     } else {
         var postData = {
             importAPI: getParamByName('apikey'),
