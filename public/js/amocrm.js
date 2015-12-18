@@ -105,6 +105,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
                 search_text = $inputTextSearch.val();
                 search_result = _result;
             } else {
+                alert('fff');
                 _result = search_result;
             }
             if (_result) {
