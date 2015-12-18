@@ -115,7 +115,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             if (result) {
                 $tabs.find('a:last').tab('show');
             } else {
-                alert('По вашему запросу ничего не найдено.');
+                toastr['error']('По вашему запросу ничего не найдено. Возможно компаний, занимающиеся данным видом деятельности в выбранном городе, нет.');
             }
         }
     });
@@ -123,7 +123,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 function getSearch(text, city, type) {
     var rer = text + city + type;
-    return true;
+    return false;
 }
 
 function getParamByName(name) {
