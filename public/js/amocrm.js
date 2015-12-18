@@ -109,13 +109,14 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         } else if (!$inputRubricSearch.val()) {
             toastr['error']('Выберите вид деятельности для поиска');
             return false;
-        }
-        var result = getSearch(selectCity.val(), $inputRubricSearch.val(), 'rubric');
-        console.log(selectCity.val(), $inputRubricSearch.val(), result);
-        if (result) {
-            $tabs.find('a:last').tab('show');
         } else {
-            alert('По вашему запросу ничего не найдено.');
+            var result = getSearch(selectCity.val(), $inputRubricSearch.val(), 'rubric');
+            console.log(selectCity.val(), $inputRubricSearch.val(), result);
+            if (result) {
+                $tabs.find('a:last').tab('show');
+            } else {
+                alert('По вашему запросу ничего не найдено.');
+            }
         }
     });
 })(jQuery);
