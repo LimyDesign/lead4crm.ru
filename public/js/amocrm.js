@@ -144,7 +144,7 @@ var self = document.querySelector('script[data-name="amocrm"]'),
 
 function getSearch(text, city, type) {
     var rer = text + city + type;
-    return false;
+    return true;
 }
 
 function getParamByName(name) {
