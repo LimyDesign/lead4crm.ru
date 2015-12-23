@@ -482,7 +482,7 @@ BX24.init(function() {
                     importData.importCompanyHash = importCompanyHash;
                     importData.assignedUserId = $('#assigned'+index).val();
                     $('#company'+index)
-                      .prop('checked', 0)
+                      .prop('checked', 0).attr('disabled', 'disabled')
                       .parent().parent().addClass('active');
                     $.post('/importCompany/', importData, function (data) {
                       if (data.error != '0')
