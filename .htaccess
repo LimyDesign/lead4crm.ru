@@ -22,5 +22,4 @@ RewriteRule ^ index.php [L]
 
 <FilesMatch ".(css|js|png|jpg|jpeg|svg)$">
     Header set Cache-Control "max-age=3600"
-    Header set ETag
 </FilesMatch>
