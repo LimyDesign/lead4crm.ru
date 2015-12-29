@@ -19,3 +19,8 @@ RewriteRule ^ index.php [L]
 	Deny from all
 	Allow from 127.0.0.1
 </Files>
+
+<FilesMatch ".(css|js|png|jpg|jpeg|svg)$">
+    Header set Cache-Control "max-age=3600"
+    Header set ETag
+</FilesMatch>
