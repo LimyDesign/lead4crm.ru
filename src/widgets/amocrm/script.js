@@ -50,10 +50,6 @@ define(['jquery', 'lib/components/base/modal'], function($, Modal) {
             });
         };
 
-        this.resizeModal = function() {
-          alert('Yo!');
-        };
-
         this.get_lead4crm_data = function(apikey, callback) {
             var lang = self.i18n('userLang'),
                 notify_data = {};

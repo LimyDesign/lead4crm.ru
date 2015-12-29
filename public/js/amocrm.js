@@ -1,6 +1,7 @@
 var self = document.querySelector('script[data-name="amocrm"]'),
     script_src = self.getAttribute('src'),
     search_text = '',
+    search_city = 0,
     search_result = false;
 
 (function($){
@@ -10,7 +11,8 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         $formRubricSearch = $('#formRubricSearch'),
         $resultTable = $('#resultTable'),
         $gototab = $('.gototab'),
-        $tabs = $('#main-tabs');
+        $tabs = $('#main-tabs'),
+        $selectAll = $('#selectAllID');
 
     toastr.options = {
         "closeButton": false,
@@ -101,8 +103,9 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         } else {
             var _result = false;
             if (search_text != $inputTextSearch.val()) {
-                _result = getSearch(selectCity.val(), $inputTextSearch.val(), 'text');
+                _result = getSearch(selectCity.val(), $inputTextSearch.val(), 1, 'text');
                 search_text = $inputTextSearch.val();
+                search_city = selectCity.val();
                 search_result = _result;
             } else {
                 _result = search_result;
@@ -127,8 +130,9 @@ var self = document.querySelector('script[data-name="amocrm"]'),
         } else {
             var _result = false;
             if (search_text != $inputRubricSearch.find(':selected').text()) {
-                _result = getSearch(selectCity.val(), $inputRubricSearch.find(':selected').text(), 'rubric');
+                _result = getSearch(selectCity.val(), $inputRubricSearch.find(':selected').text(), 1, 'rubric');
                 search_text = $inputRubricSearch.find(':selected').text();
+                search_city = selectCity.val();
                 search_result = _result;
             } else {
                 _result = search_result;
@@ -140,12 +144,35 @@ var self = document.querySelector('script[data-name="amocrm"]'),
             }
         }
     });
-})(jQuery);
 
-function getSearch(text, city, type) {
-    var rer = text + city + type;
-    return true;
-}
+    $selectAll.click(function() {
+        var checkedStatus = this.checked;
+        $resultTable.find('tbody tr td:first :checkbox').each(function() {
+            $(this).prop('checked', checkedStatus);
+        });
+    });
+
+    function getSearch(text, city, page, type) {
+        var _return = false,
+            requestURI = '/getDataSearch/';
+        var formData = {
+            searchAPI: getParamByName('apikey'),
+            searchDomain: getParamByName('subdomain') + '.amocrm.ru',
+            searchCity: city,
+            searchPage: page
+        };
+        if (type == 'rubric') {
+            formData.searchRubric = text;
+            requestURI = '/getDataSearchRubric/';
+        } else {
+            formData.searchText = text;
+        }
+        $.post(requestURI, formData, function (data) {
+
+        });
+        return _return;
+    }
+})(jQuery);
 
 function getParamByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
