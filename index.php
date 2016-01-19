@@ -22,16 +22,11 @@ require_once __DIR__.'/src/vendor/autoload.php';
 
 $conf = json_decode(file_get_contents(__DIR__.'/config.json'));
 
-if (isset($_REQUEST['clear_cache']))
-    $auto_reload = true;
-else
-    $auto_reload = false;
-
 $api = new Lead4CRM\API($conf);
 $loader = new Twig_Loader_Filesystem(__DIR__.'/views');
 $twig = new Twig_Environment($loader, array(
 	'cache' => __DIR__.'/cache',
-	'auto_reload' => $auto_reload,
+	'auto_reload' => true,
 	'optimizations' => -1
 ));
 // $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
