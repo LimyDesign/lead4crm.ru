@@ -279,9 +279,11 @@
               <li role="notification">
                 <a href="#tabNotification" aria-controls="tabNotification" role="tab" data-toggle="tab">Уведомления</a>
               </li>
+              {% if admin %}
               <li role="referal">
-                <a href="#tabReferal" aria-controls="tabReferal" role="tab" data-toggle="tab">Уведомления</a>
+                <a href="#tabReferal" aria-controls="tabReferal" role="tab" data-toggle="tab">Реферальная программа</a>
               </li>
+              {% endif %}
             </ul>
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane fade in active" id="tabBalans">
@@ -299,11 +301,9 @@
               <div role="tabpanel" class="tab-pane fade" id="tabNotification">
                 {% include 'layout/cabinet/notification.twig' %}
               </div>
-              {% if admin %}
               <div role="tabpanel" class="tab-pane fade" id="tabReferal">
                 {% include 'layout/cabinet/referal.twig' %}
               </div>
-              {% endif %}
             </div>
           </div>
         </div>
