@@ -230,6 +230,14 @@ if ($cmd[0]) {
         exit;
     } elseif ($cmd[0] == 'setReferal') {
         isAuth($cmd);
+        $data = array(
+            'uid' => $_SESSION['userid'],
+            'firm' => $_REQUEST['firm'],
+            'inn' => $_REQUEST['inn'],
+            'bik' => $_REQUEST['bik'],
+            'rs' => $_REQUEST['rs'],
+        );
+        $api->setUserReferal($data);
         exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';

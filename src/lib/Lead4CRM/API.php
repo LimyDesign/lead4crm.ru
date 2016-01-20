@@ -557,6 +557,23 @@ class API
     }
 
     /**
+     * Функция внесения данных в реферальную таблицу
+     *
+     * @param array $data Массив данных для добавления в реферальную таблицу
+     */
+    public function setUserReferal($data)
+    {
+        $sql = "INSERT INTO crm_referals (uid, firm, inn, bik, rs) VALUES (:uid, :firm, :inn, :bik, :rs)";
+        $params = array();
+        $params[] = array(':uid', $data['uid'], \PDO::PARAM_INT);
+        $params[] = array(':firm', $data['firm'], \PDO::PARAM_STR);
+        $params[] = array(':inn', $data['inn'], \PDO::PARAM_STR);
+        $params[] = array(':bik', $data['bik'], \PDO::PARAM_STR);
+        $params[] = array(':rs', $data['rs'], \PDO::PARAM_STR);
+        $this->postSqlQuery($sql, $params);
+    }
+
+    /**
      * Функция получает данные из справоника 2ГИС через API CNAM РФ по пользовательскому тексту.
      *
      * @param string $apikey Пользовательский ключ доступа.
