@@ -657,6 +657,11 @@ $(document).ready(function()
       $('#inputEmailAddress').focus();
     }
   });
+
+  $('#referalForm').submit(function(e){
+    e.preventDefault();
+    alert('hoy!');
+  });
 });
 
 /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
