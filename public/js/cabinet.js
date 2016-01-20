@@ -660,7 +660,23 @@ $(document).ready(function()
 
   $('#referalForm').submit(function(e){
     e.preventDefault();
-    alert('hoy!');
+    var $firm_name = $(this).find('#inputFirmName'),
+        $inn = $(this).find('#inputINN'),
+        $bik = $(this).find('#inputBIK'),
+        $rs = $(this).find('#inputRS'),
+        dataForm = {
+          firm: $firm_name,
+          inn: $inn,
+          bik: $bik,
+          rs: $rs
+        };
+    if (!$firm_name || !$inn || !$bik || !$rs) {
+      alert('Заполните все поля формы!');
+    } else {
+      $.post($(this).attr('action'), dataForm, function(data) {
+
+      });
+    }
   });
 });
 
