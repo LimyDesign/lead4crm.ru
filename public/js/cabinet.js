@@ -664,6 +664,7 @@ $(document).ready(function()
         $inn = $(this).find('#inputINN'),
         $bik = $(this).find('#inputBIK'),
         $rs = $(this).find('#inputRS'),
+        _alert = $('#refMessageSuccess'),
         dataForm = {
           firm: $firm_name,
           inn: $inn,
@@ -673,8 +674,8 @@ $(document).ready(function()
     if (!$firm_name || !$inn || !$bik || !$rs) {
       alert('Заполните все поля формы!');
     } else {
-      $.post($(this).attr('action'), dataForm, function(data) {
-
+      $.post($(this).attr('action'), dataForm).done(function() {
+        _alert.removeClass('hide');
       });
     }
   });
