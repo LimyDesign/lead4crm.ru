@@ -689,7 +689,7 @@ class API
                     $this->sendICQ('sendMsg', $user['icq_uin'], "За импорт компании списана сумма:\r\t{$cp->summ} руб.");
                 } else {
                     if ($cp->summ)
-                        $this->sendICQ('sendMsg', $user['icq_uin'], "За импорт компании:\r\t{$cp->name}\rСписана сумма:\r\t\".$cp->summ.\" руб.");
+                        $this->sendICQ('sendMsg', $user['icq_uin'], "За импорт компании:\r\t{$cp->name}\rСписана сумма:\r\t{$cp->summ} руб.");
                     else
                         $this->sendICQ('sendMsg', $user['icq_uin'], "Импортирована компания:\r\t{$cp->name}");
                 }
