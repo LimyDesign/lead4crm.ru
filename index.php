@@ -228,6 +228,9 @@ if ($cmd[0]) {
         else
             $api->getUserDataByUID($_SESSION['userid'], true);
         exit;
+    } elseif ($cmd[0] == 'setReferal') {
+        isAuth($cmd);
+        exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
     } elseif ($cmd[0] == 'about-us') {
