@@ -859,7 +859,6 @@
           "crm.company.list",
           {
             filter: {"TITLE": F_CNAME, "ADDRESS": F_CADDRESS},
-            order: {"DATE_CREATE": "ASC"},
             select: ["ID", "TITLE", "ADDRESS", "ASSIGNED_BY_ID"]
           },
           function (result_cl) {
