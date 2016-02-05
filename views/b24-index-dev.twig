@@ -850,11 +850,11 @@
         }
 
         var F_CNAME = [], F_CADDRESS = [];
-        console.log('DEBUG RESULT OUTPUT:',data.result);
         data.result.forEach(function(entry) {
           F_CNAME = F_CNAME.concat(entry.name);
           F_CADDRESS = F_CADDRESS.concat(entry.address)
         });
+        console.log('DEBUG RESULT OUTPUT:',F_CNAME, F_CADDRESS);
         BX24.callMethod(
           "crm.company.list",
           {
