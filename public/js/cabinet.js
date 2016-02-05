@@ -352,7 +352,7 @@ $(document).ready(function()
   ========================================================================================= */
   $('#yaform').submit(function() {
     $('#inputSum').number(true, 2, '.', '');
-    if ($('#inputSum').val() >= 100) {
+    if ($('#inputSum').val() >= 1) {
       return true;
     } else {
       $('#inputSum').number(true, 2, '.', ' ');
