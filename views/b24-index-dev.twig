@@ -870,7 +870,7 @@
                 result_cl.next();
               } else {
                 var statusExist = 0, assignedUserId = 0;
-                userList.forEarch(function(entry) {
+                userList.forEach(function(entry) {
                   selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.LAST_NAME+'</option>';
                 });
                 data.result.forEach(function(entry, index) {
