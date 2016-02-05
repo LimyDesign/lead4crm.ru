@@ -875,7 +875,7 @@
                   selectUserList += '<option value="'+entry.ID+'">'+entry.NAME+' '+entry.LAST_NAME+'</option>';
                 });
                 data.result.forEach(function(entry, index) {
-                  var CID = index + 1;
+                  var cId = index + 1;
                   for (var i in companyList) {
                     if (companyList[i].ADDRESS == entry.address && companyList[i].TITLE == entry.name) {
                       statusExist = 1;
