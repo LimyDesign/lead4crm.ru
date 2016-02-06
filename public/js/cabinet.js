@@ -701,6 +701,7 @@ $(document).ready(function()
         }
         $.get()
       } else {
+        $inn.focus();
         $.growl.error({title: 'Ошибка!', message: 'Неправильный ИНН. Введите верный ИНН.'});
       }
     }
