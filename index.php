@@ -239,6 +239,10 @@ if ($cmd[0]) {
         );
         $api->setUserReferal($data);
         exit;
+    } elseif ($cmd[0] == 'getBIKInfo') {
+        isAuth($cmd);
+        header("Content-Type: application/json");
+        echo $api->getBIKInfo($_REQUEST['bik']);
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
     } elseif ($cmd[0] == 'about-us') {

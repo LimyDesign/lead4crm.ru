@@ -574,6 +574,18 @@ class API
     }
 
     /**
+     * Функция просто выполняет прокладку между backend пользователя и сервисом предоставления информации по БИК.
+     *
+     * @param string $bik БИК
+     * @return string JSON ответ с результатами запроса.
+     */
+    public function getBIKInfo($bik)
+    {
+        $bik_search_url = "http://www.bik-info.ru/api.html?type=json&bik=" . $bik;
+        return file_get_contents($bik_search_url);
+    }
+
+    /**
      * Функция получает данные из справоника 2ГИС через API CNAM РФ по пользовательскому тексту.
      *
      * @param string $apikey Пользовательский ключ доступа.
