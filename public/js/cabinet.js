@@ -673,6 +673,7 @@ $(document).ready(function()
           rs: $rs
         };
     if (!$firm_name || !$inn || !$bik || !$rs) {
+      console.error('Не заполнены пользовательские поля формы регистрации в реферальной программе.');
       $.growl.error({message: 'Заполните все поля формы!'});
     } else {
       //$.post(_action, dataForm).done(function() {
