@@ -675,9 +675,9 @@ $(document).ready(function()
     if (!$firm_name || !$inn || !$bik || !$rs) {
       alert('Заполните все поля формы!');
     } else {
-      $.post(_action, dataForm).done(function() {
-        _alert.removeClass('hide');
-      });
+      //$.post(_action, dataForm).done(function() {
+      //  _alert.removeClass('hide');
+      //});
     }
   });
 });
