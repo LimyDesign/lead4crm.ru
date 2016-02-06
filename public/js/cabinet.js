@@ -673,7 +673,7 @@ $(document).ready(function()
           rs: $rs
         };
     if (!$firm_name || !$inn || !$bik || !$rs) {
-      alert('Заполните все поля формы!');
+      $.growl.error({message: 'Заполните все поля формы!'});
     } else {
       //$.post(_action, dataForm).done(function() {
       //  _alert.removeClass('hide');
