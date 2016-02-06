@@ -684,7 +684,7 @@ $(document).ready(function()
           var bik_search_url = 'http://www.bik-info.ru/api.html?type=json&bik=' + $bik_val;
           $.get(bik_search_url, function(data) {
             if (data.error) {
-              $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК номеру не найден ни один банк.'});
+              $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК не найден ни один банк.'});
             } else {
               if (checkRS($rs_val, $bik_val)) {
                 $.post(_action, dataForm).done(function() {
