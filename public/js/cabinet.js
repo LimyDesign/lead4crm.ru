@@ -677,13 +677,32 @@ $(document).ready(function()
           rs: $rs_val
         };
     if (!$firm_name_val || !$inn_val || !$bik_val || !$rs_val) {
-      console.error('Не заполнены пользовательские поля формы регистрации в реферальной программе.');
       $.growl.error({title: 'Ошибка!', message: 'Заполните все поля формы!'});
     } else {
-      console.log('РЕФЕРАЛЬНАЯ ПРОГРАММА: Отправка данных формы на сервер.', $firm_name, $inn, $bik, $rs);
-      //$.post(_action, dataForm).done(function() {
-      //  _alert.removeClass('hide');
-      //});
+      if (checkINN($inn_val)) {
+        if (isNumeric($bik_val) && $bik_val.length == 9) {
+          var bik_search_url = 'http://www.bik-info.ru/api.html?type=json&bik=' + $bik_val;
+          $.get(bik_search_url, function(data) {
+            if (data.error) {
+              $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК номеру не найден ни один банк.'});
+            } else {
+              if (checkRS($rs_val, $bik_val)) {
+                $.post(_action, dataForm).done(function() {
+                  $.growl.success({ title: "Успешно!", message: "Ваша заявка успешно отправлена." });
+                  _alert.removeClass('hide');
+                });
+              } else {
+                $.growl.error({ title: 'Ошибка!', message: 'Расчетный счет указан не правильно.' });
+              }
+            }
+          }, 'json');
+        } else {
+          $.growl.error({ title: 'Ошибка!', message: 'БИК должен состоять только из цифр и быть длинной 9 цифр.' });
+        }
+        $.get()
+      } else {
+        $.growl.error({title: 'Ошибка!', message: 'Неправильный ИНН. Введите верный ИНН.'});
+      }
     }
   });
 });
@@ -708,6 +727,39 @@ function greeting(element) {
         g.html('Доброй ночи&hellip;');
     }
   }
+}
+
+/* Функция проверки ИНН.
+ ========================================================================================= */
+function checkINN(num) {
+  num = "" + num;
+  num = num.split('');
+  if ((num.length == 10) && (num[9] == ((2 * num[0] + 4 * num[1] + 10 * num[2] + 3 * num[3] + 5 * num[4] + 9 * num[5] + 4 * num[6] + 6 * num[7] + 8 * num[8] % 11) % 10)))
+      return true;
+  else if ((num.length == 12) && ((num[10] == ((7 * num[0] + 2 * num[1] + 4 * num[2] + 10 * num[3] + 3 * num[4] + 5 * num[5] + 9 * num[6] + 4 * num[7] + 6 * num[8] + 8 * num[9]) % 11) % 10) && (num[11] == ((3 * num[0] + 7 * num[1] + 2 * num[2] + 4 * num[3] + 10 * num[4] + 3 * num[5] + 5 * num[6] + 9 * num[7] + 4 * num[8] + 6 * num[9] + 8 * num[10]) % 11) % 10)))
+      return true;
+  else
+      return false;
+}
+
+/* Функция проверки расчетного счета.
+ ========================================================================================= */
+function checkRS(account, bik) {
+  return checkBankAccount(bik.substr(6,3) + account);
+}
+
+/* Функция проверки правильности указания банковского счёта.
+ ========================================================================================= */
+function checkBankAccount(str) {
+  var result = false;
+  var sum = 0;
+  var v = [7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7,1,3,7,1];
+  for (var i = 0; i <= 22; i++) {
+    sum = sum + (Number(str.charAt(i)) * v[i]) % 10;
+  }
+  if (sum % 10 == 0)
+      result = true;
+  return result;
 }
 
 /* Функция прокрутки страницы к конкретному элементу.
