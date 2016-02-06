@@ -668,6 +668,7 @@ $(document).ready(function()
         $bik_val = $bik.val(),
         $rs = $(this).find('#inputRS'),
         $rs_val = $rs.val(),
+        _fieldset = $(this).find('fieldset'),
         _action = $(this).attr('action'),
         _alert = $('#refMessageSuccess'),
         dataForm = {
@@ -689,6 +690,7 @@ $(document).ready(function()
               $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК не найден ни один банк.'});
             } else {
               if (checkRS($rs_val, $bik_val)) {
+                _fieldset.attr('disabled', 'disabled');
                 $.post(_action, dataForm).done(function() {
                   $.growl.notice({ title: "УРА!", message: "Ваша заявка успешно отправлена." });
                   _alert.removeClass('hide');

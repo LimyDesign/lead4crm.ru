@@ -14,27 +14,29 @@
       <strong>Заявка успешно отправлена.</strong> Все заявки обрабатываются вручную, поэтому проявите терпение мы вас уведомим как только ваши данные будут проверены и утверждены.<br><br>В любом случае с вами свяжется наш специалист по электронному адресу ({{ email.address }}), указанному при авторизации через любой социальный сервис, если, конечно, вы не запретили передачу нам данных вашей электронной почты или, возможно, именно в этом социальном сервисе у вас не указана электронная почта.<br><br>Если в этом сообщении вы не увидели своей электронной почты, тогда свяжитесь с нами дополнительно по почте: <a href="mailto:help@lead4crm.ru">help@lead4crm.ru</a>.
     </div>
     <form action="/setReferal/" method="post" id="referalForm">
-      <div class="form-group">
-        <label for="inputFirmName">Название организации:</label>
-        <input type="text" class="form-control" id="inputFirmName" placeholder="ИП Беспалов Арсен Георгиевич">
-        <p class="help-block">Введите краткое или полное наименование вашей организации, главное чтобы было указана организацинно-правовая форма.</p>
-      </div>
-      <div class="form-group">
-        <label for="inputINN">ИНН:</label>
-        <input type="text" class="form-control" id="inputINN" placeholder="381004151548" maxlength="12">
-        <p class="help-block">Введите идентификационный номер налогоплатильщика.</p>
-      </div>
-      <div class="form-group">
-        <label for="inputBIK">БИК:</label>
-        <input type="text" class="form-control" id="inputBIK" placeholder="042520607" maxlength="9">
-        <p class="help-block">Введите банковский идентицикационный код.</p>
-      </div>
-      <div class="form-group">
-        <label for="inputRS">Р/с:</label>
-        <input type="text" class="form-control" id="inputRS" placeholder="40802810618350007723" maxlength="25">
-        <p class="help-block">Введите банковский расчетный счет вашей организации.</p>
-      </div>
-      <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-envelope"></i> Сохранить и сделать запрос на партнерство</button>
+      <fieldset>
+        <div class="form-group">
+          <label for="inputFirmName">Название организации:</label>
+          <input type="text" class="form-control" id="inputFirmName" placeholder="ИП Беспалов Арсен Георгиевич">
+          <p class="help-block">Введите краткое или полное наименование вашей организации, главное чтобы было указана организацинно-правовая форма.</p>
+        </div>
+        <div class="form-group">
+          <label for="inputINN">ИНН:</label>
+          <input type="text" class="form-control" id="inputINN" placeholder="381004151548" maxlength="12">
+          <p class="help-block">Введите идентификационный номер налогоплатильщика.</p>
+        </div>
+        <div class="form-group">
+          <label for="inputBIK">БИК:</label>
+          <input type="text" class="form-control" id="inputBIK" placeholder="042520607" maxlength="9">
+          <p class="help-block">Введите банковский идентицикационный код.</p>
+        </div>
+        <div class="form-group">
+          <label for="inputRS">Р/с:</label>
+          <input type="text" class="form-control" id="inputRS" placeholder="40802810618350007723" maxlength="25">
+          <p class="help-block">Введите банковский расчетный счет вашей организации.</p>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-envelope"></i> Сохранить и сделать запрос на партнерство</button>
+      </fieldset>
     </form>
     <h3>&nbsp;</h3>
   </div>
