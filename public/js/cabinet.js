@@ -661,18 +661,22 @@ $(document).ready(function()
   $('#referalForm').submit(function(e){
     e.preventDefault();
     var $firm_name = $(this).find('#inputFirmName'),
+        $firm_name_val = $firm_name.val(),
         $inn = $(this).find('#inputINN'),
+        $inn_val = $inn.val(),
         $bik = $(this).find('#inputBIK'),
+        $bik_val = $bik.val(),
         $rs = $(this).find('#inputRS'),
+        $rs_val = $rs.val(),
         _action = $(this).attr('action'),
         _alert = $('#refMessageSuccess'),
         dataForm = {
-          firm: $firm_name,
-          inn: $inn,
-          bik: $bik,
-          rs: $rs
+          firm: $firm_name_val,
+          inn: $inn_val,
+          bik: $bik_val,
+          rs: $rs_val
         };
-    if (!$firm_name || !$inn || !$bik || !$rs) {
+    if (!$firm_name_val || !$inn_val || !$bik_val || !$rs_val) {
       console.error('Не заполнены пользовательские поля формы регистрации в реферальной программе.');
       $.growl.error({message: 'Заполните все поля формы!'});
     } else {
