@@ -682,6 +682,7 @@ $(document).ready(function()
       if (checkINN($inn_val)) {
         if ($bik_val.length == 9) {
           var bik_search_url = 'http://www.bik-info.ru/api.html?type=json&bik=' + $bik_val;
+          console.log(bik_search_url);
           $.get(bik_search_url, function(data) {
             if (data.error) {
               $bik.focus();
