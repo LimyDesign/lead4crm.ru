@@ -678,7 +678,7 @@ $(document).ready(function()
         };
     if (!$firm_name_val || !$inn_val || !$bik_val || !$rs_val) {
       console.error('Не заполнены пользовательские поля формы регистрации в реферальной программе.');
-      $.growl.error({message: 'Заполните все поля формы!'});
+      $.growl.error({title: 'Ошибка!', message: 'Заполните все поля формы!'});
     } else {
       console.log('РЕФЕРАЛЬНАЯ ПРОГРАММА: Отправка данных формы на сервер.', $firm_name, $inn, $bik, $rs);
       //$.post(_action, dataForm).done(function() {
