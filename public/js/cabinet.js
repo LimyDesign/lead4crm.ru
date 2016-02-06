@@ -684,6 +684,7 @@ $(document).ready(function()
           var bik_search_url = 'http://www.bik-info.ru/api.html?type=json&bik=' + $bik_val;
           $.get(bik_search_url, function(data) {
             if (data.error) {
+              $bik.focus();
               $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК не найден ни один банк.'});
             } else {
               if (checkRS($rs_val, $bik_val)) {
@@ -692,6 +693,7 @@ $(document).ready(function()
                   _alert.removeClass('hide');
                 });
               } else {
+                $rs.focus();
                 $.growl.error({ title: 'Ошибка!', message: 'Расчетный счет указан не правильно.' });
               }
             }
