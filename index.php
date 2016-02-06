@@ -236,6 +236,8 @@ if ($cmd[0]) {
             'inn' => $_REQUEST['inn'],
             'bik' => $_REQUEST['bik'],
             'rs' => $_REQUEST['rs'],
+            'ks' => $_REQUEST['ks'],
+            'bank' => $_REQUEST['bank'],
         );
         $api->setUserReferal($data);
         exit;

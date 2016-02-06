@@ -670,6 +670,7 @@ $(document).ready(function()
         $rs_val = $rs.val(),
         _fieldset = $(this).find('fieldset'),
         _action = $(this).attr('action'),
+        _header = $('header'),
         _alert = $('#refMessageSuccess'),
         dataForm = {
           firm: $firm_name_val,
@@ -683,19 +684,23 @@ $(document).ready(function()
       if (checkINN($inn_val)) {
         if ($bik_val.length == 9) {
           var bik_search_url = '/getBIKInfo/?bik=' + $bik_val;
+          _fieldset.attr('disabled', 'disabled');
           $.get(bik_search_url, function(data) {
-            console.log(data);
             if (data.error) {
+              _fieldset.removeAttr('disabled');
               $bik.focus();
               $.growl.error({ title: 'Ошибка!', message: 'По вашему БИК не найден ни один банк.'});
             } else {
               if (checkRS($rs_val, $bik_val)) {
-                _fieldset.attr('disabled', 'disabled');
+                dataForm.ks = data.ks;
+                dataForm.bank = data.name + ' в г. ' + data.city;
                 $.post(_action, dataForm).done(function() {
                   $.growl.notice({ title: "УРА!", message: "Ваша заявка успешно отправлена." });
-                  _alert.removeClass('hide');
+                  var _alert_pos = _alert.position();
+                  _alert.removeClass('hide').animate({ scrollTop: _alert_pos.top + _header.height + 20}, 'fast');
                 });
               } else {
+                _fieldset.removeAttr('disabled');
                 $rs.focus();
                 $.growl.error({ title: 'Ошибка!', message: 'Расчетный счет указан не правильно.' });
               }
