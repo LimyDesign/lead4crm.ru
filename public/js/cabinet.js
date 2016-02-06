@@ -680,7 +680,7 @@ $(document).ready(function()
       $.growl.error({title: 'Ошибка!', message: 'Заполните все поля формы!'});
     } else {
       if (checkINN($inn_val)) {
-        if (isNumeric($bik_val) && $bik_val.length == 9) {
+        if ($bik_val.length == 9) {
           var bik_search_url = 'http://www.bik-info.ru/api.html?type=json&bik=' + $bik_val;
           $.get(bik_search_url, function(data) {
             if (data.error) {
@@ -699,6 +699,7 @@ $(document).ready(function()
             }
           }, 'json');
         } else {
+          $bik.focus();
           $.growl.error({ title: 'Ошибка!', message: 'БИК должен состоять только из цифр и быть длинной 9 цифр.' });
         }
         $.get()
