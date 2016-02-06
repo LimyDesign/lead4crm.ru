@@ -676,6 +676,7 @@ $(document).ready(function()
       console.error('Не заполнены пользовательские поля формы регистрации в реферальной программе.');
       $.growl.error({message: 'Заполните все поля формы!'});
     } else {
+      console.log('РЕФЕРАЛЬНАЯ ПРОГРАММА: Отправка данных формы на сервер.');
       //$.post(_action, dataForm).done(function() {
       //  _alert.removeClass('hide');
       //});
