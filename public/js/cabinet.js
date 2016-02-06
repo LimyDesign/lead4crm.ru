@@ -690,7 +690,7 @@ $(document).ready(function()
             } else {
               if (checkRS($rs_val, $bik_val)) {
                 $.post(_action, dataForm).done(function() {
-                  $.growl.success({ title: "Успешно!", message: "Ваша заявка успешно отправлена." });
+                  $.growl.notice({ title: "УРА!", message: "Ваша заявка успешно отправлена." });
                   _alert.removeClass('hide');
                 });
               } else {
