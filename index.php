@@ -32,6 +32,7 @@ $twig = new Twig_Environment($loader, array(
 // $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 
+file_put_contents('/var/www/html/ref_debug.log', $_SERVER['HTTP_REFERER']);
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
 for ($i = 0; $i < count($scriptName); $i++) {
