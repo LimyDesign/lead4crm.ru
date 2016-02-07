@@ -123,6 +123,11 @@ if ($cmd[0]) {
         header('Content-Type: text/plain');
         $api->sendICQ($cmd[1], $_REQUEST['uin']);
         exit;
+    } elseif ($cmd[0] == 'wafirst') {
+        header("Content-Type: text/plain");
+        $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
+        $rx = $wa->codeRequest('sms', 'MTS');
+        print_r($rx);
     } elseif ($cmd[0] == 'wa') {
         $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $wa->connect();
