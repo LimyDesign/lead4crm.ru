@@ -124,7 +124,7 @@ if ($cmd[0]) {
         $api->sendICQ($cmd[1], $_REQUEST['uin']);
         exit;
     } elseif ($cmd[0] == 'wa') {
-        $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', false);
+        $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $wa->connect();
         $wa->loginWithPassword($conf->wa->password);
         $wa->sendMessage('79041326000', 'Hi! :) this is a test message');
