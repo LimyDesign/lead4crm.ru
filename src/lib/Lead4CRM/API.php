@@ -1414,9 +1414,8 @@ class API
         $vcard.= "FN:Lead4CRM («Генератор лидов»)\n";
         $vcard.= "ORG:Lead4CRM («Генератор лидов»)\n";
         $vcard.= "NOTE:Базы 2ГИС в формате любимой CRM\n";
-        $vcard.= "TEL;TYPE=work:+7 (499) 704-69-17\n";
+        $vcard.= "TEL;TYPE=work:+7 (3952) 96-96-17\n";
         $vcard.= "TEL;TYPE=cell:+7 (914) 926-96-17\n";
-        $vcard.= "TEL;TYPE=cell:+7 (904) 132-60-00\n";
         $vcard.= "EMAIL;TYPE=internet:support@lead4crm.ru\n";
         $vcard.= "EMAIL;TYPE=internet,pref:help@lead4crm.ru\n";
         $vcard.= "EMAIL;TYPE=internet:news@lead4crm.ru\n";
