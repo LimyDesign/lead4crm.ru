@@ -11,7 +11,9 @@
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-eu.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-ar_AR.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-bg_BG.min.js" />
+        <item url="file://$PROJECT_DIR$/src/vendor/symfony/assetic-bundle/Tests/Resources/web/javascript2.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-cs_CZ.min.js" />
+        <item url="file://$PROJECT_DIR$/src/vendor/symfony/assetic-bundle/Tests/Resources/web/javascript1.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-da_DK.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-de_DE.min.js" />
         <item url="file://$PROJECT_DIR$/public/js/i18n/defaults-en_US.min.js" />
@@ -89,7 +91,9 @@
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-eu.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-ar_AR.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-bg_BG.min.js" />
+      <root url="file://$PROJECT_DIR$/src/vendor/symfony/assetic-bundle/Tests/Resources/web/javascript2.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-cs_CZ.min.js" />
+      <root url="file://$PROJECT_DIR$/src/vendor/symfony/assetic-bundle/Tests/Resources/web/javascript1.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-da_DK.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-de_DE.min.js" />
       <root url="file://$PROJECT_DIR$/public/js/i18n/defaults-en_US.min.js" />

@@ -8,7 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Lead4CRM' => array($baseDir . '/lib'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
+    'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );
