@@ -128,6 +128,7 @@ if ($cmd[0]) {
         $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $rx = $wa->codeRequest('sms', 'MTS');
         print_r($rx);
+        exit;
     } elseif ($cmd[0] == 'wa') {
         $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $wa->connect();
