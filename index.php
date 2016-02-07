@@ -32,8 +32,8 @@ $twig = new Twig_Environment($loader, array(
 // $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
-// $wa->connect();
-// $wa->loginWithPassword($conf->wa->password);
+$wa->connect();
+$wa->loginWithPassword($conf->wa->password);
 // $wa->sendGetPrivacyBlockedList();
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
@@ -127,20 +127,7 @@ if ($cmd[0]) {
         header('Content-Type: text/plain');
         $api->sendICQ($cmd[1], $_REQUEST['uin']);
         exit;
-    } elseif ($cmd[0] == 'wafirst') {
-        $wa->sendGetClientConfig();
-        $wa->sendGetServerProperties();
-        $wa->sendGetGroups();
-        $wa->sendGetBroadcastLists();
-        $wa->sendSync('79041326000');
-        $wa->sendPresenceSubscription('79041326000');
-        $wa->sendGetStatuses('79041326000');
-        $wa->sendGetProfilePicture('79041326000');
-        $wa->sendPing();
-        exit;
     } elseif ($cmd[0] == 'wa') {
-        $wa->sendMessageComposing('79041326000');
-        $wa->sendMessagePaused('79041326000');
         $wa->sendMessage('79041326000', 'Hi! :) this is a test message');
         exit;
     } elseif ($cmd[0] == 'sms') {
