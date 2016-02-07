@@ -1346,7 +1346,7 @@ class API
             }
             $response .= "<paymentAvisoResponse performedDatetime=\"{$performedDatetime}\" code=\"{$code}\" invoiceId=\"{$yaInvoiceId}\" shopId=\"{$yaShopId}\"/>";
         }
-        file_put_contents('/var/www/html/ya_debug.log', $response);
+        file_put_contents('/var/www/html/ya_debug.log', $response, FILE_APPEND | LOCK_EX);
         return $response;
     }
 
