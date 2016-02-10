@@ -19,6 +19,11 @@
           width: 100%;
           height: 600px;
         }
+        a.maplink {
+          color: #333;
+          text-decoration: none;
+          border-bottom: 1px dotted #333;
+        }
       </style>
     </head>
     <body>
@@ -791,20 +796,12 @@
         results: 1
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
-//            coords = firstGeoObject.geometry.getCoordinates(),
             bounds = firstGeoObject.properties.get('boundedBy');
         myMap.geoObjects.add(firstGeoObject);
         myMap.setBounds(bounds, {
           checkZoomRange: true
         });
         myMap.behaviors.disable('scrollZoom');
-//        myPlacemark = new ymaps.Placemark(coords, {}, {
-//          iconLayout: 'default#image',
-//          iconImageHref: '/public/images/map-marker.png',
-//          iconImageSize: [64, 64],
-//          iconImageOffset: [-32, -64]
-//        });
-//        myMap.geoObjects.add(myPlacemark);
       });
     }
 
@@ -947,11 +944,11 @@
                     }
                   }
                   if (statusExist) {
-                    $('#tableResult').find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    $('#tableResult').find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')" class="maplink">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(assignedUserId).selectpicker('render');
                   } else {
                     totalChecked++;
-                    $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')" class="maplink>'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(bx24userid).selectpicker('render');
                   }
                 });
