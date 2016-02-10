@@ -771,6 +771,7 @@
 
     // Функция отображения найденного объекта на карте
     function showAtMap(address) {
+      console.log(address);
       ymaps.geocode(address, {
         results: 1
       }).then(function(res) {
