@@ -765,10 +765,7 @@
         zoom: 9,
         controls: ["geolocationControl", "trafficControl", "typeSelector", "zoomControl"]
       });
-      myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-        hintContent: 'Собственный значок метки',
-        balloonContent: 'Это красивая метка'
-      }, {
+      myPlacemark = new ymaps.Placemark(myMap.getCenter(), {}, {
         iconLayout: 'default#image',
         iconImageHref: '/public/images/map-marker.png',
         iconImageSize: [64, 64],
