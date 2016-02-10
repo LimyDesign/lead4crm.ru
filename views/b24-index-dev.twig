@@ -244,6 +244,9 @@
     var selectUserList = '';
     var myMap, myPlacemark;
 
+    // Присваеваем переменным селекторы
+    var _selectSearchCity = $('#selectSearchCity');
+
     // Делаем удобный выбор городов, иначе полная лабуда
     $('.selectpicker').selectpicker();
 
@@ -324,7 +327,7 @@
       // опций приложения, чтобы сразу можно было искать
       b24CityID = BX24.appOption.get('LEAD4CRM_CITYID');
       if (b24CityID) {
-        $('#selectSearchCity').val(b24CityID).selectpicker('render');
+        _selectSearchCity.val(b24CityID).selectpicker('render');
       }
 
       // Подгружаем список видов деятельности
@@ -672,15 +675,15 @@
             {
               selectedRubrics = $('#selectRubrics').val();
               searchRubric = $('#selectRubrics option:selected').text();
-              b24CityID = $('#selectSearchCity').val();
+              b24CityID = _selectSearchCity.val();
               $('#searchGroupRubrics').attr('disabled', 'disabled');
-              $('#selectSearchCity').attr('disabled', 'disabled').selectpicker('render');
+              _selectSearchCity.attr('disabled', 'disabled').selectpicker('render');
               $('#configForm').find('button').attr('disabled', 'disabled');
               searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
               $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
               gotoPage('1', 'rubric', function() {
                 $('#searchGroupRubrics').removeAttr('disabled');
-                $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
+                _selectSearchCity.removeAttr('disabled').selectpicker('render');
                 $('#configForm').find('button').removeAttr('disabled');
                 $('#searchButton').removeAttr('disabled');
                 $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
@@ -718,15 +721,15 @@
             if (searchText != $('#inputSearchText').val())
             {
               searchText = $('#inputSearchText').val();
-              b24CityID = $('#selectSearchCity').val();
+              b24CityID = _selectSearchCity.val();
               $('#searchGroupText').attr('disabled', 'disabled');
-              $('#selectSearchCity').attr('disabled', 'disabled').selectpicker('render');
+              _selectSearchCity.attr('disabled', 'disabled').selectpicker('render');
               $('#configForm').find('button').attr('disabled', 'disabled');
               searchButtonHTML = '<i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Поиск';
               $('#searchButton').attr('disabled', 'disabled').html(searchButtonHTML);
               gotoPage('1', 'text', function() {
                 $('#searchGroupText').removeAttr('disabled');
-                $('#selectSearchCity').removeAttr('disabled').selectpicker('render');
+                _selectSearchCity.removeAttr('disabled').selectpicker('render');
                 $('#configForm').find('button').removeAttr('disabled');
                 $('#searchButton').removeAttr('disabled');
                 $('#searchButton').find('i').removeClass('fa-circle-o-notch fa-spin')
@@ -759,21 +762,50 @@
     BX24.fitWindow();
 
     // Инициализируем карту
-    ymaps.ready(function() {
+    ymaps.ready(initMap);
+
+    // Функция отображения найденного объекта на карте
+    function showAtMap(address) {
+      ymaps.geocode(address, {
+        results: 1
+      }).then(function(res) {
+        var firstGeoObject = res.geoObjects.get(0),
+                bounds = firstGeoObject.properties.get('boundedBy');
+        myMap.geoObjects.add(firstGeoObject);
+        myMap.setBounds(bounds, {
+          checkZoomRange: true
+        });
+      });
+    }
+
+    // Функция инициализации карты
+    function initMap() {
       myMap = new ymaps.Map('map', {
         center: [55.751574, 37.573856],
         zoom: 9,
         controls: ["geolocationControl", "trafficControl", "typeSelector", "zoomControl"]
       });
-      myMap.behaviors.disable('scrollZoom');
-      myPlacemark = new ymaps.Placemark(myMap.getCenter(), {}, {
-        iconLayout: 'default#image',
-        iconImageHref: '/public/images/map-marker.png',
-        iconImageSize: [64, 64],
-        iconImageOffset: [-32, -64]
+
+      var cityname = _selectSearchCity.find('option:selected').text();
+      ymaps.geocode(cityname, {
+        results: 1
+      }).then(function(res) {
+        var firstGeoObject = res.geoObjects.get(0),
+            bounds = firstGeoObject.properties.get('boundedBy');
+        myMap.geoObjects.add(firstGeoObject);
+        myMap.setBounds(bounds, {
+          checkZoomRange: true
+        });
+        myMap.behaviors.disable('scrollZoom');
+        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {}, {
+          iconLayout: 'default#image',
+          iconImageHref: '/public/images/map-marker.png',
+          iconImageSize: [64, 64],
+          iconImageOffset: [-32, -64]
+        });
+        myMap.geoObjects.add(myPlacemark);
       });
-      myMap.geoObjects.add(myPlacemark);
-    });
+    }
 
     // Функция меняет итоговое кол-во импортируемых компаний
     // отображаемых пользователю для удобства
@@ -799,7 +831,8 @@
       var requestURL = '',
           searchingText = '',
           unlockFiledset = '',
-          companyList = [];
+          companyList = [],
+          cityname = _selectSearchCity.find('option:selected').text();
 
       $('#page'+pageTo)
               .html('<span><i class="fa fa-circle-o-notch fa-spin"></i></span>');
@@ -913,11 +946,11 @@
                     }
                   }
                   if (statusExist) {
-                    $('#tableResult').find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td>'+entry.address+' <i class="fa fa-map"></i></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    $('#tableResult').find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(assignedUserId).selectpicker('render');
                   } else {
                     totalChecked++;
-                    $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td>'+entry.address+' <i class="fa fa-map"></i></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    $('#tableResult').find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td><a href="#." onclick="showAtMap(\''+cityname+', '+entry.address+'\')">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(bx24userid).selectpicker('render');
                   }
                 });
