@@ -775,8 +775,9 @@
         results: 1
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
-                bounds = firstGeoObject.properties.get('boundedBy');
-        myMap.geoObjects.add(firstGeoObject);
+            coords = firstGeoObject.geometry.getCoordinates(),
+            bounds = firstGeoObject.properties.get('boundedBy');
+        myMap.setCenter(coords);
         myMap.setBounds(bounds, {
           checkZoomRange: true
         });
