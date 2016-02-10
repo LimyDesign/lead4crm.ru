@@ -765,6 +765,7 @@
         zoom: 9,
         controls: ["geolocationControl", "trafficControl", "typeSelector", "zoomControl"]
       });
+      myMap.behaviors.disable('scrollZoom');
       myPlacemark = new ymaps.Placemark(myMap.getCenter(), {}, {
         iconLayout: 'default#image',
         iconImageHref: '/public/images/map-marker.png',
