@@ -797,13 +797,6 @@
           checkZoomRange: true
         });
         myMap.behaviors.disable('scrollZoom');
-        myPlacemark = new ymaps.Placemark(myMap.getCenter(), {}, {
-          iconLayout: 'default#image',
-          iconImageHref: '/public/images/map-marker.png',
-          iconImageSize: [64, 64],
-          iconImageOffset: [-32, -64]
-        });
-        myMap.geoObjects.add(myPlacemark);
       });
     }
 
