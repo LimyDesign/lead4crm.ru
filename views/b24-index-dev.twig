@@ -794,6 +794,7 @@
       });
 
       var cityname = _selectSearchCity.find('option:selected').text();
+      console.log(cityname);
       ymaps.geocode(cityname, {
         results: 1
       }).then(function(res) {
