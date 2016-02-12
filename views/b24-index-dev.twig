@@ -722,7 +722,6 @@
       });
 
       myCityName = _selectSearchCity.find('option:selected').text().trim();
-      console.log(myCityName);
       ymaps.geocode(myCityName, {
         results: 1
       }).then(function(res) {
