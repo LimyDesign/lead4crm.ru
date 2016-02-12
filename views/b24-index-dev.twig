@@ -721,9 +721,8 @@
         controls: ["geolocationControl", "trafficControl", "typeSelector", "zoomControl"]
       });
 
-      myCityName = _selectSearchCity.find('option:selected').text();
-      myCityName = myCityName.trim()
-      console.log(cityname);
+      myCityName = _selectSearchCity.find('option:selected').text().trim();
+      console.log(myCityName);
       ymaps.geocode(myCityName, {
         results: 1
       }).then(function(res) {
