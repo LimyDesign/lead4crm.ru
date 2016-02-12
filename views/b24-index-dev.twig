@@ -779,9 +779,7 @@
             coords = firstGeoObject.geometry.getCoordinates(),
             bounds = firstGeoObject.properties.get('boundedBy');
         myMap.setCenter(coords);
-        myMap.setBounds(bounds, {
-          checkZoomRange: true
-        });
+        myMap.setBounds(bounds);
       });
     }
 
@@ -801,9 +799,7 @@
         var firstGeoObject = res.geoObjects.get(0),
             bounds = firstGeoObject.properties.get('boundedBy');
         myMap.geoObjects.add(firstGeoObject);
-        myMap.setBounds(bounds, {
-          checkZoomRange: true
-        });
+        myMap.setBounds(bounds);
         myMap.behaviors.disable('scrollZoom');
       });
     }
