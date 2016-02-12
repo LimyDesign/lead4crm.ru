@@ -735,6 +735,7 @@
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
             bounds = firstGeoObject.properties.get('boundedBy');
+        console.log(bounds);
         myMap.geoObjects.add(firstGeoObject);
         myMap.setBounds(bounds, {
           checkZoomRange: true
