@@ -642,8 +642,7 @@
                 _selectSearchCity.removeAttr('disabled').selectpicker('render');
                 _configForm.find('button').removeAttr('disabled');
                 _searchButton.removeAttr('disabled');
-                _searchButton.find('i').removeClass('fa-circle-o-notch fa-spin')
-                        .addClass('fa-search');
+                _searchButton.find('i').removeClass('fa-circle-o-notch fa-spin').addClass('fa-search');
                 _search_options.slideToggle('fast');
                 _search_results.slideToggle('fast',function() {
                   BX24.fitWindow();
@@ -652,6 +651,7 @@
             } else {
               _search_options.slideToggle('fast');
               _search_results.slideToggle('fast', function() {
+                showMapDefault();
                 BX24.fitWindow();
               });
             }
@@ -673,16 +673,17 @@
                 _selectSearchCity.removeAttr('disabled').selectpicker('render');
                 _configForm.find('button').removeAttr('disabled');
                 _searchButton.removeAttr('disabled');
-                _searchButton.find('i').removeClass('fa-circle-o-notch fa-spin')
-                        .addClass('fa-search');
+                _searchButton.find('i').removeClass('fa-circle-o-notch fa-spin').addClass('fa-search');
                 _search_options.slideToggle('fast');
                 _search_results.slideToggle('fast', function() {
+                  showMapDefault();
                   BX24.fitWindow();
                 });
               });
             } else {
               _search_options.slideToggle('fast');
               _search_results.slideToggle('fast', function() {
+                showMapDefault();
                 BX24.fitWindow();
               });
             }
@@ -709,7 +710,9 @@
             coords = firstGeoObject.geometry.getCoordinates(),
             bounds = firstGeoObject.properties.get('boundedBy');
         myMap.setCenter(coords);
-        myMap.setBounds(bounds);
+        myMap.setBounds(bounds, {
+          checkZoomrange: true
+        });
       });
     }
 
@@ -717,10 +720,14 @@
     function initMap() {
       myMap = new ymaps.Map('map', {
         center: [55.751574, 37.573856],
-        zoom: 10,
+        zoom: 9,
         controls: ["geolocationControl", "trafficControl", "typeSelector", "zoomControl"]
       });
+      myMap.behaviors.disable('scrollZoom');
+    }
 
+    // Данная функция отображет выбранный город по умолчанию, в момент отображения результатов поиска
+    function showMapDefault() {
       myCityName = _selectSearchCity.find('option:selected').text().trim();
       ymaps.geocode(myCityName, {
         results: 1
@@ -728,8 +735,9 @@
         var firstGeoObject = res.geoObjects.get(0),
             bounds = firstGeoObject.properties.get('boundedBy');
         myMap.geoObjects.add(firstGeoObject);
-        myMap.setBounds(bounds);
-        myMap.behaviors.disable('scrollZoom');
+        myMap.setBounds(bounds, {
+          checkZoomRange: true
+        });
       });
     }
 
