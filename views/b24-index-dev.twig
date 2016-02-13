@@ -247,7 +247,7 @@
     var bx24userid = 1;
     var userList = null;
     var selectUserList = '';
-    var myMap, myCityName;
+    var myMap, myCityName, myCollection;
 
     // Присваеваем переменным селекторы
     var _selectSearchCity = $('#selectSearchCity'),
@@ -707,14 +707,20 @@
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
             coords = firstGeoObject.geometry.getCoordinates(),
-            bounds = firstGeoObject.properties.get('boundedBy'),
-            myCollection = new ymaps.GeoObjectCollection();
-        myCollection.removeAll();
-        //myMap.setCenter(coords);
-        myMap.geoObjects.add(firstGeoObject);
+            bounds = firstGeoObject.properties.get('boundedBy');
+        myMap.setCenter(coords);
         myMap.setBounds(bounds, {
           checkZoomrange: true
         });
+        myCollection.removeAll();
+        var myPlacemark = new ymaps.Placemark(coors, {}, {
+          iconLayout: 'default#image',
+          iconImageHref: '/public/images/map-marker.png',
+          iconImageSize: [64, 64],
+          iconImageOffset: [-32, -64]
+        });
+        myCollection.add(myPlacemark);
+        myMap.geoObjects.add(myCollection);
       });
     }
 
@@ -736,10 +742,10 @@
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
             bounds = firstGeoObject.properties.get('boundedBy');
-        myMap.geoObjects.add(firstGeoObject);
         myMap.setBounds(bounds, {
           checkZoomRange: true
         });
+        myCollection = new ymaps.GeoObjectCollection();
       });
     }
 
