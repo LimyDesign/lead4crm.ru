@@ -707,8 +707,11 @@
       }).then(function(res) {
         var firstGeoObject = res.geoObjects.get(0),
             coords = firstGeoObject.geometry.getCoordinates(),
-            bounds = firstGeoObject.properties.get('boundedBy');
-        myMap.setCenter(coords);
+            bounds = firstGeoObject.properties.get('boundedBy'),
+            myCollection = new ymaps.GeoObjectCollection();
+        myCollection.removeAll();
+        //myMap.setCenter(coords);
+        myMap.geoObjects.add(firstGeoObject);
         myMap.setBounds(bounds, {
           checkZoomrange: true
         });
