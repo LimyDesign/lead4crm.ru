@@ -701,7 +701,7 @@
     ymaps.ready(initMap);
 
     // Функция отображения найденного объекта на карте
-    function showAtMap(address) {
+    function showAtMap(address, name) {
       ymaps.geocode(address, {
         results: 1
       }).then(function(res) {
@@ -713,7 +713,11 @@
           checkZoomrange: true
         });
         myCollection.removeAll();
-        var myPlacemark = new ymaps.Placemark(coords, {}, {
+        var myPlacemark = new ymaps.Placemark(coords, {
+          hintContent: name,
+          balloonContentHeader: name,
+          balloonContentBody: address
+        }, {
           iconLayout: 'default#image',
           iconImageHref: '/public/images/map-marker.png',
           iconImageSize: [64, 64],
@@ -855,11 +859,11 @@
                     } else statusExist = assignedUserId = 0;
                   }
                   if (statusExist) {
-                    _tableResult.find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td><a href="javascript:showAtMap(\''+cityname+', '+entry.address+'\')" class="maplink">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    _tableResult.find('tbody').append('<tr class="success"><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'"></td><td>'+entry.name+'</td><td><a href="javascript:showAtMap(\''+cityname+', '+entry.address+'\',\''+entry.name+'\')" class="maplink">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-success btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(assignedUserId).selectpicker('render');
                   } else {
                     totalChecked++;
-                    _tableResult.find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td><a href="javascript:showAtMap(\''+cityname+', '+entry.address+'\')" class="maplink">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
+                    _tableResult.find('tbody').append('<tr><td class="text-center"><input type="checkbox" name="'+entry.id+'" value="'+entry.hash+'" onclick=changeMark("'+entry.id+'") id="company'+cId+'" checked></td><td>'+entry.name+'</td><td><a href="javascript:showAtMap(\''+cityname+', '+entry.address+'\',\''+entry.name+'\')" class="maplink">'+entry.address+'</a></td><td>'+entry.firm_group+'</td><td><select class="selectpicker" id="assigned'+cId+'" data-live-search="true" data-width="100%" data-style="btn-default btn-xs" data-container="body">'+selectUserList+'</select></td></tr>');
                     $('#assigned'+cId).val(bx24userid).selectpicker('render');
                   }
                 });
