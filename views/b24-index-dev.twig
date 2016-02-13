@@ -257,7 +257,6 @@
         _changeToText = $('#changeToText'),
         _searchGroupText = $('#searchGroupText'),
         _searchGroupRubrics = $('#searchGroupRubrics'),
-        _tooltip = $('[data-toggle="tooltip"]'),
         _tariff = $('#tariff'),
         _qty = $('#qty'),
         _qtybutton = $('#qtybutton'),
@@ -281,6 +280,11 @@
         _searching = $('#searching'),
         _resultTotal = $('#resultTotal'),
         _pagination = $('nav ul.pagination');
+
+    // Подключаем подсказки
+    $('body').tooltip({
+      selector: '[data-toogle=tooltip]'
+    });
 
     // Делаем удобный выбор городов, иначе полная лабуда
     _selectpicker.selectpicker();
@@ -308,9 +312,6 @@
 
     // Инициализируем Битрикс24
     BX24.init(function() {
-      // Подключаем подсказки
-      _tooltip.tooltip();
-
       // Показываем текущий тариф пользователя
       // и остаток кол-ва запросов
       b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
