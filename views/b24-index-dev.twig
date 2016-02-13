@@ -709,9 +709,8 @@
         var firstGeoObject = res.geoObjects.get(0),
             coords = firstGeoObject.geometry.getCoordinates(),
             bounds = firstGeoObject.properties.get('boundedBy');
-        console.log(bounds);
         myMap.setCenter(coords);
-        myMap.setBounds(bounds[0], {
+        myMap.setBounds(bounds, {
           checkZoomrange: true
         });
       });
