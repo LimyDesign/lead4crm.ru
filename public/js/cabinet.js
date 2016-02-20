@@ -1217,7 +1217,8 @@ function getReferalInfo() {
       _tab_text = _tab.text();
   _tab.html(_tab_text + ' <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>');
   $.post('/getReferal/', function (data) {
-    var _referalForm = $('#referalForm');
+    var _referalForm = $('#referalForm'),
+        _alertMsg = $('#refMessageSuccess');
     if (data.id > 0) {
       if (!data.accept) {
         _referalForm.find('fieldset').attr('disabled', 'disabled');
@@ -1225,8 +1226,15 @@ function getReferalInfo() {
         _referalForm.find('#inputINN').val(data.inn);
         _referalForm.find('#inputBIK').val(data.bik);
         _referalForm.find('#inputRS').val(data.rs);
-        $('#refMessageSuccess').removeClass('hide');
+        _alertMsg.removeClass('hide');
       }
+    } else {
+      _referalForm.find('fieldset').removeAttr('disabled');
+      _referalForm.find('#inputFirmName').val('');
+      _referalForm.find('#inputINN').val('');
+      _referalForm.find('#inputBIK').val('');
+      _referalForm.find('#inputRS').val('');
+      _alertMsg.addClass('hide');
     }
     _tab.html(_tab_text);
   }, 'json');
