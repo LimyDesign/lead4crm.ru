@@ -1210,6 +1210,8 @@ function sendEmail(type, serialized, callback) {
   });
 }
 
+/* Функция получает данные по реферальной программе и показывает соответствующие формы.
+ ========================================================================================= */
 function getReferalInfo() {
   var _tab = $('li[role="referal"] a'),
       _tab_text = _tab.text();
@@ -1217,16 +1219,16 @@ function getReferalInfo() {
   $.post('/getReferal/', function (data) {
     var _referalForm = $('#referalForm');
     if (data.id > 0) {
-      _referalForm.find('fieldset').attr('disabled', 'disabled');
-      _referalForm.find('#inputFirmName').val(data.firm);
-      _referalForm.find('#inputINN').val(data.inn);
-      _referalForm.find('#inputBIK').val(data.bik);
-      _referalForm.find('#inputRS').val(data.rs);
-      $('#refMessageSuccess').removeClass('hide');
-      _tab.html(_tab_text);
-    } else {
-      _tab.html(_tab_text);
+      if (data.accept == 'f') {
+        _referalForm.find('fieldset').attr('disabled', 'disabled');
+        _referalForm.find('#inputFirmName').val(data.firm);
+        _referalForm.find('#inputINN').val(data.inn);
+        _referalForm.find('#inputBIK').val(data.bik);
+        _referalForm.find('#inputRS').val(data.rs);
+        $('#refMessageSuccess').removeClass('hide');
+      }
     }
+    _tab.html(_tab_text);
   }, 'json');
 }
 
