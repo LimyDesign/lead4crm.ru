@@ -1211,6 +1211,9 @@ function sendEmail(type, serialized, callback) {
 }
 
 function getReferalInfo() {
+  var _tab = $('li[role="referal"] a'),
+      _tab_text = _tab.text();
+  _tab.html(_tab_text + ' <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>');
   $.post('/getReferal/', function (data) {
     var _referalForm = $('#referalForm');
     if (data.id > 0) {
@@ -1220,6 +1223,7 @@ function getReferalInfo() {
       _referalForm.find('#inputBIK').val(data.bik);
       _referalForm.find('#inputRS').val(data.rs);
       $('#refMessageSuccess').removeClass('hide');
+      _tab.html(_tab_text);
     }
   }, 'json');
 }
