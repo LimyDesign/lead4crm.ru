@@ -557,9 +557,10 @@ class API
     }
 
     /**
-     * Функция внесения данных в реферальную таблицу
+     * Функция внесения данных в реферальную таблицу и отправки уведомления на почту администратора о новом партнере.
      *
-     * @param array $data Массив данных для добавления в реферальную таблицу
+     * @param array $data Массив данных для добавления в реферальную таблицу.
+     * @return bool Возвращает TRUE, если письмо было принято для передачи, иначе FALSE.
      */
     public function setUserReferal($data)
     {
@@ -571,6 +572,12 @@ class API
         $params[] = array(':bik', $data['bik'], \PDO::PARAM_STR);
         $params[] = array(':rs', $data['rs'], \PDO::PARAM_STR);
         $this->postSqlQuery($sql, $params);
+        $msg = "Бобрый день!\r\n\r\nКакой-то инициативный решил подзаработать денежек на нашем сервисе, оставил заявочку для реферальной программы, необходимо рассмотреть и одобрить, если все ок, либо написать сообщение о необходимости уточнения или исправления данных.\r\n\r\nВсе заявки и данные по пользователям доступны в личном кабинете администратора, поэтому рассказывать особо не чего, вот ссылка: https://www.lead4crm.ru/cabinet/\r\n\r\nС уважением,\r\nмегабот сервиса Lead4CRM.";
+        $subject = "Lead4CRM: Заявка на реферал";
+        $headers = "From: noreply@lead4crm.ru\r\n";
+        $headers.= "Reply-To: support@lead4crm.ru\r\n";
+        $headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
+        return mail('arsen@lead4crm.ru', $subject, $msg, $headers);
     }
 
     /**
