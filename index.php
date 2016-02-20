@@ -125,12 +125,14 @@ if ($cmd[0]) {
         $api->sendICQ($cmd[1], $_REQUEST['uin']);
         exit;
     } elseif ($cmd[0] == 'wafirst') {
+        isAdmin($cmd);
         header("Content-Type: text/plain");
         $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $rx = $wa->codeRequest('sms', 'MTS');
         print_r($rx);
         exit;
     } elseif ($cmd[0] == 'wa') {
+        isAdmin($cmd);
         $wa = new WhatsProt($conf->wa->login, 'Lead4CRM', true);
         $wa->connect();
         $wa->loginWithPassword($conf->wa->password);
@@ -233,6 +235,11 @@ if ($cmd[0]) {
             'bank' => $_REQUEST['bank'],
         );
         $api->setUserReferal($data);
+        exit;
+    } elseif ($cmd[0] == 'getReferal') {
+        isAuth($cmd);
+        header("Content-Type: application/json");
+        echo json_encode($api->getUserReferal($_SESSION['userid']), JSON_UNESCAPED_UNICODE);
         exit;
     } elseif ($cmd[0] == 'getBIKInfo') {
         isAuth($cmd);

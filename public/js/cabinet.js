@@ -312,6 +312,8 @@ $(document).ready(function()
       selectText('apikey');
     else if (target == 'tabNotification')
       getSMSInfo('79041326000');
+    else if (target == 'tabReferal')
+      getReferalInfo();
   });
   $('body').on('mouseup', '.well', function() {
     selectText('apikey');
@@ -337,7 +339,7 @@ $(document).ready(function()
   /* Выбираем соответствующий метод оплаты. Это не совсем стандартный список. Потребовалось
      так извратиться из-за внедрения картинок в список выбора метода оплаты.
   ========================================================================================= */
-  $('body').on('click','.option li',function() {
+  $('body').on('click', '.option li', function() {
     var i = $(this).parents('.select').attr('id');
     var v = $(this).children().html();
     var o = $(this).attr('id');
@@ -658,6 +660,8 @@ $(document).ready(function()
     }
   });
 
+  /* Выполняем запрос на сохранение данных для реферальной программы пользователя.
+  ========================================================================================= */
   $('#referalForm').submit(function(e){
     e.preventDefault();
     var $firm_name = $(this).find('#inputFirmName'),
@@ -1204,6 +1208,20 @@ function sendEmail(type, serialized, callback) {
       callback();
     }
   });
+}
+
+function getReferalInfo() {
+  $.post('/getReferal/', function (data) {
+    var _referalForm = $('#referalForm');
+    if (data.id > 0) {
+      _referalForm.find('fieldset').attr('disabled', 'disabled');
+      _referalForm.find('#inputFirmName').val(data.firm);
+      _referalForm.find('#inputINN').val(data.inn);
+      _referalForm.find('#inputBIK').val(data.bik);
+      _referalForm.find('#inputRS').val(data.rs);
+      $('#refMessageSuccess').removeClass('hide');
+    }
+  }, 'json');
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.
