@@ -1225,6 +1225,7 @@ function getReferalInfo() {
         _finish = $('#refFinish');
     if (data) {
       if (data.id > 0) {
+        console.log(data.accept);
         if (!data.accept) {
           _referalForm.find('fieldset').attr('disabled', 'disabled');
           _referalForm.find('#inputFirmName').val(data.firm);
