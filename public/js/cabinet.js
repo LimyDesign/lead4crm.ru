@@ -1216,14 +1216,16 @@ function getReferalInfo() {
   _tab.html(_tab_text + ' <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>');
   $.post('/getReferal/', function (data) {
     var _referalForm = $('#referalForm');
-    if (data.id > 0) {
-      _referalForm.find('fieldset').attr('disabled', 'disabled');
-      _referalForm.find('#inputFirmName').val(data.firm);
-      _referalForm.find('#inputINN').val(data.inn);
-      _referalForm.find('#inputBIK').val(data.bik);
-      _referalForm.find('#inputRS').val(data.rs);
-      $('#refMessageSuccess').removeClass('hide');
-      _tab.html(_tab_text);
+    if (!data) {
+      if (data.id > 0) {
+        _referalForm.find('fieldset').attr('disabled', 'disabled');
+        _referalForm.find('#inputFirmName').val(data.firm);
+        _referalForm.find('#inputINN').val(data.inn);
+        _referalForm.find('#inputBIK').val(data.bik);
+        _referalForm.find('#inputRS').val(data.rs);
+        $('#refMessageSuccess').removeClass('hide');
+        _tab.html(_tab_text);
+      }
     }
   }, 'json');
 }
