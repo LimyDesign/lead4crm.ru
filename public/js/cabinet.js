@@ -1225,7 +1225,6 @@ function getReferalInfo() {
         _finish = $('#refFinish');
     if (data) {
       if (data.id > 0) {
-        console.log(data.accept);
         if (!data.accept) {
           _referalForm.find('fieldset').attr('disabled', 'disabled');
           _referalForm.find('#inputFirmName').val(data.firm);
@@ -1264,6 +1263,16 @@ function getReferalInfo() {
     }
     _tab.html(_tab_text);
   }, 'json');
+}
+
+function refContractAccept() {
+  var _referalContract = $('#referalContract'),
+      _status = _referalContract.find('#firmAccept').is(':checked'),
+      _button = _referalContract.find('button');
+  if (_status)
+      _button.removeAttr('disabled');
+  else
+      _button.attr('disabled', 'disabled');
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.
