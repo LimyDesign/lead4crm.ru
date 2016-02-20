@@ -1219,14 +1219,16 @@ function getReferalInfo() {
   $.post('/getReferal/', function (data) {
     var _referalForm = $('#referalForm'),
         _alertMsg = $('#refMessageSuccess');
-    if (data.id > 0) {
-      if (!data.accept) {
-        _referalForm.find('fieldset').attr('disabled', 'disabled');
-        _referalForm.find('#inputFirmName').val(data.firm);
-        _referalForm.find('#inputINN').val(data.inn);
-        _referalForm.find('#inputBIK').val(data.bik);
-        _referalForm.find('#inputRS').val(data.rs);
-        _alertMsg.removeClass('hide');
+    if (data) {
+      if (data.id > 0) {
+        if (!data.accept) {
+          _referalForm.find('fieldset').attr('disabled', 'disabled');
+          _referalForm.find('#inputFirmName').val(data.firm);
+          _referalForm.find('#inputINN').val(data.inn);
+          _referalForm.find('#inputBIK').val(data.bik);
+          _referalForm.find('#inputRS').val(data.rs);
+          _alertMsg.removeClass('hide');
+        }
       }
     } else {
       _referalForm.find('fieldset').removeAttr('disabled');
