@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" id="refStep01">
   <div class="col-md-6">
     <h3>Заявка на регистрацию в реферальной программе</h3>
     <p>Мы производим отчисления по реферальной программе всем участникам программы имеющим юридическое лицо (ИП, ООО, АО). Выплаты физ. лицам мы не производим и в ближайшее время не планируем в связи со сложностью подобных выпал. Для того, чтобы начать пользоваться реферальной программой необходимо заполнить все поля партнерской формы и пользоваться выданной ссылкой.</p>
@@ -40,4 +40,63 @@
     </form>
     <h3>&nbsp;</h3>
   </div>
+</div>
+<div class="row hide" id="refStep02">
+    <div class="col-md-12">
+        <h3>Договор реферальной программы</h3>
+        <p>Проверьте указанные ниже данные, скачайте, прочитайте агентский договор-оферта и подтвержите корректность данных, а также ваше согласние со всеми условиями договора. Если вы видите где-то неточность, просьба написать об этом на почту: <a href="mailto:support@lead4crm.ru">support@lead4crm.ru</a>.</p>
+        <form action="/acceptReferalContract/" id="referalContract">
+            <div class="form-group">
+                <label for="firmName">Название огранизации:</label>
+                <input type="text" class="form-control" id="firmName" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmURAddr">Юридический адрес:</label>
+                <input type="text" class="form-control" id="firmURAddr" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmPOAddr">Почтовый адрес:</label>
+                <input type="text" class="form-control" id="firmPOAddr" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmINN">ИНН:</label>
+                <input type="text" class="form-control" id="firmINN" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmKPP">КПП:</label>
+                <input type="text" class="form-control" id="firmKPP" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmOGRN">ОГРН:</label>
+                <input type="text" class="form-control" id="firmOGRN" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmOKPO">ОКПО:</label>
+                <input type="text" class="form-control" id="firmOKPO" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmBank">Банк:</label>
+                <input type="text" class="form-control" id="firmBank" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmRS">Расчетный счет:</label>
+                <input type="text" class="form-control" id="firmRS" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmKS">Корреспондентский счет:</label>
+                <input type="text" class="form-control" id="firmKS" readonly>
+            </div>
+            <div class="form-group">
+                <label for="firmBIK">БИК:</label>
+                <input type="text" class="form-control" id="firmBIK" readonly>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="contract" value="Y"> Я прочитал и полностью согласен с <a href="/downloadRefContract/">агентским
+                        договором-офертой</a> и в дальнейшем работая по реферальной программе буду придерживаться правил данного договора.
+                </label>
+            </div>
+            <button class="btn btn-primary" disabled>Подтверждаю</button>
+        </form>
+    </div>
 </div>

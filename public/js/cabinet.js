@@ -354,7 +354,7 @@ $(document).ready(function()
   ========================================================================================= */
   $('#yaform').submit(function() {
     $('#inputSum').number(true, 2, '.', '');
-    if ($('#inputSum').val() >= 1) {
+    if ($('#inputSum').val() >= 100) {
       return true;
     } else {
       $('#inputSum').number(true, 2, '.', ' ');
@@ -1218,7 +1218,11 @@ function getReferalInfo() {
   _tab.html(_tab_text + ' <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>');
   $.post('/getReferal/', function (data) {
     var _referalForm = $('#referalForm'),
-        _alertMsg = $('#refMessageSuccess');
+        _referalContract = $('#referalContract'),
+        _alertMsg = $('#refMessageSuccess'),
+        _step01 = $('#refStep01'),
+        _step02 = $('#refStep02'),
+        _finish = $('#refFinish');
     if (data) {
       if (data.id > 0) {
         if (!data.accept) {
@@ -1228,6 +1232,25 @@ function getReferalInfo() {
           _referalForm.find('#inputBIK').val(data.bik);
           _referalForm.find('#inputRS').val(data.rs);
           _alertMsg.removeClass('hide');
+        } else {
+          _step01.addClass('hide');
+          if (!data.contract) {
+            _step02.removeClass('hide');
+            _referalContract.find('#firmName').val(data.firm);
+            _referalContract.find('#firmURAddr').val(data.ur_addr);
+            _referalContract.find('#firmPOAddr').val(data.po_addr);
+            _referalContract.find('#firmINN').val(data.inn);
+            _referalContract.find('#firmKPP').val(data.kpp);
+            _referalContract.find('#firmOGRN').val(data.ogrn);
+            _referalContract.find('#firmOKPO').val(data.okpo);
+            _referalContract.find('#firmBank').val(data.bank);
+            _referalContract.find('#firmRS').val(data.rs);
+            _referalContract.find('#firmKS').val(data.ks);
+            _referalContract.find('#firmBIK').val(data.bik);
+          } else {
+            _step02.addClass('hide');
+            _finish.removeClass('hide');
+          }
         }
       }
     } else {

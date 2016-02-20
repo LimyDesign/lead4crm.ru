@@ -588,7 +588,7 @@ class API
      */
     public function getUserReferal($uid)
     {
-        $sql = "SELECT id, firm, inn, bik, rs, kpp, ks, bank, ur_addr, po_addr, ogrn, okpo, accept FROM crm_referals WHERE uid = :uid";
+        $sql = "SELECT id, firm, inn, bik, rs, kpp, ks, bank, ur_addr, po_addr, ogrn, okpo, accept, contract FROM crm_referals WHERE uid = :uid";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $ref = $this->getSingleRow($sql, $params);
