@@ -564,13 +564,17 @@ class API
      */
     public function setUserReferal($data)
     {
-        $sql = "INSERT INTO crm_referals (uid, firm, inn, bik, rs) VALUES (:uid, :firm, :inn, :bik, :rs)";
+        $bank = $this->getBIKInfo($data['bik']);
+        $bank = json_decode($bank, true);
+        $sql = "INSERT INTO crm_referals (uid, firm, inn, bik, rs, ks, bank) VALUES (:uid, :firm, :inn, :bik, :rs, :ks, :bank)";
         $params = array();
         $params[] = array(':uid', $data['uid'], \PDO::PARAM_INT);
         $params[] = array(':firm', $data['firm'], \PDO::PARAM_STR);
         $params[] = array(':inn', $data['inn'], \PDO::PARAM_STR);
         $params[] = array(':bik', $data['bik'], \PDO::PARAM_STR);
         $params[] = array(':rs', $data['rs'], \PDO::PARAM_STR);
+        $params[] = array(':ks', $bank['ks'], \PDO::PARAM_STR);
+        $params[] = array(':bank', $bank['name'] . ' в г ' . $bank['city'], \PDO::PARAM_STR);
         $this->postSqlQuery($sql, $params);
         $msg = "Бобрый день!\r\n\r\nКакой-то инициативный решил подзаработать денежек на нашем сервисе, оставил заявочку для реферальной программы, необходимо рассмотреть и одобрить, если все ок, либо написать сообщение о необходимости уточнения или исправления данных.\r\n\r\nВсе заявки и данные по пользователям доступны в личном кабинете администратора, поэтому рассказывать особо не чего, вот ссылка: https://www.lead4crm.ru/cabinet/\r\n\r\nС уважением,\r\nмегабот сервиса Lead4CRM.";
         $subject = "Lead4CRM: Заявка на реферал";
