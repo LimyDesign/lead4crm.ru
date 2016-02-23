@@ -647,7 +647,7 @@ class API
      */
     public function getURLReferal($uid)
     {
-        $sql = "SELECT t1.url, t1.confirm, t1.moderate FROM crm_refurls AS t1 LEFT JOIN crm_referals AS t2 ON t1.refid = t2.id WHERE t2.uid = :uid";
+        $sql = "SELECT t1.id, t1.url, t1.confirm, t1.moderate FROM crm_refurls AS t1 LEFT JOIN crm_referals AS t2 ON t1.refid = t2.id WHERE t2.uid = :uid";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         return $this->getMultipleRows($sql, $params);

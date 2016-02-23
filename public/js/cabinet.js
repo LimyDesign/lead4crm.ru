@@ -1287,7 +1287,7 @@ function getReferalInfo() {
             _finish.removeClass('hide');
             selectText('refurl');
             $.post('/refGetURL/', function(data) {
-              var _table = $('#refURLTable tbody'), _html, _confirm, _moderate;
+              var _table = $('#refURLTable tbody'), _html, _url, _confirm, _moderate;
               if (data.length > 0) {
                 _table.empty();
                 data.forEach(function(entry) {
@@ -1297,7 +1297,8 @@ function getReferalInfo() {
                   if (entry.moderate) _moderate = '+';
                   else _moderate = '&mdash;';
 
-                  _html = '<tr><td>'+entry.url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
+                  _url = '<a href="javascript:refEditRow('+entry.id+');" class="jslink">'+entry.url+'</a>';
+                  _html = '<tr data-id="'+data.id+'"><td>'+_url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
                   _table.append(_html);
                 });
               }
