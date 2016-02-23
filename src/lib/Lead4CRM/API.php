@@ -615,11 +615,12 @@ class API
      */
     public function postURLReferal($url, $uid, $update = false, $id = 0)
     {
-        if ($update)
-            $sql = "UPDATE crm_refurls SET url = :url WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid) RETURNING id";
-        else
-            $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
         $params = array();
+        if ($update) {
+            $sql = "UPDATE crm_refurls SET url = :url WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid) RETURNING id";
+            $params[] = array(':id', $id, \PDO::PARAM_INT);
+        } else
+            $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $params[] = array(':url', $url, \PDO::PARAM_STR);
         $refurl = $this->getSingleRow($sql, $params);
