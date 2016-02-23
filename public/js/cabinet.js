@@ -1298,7 +1298,7 @@ function refContractAccept() {
 
 function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
-      _newInput = '<form><div class="input-group input-group-sm"><input type="text" name="refurl" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="button"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button></div></div></form>',
+      _newInput = '<form><div class="input-group input-group-sm"><input type="text" name="refurl" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button"><i class="fa fa-trash"></i></button></div></div></form>',
       _newRow = '<tr><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
   _refURLTabel.find('tbody').append(_newRow);
 }
