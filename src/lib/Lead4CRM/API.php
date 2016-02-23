@@ -583,6 +583,30 @@ class API
     }
 
     /**
+     * Функция выполняет обновление таблицы рефералов.
+     *
+     * @param int $uid Идентификатор пользователя.
+     * @param string $field Название поля, которое необходимо обновить в таблице рефералов.
+     * @param mixed $data Данные для поля $field.
+     * @param string $type Тип данных $data для поля $field.
+     * @return bool Всегда возвращает TRUE, вот такой бред, хотя должна быть проверка на изменение информации.
+     */
+    public function updateUserReferal($uid, $field, $data, $type = "string")
+    {
+        $sql = "UPDATE crm_referals SET {$field} = :data WHERE uid = :uid";
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        if ($type == "string")
+            $params[] = array(':data', $data, \PDO::PARAM_STR);
+        elseif ($type == "bool")
+            $params[] = array(':data', $data, \PDO::PARAM_BOOL);
+        else
+            $params[] = array(':data', $data, \PDO::PARAM_INT);
+        $this->postSqlQuery($sql, $params);
+        return true;
+    }
+
+    /**
      * Функция получает данные реферальной программы по конкретному пользователю.
      *
      * @param string $uid Идентификатор пользователя.
