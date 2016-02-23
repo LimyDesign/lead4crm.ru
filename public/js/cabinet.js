@@ -1300,13 +1300,13 @@ function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
       _rowCount = _refURLTabel.find('tbody tr').length,
       _newInput = '<form><div class="input-group input-group-sm"><input type="text" name="refurl" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></form>',
-      _newRow = '<tr><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
+      _newRow = '<tr data-id="'+_rowCount+'"><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
   _refURLTabel.find('tbody').append(_newRow);
 }
 
 function refDeleteRow(id) {
   var _refURLTabel = $('#refURLTable');
-  _refURLTabel.find('tbody tr').eq(id).remove();
+  _refURLTabel.find('tbody tr[data-id='+id+']').remove();
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.
