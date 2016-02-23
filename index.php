@@ -46,15 +46,6 @@ foreach ($requestURI as $key => $uri) {
 $cmd = array_values($requestURI);
 
 if ($cmd[0]) {
-    $options = array(
-        'title' => $title,
-        'userid' => $_SESSION['userid'],
-        'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/',
-    );
-    $options = array_merge($options, $api->getOAuthLoginURL(), $api->getMenuUrl());
-
-    if (count($cOptions) > 0)
-        $options = array_merge($options, $cOptions);
     if ($cmd[0] == 'logout') {
         logout();
         exit;
@@ -353,7 +344,15 @@ if ($cmd[0]) {
     } else {
         $title = '404 - Страница не найдена';
     }
+    $options = array(
+        'title' => $title,
+        'userid' => $_SESSION['userid'],
+        'currentUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/' . $cmd[0] . '/',
+    );
+    $options = array_merge($options, $api->getOAuthLoginURL(), $api->getMenuUrl());
 
+    if (count($cOptions) > 0)
+        $options = array_merge($options, $cOptions);
     if (file_exists(__DIR__.'/views/'.$cmd[0].'.twig') && $cmd[0] != '403') {
         $render = $twig->render($cmd[0].'.twig', $options);
     } else {

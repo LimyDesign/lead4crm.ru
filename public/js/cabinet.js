@@ -1290,16 +1290,16 @@ function getReferalInfo() {
               var _table = $('#refURLTable tbody'), _html, _confirm, _moderate;
               if (data.length > 0) {
                 _table.empty();
-                //data.forEach(function(entry) {
-                //  if (entry.confirm) _confirm = '+';
-                //  else _confirm = '&mdash;';
-                //
-                //  if (entry.moderate) _moderate = '+';
-                //  else _moderate = '&mdash;';
-                //
-                //  _html = '<tr><td>'+entry.url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
-                //  _table.append(_html);
-                //});
+                data.forEach(function(entry) {
+                  if (entry.confirm) _confirm = '+';
+                  else _confirm = '&mdash;';
+
+                  if (entry.moderate) _moderate = '+';
+                  else _moderate = '&mdash;';
+
+                  _html = '<tr><td>'+entry.url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
+                  _table.append(_html);
+                });
               }
             }, 'json');
           }
