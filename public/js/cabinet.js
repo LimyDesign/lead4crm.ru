@@ -1290,6 +1290,12 @@ function refContractAccept() {
       _button.attr('disabled', 'disabled');
 }
 
+function refAddNewURL() {
+  var _refURLTabel = $('#refURLTable'),
+      _newInput = '<form id="refFormAddNewURL"><input type="text" name="refurl" class="form-control input-sm"></form>';
+  _refURLTabel.find('tbody').append(_newInput);
+}
+
 /* Функция проверяет является ли переменная 'n' целочисленной.
 ========================================================================================= */
 function isInt(n) {
