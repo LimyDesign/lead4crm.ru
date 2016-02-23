@@ -738,8 +738,10 @@ $(document).ready(function()
 
   $('#refURLTable').on('submit', 'form', function(e) {
     e.preventDefault();
-    var _input = $(this).find('input');
-    alert(_input.val());
+    var _input = $(this).find('input'),
+        _rowId = $(this).parent().parent().data("id"),
+        _html = '<a href="javascript:refEditRow('+_rowId+')" class="jslink">'+_input.val()+'</a>';
+    $(this).after(_html).remove();
   });
 });
 
