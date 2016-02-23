@@ -762,7 +762,7 @@ $(document).ready(function()
     }
     var _posting = $.post(_postURL, { url: _input }, 'json');
     _posting.done(function(data) {
-      refToggleEdit(data, _form, _input)
+      refToggleEdit(data, _form, _input);
     });
   });
 });
