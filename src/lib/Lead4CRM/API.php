@@ -607,6 +607,24 @@ class API
     }
 
     /**
+     * Функция добавляем новый URL реферера.
+     *
+     * @param string $url Интернет адрес ресурса реферера на котором разместил не реферальные ссылки.
+     * @param int $uid Идентификатор пользователя.
+     * @return array Возвращает массив в котором должен содержаться идентификатор добавленного URL.
+     */
+    public function postNewURLReferal($url, $uid)
+    {
+        $ref = $this->getUserReferal($uid);
+        $sql = "INSERT INTO crm_refurls (refid, url) VALUES (:refid, :url) RETURNING id";
+        $params = array();
+        $params[] = array(':refid', $ref['id'], \PDO::PARAM_INT);
+        $params[] = array(':url', $url, \PDO::PARAM_STR);
+        $refurl = $this->getSingleRow($sql, $params);
+        return $refurl;
+    }
+
+    /**
      * Функция получает данные реферальной программы по конкретному пользователю.
      *
      * @param string $uid Идентификатор пользователя.
@@ -619,6 +637,20 @@ class API
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $ref = $this->getSingleRow($sql, $params);
         return $ref;
+    }
+
+    /**
+     * Функция получает все пользовательские URL для конкретного реферера.
+     *
+     * @param int $uid Идентификатор пользователя.
+     * @return array Возвращает массив с полями 'url', 'confirm', 'moderate'.
+     */
+    public function getURLReferal($uid)
+    {
+        $sql = "SELECT t1.url, t1.confirm, t1.moderate FROM crm_refurls AS t1 LEFT JOIN crm_referals AS t2 ON t1.refid = t2.id WHERE t1.uid = :uid";
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        return $this->getMultipleRows($sql, $params);
     }
 
     /**
