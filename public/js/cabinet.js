@@ -760,7 +760,10 @@ $(document).ready(function()
       }
       _postURL = '/refUpdateURL/';
     }
-    $.post(_postURL, { url: _input }, refToggleEdit(data, _form, _input), 'json');
+    var _posting = $.post(_postURL, { url: _input }, 'json');
+    _posting.done(function(data) {
+      refToggleEdit(data, _form, _input)
+    });
   });
 });
 
