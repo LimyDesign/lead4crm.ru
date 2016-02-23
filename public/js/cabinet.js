@@ -1295,23 +1295,7 @@ function getReferalInfo() {
             _step02.addClass('hide');
             _finish.removeClass('hide');
             selectText('refurl');
-            $.post('/refGetURL/', function(data) {
-              var _table = $('#refURLTable tbody'), _html, _url, _confirm, _moderate;
-              if (data.length > 0) {
-                _table.empty();
-                data.forEach(function(entry) {
-                  if (entry.confirm) _confirm = '+';
-                  else _confirm = '&mdash;';
-
-                  if (entry.moderate) _moderate = '+';
-                  else _moderate = '&mdash;';
-
-                  _url = '<a href="javascript:refEditRow('+entry.id+');" class="jslink">'+entry.url+'</a>';
-                  _html = '<tr data-id="'+entry.id+'"><td>'+_url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
-                  _table.append(_html);
-                });
-              }
-            }, 'json');
+            refRefreshTable();
           }
         }
       }
@@ -1367,6 +1351,26 @@ function refDeleteRow(id) {
     $.post('/refDeleteURL/', { id: id });
   }
   _row.remove();
+}
+
+function refRefreshTable() {
+  $.post('/refGetURL/', function(data) {
+    var _table = $('#refURLTable tbody'), _html, _url, _confirm, _moderate;
+    if (data.length > 0) {
+      _table.empty();
+      data.forEach(function(entry) {
+        if (entry.confirm) _confirm = '+';
+        else _confirm = '&mdash;';
+
+        if (entry.moderate) _moderate = '+';
+        else _moderate = '&mdash;';
+
+        _url = '<a href="javascript:refEditRow('+entry.id+');" class="jslink">'+entry.url+'</a>';
+        _html = '<tr data-id="'+entry.id+'"><td>'+_url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
+        _table.append(_html);
+      });
+    }
+  }, 'json');
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.
