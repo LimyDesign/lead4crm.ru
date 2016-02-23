@@ -751,7 +751,7 @@ $(document).ready(function()
         _input = _form.find('input');
     _form.find('fieldset').prop('disabled', true);
     $.post('/refAddURL/', { url: _input.val() }, function(data) {
-      var _html = '<a href="javascript:refEditRow('+data.id+')" class="jslink">'+_input.val()+'</a>';
+      var _html = '<a href="javascript:refEditRow('+data.id+');" class="jslink">'+_input.val()+'</a>';
       _form.parent().parent().data('id', data.id);
       _form.after(_html).remove();
     }, 'json');
@@ -1332,9 +1332,15 @@ function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
       _rowLastId = _refURLTabel.find('tbody tr:last').data("id") || 0,
       _rowCount = _rowLastId + 1,
-      _newInput = '<form><fieldset><div class="input-group input-group-sm"><input type="text" name="refurl" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>',
+      _newInput = '<form><fieldset><div class="input-group input-group-sm"><input type="text" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>',
       _newRow = '<tr data-id="'+_rowCount+'"><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
   _refURLTabel.find('tbody').append(_newRow);
+}
+
+function refEditRow(id) {
+  var _refURLTabel = $('#refURLTable tbody'),
+      _input = '<form><fieldset><div class="input-group input-group-sm"><input type="text" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>';
+  _refURLTabel.find('tr[data-id='+id+'] td:first').empty().html(_input);
 }
 
 function refDeleteRow(id) {
