@@ -46,6 +46,11 @@ foreach ($requestURI as $key => $uri) {
 $cmd = array_values($requestURI);
 
 if ($cmd[0]) {
+    if ($cmd[0] == 'ref') {
+        setcookie('_refid', $cmd[1], null, '/', '.lead4crm.ru');
+        header("Locate: /");
+    }
+
     if ($cmd[0] == 'logout') {
         logout();
         exit;
