@@ -735,6 +735,12 @@ $(document).ready(function()
       _finish.removeClass('hide');
     })
   });
+
+  $('#refURLTable').on('submit', 'form', function(e) {
+    e.preventDefault();
+    var _input = $(this).find('input');
+    alert(_input.val());
+  });
 });
 
 /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
@@ -1292,7 +1298,7 @@ function refContractAccept() {
 
 function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
-      _newInput = '<form id="refFormAddNewURL"><input type="text" name="refurl" class="form-control input-sm"></form>',
+      _newInput = '<form><input type="text" name="refurl" class="form-control input-sm"></form>',
       _newRow = '<tr><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
   _refURLTabel.find('tbody').append(_newRow);
 }
