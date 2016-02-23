@@ -1264,6 +1264,7 @@ function getReferalInfo() {
           } else {
             _step02.addClass('hide');
             _finish.removeClass('hide');
+            selectText('refurl');
           }
         }
       }
