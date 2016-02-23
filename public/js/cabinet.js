@@ -761,7 +761,6 @@ $(document).ready(function()
       }
       _postURL = '/refUpdateURL/';
       _index = _form.parent().parent().data('id');
-      alert(_index);
     }
     var _posting = $.post(_postURL, { url: _input, id: _index }, 'json');
     _posting.done(function(data) {
