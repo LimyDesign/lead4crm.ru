@@ -721,6 +721,20 @@ $(document).ready(function()
       }
     }
   });
+
+  $('#referalContract').submit(function(e) {
+    e.preventDefault();
+    var _action = $(this).attr('action'),
+        _step01 = $('#refStep01'),
+        _step02 = $('#refStep02'),
+        _finish = $('#refFinish');
+    $.post(_action).done(function() {
+      $.growl.notice({ title: "Поздравляем!", message: "Теперь вы можете приступить к заработку." });
+      _step01.addClass('hide');
+      _step02.addClass('hide');
+      _finish.removeClass('hide');
+    })
+  });
 });
 
 /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
