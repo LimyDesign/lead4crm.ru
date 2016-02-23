@@ -749,7 +749,7 @@ $(document).ready(function()
     e.preventDefault();
     var _form = $(this),
         _input = _form.find('input');
-    _form.find('fieldset').attr('disabled', 'disabled');
+    _form.find('fieldset').prop('disabled', true);
     $.post('/refAddURL/', { url: _input.val() }, function(data) {
       var _html = '<a href="javascript:refEditRow('+data.id+')" class="jslink">'+_input.val()+'</a>';
       _form.parent().parent().data('id', data.id);
