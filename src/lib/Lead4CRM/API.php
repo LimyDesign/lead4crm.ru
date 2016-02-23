@@ -613,9 +613,12 @@ class API
      * @param int $uid Идентификатор пользователя.
      * @return array Возвращает массив в котором должен содержаться идентификатор добавленного URL.
      */
-    public function postNewURLReferal($url, $uid)
+    public function postURLReferal($url, $uid, $update = false)
     {
-        $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
+        if ($update)
+            $sql = "UPDATE crm_refurls SET url = :url WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid) RETURNING id";
+        else
+            $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $params[] = array(':url', $url, \PDO::PARAM_STR);
