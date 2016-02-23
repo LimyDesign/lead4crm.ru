@@ -747,10 +747,14 @@ $(document).ready(function()
 
   $('#refURLTable').on('submit', 'form', function(e) {
     e.preventDefault();
-    var _input = $(this).find('input'),
-        _rowId = $(this).parent().parent().data("id"),
-        _html = '<a href="javascript:refEditRow('+_rowId+')" class="jslink">'+_input.val()+'</a>';
-    $(this).after(_html).remove();
+    var _form = $(this),
+        _input = _form.find('input');
+    _form.find('input, button').prop('disabed', true);
+    $.post('/refAddURL/', { url: _input.val() }, function(data) {
+      var _html = '<a href="javascript:refEditRow('+data.id+')" class="jslink">'+_input.val()+'</a>';
+      _form.parent().parent().data('id', data.id);
+      _form.after(_html).remove();
+    }, 'json');
   });
 });
 
