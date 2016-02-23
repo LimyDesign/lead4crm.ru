@@ -30,6 +30,10 @@ svg rect{
   fill: #8d81ac;
 }
 
+.jslink {
+  border-bottom-style: dashed;
+}
+
 /*p {
   font-family: "Roboto", sans-serif; }*/
 
