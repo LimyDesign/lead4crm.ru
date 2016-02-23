@@ -49,6 +49,7 @@ if ($cmd[0]) {
         setcookie('_refid', $cmd[1], null, '/', '.lead4crm.ru');
         unset($cmd[0], $cmd[1]);
         $new_url = implode('/', $cmd);
+        print_r($new_url); die();
         header("Location: https://www.lead4crm.ru/".$new_url);
         exit;
     }
