@@ -1339,7 +1339,7 @@ function refAddNewURL() {
 
 function refEditRow(id) {
   var _refURLTabel = $('#refURLTable tbody'),
-      _input = '<form><fieldset><div class="input-group input-group-sm"><input type="text" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>';
+      _input = '<form><fieldset><div class="input-group input-group-sm"><input type="text" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+id+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>';
   _refURLTabel.find('tr[data-id='+id+'] td:first').empty().html(_input);
 }
 
