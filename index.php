@@ -255,6 +255,10 @@ if ($cmd[0]) {
         header("Content-Type: application/json");
         echo json_encode($api->postNewURLReferal($_REQUEST['url'], $_SESSION['userid']), JSON_UNESCAPED_UNICODE);
         exit;
+    } elseif ($cmd[0] == 'refDeleteURL') {
+        isAuth($cmd);
+        $api->deleteURLReferal($_REQUEST['id'], $_SESSION['userid']);
+        exit;
     } elseif ($cmd[0] == 'getBIKInfo') {
         isAuth($cmd);
         header("Content-Type: application/json");

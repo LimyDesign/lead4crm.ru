@@ -1360,8 +1360,13 @@ function refToggleEdit(data, form, input) {
 }
 
 function refDeleteRow(id) {
-  var _refURLTabel = $('#refURLTable');
-  _refURLTabel.find('tbody tr[data-id='+id+']').remove();
+  var _refURLTabel = $('#refURLTable'),
+      _row = _refURLTabel.find('tbody tr[data-id='+id+']'),
+      _hidden = _row.find('input[name=oldrefurl]').val();
+  if (_hidden) {
+    $.post('/refDeleteURL/', { id: id });
+  }
+  _row.remove();
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.

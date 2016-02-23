@@ -623,6 +623,15 @@ class API
         return $refurl;
     }
 
+    public function deleteURLReferal($id, $uid)
+    {
+        $sql = "DELETE FROM crm_refurls WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid)";
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        $params[] = array(':id', $id, \PDO::PARAM_INT);
+        $this->postSqlQuery($sql, $params);
+    }
+
     /**
      * Функция получает данные реферальной программы по конкретному пользователю.
      *
