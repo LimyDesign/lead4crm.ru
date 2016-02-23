@@ -750,7 +750,8 @@ $(document).ready(function()
     var _form = $(this),
         _input = _form.find('input[name=refurl]').val(),
         _hidden = _form.find('input[name=oldrefurl]').val(),
-        _postURL = '/refAddURL/';
+        _postURL = '/refAddURL/',
+        _index = 0;
     _form.find('fieldset').prop('disabled', true);
     if (_hidden) {
       if (_input == _hidden) {
@@ -759,8 +760,9 @@ $(document).ready(function()
         return;
       }
       _postURL = '/refUpdateURL/';
+      _index = _form.parent().parent().data('id');
     }
-    var _posting = $.post(_postURL, { url: _input }, 'json');
+    var _posting = $.post(_postURL, { url: _input, id: _index }, 'json');
     _posting.done(function(data) {
       refToggleEdit(data, _form, _input);
     });

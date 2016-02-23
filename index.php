@@ -258,7 +258,7 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'refUpdateURL') {
         isAuth($cmd);
         header("Content-Type: application/json");
-        echo json_encode($api->postURLReferal($_REQUEST['url'], $_SESSION['userid'], true), JSON_UNESCAPED_UNICODE);
+        echo json_encode($api->postURLReferal($_REQUEST['url'], $_SESSION['userid'], true, $_REQUEST['id']), JSON_UNESCAPED_UNICODE);
         exit;
     } elseif ($cmd[0] == 'refDeleteURL') {
         isAuth($cmd);
