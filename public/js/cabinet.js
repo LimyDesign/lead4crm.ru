@@ -1297,8 +1297,8 @@ function getReferalInfo() {
                   if (entry.moderate) _moderate = '+';
                   else _moderate = '&mdash;';
 
-                  _url = '<a href="javascript:refEditRow(\''+entry.id+'\');" class="jslink">'+entry.url+'</a>';
-                  _html = '<tr data-id="'+data.id+'"><td>'+_url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
+                  _url = '<a href="javascript:refEditRow('+entry.id+');" class="jslink">'+entry.url+'</a>';
+                  _html = '<tr data-id="'+entry.id+'"><td>'+_url+'</td><td>'+_confirm+'</td><td>'+_moderate+'</td></tr>';
                   _table.append(_html);
                 });
               }
