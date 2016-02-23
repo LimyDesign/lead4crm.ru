@@ -615,10 +615,9 @@ class API
      */
     public function postNewURLReferal($url, $uid)
     {
-        $ref = $this->getUserReferal($uid);
-        $sql = "INSERT INTO crm_refurls (refid, url) VALUES (:refid, :url) RETURNING id";
+        $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
         $params = array();
-        $params[] = array(':refid', $ref['id'], \PDO::PARAM_INT);
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $params[] = array(':url', $url, \PDO::PARAM_STR);
         $refurl = $this->getSingleRow($sql, $params);
         return $refurl;

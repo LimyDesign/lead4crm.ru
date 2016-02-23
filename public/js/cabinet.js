@@ -748,13 +748,19 @@ $(document).ready(function()
   $('#refURLTable').on('submit', 'form', function(e) {
     e.preventDefault();
     var _form = $(this),
-        _input = _form.find('input');
+        _input = _form.find('input[name=refurl]').val(),
+        _hidden = _form.find('input[name=oldrefurl]').val(),
+        _postURL = '/refAddURL/';
     _form.find('fieldset').prop('disabled', true);
-    $.post('/refAddURL/', { url: _input.val() }, function(data) {
-      var _html = '<a href="javascript:refEditRow('+data.id+');" class="jslink">'+_input.val()+'</a>';
-      _form.parent().parent().data('id', data.id);
-      _form.after(_html).remove();
-    }, 'json');
+    if (_hidden) {
+      if (_input == _hidden) {
+        var data = {id : _form.parent().parent().data('id')};
+        refToggleEdit(data, _form, _input);
+        return;
+      }
+      _postURL = '/refUpdateURL/';
+    }
+    $.post(_postURL, { url: _input }, refToggleEdit(data, _form, _input), 'json');
   });
 });
 
@@ -1332,7 +1338,7 @@ function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
       _rowLastId = _refURLTabel.find('tbody tr:last').data("id") || 0,
       _rowCount = _rowLastId + 1,
-      _newInput = '<form><fieldset><div class="input-group input-group-sm"><input type="text" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>',
+      _newInput = '<form><fieldset><div class="input-group input-group-sm"><input type="text" name="refurl" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+_rowCount+');"><i class="fa fa-trash"></i></button></div></div><input type="hidden" name="oldrefurl" value=""></fieldset></form>',
       _newRow = '<tr data-id="'+_rowCount+'"><td>'+_newInput+'</td><td>&mdash;</td><td>&mdash;</td>';
   _refURLTabel.find('tbody').append(_newRow);
 }
@@ -1340,8 +1346,14 @@ function refAddNewURL() {
 function refEditRow(id) {
   var _refURLTabel = $('#refURLTable tbody'),
       _val = _refURLTabel.find('tr[data-id='+id+'] td:first').text();
-      _input = '<form><fieldset><div class="input-group input-group-sm"><input type="text" value="'+_val+'" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+id+');"><i class="fa fa-trash"></i></button></div></div></fieldset></form>';
+      _input = '<form><fieldset><div class="input-group input-group-sm"><input type="text" name="refurl" value="'+_val+'" class="form-control"><div class="input-group-btn"><button class="btn btn-success" type="submit"><i class="fa fa-check"></i></button><button class="btn btn-danger" type="button" onclick="refDeleteRow('+id+');"><i class="fa fa-trash"></i></button></div></div><input type="hidden" name="oldrefurl" value="'+_val+'"></fieldset></form>';
   _refURLTabel.find('tr[data-id='+id+'] td:first').empty().html(_input);
+}
+
+function refToggleEdit(data, form, input) {
+  var _html = '<a href="javascript:refEditRow('+data.id+');" class="jslink">'+input+'</a>';
+  form.parent().parent().data('id', data.id);
+  form.after(_html).remove();
 }
 
 function refDeleteRow(id) {
