@@ -29,7 +29,6 @@ $twig = new Twig_Environment($loader, array(
 	'auto_reload' => true,
 	'optimizations' => -1
 ));
-// $twig->addExtension(new \Salva\JshrinkBundle\Twig\Extension\JshrinkExtension);
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 
 file_put_contents('/var/www/html/ref_debug.log', $_SERVER['HTTP_REFERER'] . "\r\n", FILE_APPEND | LOCK_EX);
@@ -48,7 +47,8 @@ $cmd = array_values($requestURI);
 if ($cmd[0]) {
     if ($cmd[0] == 'ref') {
         setcookie('_refid', $cmd[1], null, '/', '.lead4crm.ru');
-        header("Location: /");
+        header("Location: https://www.lead4crm.ru/");
+        exit;
     }
 
     if ($cmd[0] == 'logout') {
