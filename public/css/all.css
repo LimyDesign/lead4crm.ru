@@ -32,6 +32,7 @@ svg rect{
 
 .jslink {
   border-bottom-style: dashed;
+  border-bottom-width: 1px;
 }
 
 /*p {
