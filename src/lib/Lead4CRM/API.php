@@ -627,6 +627,12 @@ class API
         return $refurl;
     }
 
+    /**
+     * Функция удаляет пользовательский URL из таблица реферных URL.
+     *
+     * @param int $id Идентификатор пользовательского URL.
+     * @param int $uid Идентификатор пользователя.
+     */
     public function deleteURLReferal($id, $uid)
     {
         $sql = "DELETE FROM crm_refurls WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid)";
@@ -2078,11 +2084,12 @@ class API
                 $ya                 = $user['ya'];
             } else {
                 $state = sha1($_SERVER['HTTP_USER_AGENT'].time());
-                $sql = "INSERT INTO users(email, {$provider}, apikey) VALUES (:email, :uid, :state) RETURNING id, vk, ok, fb, gp, mr, ya, contract2, email, email_renewal";
+                $sql = "INSERT INTO users(email, {$provider}, apikey, refid) VALUES (:email, :uid, :state, (SELECT id FROM crm_referals WHERE uid = :refid)) RETURNING id, vk, ok, fb, gp, mr, ya, contract2, email, email_renewal";
                 $param = array();
                 $param[] = array(':email', $userEmail, \PDO::PARAM_STR);
                 $param[] = array(':uid', $userId, \PDO::PARAM_INT);
                 $param[] = array(':state', $state, \PDO::PARAM_STR);
+                $param[] = array(':refid', $_COOKIE['_refid'], \PDO::PARAM_INT);
                 $user = $this->getSingleRow($sql, $param);
                 $userid             = $user['id'];
                 $contract           = $user['contract2'];
