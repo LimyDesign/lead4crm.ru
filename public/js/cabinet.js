@@ -1292,8 +1292,9 @@ function refContractAccept() {
 
 function refAddNewURL() {
   var _refURLTabel = $('#refURLTable'),
-      _newInput = '<form id="refFormAddNewURL"><input type="text" name="refurl" class="form-control input-sm"></form>';
-  _refURLTabel.find('tbody').append(_newInput);
+      _newInput = '<form id="refFormAddNewURL"><input type="text" name="refurl" class="form-control input-sm"></form>',
+      _newRow = '<tr><td>'+_newInput+'</td><td></td><td></td>';
+  _refURLTabel.find('tbody').append(_newRow);
 }
 
 /* Функция проверяет является ли переменная 'n' целочисленной.
