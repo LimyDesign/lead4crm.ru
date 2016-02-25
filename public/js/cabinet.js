@@ -24,7 +24,7 @@ Number.prototype.formatMoney = function(c, d, t) {
   var n = this,
       c = isNaN(c = Math.abs(c)) ? 2 : c,
       d = d == undefined ? '.' : d,
-      t = t == undefined ? ',' : t,
+      t = t == undefined ? ' ' : t,
       s = n < 0 ? '-' : '',
       i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + '',
       j = (j = i.length) > 3 ? j  % 3 : 0;
