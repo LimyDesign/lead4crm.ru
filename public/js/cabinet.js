@@ -1316,8 +1316,9 @@ function getReferalInfo() {
                   if (entry.company == null) entry.company = '';
                   if (entry.total != null) _total = entry.total;
 
-                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.number(true, 2, '.', ' ')+' <i class="fa fa-rub"></i></td></tr>';
+                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td><span class="refTotal">'+_total+'</span>&nbsp;<i class="fa fa-rub"></i></td></tr>';
                   _tableReferals.append(_row);
+                  $('#refTotal').number(true, 2, '.', ' ');
                 });
               } else {
                 _row = '<tr><td colspan="10">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
