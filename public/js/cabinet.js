@@ -1305,7 +1305,7 @@ function getReferalInfo() {
                 var uncheck = '<i class="fa fa-square-o"></i>',
                     check = '<i class="fa fa-check-square-o"></i>';
                 data.forEach(function(entry, index) {
-                  var num = index + 1;
+                  var num = index + 1, _total = 0;
                   _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
                   if (entry.vk) _vk = check;
                   if (entry.ok) _ok = check;
@@ -1314,8 +1314,9 @@ function getReferalInfo() {
                   if (entry.mr) _mr = check;
                   if (entry.ya) _ya = check;
                   if (entry.company == null) entry.company = '';
-                  if (entry.total == null) entry.total = 0;
-                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+entry.total+'</td></tr>';
+                  if (entry.total != null) _total = entry.total;
+
+                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.number(true, 2, '.', ' ')+' <i class="fa fa-rub"></i></td></tr>';
                   _tableReferals.append(_row);
                 });
               } else {
