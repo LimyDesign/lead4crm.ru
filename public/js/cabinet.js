@@ -1315,7 +1315,7 @@ function getReferalInfo() {
                   if (entry.ya) _ya = check;
                   if (entry.company == null) entry.company = '';
                   if (entry.total != null) _total = entry.total;
-                  _total = _total.number(true, 2, '.', ' ');
+                  _total = (_total).formatMoney(2);
                   _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
                   _tableReferals.append(_row);
                 });
@@ -1432,3 +1432,15 @@ function getParamByName(name) {
       results = regex.exec(me_src);
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+
+Number.prototype.formatMoney = function(c, d, t) {
+  var n = this,
+      c = isNaN(c = Math.abs(c)) ? 2 : c,
+      d = d == undefined ? '.' : d,
+      t = t == undefined ? ',' : t,
+      s = n < 0 ? '-' : '',
+      i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + '',
+      j = (j = i.length) > 3 ? j  % 3 : 0;
+  return s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+};
