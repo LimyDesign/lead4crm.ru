@@ -1326,8 +1326,7 @@ function getReferalInfo() {
                   if (entry.ya) _ya = check;
                   if (entry.company == null) entry.company = '';
                   if (entry.total != null) _total = entry.total;
-                  _total = (_total).formatMoney(2);
-                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
+                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
                   _tableReferals.append(_row);
                 });
               } else {
