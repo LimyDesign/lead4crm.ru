@@ -1313,6 +1313,8 @@ function getReferalInfo() {
                   if (entry.gp) _gp = check;
                   if (entry.mr) _mr = check;
                   if (entry.ya) _ya = check;
+                  if (entry.company == null) entry.company = '';
+                  if (entry.total == null) entry.company = 0;
                   _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+entry.total+'</td></tr>';
                   _tableReferals.append(_row);
                 });
