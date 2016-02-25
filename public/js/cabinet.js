@@ -1304,7 +1304,7 @@ function getReferalInfo() {
               if (data.length > 0) {
                 var uncheck = '<i class="fa fa-times"></i>',
                     check = '<i class="fa fa-check"></i>';
-                data.forEach(function(entry) {
+                data.forEach(function(entry, index) {
                   _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
                   if (entry.vk) _vk = check;
                   if (entry.ok) _ok = check;
@@ -1312,11 +1312,11 @@ function getReferalInfo() {
                   if (entry.gp) _gp = check;
                   if (entry.mr) _mr = check;
                   if (entry.ya) _ya = check;
-                  _row = '<tr><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+entry.sum+'</td></tr>';
+                  _row = '<tr><td>'+index+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+entry.sum+'</td></tr>';
                   _tableReferals.append(_row);
                 });
               } else {
-                _row = '<tr><td colspan="9">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
+                _row = '<tr><td colspan="10">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
                 _tableReferals.append(_row);
               }
             });
