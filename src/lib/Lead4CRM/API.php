@@ -653,8 +653,15 @@ class API
         $sql = "SELECT id, firm, inn, bik, rs, kpp, ks, bank, ur_addr, po_addr, ogrn, okpo, accept, contract FROM crm_referals WHERE uid = :uid";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-        $ref = $this->getSingleRow($sql, $params);
-        return $ref;
+        return $this->getSingleRow($sql, $params);
+    }
+
+    public function getAllReferals($uid)
+    {
+        $sql = "SELECT email, count(vk)::INT::BOOLEAN AS vk, count(ok)::INT::BOOLEAN AS ok, count(fb)::INT::BOOLEAN AS fb, count(gp)::INT::BOOLEAN AS gp, count(mr)::INT::BOOLEAN AS mr, count(ya)::INT::BOOLEAN AS ya, company FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid) GROUP BY email, company, id ORDER BY id DESC LIMIT 500 OFFSET 0";
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        return $this->getMultipleRows($sql, $params);
     }
 
     /**
