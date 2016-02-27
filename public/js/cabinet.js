@@ -1337,9 +1337,9 @@ function getReferalInfo() {
                   var _page = 1;
                   for (var i = 0; i < total_users; i += 50) {
                     if (_page == 1)
-                      _pagi += '<li class="active"><a href="javascript:goto('+_page+', \'ref\');">'+_page+'</a></li>';
+                      _pagi += '<li class="active"><span>'+_page+'</span></li>';
                     else
-                      _pagi += '<li><a href="javascript:goto('+_page+', \'ref\');">'+_page+'</a></li>';
+                      _pagi += '<li><a href="javascript:goto('+_page+',\'ref\');">'+_page+'</a></li>';
                     _page++;
                   }
                 }
