@@ -1339,6 +1339,7 @@ function refFinRender() {
         _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
         _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
       });
+      _debet = _subtotal - parseInt(data[data.length].credit);
       _row = '<tr><td>'+_datenow+'</td><td>0</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
       _tableFincance.append(_row);
     } else {
