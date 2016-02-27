@@ -1325,6 +1325,22 @@ function getReferalInfo() {
   }, 'json');
 }
 
+function refFinRender() {
+  $.post('/getFinReferals/', function(data) {
+    var _tableFincance = $('#tableFinance'), _row;
+    _tableFincance.empty();
+    if (data.length > 0) {
+      data.forEach(function(entry) {
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.subdebet+'</td>';
+        _tableFincance.append(_row);
+      });
+    } else {
+      _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>'
+      _tableFincance.append(_row);
+    }
+  });
+}
+
 function goto(page, tab, scroll) {
   scroll = scroll == undefined ? true : scroll;
   if (tab == 'refUsers') {

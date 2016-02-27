@@ -253,6 +253,11 @@ if ($cmd[0]) {
         header("Content-Type: application/json");
         echo json_encode($api->getAllReferals($_SESSION['userid'], $_REQUEST['page']), JSON_UNESCAPED_UNICODE);
         exit;
+    } elseif ($cmd[0] == 'getFinReferals') {
+        isAuth($cmd);
+        header("Content-Type: application/json");
+        echo json_encode($api->getFinanceReferals($_SESSION['userid']), JSON_UNESCAPED_UNICODE);
+        exit;
     } elseif ($cmd[0] == 'acceptReferalContract') {
         isAuth($cmd);
         $api->updateUserReferal($_SESSION['userid'], 'contract', true, 'bool');

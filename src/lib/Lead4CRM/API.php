@@ -656,6 +656,13 @@ class API
         return $this->getSingleRow($sql, $params);
     }
 
+    /**
+     * Функция формирует список рефералов, принадлежащие конкретному пользователю.
+     *
+     * @param int $uid Идентификатор пользователя
+     * @param int $page Номер страницы
+     * @return array Список пользователей рефералов
+     */
     public function getAllReferals($uid, $page)
     {
         $limit = 50 * $page;
@@ -663,8 +670,15 @@ class API
         $sql = "SELECT t1.email, count(t1.vk)::INT::BOOLEAN AS vk, count(t1.ok)::INT::BOOLEAN AS ok, count(t1.fb)::INT::BOOLEAN AS fb, count(t1.gp)::INT::BOOLEAN AS gp, count(t1.mr)::INT::BOOLEAN AS mr, count(t1.ya)::INT::BOOLEAN AS ya, t1.company, (SELECT sum(t2.debet) FROM log AS t2 WHERE t1.id = t2.uid) as total, count(t1.id) OVER() AS total_users FROM users AS t1 WHERE t1.refid = (SELECT id FROM crm_referals WHERE uid = :uid) GROUP BY t1.email, t1.company, t1.id ORDER BY total DESC NULLS LAST, t1.id DESC LIMIT 50 OFFSET :offset";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-//        $params[] = array(':limit', $limit, \PDO::PARAM_INT);
         $params[] = array(':offset', $offset, \PDO::PARAM_INT);
+        return $this->getMultipleRows($sql, $params);
+    }
+
+    public function getFinanceReferals($uid)
+    {
+        $sql = "SELECT paydate, totalsum as credit, (SELECT sum(debet) * 0.1 FROM log WHERE uid IN (SELECT id FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid))) AS sumdebet FROM crm_reffin WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid);";
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         return $this->getMultipleRows($sql, $params);
     }
 
