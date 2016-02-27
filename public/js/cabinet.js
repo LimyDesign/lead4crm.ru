@@ -1311,7 +1311,7 @@ function getReferalInfo() {
             refRefreshTable();
             $.post('/getAllReferals/', function(data) {
               var _tableReferals = $('#tableReferals tbody'),
-                  _pagination = _tableReferals.next().find('.pagination'),
+                  _pagination = $('#refFinish ul.pagination'),
                   _row, _vk, _ok, _fb, _gp, _mr, _ya;
               _tableReferals.empty();
               if (data.length > 0) {
