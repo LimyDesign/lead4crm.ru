@@ -1364,7 +1364,7 @@ function goto(page, tab) {
       }
       _pagination.empty().html(_pagi);
     } else {
-      _row = '<tr><td colspan="10" class="text-center">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
+      _row = '<tr><td colspan="10" class="text-center"><h4>Упс!</h4>Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
       _tableReferals.append(_row);
     }
   });
