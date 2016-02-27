@@ -1337,7 +1337,7 @@ function refFinRender() {
           _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
       data.forEach(function(entry, index) {
         var _dateParse = Date.parse(entry.paydate),
-            _dateDB = _dateParse.getDay() + ' ' _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
+            _dateDB = _dateParse.getDay() + ' ' + _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
         _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
