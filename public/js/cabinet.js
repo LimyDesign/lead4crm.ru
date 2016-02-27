@@ -1326,6 +1326,7 @@ function getReferalInfo() {
 }
 
 function goto(page, tab, scroll) {
+  var scroll = scroll == undefined ? false : scroll;
   if (tab == 'refUsers') {
     $.post('/getAllReferals/', { page: page }, function(data) {
       var _tableReferals = $('#tableReferals tbody'),
@@ -1354,8 +1355,7 @@ function goto(page, tab, scroll) {
         });
         var total_users = parseInt(data[0].total_users);
         if (total_users > 50) {
-          var _page = 1,
-              scroll = scroll == undefined ? false : scroll;
+          var _page = 1;
           for (var i = 0; i < total_users; i += 50) {
             if (_page == page)
               _pagi += '<li class="active"><span>'+_page+'</span></li>';
@@ -1370,7 +1370,6 @@ function goto(page, tab, scroll) {
         _tableReferals.append(_row);
       }
     }).done(function() {
-      var scroll = scroll == undefined ? false : scroll;
       if (scroll)
         scrollTo('#tableReferals');
     });
