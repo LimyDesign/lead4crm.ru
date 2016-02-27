@@ -1325,7 +1325,7 @@ function getReferalInfo() {
   }, 'json');
 }
 
-function goto(page, tab) {
+function goto(page, tab, scroll) {
   if (tab == 'refUsers') {
     $.post('/getAllReferals/', { page: page }, function(data) {
       var _tableReferals = $('#tableReferals tbody'),
@@ -1354,12 +1354,13 @@ function goto(page, tab) {
         });
         var total_users = parseInt(data[0].total_users);
         if (total_users > 50) {
-          var _page = 1;
+          var _page = 1,
+              scroll = scroll == undefined ? false : scroll;
           for (var i = 0; i < total_users; i += 50) {
             if (_page == page)
               _pagi += '<li class="active"><span>'+_page+'</span></li>';
             else
-              _pagi += '<li><a href="javascript:goto('+_page+',\''+tab+'\');">'+_page+'</a></li>';
+              _pagi += '<li><a href="javascript:goto('+_page+',\''+tab+'\''+scroll+');">'+_page+'</a></li>';
             _page++;
           }
         }
@@ -1369,7 +1370,9 @@ function goto(page, tab) {
         _tableReferals.append(_row);
       }
     }).done(function() {
-      scrollTo('#tableReferals');
+      var scroll = scroll == undefined ? false : scroll;
+      if (scroll)
+        scrollTo('#tableReferals');
     });
   }
 }
