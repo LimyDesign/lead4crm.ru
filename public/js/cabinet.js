@@ -1331,10 +1331,11 @@ function refFinRender() {
     var _tableFincance = $('#tableFinance tbody'), _row = '';
     _tableFincance.empty();
     if (data.length > 0) {
-      var _debet = 0;
+      var _debet = 0, _credit = 0;
       data.forEach(function(entry) {
-        _debet = _debet == 0 ? entry.sumdebet : entry.sumbedet - entry.credit;
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+_debet+'</td>' + _row;
+        _credit = parseInt(entry.credit).formatMoney(2);
+        _debet = _debet == 0 ? parseInt(entry.sumdebet) : parseInt(entry.sumbedet - entry.credit);
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
       });
       _tableFincance.append(_row);
     } else {
