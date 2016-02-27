@@ -1326,7 +1326,7 @@ function getReferalInfo() {
 }
 
 function goto(page, tab, scroll) {
-  var scroll = scroll == undefined ? false : scroll;
+  scroll = scroll == undefined ? false : scroll;
   if (tab == 'refUsers') {
     $.post('/getAllReferals/', { page: page }, function(data) {
       var _tableReferals = $('#tableReferals tbody'),
