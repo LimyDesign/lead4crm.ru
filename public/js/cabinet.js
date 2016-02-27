@@ -1328,13 +1328,13 @@ function getReferalInfo() {
 
 function refFinRender() {
   $.post('/getFinReferals/', function(data) {
-    var _tableFincance = $('#tableFinance'), _row;
+    var _tableFincance = $('#tableFinance'), _row = '';
     _tableFincance.empty();
     if (data.length > 0) {
       data.forEach(function(entry) {
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.sumdebet+'</td>';
-        _tableFincance.append(_row);
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.sumdebet+'</td>' + _row;
       });
+      _tableFincance.append(_row);
     } else {
       _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>'
       _tableFincance.append(_row);
