@@ -676,7 +676,7 @@ class API
 
     public function getFinanceReferals($uid)
     {
-        $sql = "SELECT paydate, totalsum as credit, (SELECT sum(debet) * 0.1 FROM log WHERE uid IN (SELECT id FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid))) AS sumdebet FROM crm_reffin WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid);";
+        $sql = "SELECT paydate, totalsum as credit, (SELECT sum(debet) * 0.1 FROM log WHERE uid IN (SELECT id FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid))) AS sumdebet FROM crm_reffin WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid)  ORDER BY paydate DESC";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         return $this->getMultipleRows($sql, $params);
