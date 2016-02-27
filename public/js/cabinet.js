@@ -1334,12 +1334,14 @@ function refFinRender() {
       var _debet = 0, _credit = 0, _subtotal = 0,
           _date = new Date(),
           _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
-          _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear();
+          _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
       data.forEach(function(entry, index) {
+        var _dateParse = Date.parse(entry.paydate),
+            _dateDB = _dateParse.getDay() + ' ' _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
         _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
+        _row = '<tr><td>'+_dateDB+'</td><td>'+_credit+'&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       });
       _debet = _subtotal - parseInt(data[data.length - 1].credit);
       _row = '<tr><td>'+_datenow+'</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
