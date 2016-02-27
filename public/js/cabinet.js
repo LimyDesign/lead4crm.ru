@@ -1337,10 +1337,10 @@ function refFinRender() {
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
         _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       });
       _debet = _subtotal - parseInt(data[data.length - 1].credit);
-      _row = '<tr><td>'+_datenow+'</td><td>0</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
+      _row = '<tr><td>'+_datenow+'</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       _tableFincance.append(_row);
     } else {
       _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>'
