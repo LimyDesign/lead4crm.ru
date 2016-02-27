@@ -1332,10 +1332,10 @@ function refFinRender() {
     _tableFincance.empty();
     if (data.length > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0;
-      data.forEach(function(entry) {
+      data.forEach(function(entry, index) {
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
-        _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(entry.credit);
+        _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
         _row = '<tr><td>'+entry.paydate+'</td><td>'+_credit+'</td><td>'+_debet.formatMoney(2)+'</td>' + _row;
       });
       _tableFincance.append(_row);
