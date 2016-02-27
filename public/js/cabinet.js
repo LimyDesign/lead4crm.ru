@@ -838,7 +838,7 @@ function checkBankAccount(str) {
 /* Функция прокрутки страницы к конкретному элементу.
 ========================================================================================= */
 function scrollTo(element) {
-  $('html, body').animate({ scrollTop: $(element).offset().top - $('#header').outerHeight() - 40 }, 1000);
+  $('html, body').animate({ scrollTop: $(element).offset().top - $('#header').outerHeight() - 20 }, 1000);
 }
 
 /* Функция перехода к предыдущему шагу в мастере выборок.
