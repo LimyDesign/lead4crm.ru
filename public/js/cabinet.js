@@ -1338,6 +1338,7 @@ function goto(page, tab) {
       data.forEach(function(entry, index) {
         var num = index + 1, _total = 0;
         _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
+        if (entry.email == null) entry.email = '(адрес не указан)';
         if (entry.vk) _vk = check;
         if (entry.ok) _ok = check;
         if (entry.fb) _fb = check;
