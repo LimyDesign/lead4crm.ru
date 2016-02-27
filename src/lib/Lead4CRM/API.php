@@ -660,10 +660,10 @@ class API
     {
         $limit = 50 * $page;
         $offset = $limit - 50;
-        $sql = "SELECT t1.email, count(t1.vk)::INT::BOOLEAN AS vk, count(t1.ok)::INT::BOOLEAN AS ok, count(t1.fb)::INT::BOOLEAN AS fb, count(t1.gp)::INT::BOOLEAN AS gp, count(t1.mr)::INT::BOOLEAN AS mr, count(t1.ya)::INT::BOOLEAN AS ya, t1.company, (SELECT sum(t2.debet) FROM log AS t2 WHERE t1.id = t2.uid) as total, count(t1.id) OVER() AS total_users FROM users AS t1 WHERE t1.refid = (SELECT id FROM crm_referals WHERE uid = :uid) GROUP BY t1.email, t1.company, t1.id ORDER BY total DESC NULLS LAST, t1.id DESC LIMIT :limit OFFSET :offset";
+        $sql = "SELECT t1.email, count(t1.vk)::INT::BOOLEAN AS vk, count(t1.ok)::INT::BOOLEAN AS ok, count(t1.fb)::INT::BOOLEAN AS fb, count(t1.gp)::INT::BOOLEAN AS gp, count(t1.mr)::INT::BOOLEAN AS mr, count(t1.ya)::INT::BOOLEAN AS ya, t1.company, (SELECT sum(t2.debet) FROM log AS t2 WHERE t1.id = t2.uid) as total, count(t1.id) OVER() AS total_users FROM users AS t1 WHERE t1.refid = (SELECT id FROM crm_referals WHERE uid = :uid) GROUP BY t1.email, t1.company, t1.id ORDER BY total DESC NULLS LAST, t1.id DESC LIMIT 50 OFFSET :offset";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-        $params[] = array(':limit', $limit, \PDO::PARAM_INT);
+//        $params[] = array(':limit', $limit, \PDO::PARAM_INT);
         $params[] = array(':offset', $offset, \PDO::PARAM_INT);
         return $this->getMultipleRows($sql, $params);
     }
