@@ -1333,10 +1333,11 @@ function getReferalInfo() {
                   _tableReferals.append(_row);
                 });
                 var total_users = parseInt(data[0].total_users);
-                alert(total_users);
                 if (total_users > 50) {
+                  console.log('Pagination start!');
                   var _page = 1;
                   for (var i = 0; i < total_users; i += 50) {
+                    console.log('Page: ' + _page);
                     _pagi += '<li><a href="#">'+_page+'</a></li>';
                     _page++;
                   }
