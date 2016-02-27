@@ -1332,7 +1332,11 @@ function refFinRender() {
     _tableFincance.empty();
     if (data.length > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0,
-          _datenow = new Date();
+          _datenow = new Date().toLocaleString('ru', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
       data.forEach(function(entry, index) {
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
