@@ -1328,11 +1328,13 @@ function getReferalInfo() {
 
 function refFinRender() {
   $.post('/getFinReferals/', function(data) {
-    var _tableFincance = $('#tableFinance'), _row = '';
+    var _tableFincance = $('#tableFinance tbody'), _row = '';
     _tableFincance.empty();
     if (data.length > 0) {
+      var _debet = 0;
       data.forEach(function(entry) {
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.sumdebet+'</td>' + _row;
+        _debet = _debet == 0 ? entry.sumdebet : entry.sumbedet - entry.credit;
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+_debet+'</td>' + _row;
       });
       _tableFincance.append(_row);
     } else {
