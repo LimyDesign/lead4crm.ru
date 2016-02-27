@@ -1309,7 +1309,7 @@ function getReferalInfo() {
             _finish.removeClass('hide');
             selectText('refurl');
             refRefreshTable();
-            goto(1,'ref');
+            goto(1,'#tableReferals');
           }
         }
       }
@@ -1325,7 +1325,7 @@ function getReferalInfo() {
   }, 'json');
 }
 
-function goto(page,tab) {
+function goto(page, tab) {
   $.post('/getAllReferals/', { page: page }, function(data) {
     var _tableReferals = $('#tableReferals tbody'),
         _pagination = $('#refFinish ul.pagination'),
@@ -1356,7 +1356,7 @@ function goto(page,tab) {
           if (_page == page)
             _pagi += '<li class="active"><span>'+_page+'</span></li>';
           else
-            _pagi += '<li><a href="javascript:goto('+_page+',\'ref\');">'+_page+'</a></li>';
+            _pagi += '<li><a href="javascript:goto('+_page+',\''+tab+'\');">'+_page+'</a></li>';
           _page++;
         }
       }
