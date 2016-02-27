@@ -1332,7 +1332,8 @@ function getReferalInfo() {
                   if (entry.total_users > 50) {
                     var _page = 1;
                     for (var i = 0; i < entry.total_users; i += 50) {
-                      _pagi += '<li><a href="#.">'+_page+'</a></li>';
+                      _pagi += '<li><a href="#">'+_page+'</a></li>';
+                      _page++;
                     }
                   }
                   _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
