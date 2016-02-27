@@ -31,6 +31,24 @@ Number.prototype.formatMoney = function(c, d, t) {
   return s + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
 };
 
+Date.createFromString = function(string) {
+  'use strict';
+  var pattern = /^(\d\d\d\d)-(\d\d)-(\d\d)[ T](\d\d):(\d\d):(\d\d).(\d\d\d\d\d\d)$/,
+      matches = pattern.exec(string);
+  if (!matches) {
+    throw new Error("Invalid string: " + string);
+  }
+  var year = matches[1],
+      month = matches[2] - 1,
+      day = matches[3],
+      hour = matches[4],
+      minute = matches[5],
+      second = matches[6];
+
+  var absoluteMs = Date.UTC(year, month, day, hour, minute, second);
+  return new Date(absoluteMs);
+};
+
 $(document).ready(function() 
 {
   /* Меняем приветствие в зависимости от времени суток у пользователя. А также подгружаем
@@ -1336,7 +1354,7 @@ function refFinRender() {
           _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
           _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
       data.forEach(function(entry, index) {
-        var _dateParse = Date.parse(entry.paydate),
+        var _dateParse = Date.createFromString(entry.paydate),
             _dateDB = _dateParse.getDay() + ' ' + _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
