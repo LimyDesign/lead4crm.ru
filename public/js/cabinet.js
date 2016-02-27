@@ -1309,46 +1309,7 @@ function getReferalInfo() {
             _finish.removeClass('hide');
             selectText('refurl');
             refRefreshTable();
-            $.post('/getAllReferals/', function(data) {
-              var _tableReferals = $('#tableReferals tbody'),
-                  _pagination = $('#refFinish ul.pagination'),
-                  _row, _vk, _ok, _fb, _gp, _mr, _ya;
-              _tableReferals.empty();
-              if (data.length > 0) {
-                var uncheck = '<i class="fa fa-square-o"></i>',
-                    check = '<i class="fa fa-check-square-o"></i>',
-                    _pagi = '';
-                data.forEach(function(entry, index) {
-                  var num = index + 1, _total = 0;
-                  _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
-                  if (entry.vk) _vk = check;
-                  if (entry.ok) _ok = check;
-                  if (entry.fb) _fb = check;
-                  if (entry.gp) _gp = check;
-                  if (entry.mr) _mr = check;
-                  if (entry.ya) _ya = check;
-                  if (entry.company == null) entry.company = '';
-                  if (entry.total != null) _total = parseInt(entry.total);
-                  _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
-                  _tableReferals.append(_row);
-                });
-                var total_users = parseInt(data[0].total_users);
-                if (total_users > 50) {
-                  var _page = 1;
-                  for (var i = 0; i < total_users; i += 50) {
-                    if (_page == 1)
-                      _pagi += '<li class="active"><span>'+_page+'</span></li>';
-                    else
-                      _pagi += '<li><a href="javascript:goto('+_page+',\'ref\');">'+_page+'</a></li>';
-                    _page++;
-                  }
-                }
-                _pagination.empty().html(_pagi);
-              } else {
-                _row = '<tr><td colspan="10">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
-                _tableReferals.append(_row);
-              }
-            });
+            goto(1,'ref');
           }
         }
       }
@@ -1362,6 +1323,49 @@ function getReferalInfo() {
     }
     _tab.html(_tab_text);
   }, 'json');
+}
+
+function goto(page,tab) {
+  $.post('/getAllReferals/', { page: page }, function(data) {
+    var _tableReferals = $('#tableReferals tbody'),
+        _pagination = $('#refFinish ul.pagination'),
+        _row, _vk, _ok, _fb, _gp, _mr, _ya;
+    _tableReferals.empty();
+    if (data.length > 0) {
+      var uncheck = '<i class="fa fa-square-o"></i>',
+          check = '<i class="fa fa-check-square-o"></i>',
+          _pagi = '';
+      data.forEach(function(entry, index) {
+        var num = index + 1, _total = 0;
+        _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
+        if (entry.vk) _vk = check;
+        if (entry.ok) _ok = check;
+        if (entry.fb) _fb = check;
+        if (entry.gp) _gp = check;
+        if (entry.mr) _mr = check;
+        if (entry.ya) _ya = check;
+        if (entry.company == null) entry.company = '';
+        if (entry.total != null) _total = parseInt(entry.total);
+        _row = '<tr><td>'+num+'</td><td>'+entry.email+'</td><td>'+_vk+'</td><td>'+_ok+'</td><td>'+_fb+'</td><td>'+_gp+'</td><td>'+_mr+'</td><td>'+_ya+'</td><td>'+entry.company+'</td><td>'+_total.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td></tr>';
+        _tableReferals.append(_row);
+      });
+      var total_users = parseInt(data[0].total_users);
+      if (total_users > 50) {
+        var _page = 1;
+        for (var i = 0; i < total_users; i += 50) {
+          if (_page == page)
+            _pagi += '<li class="active"><span>'+_page+'</span></li>';
+          else
+            _pagi += '<li><a href="javascript:goto('+_page+',\'ref\');">'+_page+'</a></li>';
+          _page++;
+        }
+      }
+      _pagination.empty().html(_pagi);
+    } else {
+      _row = '<tr><td colspan="10">Вы еще не привлекли ни одного пользователя. Возпользуйтесь реферальной ссылкой.</td></tr>';
+      _tableReferals.append(_row);
+    }
+  });
 }
 
 function refContractAccept() {

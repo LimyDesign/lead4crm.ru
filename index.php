@@ -251,7 +251,7 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'getAllReferals') {
         isAuth($cmd);
         header("Content-Type: application/json");
-        echo json_encode($api->getAllReferals($_SESSION['userid']), JSON_UNESCAPED_UNICODE);
+        echo json_encode($api->getAllReferals($_SESSION['userid'], $_REQUEST['page']), JSON_UNESCAPED_UNICODE);
         exit;
     } elseif ($cmd[0] == 'acceptReferalContract') {
         isAuth($cmd);
