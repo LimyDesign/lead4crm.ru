@@ -1310,6 +1310,7 @@ function getReferalInfo() {
             selectText('refurl');
             refRefreshTable();
             goto(1,'refUsers',false);
+            refFinRender();
           }
         }
       }
