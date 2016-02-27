@@ -1309,7 +1309,7 @@ function getReferalInfo() {
             _finish.removeClass('hide');
             selectText('refurl');
             refRefreshTable();
-            goto(1,'refUsers');
+            goto(1,'refUsers',false);
           }
         }
       }
@@ -1360,7 +1360,7 @@ function goto(page, tab, scroll) {
             if (_page == page)
               _pagi += '<li class="active"><span>'+_page+'</span></li>';
             else
-              _pagi += '<li><a href="javascript:goto('+_page+',\''+tab+'\','+scroll+');">'+_page+'</a></li>';
+              _pagi += '<li><a href="javascript:goto('+_page+',\''+tab+'\');">'+_page+'</a></li>';
             _page++;
           }
         }
