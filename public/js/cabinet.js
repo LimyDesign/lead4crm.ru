@@ -1335,8 +1335,8 @@ function goto(page, tab) {
       var uncheck = '<i class="fa fa-square-o"></i>',
           check = '<i class="fa fa-check-square-o"></i>',
           _pagi = '';
-      data.forEach(function(entry, index) {
-        var num = (index + 1) * page, _total = 0;
+      data.forEach(function(entry) {
+        var num = (50 * page - 50) + 1, _total = 0;
         _vk = _ok = _fb = _gp = _mr = _ya = uncheck;
         if (entry.email == null) entry.email = '&lt;адрес не указан&gt;';
         else entry.email = '<a href="mailto:'+entry.email+'">'+entry.email+'</a>';
