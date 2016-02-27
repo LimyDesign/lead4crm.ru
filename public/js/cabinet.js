@@ -1332,7 +1332,7 @@ function refFinRender() {
     _tableFincance.empty();
     if (data.length > 0) {
       data.forEach(function(entry) {
-        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.subdebet+'</td>';
+        _row = '<tr><td>'+entry.paydate+'</td><td>'+entry.credit+'</td><td>'+entry.sumdebet+'</td>';
         _tableFincance.append(_row);
       });
     } else {
