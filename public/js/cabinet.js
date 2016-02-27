@@ -1333,7 +1333,8 @@ function refFinRender() {
     if (data.length > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0,
           _date = new Date(),
-          _datenow = _date.getFullYear() + '.' + _date.getMonth();
+          _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
+          _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear();
       data.forEach(function(entry, index) {
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
