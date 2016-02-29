@@ -46,6 +46,7 @@ Date.createFromString = function(string) {
       second = matches[6];
 
   var absoluteMs = Date.UTC(year, month, day, hour, minute, second);
+  console.log(day);
   return new Date(absoluteMs);
 };
 
