@@ -46,7 +46,6 @@ Date.createFromString = function(string) {
       second = matches[6];
 
   var absoluteMs = Date.UTC(year, month, day, hour, minute, second);
-  console.log(day);
   return new Date(absoluteMs);
 };
 
@@ -1353,10 +1352,10 @@ function refFinRender() {
       var _debet = 0, _credit = 0, _subtotal = 0,
           _date = new Date(),
           _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
-          _datenow = _date.getDay() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
+          _datenow = _date.getDate() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
       data.forEach(function(entry, index) {
         var _dateParse = Date.createFromString(entry.paydate),
-            _dateDB = _dateParse.getDay() + ' ' + _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
+            _dateDB = _dateParse.getDate() + ' ' + _monthRu[_dateParse.getMonth()] + ' ' + _dateParse.getFullYear() + ' г.';
         _credit = parseInt(entry.credit).formatMoney(2);
         _subtotal = _subtotal == 0 ? parseInt(entry.sumdebet) : _subtotal;
         _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data[index-1].credit);
@@ -1366,7 +1365,7 @@ function refFinRender() {
       _row = '<tr><td>'+_datenow+'</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       _tableFincance.append(_row);
     } else {
-      _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>'
+      _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>';
       _tableFincance.append(_row);
     }
   });
