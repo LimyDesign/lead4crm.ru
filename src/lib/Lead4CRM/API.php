@@ -693,19 +693,19 @@ class API
 
     public function getWithdrawals($uid, $to, $sum)
     {
-        if ($to == 'balance') {
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $params[] = array(':sum', $sum, \PDO::PARAM_INT);
-            $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate";
-            $paydate = $this->getSingleRow($sql, $params);
-            $params[] = array(':num', date('ymdHis').rand(0,9), \PDO::PARAM_INT);
-            $sql = "WITH invoice_num AS (INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id) INSERT INTO log (uid, debet, client, invoice) VALUES (:uid, :sum, 'Реферальная программа: Счет №', (SELECT id FROM invoice_num)) RETURNING modtime";
-            $modtime = $this->getSingleRow($sql, $params);
-            return array('paydate' => $paydate['paydate'], 'modtime' => $modtime['modtime']);
-        } elseif ($to == 'bank') {
-            $finance = $this->getFinanceReferals($uid);
-            if ($finance['debet']['debet'] >= $sum) {
+        $finance = $this->getFinanceReferals($uid);
+        if ($finance['debet']['debet'] >= $sum) {
+            if ($to == 'balance') {
+                $params = array();
+                $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+                $params[] = array(':sum', $sum, \PDO::PARAM_INT);
+                $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate";
+                $paydate = $this->getSingleRow($sql, $params);
+                $params[] = array(':num', date('ymdHis').rand(0,9), \PDO::PARAM_INT);
+                $sql = "WITH invoice_num AS (INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id) INSERT INTO log (uid, debet, client, invoice) VALUES (:uid, :sum, 'Реферальная программа: Счет №', (SELECT id FROM invoice_num)) RETURNING modtime";
+                $modtime = $this->getSingleRow($sql, $params);
+                return array('paydate' => $paydate['paydate'], 'modtime' => $modtime['modtime']);
+            } elseif ($to == 'bank') {
                 $params = array();
                 $params[] = array(':uid', $uid, \PDO::PARAM_INT);
                 $params[] = array(':sum', $sum, \PDO::PARAM_INT);
@@ -719,10 +719,10 @@ class API
                 $mailsend = mail('arsen@lead4crm.ru', $subject, $msg, $headers);
                 return array('paydate' => $paydate['paydate'], 'mailsend' => $mailsend);
             } else {
-                return array('error' => 'Указанная сумма превышает общую сумму накоплений.');
+                return array('error' => 'Не верно указана форма выплаты.');
             }
         } else {
-            return array('error' => 'Не верно указана форма выплаты.');
+            return array('error' => 'Указанная сумма превышает общую сумму накоплений.');
         }
     }
 
