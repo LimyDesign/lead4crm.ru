@@ -33,10 +33,12 @@ $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegr
 
 if (!$_COOKIE['_refid']) {
     $refURL = $api->getRefererByURL($_SERVER['HTTP_REFERER']);
-    if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
-        setcookie('_refid', $refURL['uid'], null, '/', '.lead4crm.ru');
-    } else {
-        $api->postURLReferalConfirm($_SESSION['userid'], $_SERVER['HTTP_REFERER']);
+    if (count($refURL) > 0) {
+        if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
+            setcookie('_refid', $refURL['uid'], null, '/', '.lead4crm.ru');
+        } else {
+            $api->postURLReferalConfirm($_SESSION['userid'], $_SERVER['HTTP_REFERER']);
+        }
     }
 }
 file_put_contents('/var/www/html/ref_debug.log', $_SERVER['HTTP_REFERER'] . "\r\n", FILE_APPEND | LOCK_EX);
