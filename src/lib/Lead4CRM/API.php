@@ -628,6 +628,29 @@ class API
     }
 
     /**
+     * Функция выполняет подтверждение добавленного адреса и оповещает модератора о необходимости проверки данного
+     * адреса на соответствие текущему рефереру.
+     *
+     * @param int $uid Идентификатор пользователя.
+     * @param string $url URL адрес реферала.
+     * @return bool Возвращает результат постановки почтового сообщения в очередь на отправку.
+     */
+    public function postURLReferalConfirm($uid, $url)
+    {
+        $sql = "UPDATE crm_refurls SET confirm = TRUE WHERE url = :url AND refid = (SELECT id FROM crm_referals WHERE uid = :uid)";
+        $params = array();
+        $params[] = array(':url', $url, \PDO::PARAM_STR);
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        $this->postSqlQuery($sql, $params);
+        $msg = "Наидобрейший денёк, многоуважаемый!\r\n\r\nРеферер подтвердил добавленный ранее URL, необходимо сделать проверку добавленного URL.\r\n\r\nПодтвержденный URL: {$url}\r\nИдентификатор пользователя: {$uid}\r\n\r\nС уважением,\r\nпочтовый мегабот Lead4CRM.";
+        $subject = "Lead4CRM: Реферер подтвердил URL";
+        $headers = "From: Lead4CRM <noreply@lead4crm.ru>\r\n";
+        $headers.= "Reply-To: support@lead4crm.ru\r\n";
+        $headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
+        return mail('arsen@lead4crm.ru', $subject, $msg, $headers);
+    }
+
+    /**
      * Функция удаляет пользовательский URL из таблица реферных URL.
      *
      * @param int $id Идентификатор пользовательского URL.
@@ -691,6 +714,15 @@ class API
         return array('credit' => $credit, 'debet' => $debet);
     }
 
+    /**
+     * Функция выполянет операции по перечислению денежных средств либо на лицевой счет пользователя, либо на
+     * расчетный счет.
+     *
+     * @param int $uid Идентификатор пользователя.
+     * @param string $to Указатель вывода средств.
+     * @param int $sum Сумма вывода средств.
+     * @return array Выдает результат операции.
+     */
     public function getWithdrawals($uid, $to, $sum)
     {
         $finance = $this->getFinanceReferals($uid);
@@ -738,6 +770,20 @@ class API
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         return $this->getMultipleRows($sql, $params);
+    }
+
+    /**
+     * Функция производит поиск по реферерным URL адресам и отдает идентификатор реферера для данных URL.
+     *
+     * @param string $url Реферальный URL адрес.
+     * @return array Отдает результат поиска идентификатора реферера со всеми доп. опциями.
+     */
+    public function getRefererByURL($url)
+    {
+        $sql = "SELECT t2.uid, t1.confirm, t1.moderate FROM crm_refurls AS t1 LEFT JOIN crm_referals AS t2 ON t1.refid = t2.id WHERE t1.url LIKE :url";
+        $params = array();
+        $params[] = array(':url', $url, \PDO::PARAM_STR);
+        return $this->getSingleRow($sql, $params);
     }
 
     /**
