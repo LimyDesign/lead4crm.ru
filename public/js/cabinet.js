@@ -1407,7 +1407,7 @@ function refFinRender() {
       } else {
         _debet = parseInt(data.debet.debet);
       }
-      _row = '<tr><td>Сегодня</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
+      _row = '<tr class="active"><td>Сегодня</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       _tableFincance.append(_row);
     } else {
       _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>';
