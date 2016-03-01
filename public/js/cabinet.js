@@ -33,10 +33,10 @@ Number.prototype.formatMoney = function(c, d, t) {
 
 Date.createFromString = function(string) {
   'use strict';
-  var pattern = /^(\d\d\d\d)-(\d\d)-(\d\d)[ T](\d\d):(\d\d):(\d\d).(\d\d\d\d\d\d)$/,
+  var pattern = /^(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)/,
       matches = pattern.exec(string);
   if (!matches) {
-    throw new Error("Invalid string: " + string);
+    throw new Error("Неправильная строка: " + string);
   }
   var year = matches[1],
       month = matches[2] - 1,
@@ -804,6 +804,7 @@ $(document).ready(function()
           $.growl.error({ title: "Опаньки!", message: data.error });
         } else {
           getUserData();
+          refFinRender();
           $.growl.notice({ title: "Все готово!", message: "Заказанная сумма зачислена на лицевой счет, пользуйтесь!" });
         }
       }, 'json');
