@@ -796,6 +796,21 @@ $(document).ready(function()
       refToggleEdit(data, _form, _input);
     });
   });
+
+  $('#withdrawalsBalance').submit(function(e) {
+    e.preventDefault();
+    var _this = $(this),
+        _action = _this.attr('action'),
+        _sum = _this.find('#withdrawalsSum'),
+        _sumval = _sum.val();
+    if (_sumval >= 1) {
+      $.post(_action, { sum: _sum }, function(data) {
+      }, 'json');
+    } else {
+      _sum.focus();
+      $.growl.error({ title: 'Упс!', message: 'Сумма должна быть больше или равна 1 рублю.' });
+    }
+  });
 });
 
 /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
