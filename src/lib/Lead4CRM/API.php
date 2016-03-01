@@ -617,7 +617,7 @@ class API
     {
         $params = array();
         if ($update) {
-            $sql = "UPDATE crm_refurls SET url = :url WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid) RETURNING id";
+            $sql = "UPDATE crm_refurls SET url = :url, confirm = FALSE, moderate = FALSE WHERE id = :id AND refid = (SELECT id FROM crm_referals WHERE uid = :uid) RETURNING id";
             $params[] = array(':id', $id, \PDO::PARAM_INT);
         } else
             $sql = "INSERT INTO crm_refurls (refid, url) VALUES ((SELECT id FROM crm_referals WHERE uid = :uid), :url) RETURNING id";
