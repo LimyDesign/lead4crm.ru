@@ -37,7 +37,8 @@ if (!$_COOKIE['_refid']) {
         if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
             setcookie('_refid', $refURL['uid'], null, '/', '.lead4crm.ru');
         } else {
-            $api->postURLReferalConfirm($_SESSION['userid'], $_SERVER['HTTP_REFERER']);
+            if ($refURL['uid'] == $_SESSION['userid'] && !$refURL['confirm'])
+                $api->postURLReferalConfirm($_SESSION['userid'], $_SERVER['HTTP_REFERER']);
         }
     }
 }
