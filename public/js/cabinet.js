@@ -803,7 +803,6 @@ $(document).ready(function()
         _action = _this.attr('action'),
         _sum = _this.find('#withdrawalsSum'),
         _sumval = _sum.val();
-    console.log(_action);
     if (_sumval >= 1) {
       $.post(_action, { sum: _sum }, function(data) {
       }, 'json');
@@ -1366,9 +1365,7 @@ function refFinRender() {
     _tableFincance.empty();
     if (data.debet.debet > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0,
-          _date = new Date(),
           _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
-          _datenow = _date.getDate() + ' ' + _monthRu[_date.getMonth()] + ' ' + _date.getFullYear() + ' г.';
       if (data.credit.length > 0) {
         data.credit.forEach(function(entry, index) {
           var _dateParse = Date.createFromString(entry.paydate),
@@ -1382,7 +1379,7 @@ function refFinRender() {
       } else {
         _debet = parseInt(data.debet.debet);
       }
-      _row = '<tr><td>'+_datenow+'</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
+      _row = '<tr><td>Сегодня</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       _tableFincance.append(_row);
     } else {
       _row = '<tr><td colspan="3" class="text-center"><strong>Ой-ё-ё!</strong><br>Так вышло, что у вас еще не накоплено ни одного рубля.<br>Привлекайте пользователей и получайте отчисления!</td>';
