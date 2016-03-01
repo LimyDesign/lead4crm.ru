@@ -705,18 +705,23 @@ class API
             $modtime = $this->getSingleRow($sql, $params);
             return array('paydate' => $paydate['paydate'], 'modtime' => $modtime['modtime']);
         } elseif ($to == 'bank') {
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $params[] = array(':sum', $sum, \PDO::PARAM_INT);
-            $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate, id";
-            $paydate = $this->getSingleRow($sql, $params);
-            $msg = "Бобрый денек!\r\n\r\nОдин из рефереров заказал выплату на расчетный счет.\r\n\r\nИдентификатор пользователя: {$uid}\r\nИдентификатор выплаты: {$paydate['id']}\r\n\r\nНеобходимо подговторить для него акты сверки и после подписания перечислить средства.\r\n\r\nС поклонением,\r\nпочтовый мегабот сервиса Lead4CRM.";
-            $subject = "Lead4CRM: Заявка на выплату";
-            $headers = "From: Lead4CRM <noreply@lead4crm.ru>\r\n";
-            $headers.= "Reply-To: support@lead4crm.ru\r\n";
-            $headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
-            $mailsend = mail('arsen@lead4crm.ru', $subject, $msg, $headers);
-            return array('paydate' => $paydate['paydate'], 'mailsend' => $mailsend);
+            $finance = $this->getFinanceReferals($uid);
+            if ($finance['debet']['debet'] >= $sum) {
+                $params = array();
+                $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+                $params[] = array(':sum', $sum, \PDO::PARAM_INT);
+                $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate, id";
+                $paydate = $this->getSingleRow($sql, $params);
+                $msg = "Бобрый денек!\r\n\r\nОдин из рефереров заказал выплату на расчетный счет.\r\n\r\nИдентификатор пользователя: {$uid}\r\nИдентификатор выплаты: {$paydate['id']}\r\n\r\nНеобходимо подговторить для него акты сверки и после подписания перечислить средства.\r\n\r\nС поклонением,\r\nпочтовый мегабот сервиса Lead4CRM.";
+                $subject = "Lead4CRM: Заявка на выплату";
+                $headers = "From: Lead4CRM <noreply@lead4crm.ru>\r\n";
+                $headers.= "Reply-To: support@lead4crm.ru\r\n";
+                $headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
+                $mailsend = mail('arsen@lead4crm.ru', $subject, $msg, $headers);
+                return array('paydate' => $paydate['paydate'], 'mailsend' => $mailsend);
+            } else {
+                return array('error' => 'Указанная сумма превышает общую сумму накоплений.');
+            }
         } else {
             return array('error' => 'Не верно указана форма выплаты.');
         }
