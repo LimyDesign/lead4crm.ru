@@ -1362,6 +1362,7 @@ function refFinRender() {
           _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data.credit[index-1].credit);
           _row = '<tr><td>'+_dateDB+'</td><td>'+_credit+'&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
         });
+        console.dir(date);
         _debet = _subtotal - parseInt(data.credit[data.length - 1].credit);
       } else {
         _debet = parseInt(data.debet.debet);
