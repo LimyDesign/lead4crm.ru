@@ -306,18 +306,6 @@ if ($cmd[0]) {
         header("Content-Type: application/json");
         echo $api->getBIKInfo($_REQUEST['bik']);
         exit;
-    } elseif ($cmd[0] == 'getRefURLs') {
-        header("Content-Type: text/plain");
-        $refURL = $api->getRefererByURL($_REQUEST['url']);
-        if ($refURL) {
-            if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
-                echo 'set cookie';
-            } else {
-                if ($refURL['uid'] == $_SESSION['userid'] && !$refURL['confirm'])
-                    echo 'confirm url!';
-            }
-        }
-        exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
     } elseif ($cmd[0] == 'about-us') {
