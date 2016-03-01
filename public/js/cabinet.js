@@ -1348,7 +1348,7 @@ function refFinRender() {
   $.post('/getFinReferals/', function(data) {
     var _tableFincance = $('#tableFinance tbody'), _row = '';
     _tableFincance.empty();
-    if ("debet" in data.debet && data.debet.debet > 0) {
+    if (data.debet.debet > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0,
           _date = new Date(),
           _monthRu = 'января,февраля,марта,апреля,мая,июня,июля,августа,сентября,октября,ноября,декабря'.split(',');
@@ -1362,8 +1362,10 @@ function refFinRender() {
           _debet = _debet == 0 ? _subtotal : _subtotal = _subtotal - parseInt(data.credit[index-1].credit);
           _row = '<tr><td>'+_dateDB+'</td><td>'+_credit+'&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
         });
+        _debet = _subtotal - parseInt(data.credit[data.length - 1].credit);
+      } else {
+        _debet = parseInt(data.debet.debet);
       }
-      _debet = _subtotal - parseInt(data.credit[data.length - 1].credit);
       _row = '<tr><td>'+_datenow+'</td><td>0&nbsp;<i class="fa fa-rub"></i></td><td>'+_debet.formatMoney(2)+'&nbsp;<i class="fa fa-rub"></i></td>' + _row;
       _tableFincance.append(_row);
     } else {
