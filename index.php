@@ -311,7 +311,7 @@ if ($cmd[0]) {
         $refURL = $api->getRefererByURL($_REQUEST['url']);
         if ($refURL) {
             if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
-                echo 'set cookie'
+                echo 'set cookie';
             } else {
                 if ($refURL['uid'] == $_SESSION['userid'] && !$refURL['confirm'])
                     echo 'confirm url!';
