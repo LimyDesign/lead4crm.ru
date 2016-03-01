@@ -1348,6 +1348,7 @@ function refFinRender() {
   $.post('/getFinReferals/', function(data) {
     var _tableFincance = $('#tableFinance tbody'), _row = '';
     _tableFincance.empty();
+    console.dir(data);
     if (data.length > 0) {
       var _debet = 0, _credit = 0, _subtotal = 0,
           _date = new Date(),
