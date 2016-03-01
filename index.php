@@ -309,10 +309,14 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'getRefURLs') {
         header("Content-Type: text/plain");
         $refURL = $api->getRefererByURL($_REQUEST['url']);
-        if ($refURL)
-            print_r($refURL);
-        else
-            echo 'хуй!';
+        if ($refURL) {
+            if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
+                echo 'set cookie'
+            } else {
+                if ($refURL['uid'] == $_SESSION['userid'] && !$refURL['confirm'])
+                    echo 'confirm url!';
+            }
+        }
         exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
