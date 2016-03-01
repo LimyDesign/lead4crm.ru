@@ -304,6 +304,10 @@ if ($cmd[0]) {
         header("Content-Type: application/json");
         echo $api->getBIKInfo($_REQUEST['bik']);
         exit;
+    } elseif ($cmd[0] == 'getRefURLs') {
+        header("Content-Type: text/plain");
+        echo $api->getRefererByURL($_REQUEST['url']);
+        exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
     } elseif ($cmd[0] == 'about-us') {
