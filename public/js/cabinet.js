@@ -805,6 +805,7 @@ $(document).ready(function()
         _sumval = _sum.val();
     if (_sumval >= 1) {
       $.post(_action, { sum: _sum }, function(data) {
+
       }, 'json');
     } else {
       _sum.focus();
