@@ -712,7 +712,7 @@ class API
                 $params[] = array(':sum', $sum, \PDO::PARAM_INT);
                 $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate, id";
                 $paydate = $this->getSingleRow($sql, $params);
-                $msg = "Бобрый денек!\r\n\r\nОдин из рефереров заказал выплату на расчетный счет.\r\n\r\nИдентификатор пользователя: {$uid}\r\nИдентификатор выплаты: {$paydate['id']}\r\n\r\nНеобходимо подговторить для него акты сверки и после подписания перечислить средства.\r\n\r\nС поклонением,\r\nпочтовый мегабот сервиса Lead4CRM.";
+                $msg = "Бобрый денек!\r\n\r\nОдин из рефереров заказал выплату на расчетный счет.\r\n\r\nИдентификатор пользователя: {$uid}\r\nИдентификатор выплаты: {$paydate['id']}\r\nСумма заказанной выплаты: {$sum}\r\n\r\nНеобходимо подговторить для него акты сверки и после подписания перечислить средства.\r\n\r\nС поклонением,\r\nпочтовый мегабот сервиса Lead4CRM.";
                 $subject = "Lead4CRM: Заявка на выплату";
                 $headers = "From: Lead4CRM <noreply@lead4crm.ru>\r\n";
                 $headers.= "Reply-To: support@lead4crm.ru\r\n";
