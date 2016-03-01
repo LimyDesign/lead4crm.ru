@@ -813,6 +813,28 @@ $(document).ready(function()
       $.growl.error({ title: 'Упс!', message: 'Сумма должна быть больше или равна 1 рублю.' });
     }
   });
+
+  $('#withdrawalsBank').submit(function(e) {
+    e.preventDefault();
+    var _this = $(this),
+        _action = _this.attr('action'),
+        _sum = _this.find('#withdrawalsSumBank'),
+        _sumval = _sum.val();
+    if (_sumval >= 10000) {
+      $.post(_action, { sum: _sumval }, function(data) {
+        if ('error' in data) {
+          $.growl.error({ title: "Опаньки!", message: data.error });
+        } else {
+          getUserData();
+          refFinRender();
+          $.growl.notice({ title: "Все готово!", message: "Заказанная сумма поставлена в очередь на выплату!" });
+        }
+      }, 'json');
+    } else {
+      _sum.focus();
+      $.growl.error({ title: 'Упс!', message: 'Сумма должна быть больше или равна 10 000 рублей.' });
+    }
+  });
 });
 
 /* Функция приветствия пользователя в зависимости от времени на компьютере пользователя.
