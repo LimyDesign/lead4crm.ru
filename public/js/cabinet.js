@@ -61,12 +61,7 @@ $(document).ready(function()
   $('[data-toggle="tooltip"]').tooltip({
     placement: 'auto'
   });
-  $.post('/getUserData/', function(data) {
-    $('#balance').number(data.balance, 2, '.', ' ');
-    $('#tariff').text(data.tariff);
-    $('#qty').number(data.qty, 0, '.', ' ');
-    qty = data.qty;
-  }, 'json');
+  getUserData();
 
   /* Показываем пользователю запрос на принятие контракта
   ========================================================================================= */
@@ -805,7 +800,12 @@ $(document).ready(function()
         _sumval = _sum.val();
     if (_sumval >= 1) {
       $.post(_action, { sum: _sum }, function(data) {
-
+        if ('error' in data) {
+          $.growl.error({ title: "Опаньки!", message: data.error });
+        } else {
+          getUserData();
+          $.growl.notice({ title: "Все готово!", message: "Заказанная сумма зачислена на лицевой счет, пользуйтесь!" });
+        }
       }, 'json');
     } else {
       _sum.focus();
@@ -1301,8 +1301,9 @@ function sendEmail(type, serialized, callback) {
   });
 }
 
-/* Функция получает данные по реферальной программе и показывает соответствующие формы.
- ========================================================================================= */
+/**
+ * Функция получает данные по реферальной програме и показывает соответствующие формы.
+ */
 function getReferalInfo() {
   var _tab = $('li[role="referal"] a'),
       _tab_text = _tab.text();
@@ -1360,6 +1361,9 @@ function getReferalInfo() {
   }, 'json');
 }
 
+/**
+ * Функция формирует финансовую статистику реферера.
+ */
 function refFinRender() {
   $.post('/getFinReferals/', function(data) {
     var _tableFincance = $('#tableFinance tbody'), _row = '';
@@ -1389,6 +1393,13 @@ function refFinRender() {
   });
 }
 
+/**
+ * Фунция выводит таблицу рефералов, привлеченных данным реферером.
+ *
+ * @param page Номер страницы.
+ * @param tab Область работы функции.
+ * @param scroll Указывает на необходимость прокрутки до начала таблицы пользователей.
+ */
 function goto(page, tab, scroll) {
   scroll = scroll == undefined ? true : scroll;
   if (tab == 'refUsers') {
@@ -1499,6 +1510,21 @@ function refRefreshTable() {
         _table.append(_html);
       });
     }
+  }, 'json');
+}
+
+/**
+ * Функция обновляет данные о пользователе:
+ * - общее кол-во доступных карточек компаний
+ * - баланс пользователя
+ * - тарифный план
+ */
+function getUserData() {
+  $.post('/getUserData/', function(data) {
+    $('#balance').number(data.balance, 2, '.', ' ');
+    $('#tariff').text(data.tariff);
+    $('#qty').number(data.qty, 0, '.', ' ');
+    qty = data.qty;
   }, 'json');
 }
 
