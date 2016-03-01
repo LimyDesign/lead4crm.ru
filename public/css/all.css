@@ -236,7 +236,16 @@ img.offline {
   .btn-google-plus-color:hover {
     color: #fff;
     background: #a32c28; }
-
+  
+.btn-linkedin-color {
+  background: #0077b5;
+  color: #FFFFFF;
+}
+.btn-linkedin-color:hover {
+  color: #FFFFFF;
+  background: #00a0dc;
+}
+  
 .btn-mailru-color {
   background: #168de2;
   color: #fff; }
