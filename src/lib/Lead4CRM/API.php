@@ -701,10 +701,7 @@ class API
             $paydate = $this->getSingleRow($sql, $params);
             $sql = "INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id";
             $params[] = array(':num', date('ymdHis').rand(0,9), \PDO::PARAM_INT);
-            $invoice = $this->getSingleRow($sql, $params);
-            $sql = "INSERT INTO log (uid, debet, client, invoice) VALUES (:uid, :sum, 'Реферальная программа: Счет №', :invoice) RETURNING modtime";
-            array_pop($params);
-            $params[] = array(':invoice', $invoice['id'], \PDO::PARAM_INT);
+            $sql = "WITH invoice_num AS (INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id) INSERT INTO log (uid, debet, client, invoice) VALUES (:uid, :sum, 'Реферальная программа: Счет №', (SELECT id FROM invoice_num)) RETURNING modtime";
             $modtime = $this->getSingleRow($sql, $params);
             return array('paydate' => $paydate['paydate'], 'modtime' => $modtime['modtime']);
         } elseif ($to == 'bank') {
