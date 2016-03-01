@@ -308,7 +308,9 @@ if ($cmd[0]) {
         exit;
     } elseif ($cmd[0] == 'getRefURLs') {
         header("Content-Type: text/plain");
-        print_r($api->getRefererByURL($_REQUEST['url']));
+        $refURL = $api->getRefererByURL($_REQUEST['url']);
+        if ($refURL)
+            print_r($refURL);
         exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
