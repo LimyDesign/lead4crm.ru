@@ -311,6 +311,8 @@ if ($cmd[0]) {
         $refURL = $api->getRefererByURL($_REQUEST['url']);
         if ($refURL)
             print_r($refURL);
+        else
+            echo 'хуй!';
         exit;
     } elseif ($cmd[0] == 'about-project') {
         $title = 'О проекте';
