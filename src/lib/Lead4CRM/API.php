@@ -705,8 +705,8 @@ class API
             $modtime = $this->getSingleRow($sql, $params);
             return array('paydate' => $paydate['paydate'], 'modtime' => $modtime['modtime']);
         } elseif ($to == 'bank') {
-//            $finance = $this->getFinanceReferals($uid);
-//            if ($finance['debet']['debet'] >= $sum) {
+            $finance = $this->getFinanceReferals($uid);
+            if ($finance['debet']['debet'] >= $sum) {
                 $params = array();
                 $params[] = array(':uid', $uid, \PDO::PARAM_INT);
                 $params[] = array(':sum', $sum, \PDO::PARAM_INT);
@@ -719,9 +719,9 @@ class API
                 $headers.= "X-Mailer: Lead4CRM Email Bot 1.0";
                 $mailsend = mail('arsen@lead4crm.ru', $subject, $msg, $headers);
                 return array('paydate' => $paydate['paydate'], 'mailsend' => $mailsend);
-//            } else {
-//                return array('error' => 'Указанная сумма превышает общую сумму накоплений.');
-//            }
+            } else {
+                return array('error' => 'Указанная сумма превышает общую сумму накоплений.');
+            }
         } else {
             return array('error' => 'Не верно указана форма выплаты.');
         }
