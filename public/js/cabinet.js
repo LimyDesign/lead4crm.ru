@@ -798,7 +798,7 @@ $(document).ready(function()
         _action = _this.attr('action'),
         _sum = _this.find('#withdrawalsSum'),
         _sumval = _sum.val();
-    if (_sumval > 1) {
+    if (_sumval >= 1) {
       console.log(_sumval);
       //$.post(_action, { sum: _sum }, function(data) {
       //  if ('error' in data) {
