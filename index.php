@@ -41,7 +41,7 @@ if (!$_COOKIE['_refid']) {
         }
     }
 }
-file_put_contents('/var/www/html/ref_debug.log', $_SERVER['HTTP_REFERER'] . "\r\n", FILE_APPEND | LOCK_EX);
+file_put_contents('/var/www/html/ref_debug.log', date('Y-m-d H:i:s') . ' => ' . $_SERVER['HTTP_REFERER'] . "\r\n", FILE_APPEND | LOCK_EX);
 
 $requestURI = explode('/',$_SERVER['REQUEST_URI']);
 $scriptName = explode('/',$_SERVER['SCRIPT_NAME']);
