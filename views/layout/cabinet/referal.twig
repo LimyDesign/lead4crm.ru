@@ -177,7 +177,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h3>Выплаты</h3>
+            <h3>Выплата</h3>
             <p>Вы можете заказать выплату либо на лицовой счет, либо на расчетный счет.</p>
             <p>При выплате на лицевой счет средства зачисляются моментально и далее их можно использовать за оплату услуг нашего сервиса.</p>
             <p>Выплата на расчетный счет производится ежемесячно до 15 рабочего дня каждого календарного месяца.</p>
@@ -189,6 +189,16 @@
         </div>
         <div class="col-md-6">
             <h3>&nbsp;</h3>
+            <h4>на лицевой счет</h4>
+            <form action="/withdrawals/balance/" id="withdrawalsBalance">
+                <div class="form-group">
+                    <label for="withdrawalsSum">Сумма выплаты:</label>
+                    <input type="text" class="form-control" id="withdrawalsSum">
+                </div>
+                <button type="submit" class="btn btn-primary">Перечислить</button>
+            </form>
+            <hr>
+            <h4>на расчетный счет</h4>
         </div>
     </div>
 </div>
