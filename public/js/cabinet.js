@@ -799,7 +799,7 @@ $(document).ready(function()
         _sum = _this.find('#withdrawalsSum'),
         _sumval = _sum.val();
     if (_sumval > 1) {
-      console.log('Y!');
+      console.log(_sumval);
       //$.post(_action, { sum: _sum }, function(data) {
       //  if ('error' in data) {
       //    $.growl.error({ title: "Опаньки!", message: data.error });
