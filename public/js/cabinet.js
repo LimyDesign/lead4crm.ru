@@ -799,14 +799,14 @@ $(document).ready(function()
         _sum = _this.find('#withdrawalsSum'),
         _sumval = _sum.val();
     if (_sumval >= 1) {
-      $.post(_action, { sum: _sum }, function(data) {
-        if ('error' in data) {
-          $.growl.error({ title: "Опаньки!", message: data.error });
-        } else {
-          getUserData();
-          $.growl.notice({ title: "Все готово!", message: "Заказанная сумма зачислена на лицевой счет, пользуйтесь!" });
-        }
-      }, 'json');
+      //$.post(_action, { sum: _sum }, function(data) {
+      //  if ('error' in data) {
+      //    $.growl.error({ title: "Опаньки!", message: data.error });
+      //  } else {
+      //    getUserData();
+      //    $.growl.notice({ title: "Все готово!", message: "Заказанная сумма зачислена на лицевой счет, пользуйтесь!" });
+      //  }
+      //}, 'json');
     } else {
       _sum.focus();
       $.growl.error({ title: 'Упс!', message: 'Сумма должна быть больше или равна 1 рублю.' });
