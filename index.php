@@ -31,7 +31,7 @@ $twig = new Twig_Environment($loader, array(
 ));
 $telegram = new Longman\TelegramBot\Telegram($conf->telegram->api, $conf->telegram->name);
 
-if (!$_COOKIE['_refid']) {
+if (!$_COOKIE['_refid'] && $_SERVER['HTTP_REFERER']) {
     $refURL = $api->getRefererByURL($_SERVER['HTTP_REFERER']);
     if ($refURL['uid'] != $_SESSION['userid'] && $refURL['confirm'] && $refURL['moderate']) {
         setcookie('_refid', $refURL['uid'], null, '/', '.lead4crm.ru');
