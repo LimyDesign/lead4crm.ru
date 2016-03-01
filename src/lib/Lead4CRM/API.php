@@ -699,7 +699,6 @@ class API
             $params[] = array(':sum', $sum, \PDO::PARAM_INT);
             $sql = "INSERT INTO crm_reffin (totalsum, refid) VALUES (:sum, (SELECT id FROM crm_referals WHERE uid = :uid)) RETURNING paydate";
             $paydate = $this->getSingleRow($sql, $params);
-            $sql = "INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id";
             $params[] = array(':num', date('ymdHis').rand(0,9), \PDO::PARAM_INT);
             $sql = "WITH invoice_num AS (INSERT INTO invoices (invoice, uid, sum, system) VALUES (:num, :uid, :sum, 'referals') RETURNING id) INSERT INTO log (uid, debet, client, invoice) VALUES (:uid, :sum, 'Реферальная программа: Счет №', (SELECT id FROM invoice_num)) RETURNING modtime";
             $modtime = $this->getSingleRow($sql, $params);
