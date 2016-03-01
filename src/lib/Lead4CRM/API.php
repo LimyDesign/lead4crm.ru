@@ -674,12 +674,21 @@ class API
         return $this->getMultipleRows($sql, $params);
     }
 
+    /**
+     * Функция подсчета сделаных выплат и заработанных средств за счет реферальной программы.
+     *
+     * @param int $uid Идентификатор пользователя.
+     * @return array Возвращает сумму выплат и накомплений для конкретного пользователя.
+     */
     public function getFinanceReferals($uid)
     {
-        $sql = "SELECT paydate, totalsum as credit, (SELECT sum(debet) * 0.1 FROM log WHERE uid IN (SELECT id FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid))) AS sumdebet FROM crm_reffin WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid)  ORDER BY paydate ASC";
+        $sql = "SELECT paydate, totalsum as credit FROM crm_reffin WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid)  ORDER BY paydate ASC";
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-        return $this->getMultipleRows($sql, $params);
+        $credit = $this->getMultipleRows($sql, $params);
+        $sql = "SELECT sum(debet) * 0.1 AS debet FROM log WHERE uid IN (SELECT id FROM users WHERE refid = (SELECT id FROM crm_referals WHERE uid = :uid))";
+        $debet = $this->getSingleRow($sql, $params);
+        return array('credit' => $credit, 'debet' => $debet);
     }
 
     /**
