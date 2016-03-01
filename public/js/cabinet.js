@@ -803,6 +803,7 @@ $(document).ready(function()
         _action = _this.attr('action'),
         _sum = _this.find('#withdrawalsSum'),
         _sumval = _sum.val();
+    console.log(_action);
     if (_sumval >= 1) {
       $.post(_action, { sum: _sum }, function(data) {
       }, 'json');
