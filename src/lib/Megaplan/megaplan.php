@@ -139,7 +139,13 @@ class megaplan extends SdfApi_Request
             return 0;
 	}
 
-	public function Authorize()
+    /**
+     * Функция авторизации в CRM Мегаплан и привязки к Lead4CRM.
+     *
+     * @param \Lead4CRM\API $api
+     * @return bool
+     */
+	public static function Authorize($api)
 	{
         $response = null;
 		$host = $_REQUEST['host'];
@@ -169,12 +175,12 @@ class megaplan extends SdfApi_Request
             $params[] = array(':secretkey', $response['data']['SecretKey'], \PDO::PARAM_STR);
             $params[] = array(':userid', $response['data']['UserId'], \PDO::PARAM_INT);
             $params[] = array(':employeeid', $response['data']['EmployeeId'], \PDO::PARAM_INT);
-            $data = $this->api->getSingleRow($sql, $params);
+            $data = $api->getSingleRow($sql, $params);
             $sql = 'UPDATE users SET megaplan = :mpid WHERE id = :uid';
             $params = array();
             $params[] = array(':mpid', $data['Id'], \PDO::PARAM_INT);
             $params[] = array(':uid', $_SESSION['userid'], \PDO::PARAM_INT);
-            $this->api->postSqlQuery($sql, $params);
+            $api->postSqlQuery($sql, $params);
 			$return = true;
 		} else {
 			$return = false;

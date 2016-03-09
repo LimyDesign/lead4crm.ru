@@ -20,9 +20,9 @@ class API
      */
     protected $db;
     /**
-     * @var array $crm Массив содержащий указатели классов модулей интеграции CRM систем.
+     * @var \megaplan $megaplan Указатель на объект модуля интеграции для CRM Мегаплан.
      */
-    protected $crm = array();
+    protected $megaplan;
     /**
      * @var string $dns Cхема подключения.
      * @var object $conf Объект с настройками системы, содержащий различные переменные и хранящий логины и пароли.
@@ -168,7 +168,7 @@ class API
                 foreach ($responsibles as $responsible) {
                     $opt['responsibles'][$responsible] = 'checked';
                 }
-                $this->crm['megaplan'] = $megaplan;
+                $this->megaplan = $megaplan;
             }
             $return = $opt;
         }
@@ -192,7 +192,7 @@ class API
             $params[] = array(':uid', $uid, \PDO::PARAM_INT);
             $crmid = $this->getSingleRow($sql, $params);
             if ($crmid['megaplan']) {
-                $megaplan = $this->crm['megaplan'];
+                $megaplan = $this->megaplan;
                 $return = $megaplan->putCompany($opt);
             }
         }
@@ -215,7 +215,7 @@ class API
             $params[] = array(':uid', $uid, \PDO::PARAM_INT);
             $crmid = $this->getSingleRow($sql, $params);
             if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan']);
+                $megaplan = $this->megaplan;
                 $return = $megaplan->putSetting();
             }
         }
@@ -232,7 +232,7 @@ class API
     {
         $return = '';
         if ($crm == 'megaplan') {
-            $auth = \megaplan::Authorize();
+            $auth = \megaplan::Authorize($this);
             if ($auth === false)
                 $return = 'Для данного домена логин/пароль не верный.';
         }
@@ -253,7 +253,7 @@ class API
             $params[] = array(':uid', $uid, \PDO::PARAM_INT);
             $crmid = $this->getSingleRow($sql, $params);
             if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan']);
+                $megaplan = $this->megaplan;
                 $return = $megaplan->Disconnect();
             }
         }
