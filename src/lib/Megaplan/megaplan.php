@@ -75,7 +75,7 @@ class megaplan extends SdfApi_Request
         $opt = array("Id" => $this->UserId);
         $response = $this->sdf->get('/BumsStaffApiV01/Employee/card.api', $opt);
         $response = json_decode($response, true);
-        return $opt;
+        return $response;
     }
 
 	public function getUserInfo($id)
