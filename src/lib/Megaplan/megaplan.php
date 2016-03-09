@@ -188,11 +188,11 @@ class megaplan extends SdfApi_Request
 		return $return;
 	}
 
-	public function Disconnect()
+	public function Disconnect($uid)
 	{
         $sql = 'UPDATE users SET megaplan = NULL WHERE id = :uid';
         $params = array();
-        $params[] = array(':uid', $_SESSION['userid']);
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $this->api->postSqlQuery($sql, $params);
         $sql = 'DELETE FROM crm_megaplan WHERE "Id" = :crmid';
         $params = array();

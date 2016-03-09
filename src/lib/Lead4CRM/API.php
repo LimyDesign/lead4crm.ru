@@ -252,7 +252,7 @@ class API
             $linkID = $this->getMegaplanLinkID($uid);
             if ($linkID) {
                 $megaplan = new \megaplan($linkID, $this);
-                $return = $megaplan->Disconnect();
+                $return = $megaplan->Disconnect($uid);
             }
         }
         return $return;
