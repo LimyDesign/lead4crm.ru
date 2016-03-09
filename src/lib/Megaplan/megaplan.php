@@ -168,13 +168,14 @@ class megaplan extends SdfApi_Request
 			return false;
 		
 		if ($response['status']['code'] == 'ok') {
-            $sql = 'INSERT INTO crm_megaplan ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId", "Responsibles") VALUES (:domain, :accessid, :secretkey, :userid, :employeeid, :employeeid) RETURNING "Id"';
+            $sql = 'INSERT INTO crm_megaplan ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId", "Responsibles") VALUES (:domain, :accessid, :secretkey, :userid, :employeeid, :responsibles) RETURNING "Id"';
             $params = array();
             $params[] = array(':domain', $host, \PDO::PARAM_STR);
             $params[] = array(':accessid', $response['data']['AccessId'], \PDO::PARAM_STR);
             $params[] = array(':secretkey', $response['data']['SecretKey'], \PDO::PARAM_STR);
             $params[] = array(':userid', $response['data']['UserId'], \PDO::PARAM_INT);
             $params[] = array(':employeeid', $response['data']['EmployeeId'], \PDO::PARAM_INT);
+            $params[] = array(':responsibles', $response['data']['EmployeeId'], \PDO::PARAM_INT);
             $data = $api->getSingleRow($sql, $params);
             $sql = 'UPDATE users SET megaplan = :mpid WHERE id = :uid';
             $params = array();
