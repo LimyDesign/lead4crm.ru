@@ -90,7 +90,7 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'step-2') {
         isAuth($cmd);
         header("Content-Type: application/json");
-        echo json_encode($api->wizard($_POST['crm_id'], 2), JSON_UNESCAPED_UNICODE);
+        echo json_encode($api->wizard($_REQUEST['crm_id'], 2), JSON_UNESCAPED_UNICODE);
         exit;
     } elseif ($cmd[0] == 'getIntegrated') {
         isAuth($cmd);
