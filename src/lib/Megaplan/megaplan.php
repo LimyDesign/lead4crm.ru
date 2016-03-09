@@ -9,12 +9,20 @@ class megaplan extends SdfApi_Request
 	protected $UserId;
 	protected $Responsibles;
 
-	public function __construct($crmid, $data)
+    private $conf;
+
+	public function __construct($crmid, $conf)
 	{
+        $api = new Lead4CRM\API($conf);
+        $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
+        $params = array();
+        $params[] = array(':crmid', $crmid['megaplan'], \PDO::PARAM_INT);
+        $data = $api->getSingleRow($sql, $params);
 		$this->sdf = new SdfApi_Request($data['AccessId'], $data['SecretKey'], $data['Domain'], true);
 		$this->crmid = $crmid;
 		$this->UserId = $data['UserId'];
 		$this->Responsibles = $data['Responsibles'];
+        $this->conf = $conf;
 	}
 
 	public function getEmployee()
@@ -67,9 +75,9 @@ class megaplan extends SdfApi_Request
 		return $response['data']['employee'];
 	}
 
-	public function getResponsibles($data)
+	public function getResponsibles()
 	{
-		return explode(',', $data['Responsibles']);
+		return explode(',', $this->Responsibles);
 	}
 
 	public function putCompany($coFields)

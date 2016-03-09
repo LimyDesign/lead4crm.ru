@@ -20,6 +20,10 @@ class API
      */
     protected $db;
     /**
+     * @var array $crm Массив содержащий указатели классов модулей интеграции CRM систем.
+     */
+    protected $crm = array();
+    /**
      * @var string $dns Cхема подключения.
      * @var object $conf Объект с настройками системы, содержащий различные переменные и хранящий логины и пароли.
      */
@@ -153,9 +157,7 @@ class API
             $crmid = $this->getSingleRow($sql, $params);
             $opt = array('error' => 0, 'connected' => false);
             if ($crmid['megaplan']) {
-                $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
-                $params = array();
-                $params[] = array(':crmid', $crmid['megaplan'], \PDO::PARAM_INT);
+
                 $megaplan_data = $this->getSingleRow($sql, $params);
                 $megaplan = new \megaplan($crmid['megaplan'], $megaplan_data);
                 $opt = array(
@@ -168,6 +170,7 @@ class API
                 foreach ($responsibles as $responsible) {
                     $opt['responsibles'][$responsible] = 'checked';
                 }
+                $this->crm['megaplan'] = $megaplan;
             }
             $return = $opt;
         }
@@ -191,7 +194,7 @@ class API
             $params[] = array(':uid', $uid, \PDO::PARAM_INT);
             $crmid = $this->getSingleRow($sql, $params);
             if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan']);
+                $megaplan = $this->crm['megaplan'];
                 $return = $megaplan->putCompany($opt);
             }
         }
@@ -2411,7 +2414,7 @@ class API
      * @param string $sql Строка содержащая SQL-запрос.
      * @param array $values Двумерный массив содержащий 3 значения.
      */
-    private function postSqlQuery($sql, array $values)
+    public function postSqlQuery($sql, array $values)
     {
         $db = $this->db;
         try {
@@ -2435,7 +2438,7 @@ class API
      * @param array $values Двумерный массив содержащий 3 значения.
      * @return array Массив с результатом данных.
      */
-    private function getSingleRow($sql, array $values)
+    public function getSingleRow($sql, array $values)
     {
         $db = $this->db;
         $row = array();
@@ -2462,7 +2465,7 @@ class API
      * @param array $values Двумерный массив содержащий 3 значения.Двумерный массив содержащий 3 значения.
      * @return array Массив с результатом данных. Массив с результатом данных.
      */
-    private function getMultipleRows($sql, array $values)
+    public function getMultipleRows($sql, array $values)
     {
         $db = $this->db;
         $rows = array();
