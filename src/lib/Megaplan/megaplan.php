@@ -190,7 +190,7 @@ class megaplan extends SdfApi_Request
 
 	public function Disconnect()
 	{
-        $sql = 'UPDATE users SET megaplan = DEFAULT WHERE id = :uid';
+        $sql = 'UPDATE users SET megaplan = NULL WHERE id = :uid';
         $params = array();
         $params[] = array(':uid', $_SESSION['userid']);
         $this->api->postSqlQuery($sql, $params);
