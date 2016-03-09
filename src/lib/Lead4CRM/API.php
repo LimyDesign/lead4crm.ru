@@ -137,6 +137,20 @@ class API
     }
 
     /**
+     * Функция получает идентификатор связи CRM Мегаплан.
+     *
+     * @param integer $uid Идентификатор пользователя.
+     * @return integer Возвращает идентификатор связи CRM Мегаплан с Lead4CRM.
+     */
+    private function getMegaplanLinkID($uid)
+    {
+        $params = array();
+        $params[] = array(':uid', $uid, \PDO::PARAM_INT);
+        $crmid = $this->getSingleRow($sql, $params);
+        return $crmid['megaplan'];
+    }
+
+    /**
      * Проверяет встроенную интеграцию на подключение к внешней CRM системе. И в случае удачи возвращает
      * параметры интеграции для указанной CRM системы.
      *
@@ -151,13 +165,10 @@ class API
             'message' => 'Данная система не поддерживает встроенную интеграцию.'
         );
         if ($crm == 'megaplan') {
-            $sql = "SELECT megaplan FROM users WHERE id = :uid";
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $crmid = $this->getSingleRow($sql, $params);
+            $linkID = $this->getMegaplanLinkID($uid);
             $opt = array('error' => 0, 'connected' => false);
-            if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan'], $this);
+            if ($linkID) {
+                $megaplan = new \megaplan($linkID, $this);
                 $opt = array(
                     'error' => 0,
                     'connected' => true,
@@ -187,11 +198,8 @@ class API
     {
         $return = '';
         if ($crm == 'megaplan') {
-            $sql = "SELECT megaplan FROM users WHERE id = :uid";
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $crmid = $this->getSingleRow($sql, $params);
-            if ($crmid['megaplan']) {
+            $linkID = $this->getMegaplanLinkID($uid);
+            if ($linkID) {
                 $megaplan = $this->megaplan;
                 $return = $megaplan->putCompany($opt);
             }
@@ -210,11 +218,8 @@ class API
     {
         $return = false;
         if ($crm == 'megaplan') {
-            $sql = "SELECT megaplan FROM users WHERE id = :uid";
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $crmid = $this->getSingleRow($sql, $params);
-            if ($crmid['megaplan']) {
+            $linkID = $this->getMegaplanLinkID($uid);
+            if ($linkID) {
                 $megaplan = $this->megaplan;
                 $return = $megaplan->putSetting();
             }
@@ -248,11 +253,8 @@ class API
     {
         $return = false;
         if ($crm == 'megaplan') {
-            $sql = "SELECT megaplan FROM users WHERE id = :uid";
-            $params = array();
-            $params[] = array(':uid', $uid, \PDO::PARAM_INT);
-            $crmid = $this->getSingleRow($sql, $params);
-            if ($crmid['megaplan']) {
+            $linkID = $this->getMegaplanLinkID($uid);
+            if ($linkID) {
                 $megaplan = $this->megaplan;
                 $return = $megaplan->Disconnect();
             }
