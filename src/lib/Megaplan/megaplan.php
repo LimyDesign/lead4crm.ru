@@ -17,7 +17,7 @@ class megaplan extends SdfApi_Request
      */
 	public function __construct($crmid, $api)
 	{
-        $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
+        $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles", "UserId" FROM crm_megaplan WHERE "Id" = :crmid';
         $params = array();
         $params[] = array(':crmid', $crmid, \PDO::PARAM_INT);
         $data = $api->getSingleRow($sql, $params);
