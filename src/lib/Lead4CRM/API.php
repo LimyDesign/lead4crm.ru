@@ -256,8 +256,7 @@ class API
         if ($crm == 'megaplan') {
             $linkID = $this->getMegaplanLinkID($uid);
             if ($linkID) {
-                $megaplan = $this->megaplan;
-                $return = $megaplan->Disconnect();
+                $return = $this->megaplan->Disconnect();
             }
         }
         return $return;
