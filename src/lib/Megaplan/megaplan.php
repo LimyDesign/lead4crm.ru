@@ -17,13 +17,13 @@ class megaplan extends SdfApi_Request
      */
 	public function __construct($crmid, $api)
 	{
-        $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles", "UserId" FROM crm_megaplan WHERE "Id" = :crmid';
+        $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
         $params = array();
         $params[] = array(':crmid', $crmid, \PDO::PARAM_INT);
         $data = $api->getSingleRow($sql, $params);
 		$this->sdf = new SdfApi_Request($data['AccessId'], $data['SecretKey'], $data['Domain'], true);
 		$this->crmid = $crmid;
-		$this->UserId = $data['UserId'];
+		$this->UserId = $data['EmployeeId'];
 		$this->Responsibles = $data['Responsibles'];
         $this->api = $api;
 	}
@@ -69,14 +69,6 @@ class megaplan extends SdfApi_Request
 	{
 		return $this->getUserInfo($this->UserId);
 	}
-
-    public function getUserInfo2()
-    {
-        $opt = array("Id" => 1000005);
-        $response = $this->sdf->get('/BumsStaffApiV01/Employee/card.api', $opt);
-        $response = json_decode($response, true);
-        return $response;
-    }
 
 	public function getUserInfo($id)
 	{
