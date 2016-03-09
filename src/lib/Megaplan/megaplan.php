@@ -4,25 +4,28 @@ require_once __DIR__ . '/Request.php';
 
 class megaplan extends SdfApi_Request
 {
+    protected $api;
 	protected $sdf;
 	protected $crmid;
 	protected $UserId;
 	protected $Responsibles;
 
-    private $conf;
-
-	public function __construct($crmid, $conf)
+    /**
+     * megaplan constructor.
+     * @param int $crmid
+     * @param \Lead4CRM\API $api
+     */
+	public function __construct($crmid, $api)
 	{
-        $api = new Lead4CRM\API($conf);
         $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
         $params = array();
-        $params[] = array(':crmid', $crmid['megaplan'], \PDO::PARAM_INT);
+        $params[] = array(':crmid', $crmid, \PDO::PARAM_INT);
         $data = $api->getSingleRow($sql, $params);
 		$this->sdf = new SdfApi_Request($data['AccessId'], $data['SecretKey'], $data['Domain'], true);
 		$this->crmid = $crmid;
 		$this->UserId = $data['UserId'];
 		$this->Responsibles = $data['Responsibles'];
-        $this->conf = $conf;
+        $this->api = $api;
 	}
 
 	public function getEmployee()
@@ -118,30 +121,27 @@ class megaplan extends SdfApi_Request
 
 	public function putSetting()
 	{
-		global $conf;
-		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		}
 		$responsibles = implode(',', $_REQUEST['Responsibles']);
 		$this->Responsibles = $responsibles;
-		$query = "UPDATE \"public\".\"crm_megaplan\" SET \"Responsibles\" = '{$responsibles}' WHERE \"Id\" = '{$this->crmid}'";
-		pg_query($query);
-		pg_close($db);
+        $sql = 'UPDATE crm_megaplan SET "Responsibles" = :resp WHERE "Id" = :crmid';
+        $params = array();
+        $params[] = array(':resp', $responsibles, \PDO::PARAM_STR);
+        $params[] = array(':crmid', $this->crmid, \PDO::PARAM_INT);
+        $this->api->postSqlQuery($sql, $params);
 		return true;
 	}
 
 	public static function convertPhone($number)
 	{
 		if (preg_match('/(\d)(\d{3})(\d{7})/', $number, $matches))
-		{
 			return $matches[1].'-'.$matches[2].'-'.$matches[3];
-		}
+		else
+            return 0;
 	}
 
-	public static function Authorize() 
+	public function Authorize()
 	{
-		global $conf;
-
+        $response = null;
 		$host = $_REQUEST['host'];
 		$login = $_REQUEST['login'];
 		$password = md5($_REQUEST['password']);
@@ -162,17 +162,19 @@ class megaplan extends SdfApi_Request
 			return false;
 		
 		if ($response['status']['code'] == 'ok') {
-			if ($conf->db->type == 'postgres') {
-				$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-			}
-
-			$query = 'INSERT INTO "public"."crm_megaplan" ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId", "Responsibles") VALUES ('."'{$host}', '{$response['data']['AccessId']}', '{$response['data']['SecretKey']}', '{$response['data']['UserId']}', '{$response['data']['EmployeeId']}', '{$response['data']['EmployeeId']}') ".' RETURNING "Id"';
-			$result = pg_query($query);
-			$megaplanid = pg_fetch_result($result, 0, 0);
-			$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = '{$megaplanid}' WHERE \"id\" = '{$_SESSION['userid']}'";
-			pg_query($query);
-			pg_free_result($result);
-			pg_close($db);
+            $sql = 'INSERT INTO crm_megaplan ("Domain", "AccessId", "SecretKey", "UserId", "EmployeeId", "Responsibles") VALUES (:domain, :accessid, :secretkey, :userid, :employeeid, :employeeid) RETURNING "Id"';
+            $params = array();
+            $params[] = array(':domain', $host, \PDO::PARAM_STR);
+            $params[] = array(':accessid', $response['data']['AccessId'], \PDO::PARAM_STR);
+            $params[] = array(':secretkey', $response['data']['SecretKey'], \PDO::PARAM_STR);
+            $params[] = array(':userid', $response['data']['UserId'], \PDO::PARAM_INT);
+            $params[] = array(':employeeid', $response['data']['EmployeeId'], \PDO::PARAM_INT);
+            $data = $this->api->getSingleRow($sql, $params);
+            $sql = 'UPDATE users SET megaplan = :mpid WHERE id = :uid';
+            $params = array();
+            $params[] = array(':mpid', $data['Id'], \PDO::PARAM_INT);
+            $params[] = array(':uid', $_SESSION['userid'], \PDO::PARAM_INT);
+            $this->api->postSqlQuery($sql, $params);
 			$return = true;
 		} else {
 			$return = false;
@@ -182,15 +184,14 @@ class megaplan extends SdfApi_Request
 
 	public function Disconnect()
 	{
-		global $conf;
-		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		}
-		$query = "UPDATE \"public\".\"users\" SET \"megaplan\" = DEFAULT WHERE \"id\" = '{$_SESSION['userid']}'";
-		pg_query($query);
-		$query = "DELETE FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
-		pg_query($query);
-		pg_close($db);
+        $sql = 'UPDATE users SET megaplan = DEFAULT WHERE id = :uid';
+        $params = array();
+        $params[] = array(':uid', $_SESSION['userid']);
+        $this->api->postSqlQuery($sql, $params);
+        $sql = 'DELETE FROM crm_megaplan WHERE "Id" = :crmid';
+        $params = array();
+        $params[] = array(':crmid', $this->crmid, \PDO::PARAM_INT);
+        $this->api->postSqlQuery($sql, $params);
 		return true;
 	}
 

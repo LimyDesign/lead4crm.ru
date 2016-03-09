@@ -157,7 +157,7 @@ class API
             $crmid = $this->getSingleRow($sql, $params);
             $opt = array('error' => 0, 'connected' => false);
             if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan'], $this->conf);
+                $megaplan = new \megaplan($crmid['megaplan'], $this);
                 $opt = array(
                     'error' => 0,
                     'connected' => true,
