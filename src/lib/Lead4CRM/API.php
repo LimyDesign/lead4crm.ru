@@ -153,14 +153,18 @@ class API
             $crmid = $this->getSingleRow($sql, $params);
             $opt = array('error' => 0, 'connected' => false);
             if ($crmid['megaplan']) {
-                $megaplan = new \megaplan($crmid['megaplan']);
+                $sql = 'SELECT "AccessId", "SecretKey", "Domain", "EmployeeId", "Responsibles" FROM crm_megaplan WHERE "Id" = :crmid';
+                $params = array();
+                $params[] = array(':crmid', $crmid['megaplan'], \PDO::PARAM_INT);
+                $megaplan_data = $this->getSingleRow($sql, $params);
+                $megaplan = new \megaplan($crmid['megaplan'], $megaplan_data);
                 $opt = array(
                     'error' => 0,
                     'connected' => true,
                     'employees' => $megaplan->getEmployee(),
                     'leadUser' => $megaplan->getLeadUser(),
                 );
-                $responsibles = $megaplan->getResponsibles();
+                $responsibles = $megaplan->getResponsibles($megaplan_data);
                 foreach ($responsibles as $responsible) {
                     $opt['responsibles'][$responsible] = 'checked';
                 }

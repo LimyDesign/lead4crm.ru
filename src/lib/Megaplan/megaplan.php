@@ -9,25 +9,12 @@ class megaplan extends SdfApi_Request
 	protected $UserId;
 	protected $Responsibles;
 
-	public function __construct($crmid)
+	public function __construct($crmid, $data)
 	{
-		global $conf;
-		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		}
-		$query = "SELECT \"AccessId\", \"SecretKey\", \"Domain\", \"EmployeeId\", \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$crmid}'";
-		$result = pg_query($query);
-		$AccessId = pg_fetch_result($result, 0, 0);
-		$SecretKey = pg_fetch_result($result, 0, 1);
-		$Domain = pg_fetch_result($result, 0, 2);
-		$UserId = pg_fetch_result($result, 0, 3);
-		$Responsibles = pg_fetch_result($result, 0, 4);
-		pg_free_result($result);
-		pg_close($db);
-		$this->sdf = new SdfApi_Request($AccessId, $SecretKey, $Domain, true);
+		$this->sdf = new SdfApi_Request($data['AccessId'], $data['SecretKey'], $data['Domain'], true);
 		$this->crmid = $crmid;
-		$this->UserId = $UserId;
-		$this->Responsibles = $Responsibles;
+		$this->UserId = $data['UserId'];
+		$this->Responsibles = $data['Responsibles'];
 	}
 
 	public function getEmployee()
@@ -80,19 +67,9 @@ class megaplan extends SdfApi_Request
 		return $response['data']['employee'];
 	}
 
-	public function getResponsibles()
+	public function getResponsibles($data)
 	{
-		global $conf;
-		if ($conf->db->type == 'postgres') {
-			$db = pg_connect('host='.$conf->db->host.' dbname='.$conf->db->database.' user='.$conf->db->username.' password='.$conf->db->password) or die('Невозможно подключиться к БД: '.pg_last_error());
-		}
-		$query = "SELECT \"Responsibles\" FROM \"public\".\"crm_megaplan\" WHERE \"Id\" = '{$this->crmid}'";
-		$result = pg_query($query);
-		$Responsibles = pg_fetch_result($result, 0, 0);
-
-		pg_free_result($result);
-		pg_close($db);
-		return explode(',', $Responsibles);
+		return explode(',', $data['Responsibles']);
 	}
 
 	public function putCompany($coFields)
