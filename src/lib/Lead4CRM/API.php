@@ -157,16 +157,14 @@ class API
             $crmid = $this->getSingleRow($sql, $params);
             $opt = array('error' => 0, 'connected' => false);
             if ($crmid['megaplan']) {
-
-                $megaplan_data = $this->getSingleRow($sql, $params);
-                $megaplan = new \megaplan($crmid['megaplan'], $megaplan_data);
+                $megaplan = new \megaplan($crmid['megaplan'], $this->conf);
                 $opt = array(
                     'error' => 0,
                     'connected' => true,
                     'employees' => $megaplan->getEmployee(),
                     'leadUser' => $megaplan->getLeadUser(),
                 );
-                $responsibles = $megaplan->getResponsibles($megaplan_data);
+                $responsibles = $megaplan->getResponsibles();
                 foreach ($responsibles as $responsible) {
                     $opt['responsibles'][$responsible] = 'checked';
                 }
