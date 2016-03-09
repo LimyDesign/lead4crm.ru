@@ -20,10 +20,6 @@ class API
      */
     protected $db;
     /**
-     * @var \megaplan $megaplan Указатель на объект модуля интеграции для CRM Мегаплан.
-     */
-    protected $megaplan;
-    /**
      * @var string $dns Cхема подключения.
      * @var object $conf Объект с настройками системы, содержащий различные переменные и хранящий логины и пароли.
      */
@@ -180,7 +176,6 @@ class API
                 foreach ($responsibles as $responsible) {
                     $opt['responsibles'][$responsible] = 'checked';
                 }
-                $this->megaplan = $megaplan;
             }
             $return = $opt;
         }
@@ -201,7 +196,7 @@ class API
         if ($crm == 'megaplan') {
             $linkID = $this->getMegaplanLinkID($uid);
             if ($linkID) {
-                $megaplan = $this->megaplan;
+                $megaplan = new \megaplan($linkID, $this);
                 $return = $megaplan->putCompany($opt);
             }
         }
@@ -221,7 +216,7 @@ class API
         if ($crm == 'megaplan') {
             $linkID = $this->getMegaplanLinkID($uid);
             if ($linkID) {
-                $megaplan = $this->megaplan;
+                $megaplan = new \megaplan($linkID, $this);
                 $return = $megaplan->putSetting();
             }
         }
@@ -256,7 +251,8 @@ class API
         if ($crm == 'megaplan') {
             $linkID = $this->getMegaplanLinkID($uid);
             if ($linkID) {
-                $return = $this->megaplan->Disconnect();
+                $megaplan = new \megaplan($linkID, $this);
+                $return = $megaplan->Disconnect();
             }
         }
         return $return;
@@ -618,6 +614,8 @@ class API
      *
      * @param string $url Интернет адрес ресурса реферера на котором разместил не реферальные ссылки.
      * @param int $uid Идентификатор пользователя.
+     * @param bool $update Параметр указывает на необходимость обновления записи в БД.
+     * @param int $id Идентификатор обновляемой записи в БД.
      * @return array Возвращает массив в котором должен содержаться идентификатор добавленного URL.
      */
     public function postURLReferal($url, $uid, $update = false, $id = 0)
