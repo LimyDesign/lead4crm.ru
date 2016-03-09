@@ -104,7 +104,7 @@ if ($cmd[0]) {
     } elseif ($cmd[0] == 'getLeadUser') {
         isAdmin($cmd);
         header('Content-Type: text/plain');
-        $opt = $api->getIntegrated('megaplan', 33);
+        $opt = $api->getUI2(33);
         print_r($opt);
         exit;
     } elseif ($cmd[0] == 'crmConnect') {

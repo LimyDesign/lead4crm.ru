@@ -182,6 +182,14 @@ class API
         return $return;
     }
 
+
+    public function getUI2($uid)
+    {
+        $linkID = $this->getMegaplanLinkID($uid);
+        $mp = new \megaplan($linkID, $this);
+        return $mp->getUserInfo2();
+    }
+
     /**
      * Функция записи компании в справочник внешней CRM системы. Выполняет запись одной компании за раз.
      *
