@@ -144,6 +144,7 @@ class API
      */
     private function getMegaplanLinkID($uid)
     {
+        $sql = 'SELECT megaplan FROM users WHERE id = :uid';
         $params = array();
         $params[] = array(':uid', $uid, \PDO::PARAM_INT);
         $crmid = $this->getSingleRow($sql, $params);
