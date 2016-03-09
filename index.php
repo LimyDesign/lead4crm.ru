@@ -97,9 +97,15 @@ if ($cmd[0]) {
         header('Content-Type: application/json');
         $opt = $api->getIntegrated($_REQUEST['ii'], $_SESSION['userid']);
         if ($opt['error'] == 0) {
-            $html = $twig->render('crm/'.$_REQUEST['ii'].'.twig', $opt);
+            $html = $twig->render('crm/' . $_REQUEST['ii'] . '.twig', $opt);
             echo json_encode(array('html' => $html, 'connected' => $opt['connected']), JSON_UNESCAPED_UNICODE);
         }
+        exit;
+    } elseif ($cmd[0] == 'getLeadUser') {
+        isAdmin($cmd);
+        header('Content-Type: text/plain');
+        $opt = $api->getIntegrated('megaplan', 33);
+        print_r($opt);
         exit;
     } elseif ($cmd[0] == 'crmConnect') {
         isAuth($cmd);
