@@ -315,17 +315,10 @@
       // Показываем текущий тариф пользователя
       // и остаток кол-ва запросов
       b24APIKey = BX24.appOption.get('LEAD4CRM_APIKEY');
-      if (!tariff || !qty) {
-        $.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
-          _tariff.text(data.tariff);
-          _qty.number(data.qty, 0, '.', ' ');
-        });
-      } else {
-        if (b24APIKey == '{{apikey}}') {
-          _tariff.text(tariff);
-          _qty.number(qty, 0, '.', ' ');
-        }
-      }
+      $.post('/getB24UserData/', {apikey: b24APIKey}, function(data) {
+        _tariff.text(data.tariff);
+        _qty.number(data.qty, 0, '.', ' ');
+      });
 
       // Список активных пользователей Битрикс24
       BX24.callMethod('user.get', { "ACTIVE": true }, function (result_ul) {
