@@ -32,6 +32,22 @@ svg rect {
   fill: #8d81ac;
 }
 
+.systems .visa {
+  background-image: url("../images/visa.svg");
+  height: 40px;
+}
+
+.systems .mastercard {
+  background-image: url("../images/mastercard.svg");
+  height: 40px;
+}
+
+.systems .maestro {
+  background-image: url("../images/mastercard.svg");
+  height: 40px;
+}
+
+
 .jslink {
   border-bottom: 1px dashed;
 }
