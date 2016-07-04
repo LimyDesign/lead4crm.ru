@@ -498,7 +498,7 @@ class API
         $user = $this->getSingleRow($sql, $params);
         if ($json) {
             header("Content-Type: application/json");
-            echo json_encode($user);
+            echo json_encode($user, JSON_UNESCAPED_UNICODE);
         }
         return $user;
     }
