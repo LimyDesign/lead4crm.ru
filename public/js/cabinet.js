@@ -407,11 +407,12 @@ $(document).ready(function()
       var s = $(this).serialize();
       $('#tariffModal').modal('show');
       $('#tariffModal').find('#ok').on('click', function() {
-        var b = $(this)
+        var b = $(this);
         var t = b.text();
         b.addClass('disabled');
         b.html('<i class="fa fa-fw fa-spinner fa-pulse"></i> ' + t);
         $.post(a,s,function(data) {
+          console.log(data);
           $('#qty').number(data.qty, 0, '.', ' ');
           $('#balans').number(data.balans, 2, '.', ' ');
           $('#tariff').text(data.tariff);
