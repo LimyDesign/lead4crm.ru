@@ -415,9 +415,6 @@ $(document).ready(function()
         var t = b.text();
         b.addClass('disabled');
         b.html('<i class="fa fa-fw fa-spinner fa-pulse"></i> ' + t);
-        $qty.addClass('animated flash');
-        $balance.addClass('animated flash');
-        $tariff.addClass('animated flash');
         $.post(a,s,function(data) {
           $qty.number(data.qty, 0, '.', ' ');
           $balance.number(data.balance, 2, '.', ' ');
@@ -426,9 +423,9 @@ $(document).ready(function()
           $modal.modal('hide');
           b.removeClass('disabled');
           b.text(t);
-          $qty.removeClass('animated flash');
-          $balance.removeClass('animated flash');
-          $tariff.removeClass('animated flash');
+          $qty.addClass('animated flash').delay(1000).removeClass('animated flash');
+          $balance.addClass('animated flash').delay(1000).removeClass('animated flash');
+          $tariff.addClass('animated flash').delay(1000).removeClass('animated flash');
         });
       });
     }
