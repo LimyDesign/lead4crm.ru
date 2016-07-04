@@ -543,7 +543,7 @@ class API
             $params[] = array(':tariff', $tariff, \PDO::PARAM_STR);
             $user = $this->getSingleRow($sql, $params);
             if ($user['id'] == $uid) {
-                $sql = "INSERT INTO log (uid, credit, credit) VALUES (:uid, (SELECT sum FROM tariff WHERE code = :tariff AND domain = 'lead4crm.ru'), 'Активация тарифа ' || (SELECT name FROM tariff WHERE code = :tariff AND domain = 'lead4crm.ru'))";
+                $sql = "INSERT INTO log (uid, credit, client) VALUES (:uid, (SELECT sum FROM tariff WHERE code = :tariff AND domain = 'lead4crm.ru'), 'Активация тарифа ' || (SELECT name FROM tariff WHERE code = :tariff AND domain = 'lead4crm.ru'))";
                 $this->postSqlQuery($sql, $params);
 
                 // Отправляем уведомления по всем включенным у пользователя каналам
