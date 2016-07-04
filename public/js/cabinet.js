@@ -409,8 +409,8 @@ $(document).ready(function()
       var $balance = $('#balance');
       var $tariff = $('#tariff');
       var $modal = $('#tariffModal');
-      var $qty_data = $.number($qty.text(), 0, '', '');
-      var $balance_data = $.number($balance.text(), 0, '', '');
+      var $qty_last = $.number($qty.text(), 0, '', '');
+      var $balance_last = $.number($balance.text(), 2, '.', '');
       $modal.modal('show');
       $modal.find('#ok').on('click', function() {
         var b = $(this);
@@ -425,7 +425,28 @@ $(document).ready(function()
           $modal.modal('hide');
           b.removeClass('disabled');
           b.text(t);
-          console.log($qty_data, $balance_data);
+          $qty.each(function () {
+            $(this).prop('Counter', $qty_last).animate({
+              Counter: $.number($(this).text(), 0, '', '')
+            }, {
+              duration: 4000,
+              easing: 'swing',
+              step: function (now) {
+                $(this).number(Math.ceil(now), 0, '', ' ');
+              }
+            });
+          });
+          $balance.each(function () {
+            $(this).prop('Counter', $balance_last).animate({
+              Counter: $.number($(this).text(), 2, '.', '')
+            }, {
+              duration: 4000,
+              easing: 'swing',
+              step: function (now) {
+                $(this).number(now, 2, '.', ' ');
+              }
+            });
+          });
         });
       });
     }
