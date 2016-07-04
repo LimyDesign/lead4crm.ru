@@ -405,20 +405,30 @@ $(document).ready(function()
     if ($('select[name="tariff"]').val() != 'demo') {
       var a = $(this).attr('action');
       var s = $(this).serialize();
-      $('#tariffModal').modal('show');
-      $('#tariffModal').find('#ok').on('click', function() {
+      var $qty = $('#qty');
+      var $balance = $('#balance');
+      var $tariff = $('#tariff');
+      var $modal = $('#tariffModal');
+      $modal.modal('show');
+      $modal.find('#ok').on('click', function() {
         var b = $(this);
         var t = b.text();
         b.addClass('disabled');
         b.html('<i class="fa fa-fw fa-spinner fa-pulse"></i> ' + t);
+        $qty.addClass('text-muted');
+        $balance.addClass('text-muted');
+        $tariff.addClass('text-muted');
         $.post(a,s,function(data) {
-          $('#qty').number(data.qty, 0, '.', ' ');
-          $('#balance').number(data.balance, 2, '.', ' ');
-          $('#tariff').text(data.tariff);
+          $qty.number(data.qty, 0, '.', ' ');
+          $balance.number(data.balance, 2, '.', ' ');
+          $tariff.text(data.tariff);
         }, 'json').done(function() {
-          $('#tariffModal').modal('hide');
+          $modal.modal('hide');
           b.removeClass('disabled');
           b.text(t);
+          $qty.removeClass('text-muted');
+          $balance.removeClass('text-muted');
+          $tariff.removeClass('text-muted');
         });
       });
     }
