@@ -409,6 +409,8 @@ $(document).ready(function()
       var $balance = $('#balance');
       var $tariff = $('#tariff');
       var $modal = $('#tariffModal');
+      var $qty_data = $.number($qty.text(), 0, '', '');
+      var $balance_data = $.number($balance.text(), 0, '', '');
       $modal.modal('show');
       $modal.find('#ok').on('click', function() {
         var b = $(this);
@@ -423,9 +425,7 @@ $(document).ready(function()
           $modal.modal('hide');
           b.removeClass('disabled');
           b.text(t);
-          $qty.addClass('animated flash').delay(1000).removeClass('animated flash');
-          $balance.addClass('animated flash').delay(1000).removeClass('animated flash');
-          $tariff.addClass('animated flash').delay(1000).removeClass('animated flash');
+          console.log($qty_data, $balance_data);
         });
       });
     }
