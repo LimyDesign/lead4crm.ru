@@ -412,9 +412,8 @@ $(document).ready(function()
         b.addClass('disabled');
         b.html('<i class="fa fa-fw fa-spinner fa-pulse"></i> ' + t);
         $.post(a,s,function(data) {
-          console.log(data);
           $('#qty').number(data.qty, 0, '.', ' ');
-          $('#balans').number(data.balans, 2, '.', ' ');
+          $('#balance').number(data.balance, 2, '.', ' ');
           $('#tariff').text(data.tariff);
         }, 'json').done(function() {
           $('#tariffModal').modal('hide');
