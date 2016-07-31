@@ -1,0 +1,11 @@
+banner:
+  title: Lead Generator
+  subtitle: Fresh data now from 2GIS to your CRM
+  version: version
+
+section:
+  0:
+    top-button: Supported CRM
+    top-button-helper: Powered by API
+    title: Evolution of CRM systems
+    text: Our solution is not revolutionary, but as it turns out these decisions have not yet submitted to the Russian market. So we went and did. From now on, everything is simple &mdash; a couple of clicks and you have a base!

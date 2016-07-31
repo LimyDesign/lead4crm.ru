@@ -1,0 +1,27 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+homepage:
+  path: /{_locale}
+
+about-project:
+  path: /{_locale}/about-project
+
+about-ours:
+  path: /{_locale}/about-ours
+
+price:
+  path: /{_locale}/price
+
+support:
+  path: /{_locale}/support
+
+blog:
+  path: /{_locale}/blog
+
+terms:
+  path: /{_locale}/terms
+
+cabinet:
+  path: /{_locale}/cabinet

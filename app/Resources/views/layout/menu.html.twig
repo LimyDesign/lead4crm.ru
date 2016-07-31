@@ -1,0 +1,73 @@
+{% set currentPath = app.request.schemeAndHttpHost ~ app.request.requestUri %}
+
+<header id="header">
+    <div class="container">
+        <div class="logo">
+            <a href="{{ path('homepage') }}">
+                <img src="/images/logo.svg">
+            </a>
+        </div>
+        <nav id="nav">
+            <div class="opener-holder">
+                <a href="#" class="nav-opener"><span></span></a>
+                {% if app.user %}
+                    <a href="{{ path(cabinet) }}" class="btn btn-primary rounded">
+                        {% trans from 'navigation' %}Cabinet{% endtrans %}
+                    </a>
+                {% else %}
+                    <a data-modal="login" class="btn btn-primary md-trigger rounded">
+                        {% trans from 'navigation' %}Login{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+            <div class="nav-drop">
+                <ul>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('homepage') or currentPath == app.request.schemeAndHttpHost ~ '/' %}class="active"{% endif %}>
+                        <a href="{{ path('homepage') }}">
+                            {% trans from 'navigation' %}Home{% endtrans %}
+                        </a>
+                    </li>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('about-project') %}class="active"{% endif %}>
+                        <a href="{{ path('about-project') }}">
+                            {% trans from 'navigation' %}About Project{% endtrans %}
+                        </a>
+                    </li>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('about-ours') %}class="active"{% endif %}>
+                        <a href="{{ path('about-ours') }}">
+                            {% trans from 'navigation' %}About Ours{% endtrans %}
+                        </a>
+                    </li>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('price') %}class="active"{% endif %}>
+                        <a href="{{ path('price') }}">
+                            {% trans from 'navigation' %}Price{% endtrans %}
+                        </a>
+                    </li>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('support') %}class="active"{% endif %}>
+                        <a href="{{ path('support') }}">
+                            {% trans from 'navigation' %}Support{% endtrans %}
+                        </a>
+                    </li>
+                    <li {% if currentPath == app.request.schemeAndHttpHost ~ path('blog') %}class="active"{% endif %}>
+                        <a href="{{ path('blog') }}">
+                            {% trans from 'navigation' %}Blog{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+                <div class="drop-holder visible-sm visible-xs">
+                    <span>{% trans from 'navigation' %}Follow{% endtrans %}</span>
+                    <ul class="social-networks">
+                        <li>
+                            <a href="https://www.facebook.com/lead4crm" class="fa fa-facebook"></a>
+                        </li>
+                        <li>
+                            <a href="http://vk.com/lead4crm" class="fa fa-vk"></a>
+                        </li>
+                        <li>
+                            <a href="https://plus.google.com/114159806572244188963" class="fa fa-google-plus"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

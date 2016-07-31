@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Lead4CRM &mdash; Генератор лидов на основе 2ГИС{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" type="image/png" href="/images/fb-app-icon-16x16.png">
+        <link rel="apple-touch-icon" href="/images/touch-icon-iphone.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/images/touch-icon-ipad.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/images/touch-icon-iphone-retina.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/images/touch-icon-ipad-retina.png">
+        <link rel="apple-touch-startup-image" href="/images/startup.png">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/modal.min.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,300,500&subset=latin,cyrillic">
+        <link rel="stylesheet" type="text/css" href="https://s.mlcdn.co/animate.css">
+        <!--[if IE]>
+        <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div id="wrapper">
+            {% include 'layout/menu.html.twig' %}
+            {% block body %}{% endblock %}
+            {% include 'layout/footer.html.twig' %}
+        </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

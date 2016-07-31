@@ -1,0 +1,107 @@
+<footer id="footer">
+    <div class="container">
+        <div class="footer-holder">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="logo">
+                        <a href="{{ path('homepage') }}">
+                            <img src="/images/logo.svg" alt="LEAD4CRM">
+                        </a>
+                    </div>
+                    <p>
+                        Сервис моментального импорта данных из 2ГИС.<br>
+                        Работает на базе API 2GIS.
+                    </p>
+                    <img src="/images/le-logo-standard.svg" height="80" alt="SSL Certificate">
+                </div>
+                <div class="col-md-2">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li>
+                            <a href="{{ path('homepage') }}" title="Главная">Главная</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('about-project') }}" title="О проекте">О проекте</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('about-ours') }}" title="О нас">О нас</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('price') }}" title="Цены">Цены</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('support') }}" title="Поддержка">Поддержка</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('terms') }}" title="Публичная оферта">Публичная оферта</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-holder">
+                        <strong class="phone">
+                            <a href="tel:+73952969617">+7 (3952) 96-96-17</a>
+                        </strong>
+                        <span class="available"><a href="mailto:help@lead4crm.ru">help@lead4crm.ru</a></span>
+                        <button type="button" class="btn btn-primary btn-block md-trigger" data-modal="webcall">Заказать звонок</button>
+                        <h4>Сделано в России с любовью!</h4>
+                        <address>
+                            Произведено в <a href="http://limydesign.ru" title="LimyDesign Studio" target="_blank">LimyDesign Studio</a>
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-frame">
+                        <h4>К сведению</h4>
+                        <p>Наши данные актуальны на столько, на сколько актуальны данные в справочнике 2ГИС потому, что мы не кэшируем и не сохраняем.</p>
+
+                        {% if app.environment != 'dev' %}
+                        <!-- Yandex.Metrika informer -->
+                        <notr><a href="https://metrika.yandex.ru/stat/?id=30160544&amp;from=informer"
+                                 target="_blank" rel="nofollow"><img src="//bs.yandex.ru/informer/30160544/2_1_FFFFFFFF_FFFFFFFF_0_pageviews"
+                                                                     style="width:80px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры)" onclick="try{Ya.Metrika.informer({i:this,id:30160544,lang:'ru'});return false}catch(e){}"/></a></notr>
+                        <!-- /Yandex.Metrika informer -->
+
+                        <!-- Yandex.Metrika counter -->
+                        <script type="text/javascript">
+                            (function (d, w, c) {
+                                (w[c] = w[c] || []).push(function() {
+                                    try {
+                                        w.yaCounter30160544 = new Ya.Metrika({id:30160544,
+                                            webvisor:true,
+                                            clickmap:true,
+                                            trackLinks:true,
+                                            accurateTrackBounce:true});
+                                    } catch(e) { }
+                                });
+
+                                var n = d.getElementsByTagName("script")[0],
+                                        s = d.createElement("script"),
+                                        f = function () { n.parentNode.insertBefore(s, n); };
+                                s.type = "text/javascript";
+                                s.async = true;
+                                s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+                                if (w.opera == "[object Opera]") {
+                                    d.addEventListener("DOMContentLoaded", f, false);
+                                } else { f(); }
+                            })(document, window, "yandex_metrika_callbacks");
+                        </script>
+                        <noscript><div><img src="//mc.yandex.ru/watch/30160544" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+
+                        <!--Start of Zopim Live Chat Script-->
+                        <script type="text/javascript">
+                            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+                                    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+                            _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+                                $.src="//v2.zopim.com/?3jakOO5EsuCo2PFbCKAwOHhg7d6OBgrI";z.t=+new Date;$.
+                                        type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+                        </script>
+                        <!--End of Zopim Live Chat Script-->
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

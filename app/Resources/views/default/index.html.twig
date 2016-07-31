@@ -1,0 +1,320 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section class="visual">
+        <div class="container">
+            <div class="text-block">
+                <div class="heading-holder">
+                    <h1>
+                        {% trans from "homepage" %}banner.title{% endtrans %}
+                    </h1>
+                    <p class="tagline hidden-xs hidden-sm">
+                        {% trans from "homepage" %}banner.subtitle{% endtrans %}
+                    </p>
+                    <span class="info">
+                        {% trans from "homepage" %}banner.version{% endtrans %} {{ ver }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <img src="/images/img-decor-01.jpg" alt="" class="bg-stretch">
+    </section>
+    <section class="main">
+        <div class="container">
+            <div id="cta">
+
+                <a href="#special-for" id="anchor" class="btn btn-primary rounded">
+                    {% trans from "homepage" %}section.0.top-button{% endtrans %}
+                </a>
+                 <p>
+                     {% trans from "homepage" %}section.0.top-button-helper{% endtrans %}
+                     <img src="/images/2gis-logo-1.svg" alt="2GIS" title="2gis">
+                 </p>
+            </div>
+            <div class="row">
+                <div class="text-box col-md-offset-1 col-md-10">
+                    <h2>{% trans from "homepage" %}section.0.title{% endtrans %}</h2>
+                    <p>{% trans from "homepage" %}section.0.text{% endtrans %}</p>
+                    <div class="social-placeholder notr">
+                        <div class="yashare-auto-init"
+                             data-yashareL10n="ru"
+                             data-yashareQuickServices="vkontakte,facebook,twitter,odnoklassniki,moimir,gplus,pinterest"
+                             data-yashareTheme="counter"
+                             data-yashareImage="/images/pinterest.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <h2 class="visible-xs visible-sm text-primary">&lt;рекомендуем&gt;</h2>
+                    <ul class="visual-list">
+                        <li>
+                            <div class="img-holder">
+                                <img src="/images/graph-04.svg" width="110" alt="">
+                            </div>
+                            <div class="text-holder">
+                                <h3>Подробная карточка компании</h3>
+                                <p>При импорте данных по вашим критериям, импортируются не только названия компании, но и все возможные данные, которые компания сама предоставила о себе. В результате вы получаете наиболее полные данные по каждой компании, при этом вам ничего не надо делать, кроме нажатия кнопки «Импорт».</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="img-holder">
+                                <img src="/images/graph-03.svg" width="90" alt="">
+                            </div>
+                            <div class="text-holder">
+                                <h3>Тонкая настройка</h3>
+                                <p>Настраивайте выборку данных как вам угодно &mdash; мы постарались реализовать фильтры так, чтобы они смогли упростить процесс получения максимально подходящих для вас потенциальных клиентов. Заказывая базу у кого-нибудь вам отправляют файл в формате Excel, мы делаем так, чтобы вам не нужно было бы в дальнейшем выбирать нужные и не нужные компании.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="img-holder">
+                                <img src="/images/graph-01.svg" width="71" alt="">
+                            </div>
+                            <div class="text-holder">
+                                <h3>Экономия времени</h3>
+                                <p>С нами вы экономите не только на оплате труда менеджеров или системного администратора, с нами вы экономите на множестве потенциальных расходов, которые компании несут не пользуясь нашим замечательным продуктом. Кроме этого вы увеличиваете прибыль компании ровно на столько, сколько времени тратится на сбор данных по вашим потенциальным клиентам.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-7">
+                    <div class="slide-holder">
+                        <h2 class="hidden-xs hidden-sm text-primary">
+                            &lt;наша рекомендация&gt;
+                        </h2>
+                        <div class="img-slide scroll-trigger">
+                            <img src="/images/img-01.png" alt="" height="839" width="1352">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main">
+        <div class="container">
+            <div class="block-holder">
+                {#<div class="block-frame">
+                    <div class="cycle-gallery">
+                        <div class="mask">
+                            <div class="slideset">
+                                <div class="slide">
+                                    <div class="img-box">
+                                        <div class="img-holder">
+                                            <img src="/public/images/user-01.jpg" alt="" height="85" width="85">
+                                        </div>
+                                        <div class="text-holder">
+                                            <h3>Арсен Беспалов</h3>
+                                            <p>Ведущий разработчик</p>
+                                        </div>
+                                    </div>
+                                    <p>Этот проект для меня был абсолютно спонтанным, но необходимость и востребованность данного продукта подтолкнула меня начать разработку и собрать команду единомышленников, которым будет интересно реализовать данный проект.</p>
+                                    <em class="date">22 марта 2015 г.</em>
+                                </div>
+                                <div class="slide">
+                                    <div class="img-box">
+                                        <div class="img-holder">
+                                            <img src="/public/images/user-02.jpg" alt="" height="85" width="85">
+                                        </div>
+                                        <div class="text-holder">
+                                            <h3>Александр Семенов</h3>
+                                            <p>Специалист по базам данных</p>
+                                        </div>
+                                    </div>
+                                    <p>Я вообще ничего не знал про этот проект, вернее нет, я про него услышал когда уже возникла необходимость писать какой-то код. Возможно Я отличный разработчик, но разрабатывать под Битрикс24 что-либо для меня было впервые.</p>
+                                    <em class="date">22 марта 2015 г.</em>
+                                </div>
+                                <div class="slide">
+                                    <div class="img-box">
+                                        <div class="img-holder">
+                                            <img src="/public/images/user-03.jpg" alt="" height="85" width="85">
+                                        </div>
+                                        <div class="text-holder">
+                                            <h3>Динара Беспалова</h3>
+                                            <p>Копирайтер</p>
+                                        </div>
+                                    </div>
+                                    <p>Скажем так: для меня все это впервые, я раньше никогда не занималась копирайтингом и в целом мне стало интересно работать над проектом, который будет полезен для многих людей и конечно же хочется чтобы все и всем было предельно понятно.</p>
+                                    <em class="date">22 марта 2015 г.</em>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#." class="btn-prev">
+                            <i class="glyphicon glyphicon-menu-left"></i>
+                        </a>
+                        <a href="#." class="btn-next">
+                            <i class="glyphicon glyphicon-menu-right"></i>
+                        </a>
+                    </div>
+                </div>#}
+                <div class="block-frame">
+                    <ul class="cta-list">
+                        <li>
+                            <a href="https://www.facebook.com/lead4crm" class="btn btn-fb-color">
+                                <i class="fa fa-facebook"></i>
+                                Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://vk.com/lead4crm" class="btn btn-vk-color">
+                                <i class="fa fa-vk"></i>
+                                Вконтакте
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://plus.google.com/114159806572244188963" rel="publisher" class="btn btn-google-plus-color">
+                                <i class="fa fa-google-plus"></i>
+                                Google+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.linkedin.com/company/lead4crm" class="btn btn-linkedin-color">
+                                <i class="fa fa-linkedin"></i>
+                                LinkedIn
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="visual-container" id="special-for">
+        <div class="visual-area">
+            <div class="container">
+                <h2>Разработано для</h2>
+                <ul class="testimonials">
+                    <li>
+                        <div class="img-holder">
+                            <a href="https://www.bitrix24.ru/?p=1074777" target="_blank">
+                                <img src="/images/bx24-logo.png" height="36" width="195" alt="Битрикс24">
+                            </a>
+                        </div>
+                        <p>
+                            <em>Лучшее решение корпоративного портала, включающий множество инструментов управления сотрудниками, проектами и взаимоотношениями с клиентами.</em>
+                        </p>
+                    </li>
+                    <li>
+                        <div class="img-holder">
+                            <a href="https://megaplan.ru/?ref=9357261" target="_blank">
+                                <img src="/images/megaplan-logo.png" height="50" width="195" alt="Мегаплан">
+                            </a>
+                        </div>
+                        <p>
+                            <em>Без Мегаплана ваши поручения могут навсегда остаться невыполненными. Сегодня это непозволительная роскошь!</em>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <img src="/images/img-decor-02.jpg" height="764" width="1380" class="bg-stretch">
+        </div>
+        <div class="visual-area">
+            <div class="container">
+                <h2>Стоимость услуг доступа</h2>
+                <div class="pricing-tables">
+                    <div class="plan">
+                        <div class="head">
+                            <h3>Старт</h3>
+                        </div>
+                        <div class="price">
+                            <span class="price-main notr">14 <span class="month"><i class="fa fa-rub"></i></span></span>
+                            <span class="price-additional">за компанию</span>
+                        </div>
+                        <ul class="item-list">
+                            <li>Автоматическое продление</li>
+                            <li>Выборка по городам</li>
+                            <li>Выборка по рубрикам</li>
+                            <li>Выборка по названиям</li>
+                        </ul>
+                        <ul class="item-list">
+                            <li>Стоимость тарифа — 3&nbsp;500 <i class="fa fa-rub"></i></li>
+                            <li>Включено 250 запросов</li>
+                        </ul>
+                        <a href="{{ path('price') }}" class="btn btn-default rounded">подробнее</a>
+                    </div>
+                    <div class="plan recommended">
+                        <div class="head">
+                            <h3>Бизнес</h3>
+                        </div>
+                        <div class="price">
+                            <span class="price-main notr">12 <span class="month"><i class="fa fa-rub"></i></span></span>
+                            <span class="price-additional">за компанию</span>
+                        </div>
+                        <ul class="item-list">
+                            <li>Автоматическое продление</li>
+                            <li>Выборка по городам</li>
+                            <li>Выборка по рубрикам</li>
+                            <li>Выборка по названиям</li>
+                        </ul>
+                        <ul class="item-list">
+                            <li>Стоимость пакета — 12&nbsp;000 <i class="fa fa-rub"></i></li>
+                            <li>Включено 1000 запросов</li>
+                        </ul>
+                        <a href="{{ path('price') }}" class="btn btn-default rounded">подробнее</a>
+                    </div>
+                    <div class="plan">
+                        <div class="head">
+                            <h3>Компания</h3>
+                        </div>
+                        <div class="price">
+                            <span class="price-main notr">6 <span class="month"><i class="fa fa-rub"></i></span></span>
+                            <span class="price-additional">за компанию</span>
+                        </div>
+                        <ul class="item-list">
+                            <li>Автоматическое продление</li>
+                            <li>Выборка по городам</li>
+                            <li>Выборка по рубрикам</li>
+                            <li>Выборка по названиям</li>
+                        </ul>
+                        <ul class="item-list">
+                            <li>Стоимость пакета — 60&nbsp;000 <i class="fa fa-rub"></i></li>
+                            <li>Включено 10&nbsp;000 запросов</li>
+                        </ul>
+                        <a href="{{ path('price') }}" class="btn btn-default rounded">подробнее</a>
+                    </div>
+                    <div class="plan">
+                        <div class="head">
+                            <h3>Корпорация</h3>
+                        </div>
+                        <div class="price">
+                            <span class="price-main notr">4,50 <span class="month"><i class="fa fa-rub"></i></span></span>
+                            <span class="price-additional">за компанию</span>
+                        </div>
+                        <ul class="item-list">
+                            <li>Автоматическое продление</li>
+                            <li>Выборка по городам</li>
+                            <li>Выборка по рубрикам</li>
+                            <li>Выборка по названиям</li>
+                        </ul>
+                        <ul class="item-list">
+                            <li>Стоимость пакета — 225&nbsp;000 <i class="fa fa-rub"></i></li>
+                            <li>Включено 50&nbsp;000 запросов</li>
+                        </ul>
+                        <a href="{{ path('price') }}" class="btn btn-default rounded">подробнее</a>
+                    </div>
+                </div>
+                <p class="silent">Срок действия тарифных планов &mdash; 1 месяц с момента активации тарифного плана. При исчерпывании всех средств на балансе доступ к услугам блокируется до момента пополнения баланса. Средства перечисленные на лицевой счет возврату или обмену не подлежат. Фактом оплаты считается момент зачисления денежных средств на лицевой счет нашей компании, в связи с чем оплата по счету для юридических лиц может затянуться до 3 банковских дней.</p>
+            </div>
+            <img src="/images/img-decor-03.jpg" height="1175" width="1380" class="bg-stretch">
+        </div>
+    </section>
+    <section class="area">
+        <div class="container">
+            <div class="subscribe">
+                <h3>Подписывайтесь на наши новости</h3>
+                <form class="form-inline" action="//limydesign.us6.list-manage.com/subscribe/post?u=ba50ef775520d2d6560dfeb57&amp;id=80645fb90e" method="post">
+                    <button type="submit" class="btn btn-primary rounded">Подписаться</button>
+                    <div class="form-group">
+                        <input type="email" name="EMAIL" placeholder="Электропочта" class="form-control rounded">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
