@@ -1378,6 +1378,7 @@ class API
 
         $pdf->lastPage();
         $pdf->Output(__DIR__ . "/ucf/{$uid}/Invoice_L4CRM-{$invoice_num}.pdf", 'F');
+        header('Location: https://www.lead4crm.ru/cabinet/');
     }
 
     /**
