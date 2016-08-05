@@ -1377,7 +1377,23 @@ class API
         $pdf->Cell(0, 10, $text, 1, 1, 'L', 1, 0);
 
         $pdf->lastPage();
-        $pdf->Output("Invoice_L4CRM-{$invoice_num}.pdf", 'D');
+        $pdf->Output(__DIR__ . "/ucf/{$uid}/Invoice_L4CRM-{$invoice_num}.pdf", 'F');
+    }
+
+    /**
+     * Возвращает список счетов для данного пользователя.
+     *
+     * @param int $uid
+     *
+     * @return array
+     */
+    public function getInvoices($uid) {
+        $arrFN = array();
+        foreach (glob(__DIR__ . '/ucf/' . $uid . '/*.pdf') as $filename) {
+            $arrFN['url'] = 'https://www.lead4crm.ru/src/lib/Lead4CRM/ucf/'.$uid.'/'.$filename;
+            $arrFN['name'] = $filename;
+        }
+        return $arrFN;
     }
 
     /**

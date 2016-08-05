@@ -349,6 +349,7 @@ if ($cmd[0]) {
             'yaShopId' => $conf->payments->ShopID,
             'yaSCId' => $conf->payments->SCID,
             'tariffs' => $api->getUserTariffList($_SESSION['userid']),
+            'invoices' => $api->getInvoices($_SESSION['userid']),
         );
     } elseif ($cmd[0] == 'amo-index') {
         if ($apikey = $_REQUEST['apikey'] && $login = $_REQUEST['login'] && $hash = $_REQUEST['hash'] && $subdomain = $_REQUEST['subdomain']) {
