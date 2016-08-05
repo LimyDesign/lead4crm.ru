@@ -1390,8 +1390,10 @@ class API
     public function getInvoices($uid) {
         $arrFN = array();
         foreach (glob(__DIR__ . '/ucf/' . $uid . '/*.pdf') as $filename) {
-            $arrFN['url'] = 'https://www.lead4crm.ru/src/lib/Lead4CRM/ucf/'.$uid.'/'.$filename;
-            $arrFN['name'] = $filename;
+            $arrFN[] = [
+                'url' => 'https://www.lead4crm.ru/src/lib/Lead4CRM/ucf/'.$uid.'/'.$filename,
+                'name' => $filename,
+            ];
         }
         return $arrFN;
     }
