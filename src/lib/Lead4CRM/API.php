@@ -1391,7 +1391,7 @@ class API
         $arrFN = array();
         foreach (glob(__DIR__ . '/ucf/' . $uid . '/*.pdf') as $filename) {
             $arrFN[] = [
-                'url' => 'https://www.lead4crm.ru/'.substr($filename, 12),
+                'url' => 'https://www.lead4crm.ru/'.substr($filename, 14),
                 'name' => basename($filename),
             ];
         }
