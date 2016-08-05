@@ -233,6 +233,10 @@ if ($cmd[0]) {
         isAuth($cmd);
         $api->getNewAPIKey($_SESSION['userid']);
         exit;
+    } elseif ($cmd[0] == 'getInvoices') {
+        isAuth($cmd);
+        echo json_encode($api->getInvoices($_SESSION['userid']));
+        exit();
     } elseif ($cmd[0] == 'getInvoice') {
         isAuth($cmd);
         $api->getInvoice($_POST['invoicesum'], $_POST['companyname'], $_SESSION['userid']);
